@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Social CDE for Eclipse"
+            id="it.uniba.di.socialCDEforEclipse">
+      </category>
+      <view
+            name="SocialCDEforEclipse"
+            icon="icons/sample.gif"
+            category="it.uniba.di.socialCDEforEclipse"
+            class="it.uniba.di.socialcdeforeclipse.views.SocialCDEview"
+            id="it.uniba.di.socialcdeforeclipse.views.SocialCDEview">
+      </view>
+      <view
+            name="SocialCDEforEclipse Browser"
+            icon="icons/sample.gif"
+            category="it.uniba.di.socialCDEforEclipse"
+            class="it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"
+            id="it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>
