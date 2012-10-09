@@ -6,12 +6,12 @@ import java.util.HashMap;
 
 import javax.xml.ws.Dispatch;
 
-import it.di.uniba.di.socialcdeforeclipse.popup.PinPanel;
-import it.di.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
-import it.di.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
 import it.uniba.di.socialCDEforEclipse.SharedLibrary.WOAuthData;
 import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
+import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
+import it.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

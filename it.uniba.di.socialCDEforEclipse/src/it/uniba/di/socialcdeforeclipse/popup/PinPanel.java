@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.di.uniba.di.socialcdeforeclipse.popup;
+package it.uniba.di.socialcdeforeclipse.popup;
 
 import java.io.IOException;
 import java.io.InputStream;

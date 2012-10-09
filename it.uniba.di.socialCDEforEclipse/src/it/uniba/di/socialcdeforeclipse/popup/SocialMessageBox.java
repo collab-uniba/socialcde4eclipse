@@ -1,4 +1,4 @@
-package it.di.uniba.di.socialcdeforeclipse.popup;
+package it.uniba.di.socialcdeforeclipse.popup;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;

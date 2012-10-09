@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.di.uniba.di.socialcdeforeclipse.popup;
+package it.uniba.di.socialcdeforeclipse.popup;
 
 import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
 

@@ -7,9 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.InputStream;
 
-import it.di.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.*;
+import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 
 
 import org.eclipse.jface.action.Action;
