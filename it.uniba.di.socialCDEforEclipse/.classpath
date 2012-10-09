@@ -5,6 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/it.uniba.di.socialCDEforEclipse.SharedLibrary"/>
-	<classpathentry kind="lib" path="C:/Users/Flo/git/repository_09_10_2012/socialcde4eclipse/it.uniba.di.socialCDEforEclipse/lib/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

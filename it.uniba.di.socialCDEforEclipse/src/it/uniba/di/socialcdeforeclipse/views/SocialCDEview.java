@@ -52,8 +52,6 @@ public class SocialCDEview extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "it.uniba.di.socialcdeforeclipse.views.SocialCDEview";
-	private static final String VIEW1_ID = "it.uniba.di.socialcdeforeclipse.views.SocialCDEview";
-	private static final String VIEW2_ID = "it.uniba.di.socialcdeforeclipse.views.SocialCDEview2";
 	private TableViewer viewer;
 	private Action action1;
 	private Action action2;
@@ -104,31 +102,7 @@ public class SocialCDEview extends ViewPart {
 	public void createPartControl(Composite parent) {
 	
 		
-			/*
-		ProxyWrapper pr = new ProxyWrapper(); 
-		pr.setHost("http://apat.di.uniba.it:8081"); 
-		System.out.println(String.valueOf(pr.IsAvailable("Fauzzi")));  
-		*/
-		/*
-		Controller.setPreferences("ProxyHost", "Http://apat.di.uniba.it:8081/socialTFSProxy.svc"); 
-		Controller.setPreferences("ProxyRoot", "Http://apat.di.uniba.it:8081");
-		Controller.setPreferences("Username", "Floriano"); 
-		Controller.setPreferences("Password", "pamela2781983"); 
-		*/
-		/*
-		Controller.setPreferences("ProxyHost", "Http://localhost:8081/socialTFSProxy.svc"); 
-		Controller.setPreferences("ProxyRoot", "Http://localhost:8081");
-		Controller.setPreferences("Username", "Floriano"); 
-		Controller.setPreferences("Password", "patrizio"); 
-		Controller.setPreferences("Autologin", ""); 
-		*/
-		/*
-		Controller.setPreferences("ProxyHost", ""); 
-		Controller.setPreferences("Username", "");
-		Controller.setPreferences("ProxyRoot", ""); 
-		Controller.setPreferences("Autologin", ""); 
-		Controller.setPreferences("Password", "");
-		*/
+		
 		Controller.setWindow(parent);
 		
 		System.out.println(Controller.getWindow().getSize());
