@@ -37,12 +37,14 @@ import org.eclipse.swt.widgets.Text;
  * @author Flo
  * 
  */
-public class PinPanel extends Thread{
+public class PinPanel implements Panel{
 
-	private Display display;
 	private Shell shell;
+	private Shell shadow; 
 	private int xCoordinate;
 	private int yCoordinate;
+	private int xCoordinateWithOffset; 
+	private int yCoordinateWithOffset; 
 	private WService service; 
 	private int oauthVersion; 
 	private Label labelRegistration; 
@@ -74,25 +76,122 @@ public class PinPanel extends Thread{
 		return  new Image(Controller.getWindow().getDisplay(),stream); 
 	}
 
+	
+
+	public int getxCoordinateWithOffset() {
+		return xCoordinateWithOffset;
+	}
+
+	public void setxCoordinateWithOffset(int xCoordinateWithOffset) {
+		this.xCoordinateWithOffset = xCoordinateWithOffset;
+	}
+
+	public int getyCoordinateWithOffset() {
+		return yCoordinateWithOffset;
+	}
+
+	public void setyCoordinateWithOffset(int yCoordinateWithOffset) {
+		this.yCoordinateWithOffset = yCoordinateWithOffset;
+	}
+
+	public Text getTxtPin() {
+		return txtPin;
+	}
+
+	public void setTxtPin(Text txtPin) {
+		this.txtPin = txtPin;
+	}
+
+	public Listener getOkListener() {
+		return okListener;
+	}
+
+	public void setOkListener(Listener okListener) {
+		this.okListener = okListener;
+	}
+
+	public Listener getCancelListener() {
+		return cancelListener;
+	}
+
+	public void setCancelListener(Listener cancelListener) {
+		this.cancelListener = cancelListener;
+	}
+
+
+	
+
+	public Button getBtnCancel() {
+		return btnCancel;
+	}
+
+	public void setBtnCancel(Button btnCancel) {
+		this.btnCancel = btnCancel;
+	}
+
+	
+
+	public WService getService() {
+		return service;
+	}
+
+	public void setService(WService service) {
+		this.service = service;
+	}
+
+	public int getOauthVersion() {
+		return oauthVersion;
+	}
+
+	public void setOauthVersion(int oauthVersion) {
+		this.oauthVersion = oauthVersion;
+	}
+
+	public int getxCoordinate() {
+		return xCoordinate;
+	}
+
+	public void setxCoordinate(int xCoordinate) {
+		this.xCoordinate = xCoordinate;
+	}
+
+	public int getyCoordinate() {
+		return yCoordinate;
+	}
+
+	public void setyCoordinate(int yCoordinate) {
+		this.yCoordinate = yCoordinate;
+	}
 
 	@Override
-	public void run(){
+	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
-	    display = new Display();
-		shell = new Shell(display,SWT.NO_REDRAW_RESIZE);
-		shell.setSize(300,100);
+		GridData gridData; 
+		
+		shadow = new Shell(panel.getShell(),SWT.NO_TRIM);
+		shadow.setSize(Controller.getWindowWidth(),Controller.getWindowHeight()); 
+		shadow.setBounds(xCoordinate, yCoordinate, Controller.getWindowWidth(), Controller.getWindowHeight()); 
+		shadow.setLayout(new GridLayout(1,false)); 
+		shadow.setAlpha(100);
+		shadow.layout(); 
+		shadow.open(); 
+		
+		
+		shell = new Shell(panel.getShell(), SWT.NO_TRIM);
+		shell.setSize(300,200);
 
-		shell.setBounds(xCoordinate, yCoordinate,300,200);
-		GridLayout layout = new GridLayout(2, false);
-		shell.setLayout(layout);
+		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset,300,200);
 		shell.setImage(getImageStream(PATH_ECLIPSE_ICON)); 
 		shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),300, 200));
-		GridData gridData = new GridData();
+		GridLayout layout = new GridLayout(2, false);
+		shell.setLayout(layout); 
+
+		gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL;
 		shell.setLayoutData(gridData);
 
-		labelRegistration = new Label(shell, SWT.WRAP | SWT.NO_BACKGROUND);
+		labelRegistration = new Label(shell, SWT.NONE);
 		labelRegistration.setText("Registration of service : " + service.Name);
 		labelRegistration.setFont(new Font(shell.getDisplay(), "Calibri", 15, SWT.BOLD));
 		gridData = new GridData(); 
@@ -145,98 +244,22 @@ public class PinPanel extends Thread{
 		btnOk.addListener(SWT.Selection, okListener); 
 		btnCancel.addListener(SWT.Selection, cancelListener); 
 		
+		
 		shell.layout(); 
 		shell.open(); 
-		
-		
-		  while (!shell.isDisposed()) {
-		      if (!display.readAndDispatch()) {
-		        // If no more entries in event queue
-		        display.sleep();
-		      }
-		    }
-
-		    display.dispose();
-	}
-	
-	
-
-	
-
-	public Text getTxtPin() {
-		return txtPin;
 	}
 
-	public void setTxtPin(Text txtPin) {
-		this.txtPin = txtPin;
+	@Override
+	public void dispose(Composite panel) {
+		// TODO Auto-generated method stub
+		shell.dispose();
+		shadow.dispose(); 
 	}
 
-	public Listener getOkListener() {
-		return okListener;
-	}
-
-	public void setOkListener(Listener okListener) {
-		this.okListener = okListener;
-	}
-
-	public Listener getCancelListener() {
-		return cancelListener;
-	}
-
-	public void setCancelListener(Listener cancelListener) {
-		this.cancelListener = cancelListener;
-	}
-
-	public Display getDisplay() {
-		return display;
-	}
-
-	public void setDisplay(Display display) {
-		this.display = display;
-	}
-
-	
-
-	public Button getBtnCancel() {
-		return btnCancel;
-	}
-
-	public void setBtnCancel(Button btnCancel) {
-		this.btnCancel = btnCancel;
-	}
-
-	
-
-	public WService getService() {
-		return service;
-	}
-
-	public void setService(WService service) {
-		this.service = service;
-	}
-
-	public int getOauthVersion() {
-		return oauthVersion;
-	}
-
-	public void setOauthVersion(int oauthVersion) {
-		this.oauthVersion = oauthVersion;
-	}
-
-	public int getxCoordinate() {
-		return xCoordinate;
-	}
-
-	public void setxCoordinate(int xCoordinate) {
-		this.xCoordinate = xCoordinate;
-	}
-
-	public int getyCoordinate() {
-		return yCoordinate;
-	}
-
-	public void setyCoordinate(int yCoordinate) {
-		this.yCoordinate = yCoordinate;
+	@Override
+	public HashMap<String, String> getInput() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

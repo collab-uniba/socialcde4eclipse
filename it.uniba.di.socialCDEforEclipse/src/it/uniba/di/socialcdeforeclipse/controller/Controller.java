@@ -236,17 +236,17 @@ public class Controller {
 	{
 		Composite dynamicComposite;
 		GridData gridData; 
-		ProgressBarThread pbThread; 
-		
+		ProgressBarThread pbWindow; 
+		System.out.println("Inizio ricaricamento della pagina..");
 			
 			
-		 	pbThread = new ProgressBarThread(); 
-			pbThread.setLabelTxt("Operation in progress..");
-			pbThread.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
-			pbThread.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+		 	pbWindow = new ProgressBarThread(); 
+			pbWindow.setLabelTxt("Operation in progress..");
+			pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+			pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 			//pbThread.setWidth(Controller.getWindow().getSize().x);
 			//pbThread.setHeight(Controller.getWindow().getSize().y); 
-			pbThread.start(); 
+			pbWindow.start();  
 		
 		closeAllDynamicPanel(); 
 		
@@ -261,10 +261,23 @@ public class Controller {
 				gridData.horizontalAlignment = gridData.FILL; 
 				dynamicComposite.setLayoutData(gridData); 
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+				Controller.getProfilePanel().getComposite_dinamic().layout();
+			}
+			else
+			{
+				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
+				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
+				 gridData = new GridData(); 
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = gridData.FILL; 
+				dynamicComposite.setLayoutData(gridData); 
+				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
 			}
 			homeWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
-			pbThread.setStop(1);
+			pbWindow.setStop(1); 
 			
+			Controller.getWindow().layout(); 
 			break;
 		case 1:
 			settingWindow = new SettingPanel(); 
@@ -278,7 +291,7 @@ public class Controller {
 			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
 			}
 			settingWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic()); 
-			pbThread.setStop(1);
+			pbWindow.setStop(1); 
 		
 			Controller.getWindow().layout(); 
 			

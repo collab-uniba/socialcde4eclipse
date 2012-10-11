@@ -9,6 +9,7 @@ import it.uniba.di.socialcdeforeclipse.views.InterceptingFilter;
 import it.uniba.di.socialcdeforeclipse.views.LoginPanel;
 import it.uniba.di.socialcdeforeclipse.views.ProgressBarThread;
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -16,7 +17,7 @@ import org.eclipse.swt.widgets.Widget;
 
 public class ActionRegistrationPanel {
 	  
-	private ProgressBarThread pbThread; 
+	private ProgressBarThread pbWindow; 
 	private final static Image IMAGE_OK = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconOk());
 	private final static Image IMAGE_NO = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconError());
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
@@ -157,13 +158,13 @@ public class ActionRegistrationPanel {
 			if(eventType == SWT.Selection)
 			{
 				System.out.println("Scatta evento registrazione"); 
-				pbThread = new ProgressBarThread(); 
-				pbThread.setLabelTxt("Login in progress..");
-				pbThread.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
-				pbThread.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+				pbWindow = new ProgressBarThread(); 
+				pbWindow.setLabelTxt("Login in progress..");
+				pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+				pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 				//pbThread.setWidth(Controller.getWindow().getSize().x);
 				//pbThread.setHeight(Controller.getWindow().getSize().y); 
-				pbThread.start(); 
+				pbWindow.start(); 
 				
 				Controller.getWindow().getDisplay().asyncExec(new Runnable() {
 			        public void run() {
@@ -180,8 +181,8 @@ public class ActionRegistrationPanel {
 							case -1:
 								Controller.getRegistrationPanel().getLabelAlert().setText("There's a problem. Check your connection and try again");
 								Controller.getWindow().layout();
-								pbThread.setStop(1);
-								pbThread = null;
+								pbWindow.setStop(1);  
+								pbWindow = null;
 								break;
 							case 0:
 								
@@ -200,8 +201,8 @@ public class ActionRegistrationPanel {
 									Controller.getRegistrationPanel().getLabelAlert().setText("There's a problem. Check your connection and try again");
 									Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
 									Controller.getWindow().layout();
-									pbThread.setStop(1);
-									pbThread = null;
+									pbWindow.setStop(1); 
+									pbWindow = null;
 								}
 								
 								break;
@@ -209,30 +210,30 @@ public class ActionRegistrationPanel {
 								Controller.getRegistrationPanel().getLabelAlert().setText("Please insert the email on which you recived the invite");
 								Controller.getRegistrationPanel().getLabelAlert().setVisible(true); 
 								Controller.getWindow().layout();
-								pbThread.setStop(1);
-								pbThread = null;
+								pbWindow.setStop(1); 
+								pbWindow = null;
 								break;
 							case 2:
 								// if password does not match with the e-mail address sent
 			                    Controller.getRegistrationPanel().getLabelAlert().setText("Please insert the invitation code that you recived in the invite");
 			                    Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
 			                    Controller.getWindow().layout();
-			                    pbThread.setStop(1);
-			                    pbThread = null;
+			                    pbWindow.setStop(1); 
+								pbWindow = null;
 			                    break;
 			                case 3: // if username is already used by another user
 			                    Controller.getRegistrationPanel().getLabelAlert().setText("The Username chosen is not aviable");
 			                    Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
 			                    Controller.getWindow().layout();
-			                    pbThread.setStop(1);
-			                    pbThread = null;
+			                    pbWindow.setStop(1); 
+								pbWindow = null;
 			                    break;
 							default:
 								Controller.getRegistrationPanel().getLabelAlert().setText("Response not valid from the server"); 
 								Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
 								Controller.getWindow().layout();
-								pbThread.setStop(1);
-								pbThread = null;
+								pbWindow.setStop(1); 
+								pbWindow = null;
 								break;
 							}
 							 
@@ -244,8 +245,8 @@ public class ActionRegistrationPanel {
 								 Controller.setWindowName("Login"); 
 								 Controller.setLoginPanel(new LoginPanel()); 
 								 Controller.getLoginPanel().inizialize(Controller.getWindow()); 
-								 pbThread.setStop(1);
-								 pbThread = null;
+								 pbWindow.setStop(1); 
+								 pbWindow = null;
 							 }
 							 
 							}
@@ -254,8 +255,8 @@ public class ActionRegistrationPanel {
 								Controller.getRegistrationPanel().getLabelAlert().setText("Please enter a valid proxy!"); 
 								Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
 								Controller.getWindow().layout(); 
-								pbThread.setStop(1);
-								pbThread = null;
+								pbWindow.setStop(1); 
+								pbWindow = null;
 							}
 						}
 						else
@@ -263,8 +264,8 @@ public class ActionRegistrationPanel {
 							Controller.getRegistrationPanel().getLabelAlert().setText("Please compile all field correctly!");
 							Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
 							Controller.getWindow().layout(); 
-							pbThread.setStop(1);
-							pbThread = null;
+							pbWindow.setStop(1); 
+							pbWindow = null;
 						}
 			        	
 			        	

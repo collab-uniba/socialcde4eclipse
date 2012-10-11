@@ -11,7 +11,6 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.*;
 import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -29,7 +28,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.part.ViewPart;
-
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
@@ -57,9 +55,11 @@ public class SocialCDEview extends ViewPart {
 	private Action action2;
 	private Action doubleClickAction;
 	private Label label;
-	private ProxyWrapper Proxy; 
+	private ProxyWrapper Proxy;
 
-	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
+	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Wallpaper.png");
+
 	/*
 	 * The content provider class is responsible for providing objects to the
 	 * view. It can wrap existing objects in adapters or simply return objects
@@ -67,23 +67,24 @@ public class SocialCDEview extends ViewPart {
 	 * or ignore it and always show the same content (like Task List, for
 	 * example).
 	 */
-	public Image getImageStream(InputStream stream)
-	{ 	
-		return  new Image(Controller.getWindow().getDisplay(),stream);
-		
+	public Image getImageStream(InputStream stream) {
+		return new Image(Controller.getWindow().getDisplay(), stream);
+
 	}
-	
+
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay().getDefault(), width, height);
+		Image scaled = new Image(Controller.getWindow().getDisplay()
+				.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0,image.getBounds().width, image.getBounds().height,	0, 0, width, height);
+		gc.drawImage(image, 0, 0, image.getBounds().width,
+				image.getBounds().height, 0, 0, width, height);
 		gc.dispose();
 		image.dispose(); // don't forget about me!
 		return scaled;
-		}
-	
+	}
+
 	/**
 	 * The constructor.
 	 */
@@ -100,69 +101,62 @@ public class SocialCDEview extends ViewPart {
 	 * it.
 	 */
 	public void createPartControl(Composite parent) {
-	
-		
-		
+
 		Controller.setWindow(parent);
-		
+
 		System.out.println(Controller.getWindow().getSize());
 		System.out.println(Controller.getWindow().getShell().getSize());
-		System.out.println(Controller.getWindow().toDisplay(Controller.getWindow().getShell().getSize())); 
+		System.out.println(Controller.getWindow().toDisplay(
+				Controller.getWindow().getShell().getSize()));
 
-		
-		
-		
 		final PaintListener paintEvent = new PaintListener() {
-			
-			public void paintControl( PaintEvent e) {
-				
-				
-				if(Controller.getWindowHeight() == 0)
-				{
-					if(Controller.getWindow().getSize().x == 0 && Controller.getWindow().getSize().y == 0)
-					{
-						Controller.getWindow().setBackgroundImage(getImageStream(PATH_WALLPAPER));
+
+			public void paintControl(PaintEvent e) {
+
+				if (Controller.getWindowHeight() == 0) {
+					if (Controller.getWindow().getSize().x == 0
+							&& Controller.getWindow().getSize().y == 0) {
+						Controller.getWindow().setBackgroundImage(
+								getImageStream(PATH_WALLPAPER));
+					} else {
+						System.out.println("Inizio "
+								+ Controller.getWindow().getSize());
+						Controller.setWindowHeight(Controller.getWindow()
+								.getSize().y);
+						Controller.setWindowWidth(Controller.getWindow()
+								.getSize().x);
+						Controller.getWindow().setBackgroundImage(
+								resize(getImageStream(PATH_WALLPAPER),
+										Controller.getWindowWidth(),
+										Controller.getWindowHeight()));
+
 					}
-					else
-					{
-						System.out.println("Inizio " + Controller.getWindow().getSize());
-						Controller.setWindowHeight(Controller.getWindow().getSize().y); 
-						Controller.setWindowWidth(Controller.getWindow().getSize().x);
-						Controller.getWindow().setBackgroundImage(resize(getImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight())); 
-						
-					}
-					
-				// TODO Auto-generated method stub
-				//Controller.getWindow().setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),100,100));
+
+					// TODO Auto-generated method stub
+					// Controller.getWindow().setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),100,100));
 				}
 			}
 		};
-		
-		parent.addPaintListener(paintEvent);
-		 
 
-		
+		parent.addPaintListener(paintEvent);
+
 		Controller.setPreferences("Autologin", "");
 		Controller.setWindow(parent);
 		Controller.selectWindow(parent);
-		
-		//Controller.getWindow().removePaintListener(paintEvent);
-		 
-		
-/*		
-  
-	Proxy = new ProxyWrapper(); 
-		URI[] servizi = Proxy.GetAvailableAvatars("floriano", "pamela2781983");
-		String s = "ciao"; 
-		
-		Preferences prefs = Preferences.userRoot().node(
-				this.getClass().getName());
-		String ID1 = "Test1";
-		String ID2 = "Test2";
-		String ID3 = "Test3";
-*/
-		
-		
+
+		// Controller.getWindow().removePaintListener(paintEvent);
+
+		/*
+		 * 
+		 * Proxy = new ProxyWrapper(); URI[] servizi =
+		 * Proxy.GetAvailableAvatars("floriano", "pamela2781983"); String s =
+		 * "ciao";
+		 * 
+		 * Preferences prefs = Preferences.userRoot().node(
+		 * this.getClass().getName()); String ID1 = "Test1"; String ID2 =
+		 * "Test2"; String ID3 = "Test3";
+		 */
+
 		// First we will get the values
 		// Define a boolean value
 		/*
@@ -179,7 +173,7 @@ public class SocialCDEview extends ViewPart {
 		 * // Delete the preference settings for the first value
 		 * prefs.remove(ID1);
 		 */
-		//System.out.println(prefs.get(ID2, ""));
+		// System.out.println(prefs.get(ID2, ""));
 		// This happens in the method which creates the user interface
 		// parent is the composite which is available
 		/*
@@ -229,7 +223,7 @@ public class SocialCDEview extends ViewPart {
 	 * Passing the focus request to the viewer's control.
 	 */
 	public void setFocus() {
-		
+
 		// viewer.getControl().setFocus();
 	}
 }

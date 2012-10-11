@@ -11,6 +11,7 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 import it.uniba.di.socialcdeforeclipse.views.InterceptingFilter;
 import it.uniba.di.socialcdeforeclipse.views.ProfilePanel;
+
 import it.uniba.di.socialcdeforeclipse.views.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.views.RegistrationPanel;
 import it.uniba.di.socialCDEforEclipse.SharedLibrary.*;
@@ -18,13 +19,14 @@ import it.uniba.di.socialCDEforEclipse.SharedLibrary.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 
 public class ActionLoginPanel {
 	
 	
 
-	private ProgressBarThread pbThread;
+	private ProgressBarThread pbWindow;
 	private WUser user;
 	private final static Image IMAGE_NO = Controller.getLoginPanel().getImageStream(Controller.getLoginPanel().getPathIconError());
 	private final static Image IMAGE_OK = Controller.getLoginPanel().getImageStream(Controller.getLoginPanel().getPathIconOk());
@@ -70,13 +72,15 @@ public class ActionLoginPanel {
 			    System.out.println("getSize: " + Controller.getWindow().getSize());
 			    System.out.println("to display " + Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y));
 			    System.out.println("label: " + Controller.getLoginPanel().getLabelAlert().getLocation());
-			    pbThread = new ProgressBarThread(); 
-				pbThread.setLabelTxt("Login in progress..");
-				pbThread.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
-				pbThread.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
-				pbThread.start(); 
-				
-			    System.out.println("Priorità " + pbThread.getPriority());
+			    pbWindow = new ProgressBarThread(); 
+				pbWindow.setLabelTxt("Login in progress..");
+				pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+				pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+				 pbWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
+				 pbWindow.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
+				 pbWindow.start();  
+				System.out.println("step 1");
+			    
 			    
 			        	if(Controller.getProxy() == null)	{
 							Controller.setProxy(new ProxyWrapper()); 
@@ -85,6 +89,7 @@ public class ActionLoginPanel {
 							Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText());
 						}
 							if(Controller.getProxy().IsWebServiceRunning())  {
+								System.out.println("step 2");
 								user = Controller.getProxy().GetUser(Controller.getLoginPanel().getTxtUsername().getText(), Controller.getLoginPanel().getTxtPassword().getText()); 
 								
 								if(user == null)  {
@@ -97,8 +102,8 @@ public class ActionLoginPanel {
 									Controller.getLoginPanel().getLabelAlert().setVisible(true); 
 									
 									Controller.getWindow().layout(); 
-									pbThread.setStop(1); 
-									pbThread = null;
+									pbWindow.setStop(1); 
+									pbWindow = null;
 									 
 									System.out.println("Utente non corretto"); 
 									
@@ -111,7 +116,7 @@ public class ActionLoginPanel {
 									if(Controller.getLoginPanel().getChkAutologin().getSelection())	{
 										Controller.setPreferences("Autologin", "True"); 
 									}
-									
+									System.out.println("Utente corretto!"); 
 									Controller.setCurrentUser(user); 
 									Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
 									Controller.setPreferences("ProxyRoot", Controller.getLoginPanel().getTxtProxyHost().getText());
@@ -124,10 +129,10 @@ public class ActionLoginPanel {
 									Controller.getLoginPanel().dispose(Controller.getWindow()); 
 									Controller.setLoginPanel(null); 
 									Controller.getProfilePanel().inizialize(Controller.getWindow()); 
-									System.out.println("Utente corretto!"); 
-									pbThread.setStop(1);
-									pbThread = null; 
-									Controller.getWindow().getShell().forceFocus(); 
+									
+									pbWindow.setStop(1); 
+									pbWindow = null; 
+									//Controller.getWindow().getShell().forceFocus(); 
 									 
 									
 								   
@@ -137,8 +142,8 @@ public class ActionLoginPanel {
 								Controller.getLoginPanel().getLabelAlert().setText("The connection with the Proxy failed"); 
 								Controller.getLoginPanel().getLabelImageHost().setImage(IMAGE_NO);
 								Controller.getLoginPanel().getLabelAlert().setVisible(true); 
-								pbThread.setStop(1);
-								pbThread = null;
+								pbWindow.setStop(1); 
+								pbWindow = null;
 								Controller.getWindow().layout(); 
 							}
 			        	

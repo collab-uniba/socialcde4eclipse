@@ -25,8 +25,10 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -64,8 +66,8 @@ public class ActionHomePanel {
 				if(service.Registered){
 					System.out.println("Servizio registrato");
 					SettingServicePanel serviceSetting = new SettingServicePanel(); 
-					serviceSetting.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
-					serviceSetting.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+					serviceSetting.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x ); 
+					serviceSetting.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y ); 
 					serviceSetting.setService(service); 
 					serviceSetting.start(); 
 					
@@ -75,15 +77,18 @@ public class ActionHomePanel {
 					System.out.println("Servizio non registrato");
 					if(service.RequireOAuth)
 					{
-						System.out.println("OAuth richiesto");
+						 //int x = bounds.x + (Controller.getWindow().getShell().getBounds().width - 300) / 2;
+						 //int y = bounds.y + (Controller.getWindow().getShell().getBounds().height - 200) / 2;
 						
-						 
+					    
 						 pinWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 						 pinWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+						 pinWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
+						 pinWindow.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
 						 pinWindow.setService(service); 
 						 pinWindow.setOauthVersion(service.OAuthVersion);
 						
-						oauthData = Controller.getProxy().GetOAuthData(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),pinWindow.getService().Id);
+						oauthData = Controller.getProxy().GetOAuthData(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),service.Id);
 						System.out.println(oauthData.AuthorizationLink); 
 						Controller.temporaryInformation.put("CurrentURL", oauthData.AuthorizationLink); 
 						
@@ -97,6 +102,7 @@ public class ActionHomePanel {
 								// TODO Auto-generated method stub
 								
 					           ServiceOkClick(); 
+					           
 							}
 						}); 
 						pinWindow.setCancelListener(new Listener() {
@@ -107,12 +113,16 @@ public class ActionHomePanel {
 								ServiceCancelClick(); 
 							}
 						}); 
-						pinWindow.start(); 	
+						
+							pinWindow.inizialize(Controller.getWindow()); 
+						
+						
 						
 						try {
 						 	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"); 
 						
 						} catch (PartInitException e1) {
+							System.out.println("Eccezione browser lanciata"); 
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -141,7 +151,7 @@ public class ActionHomePanel {
 	
 	private void ServiceCancelClick()
 	{
-		pinWindow.getDisplay().dispose();
+		
 		
 		try {
     		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"); 
@@ -162,6 +172,8 @@ public class ActionHomePanel {
         		msgBox.start(); 
 			}
 		}
+		
+		pinWindow.dispose(Controller.getWindow());
 	}
 	
 	
@@ -169,16 +181,15 @@ public class ActionHomePanel {
 	{
 		oauthData = Controller.getProxy().GetOAuthData(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),pinWindow.getService().Id);
 		
-		
-		
 		switch (pinWindow.getOauthVersion())
         {
             case 1:
             	if(Controller.getProxy().Authorize(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(), pinWindow.getService().Id , pinWindow.getTxtPin().getText(), oauthData.AccessToken, oauthData.AccessSecret))
             	{
-            		pinWindow.getService().Registered = true;
-            		oauthData = null;
-            		pinWindow.getDisplay().dispose();
+            		
+            		//oauthData = null;
+            		System.out.println("Ok pinwindow premuto");
+            		//Controller.selectDynamicWindow(0); 
             	}
             	else
             	{
@@ -195,6 +206,7 @@ public class ActionHomePanel {
             		
             		if(Controller.getProxy().Authorize(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(), pinWindow.getService().Id , null, Controller.temporaryInformation.get("AccessToken").toString(),null))
                 	{
+            			pinWindow.dispose(Controller.getWindow()); 
                 		pinWindow.getService().Registered = true; 
                 		oauthData = null;
                 		
@@ -206,20 +218,22 @@ public class ActionHomePanel {
                 		}
                 		
                 		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview").setFocus(); 
-                		pinWindow.getDisplay().dispose();
+                		Controller.selectDynamicWindow(0); 
+                		
                 	}
                 	else
                 	{
-                		pinWindow.getDisplay().dispose();
+                		pinWindow.dispose(Controller.getWindow()); 
                 		MessageBox messageBox = new MessageBox(Controller.getWindow().getShell(),SWT.ICON_ERROR);
                 	    messageBox.setMessage("Something was wrong, try again");
                 	    messageBox.open();
+                	    
                 	    
                 		System.out.println("Autorizzazione non confermata"); 
                 	}
 				} catch (Exception e) {
 					
-					pinWindow.getDisplay().dispose();
+					pinWindow.dispose(Controller.getWindow()); 
 					
 					SocialMessageBox msgBox = new SocialMessageBox();
             		msgBox.setMessage("Something was wrong, try again"); 

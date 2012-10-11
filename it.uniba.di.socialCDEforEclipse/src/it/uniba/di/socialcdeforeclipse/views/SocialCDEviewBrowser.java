@@ -88,11 +88,13 @@ public class SocialCDEviewBrowser extends ViewPart {
 		parent.setLayout(layout);
 		
 		browser = new Browser(parent, SWT.BORDER); 
-		
+		System.out.println("Creazione indirizzo nel browser " + Controller.temporaryInformation.get("CurrentURL").toString());
 		try {
 			browser.setUrl(Controller.temporaryInformation.get("CurrentURL").toString()); 
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("exception on browser");
+			
 		}
 		
 		browser.addLocationListener(new LocationListener() {
