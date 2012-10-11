@@ -197,6 +197,10 @@ public class LoginPanel implements Panel{
 		chkSavePassword.setText("Save password");
 		controlli.add(chkSavePassword);
 		
+		if(Controller.getPreferences("Autologin").equals("True"))
+		{
+			chkAutologin.setSelection(true); 
+		}
 		
 		
 		if(!Controller.getPreferences("Password").equals(""))
@@ -232,6 +236,7 @@ public class LoginPanel implements Panel{
 		
 		btnLogin.addListener(SWT.Selection, azioni); 
 		labelRegistration.addListener(SWT.Selection, azioni); 
+		labelRegistration.addListener(SWT.Paint, azioni); 
 		txtProxyHost.addListener(SWT.FocusOut, azioni); 
 		txtProxyHost.addKeyListener((KeyListener) azioni); 
 		txtUsername.addListener(SWT.FocusOut, azioni); 

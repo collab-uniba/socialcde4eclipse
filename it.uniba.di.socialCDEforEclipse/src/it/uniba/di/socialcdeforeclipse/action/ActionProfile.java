@@ -56,6 +56,7 @@ public class ActionProfile {
 				Controller.setLoginPanel(new LoginPanel()); 
 				Controller.getLoginPanel().inizialize(Controller.getWindow());
 				Controller.getWindow().layout(); 
+				Controller.setPreferences("FlagAutologin", "False");
 			}
 			
 			break;

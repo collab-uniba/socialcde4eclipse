@@ -112,9 +112,19 @@ public class ActionLoginPanel {
 									if(Controller.getLoginPanel().getChkSavepassword().getSelection()) {
 										Controller.setPreferences("Password",Controller.getLoginPanel().getTxtPassword().getText()); 
 									}
+									else
+									{
+										Controller.setPreferences("Password","");
+									}
 									
 									if(Controller.getLoginPanel().getChkAutologin().getSelection())	{
 										Controller.setPreferences("Autologin", "True"); 
+										Controller.setPreferences("FlagAutologin", "False");
+									}
+									else
+									{
+										Controller.setPreferences("Autologin", "False"); 
+										Controller.setPreferences("FlagAutologin", "False");
 									}
 									System.out.println("Utente corretto!"); 
 									Controller.setCurrentUser(user); 
@@ -159,14 +169,104 @@ public class ActionLoginPanel {
 			
 			break;
 		case "labelRegistration":
-			Controller.setWindowName("Registration");
-			Controller.getLoginPanel().dispose(Controller.getWindow()); 
 			
-			Controller.setRegistration_panel(new RegistrationPanel()); 
-			Controller.getRegistrationPanel().inizialize(Controller.getWindow()); 
-			Controller.setLoginPanel(null); 
-			Controller.getWindow().layout(); 
-			
+			if(eventType == SWT.Paint)
+			{
+				System.out.println("Evento paint label attivato");
+				
+				if(!Controller.getPreferences("Autologin").equals("") && Controller.getPreferences("FlagAutologin").equals("True"))
+				{
+					
+					 pbWindow = new ProgressBarThread(); 
+						pbWindow.setLabelTxt("Login in progress..");
+						pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+						pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+						 pbWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
+						 pbWindow.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
+						 pbWindow.start();  
+						System.out.println("step 1");
+					    
+					    
+					        	if(Controller.getProxy() == null)	{
+									Controller.setProxy(new ProxyWrapper()); 
+									Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText()); 
+								} else	{
+									Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText());
+								}
+									if(Controller.getProxy().IsWebServiceRunning())  {
+										System.out.println("step 2");
+										user = Controller.getProxy().GetUser(Controller.getLoginPanel().getTxtUsername().getText(), Controller.getLoginPanel().getTxtPassword().getText()); 
+										
+										if(user == null)  {
+											
+											
+										        	    
+											Controller.getLoginPanel().getLabelAlert().setText("username or password not valid!");
+											Controller.getLoginPanel().getLabelImageUsername().setImage(IMAGE_NO);
+											Controller.getLoginPanel().getLabelImagePassword().setImage(IMAGE_NO);
+											Controller.getLoginPanel().getLabelAlert().setVisible(true); 
+											
+											Controller.getWindow().layout(); 
+											pbWindow.setStop(1); 
+											pbWindow = null;
+											 
+											System.out.println("Utente non corretto"); 
+											
+										} else	{
+											
+											if(Controller.getLoginPanel().getChkSavepassword().getSelection()) {
+												Controller.setPreferences("Password",Controller.getLoginPanel().getTxtPassword().getText()); 
+											}
+											
+											if(Controller.getLoginPanel().getChkAutologin().getSelection())	{
+												Controller.setPreferences("Autologin", "True"); 
+											}
+											System.out.println("Utente corretto!"); 
+											Controller.setCurrentUser(user); 
+											Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
+											Controller.setPreferences("ProxyRoot", Controller.getLoginPanel().getTxtProxyHost().getText());
+											Controller.setPreferences("Username", user.Username);
+											Controller.setCurrentUserPassword(Controller.getLoginPanel().getTxtPassword().getText());
+
+											Controller.setWindowName("Profile");
+											Controller.setProfilePanel(new ProfilePanel()); 
+										
+											Controller.getLoginPanel().dispose(Controller.getWindow()); 
+											Controller.setLoginPanel(null); 
+											Controller.getProfilePanel().inizialize(Controller.getWindow()); 
+											
+											pbWindow.setStop(1); 
+											pbWindow = null; 
+											//Controller.getWindow().getShell().forceFocus(); 
+											 
+											
+										   
+											
+										}
+									}  else	{
+										Controller.getLoginPanel().getLabelAlert().setText("The connection with the Proxy failed"); 
+										Controller.getLoginPanel().getLabelImageHost().setImage(IMAGE_NO);
+										Controller.getLoginPanel().getLabelAlert().setVisible(true); 
+										pbWindow.setStop(1); 
+										pbWindow = null;
+										Controller.getWindow().layout(); 
+									}
+					        	
+						          
+						        
+				}
+				
+			}
+			else
+			{
+				Controller.setWindowName("Registration");
+				Controller.getLoginPanel().dispose(Controller.getWindow()); 
+				
+				Controller.setRegistration_panel(new RegistrationPanel()); 
+				Controller.getRegistrationPanel().inizialize(Controller.getWindow()); 
+				Controller.setLoginPanel(null); 
+				Controller.getWindow().layout(); 
+			}
 			break;
 			
 		case "txtProxyHost":

@@ -366,6 +366,12 @@ public class Controller {
 		}
 		else
 		{
+			setWindowName("Login"); 
+			Controller.setLoginPanel(new LoginPanel());
+			Controller.loginPanel.inizialize(parent); 
+			//Login form
+			/*
+			
 			if(!Controller.getPreferences("Autologin").equals(""))
 			{
 				
@@ -384,6 +390,7 @@ public class Controller {
 				Controller.loginPanel.inizialize(parent); 
 				//Login form
 			}
+			*/
 		}
 		
 	}

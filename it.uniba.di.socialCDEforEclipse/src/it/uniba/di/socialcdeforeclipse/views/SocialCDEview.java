@@ -14,6 +14,8 @@ import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -103,28 +105,25 @@ public class SocialCDEview extends ViewPart {
 	public void createPartControl(Composite parent) {
 
 		Controller.setWindow(parent);
-
-		System.out.println(Controller.getWindow().getSize());
+		
+		
+		
+		System.out.println(  Controller.getWindow().getSize());
 		System.out.println(Controller.getWindow().getShell().getSize());
-		System.out.println(Controller.getWindow().toDisplay(
-				Controller.getWindow().getShell().getSize()));
+		System.out.println(Controller.getWindow().toDisplay(Controller.getWindow().getShell().getSize()));
 
 		final PaintListener paintEvent = new PaintListener() {
 
 			public void paintControl(PaintEvent e) {
-
+				System.out.println("Evento paint attivato");
+				
 				if (Controller.getWindowHeight() == 0) {
-					if (Controller.getWindow().getSize().x == 0
-							&& Controller.getWindow().getSize().y == 0) {
-						Controller.getWindow().setBackgroundImage(
-								getImageStream(PATH_WALLPAPER));
+					if (Controller.getWindow().getSize().x == 0	&& Controller.getWindow().getSize().y == 0) {
+						Controller.getWindow().setBackgroundImage(	getImageStream(PATH_WALLPAPER));
 					} else {
-						System.out.println("Inizio "
-								+ Controller.getWindow().getSize());
-						Controller.setWindowHeight(Controller.getWindow()
-								.getSize().y);
-						Controller.setWindowWidth(Controller.getWindow()
-								.getSize().x);
+						System.out.println("Inizio "	+ Controller.getWindow().getSize());
+						Controller.setWindowHeight(Controller.getWindow().getSize().y);
+						Controller.setWindowWidth(Controller.getWindow().getSize().x);
 						Controller.getWindow().setBackgroundImage(
 								resize(getImageStream(PATH_WALLPAPER),
 										Controller.getWindowWidth(),
@@ -139,8 +138,24 @@ public class SocialCDEview extends ViewPart {
 		};
 
 		parent.addPaintListener(paintEvent);
-
-		Controller.setPreferences("Autologin", "");
+		parent.addDisposeListener(new DisposeListener() {
+			
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				// TODO Auto-generated method stub
+				if(Controller.getPreferences("Autologin").equals("True"))
+				{
+					Controller.setPreferences("FlagAutologin", "True"); 
+				}
+				else
+				{
+					Controller.setPreferences("FlagAutologin", "False");
+				}
+				System.out.println("Finestra chiusa"); 
+			}
+		});
+		
+		//Controller.setPreferences("Autologin", "");
 		Controller.setWindow(parent);
 		Controller.selectWindow(parent);
 

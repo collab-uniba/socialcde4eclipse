@@ -177,21 +177,28 @@ public class PinPanel implements Panel{
 		shadow.open(); 
 		
 		
-		shell = new Shell(panel.getShell(), SWT.NO_TRIM);
+		shell = new Shell(panel.getShell(), SWT.NO_TRIM | SWT.ON_TOP);
 		shell.setSize(300,200);
 
 		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset,300,200);
 		shell.setImage(getImageStream(PATH_ECLIPSE_ICON)); 
-		shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),300, 200));
-		GridLayout layout = new GridLayout(2, false);
+		
+		GridLayout layout = new GridLayout(1, false);
 		shell.setLayout(layout); 
-
+		
+		
+		Composite firstComposite = new Composite(shell,SWT.None); 
+		firstComposite.setLayout(new GridLayout(2,false)); 
+		shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),300, 200));
+		
 		gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
+		gridData.grabExcessVerticalSpace = true; 
 		gridData.horizontalAlignment = gridData.FILL;
-		shell.setLayoutData(gridData);
-
-		labelRegistration = new Label(shell, SWT.NONE);
+		gridData.verticalAlignment = gridData.FILL; 
+		firstComposite.setLayoutData(gridData);
+		
+		labelRegistration = new Label(firstComposite, SWT.WRAP );
 		labelRegistration.setText("Registration of service : " + service.Name);
 		labelRegistration.setFont(new Font(shell.getDisplay(), "Calibri", 15, SWT.BOLD));
 		gridData = new GridData(); 
@@ -201,11 +208,11 @@ public class PinPanel implements Panel{
 		
 		if(oauthVersion == 1)
 		{
-			labelVerifierPin = new Label(shell, SWT.RIGHT); 
+			labelVerifierPin = new Label(firstComposite, SWT.RIGHT); 
 			labelVerifierPin.setText("Verifier Pin"); 
 			labelVerifierPin.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.NONE ));
 			
-			txtPin = new Text(shell, SWT.BORDER | SWT.WRAP); 
+			txtPin = new Text(firstComposite, SWT.BORDER | SWT.WRAP); 
 			txtPin.setData("ID_action","txtPin");
 			gridData = new GridData();
 			gridData.horizontalAlignment = SWT.FILL;
@@ -215,7 +222,7 @@ public class PinPanel implements Panel{
 		}
 		else
 		{
-			labelInformation = new Label(shell, SWT.WRAP); 
+			labelInformation = new Label(firstComposite, SWT.WRAP ); 
 			labelInformation.setText("Please authorize the application and click OK before closing the browser"); 
 			gridData = new GridData(); 
 			gridData.horizontalSpan = 2; 
@@ -228,14 +235,14 @@ public class PinPanel implements Panel{
 	
 		
 		
-		buttonComposite = new Composite(shell, SWT.NONE); 
+		buttonComposite = new Composite(firstComposite, SWT.None); 
 		buttonComposite.setLayout(new GridLayout(2,true));
 		gridData = new GridData(); 
 		gridData.horizontalSpan = 2;
 		gridData.horizontalAlignment = SWT.CENTER; 
 		buttonComposite.setLayoutData(gridData); 
 		
-		btnOk = new Button(buttonComposite, SWT.NONE); 
+		btnOk = new Button(buttonComposite, SWT.None); 
 		btnOk.setText("Ok"); 
 		
 		btnCancel = new Button(buttonComposite, SWT.None); 

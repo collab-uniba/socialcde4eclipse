@@ -12,6 +12,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
@@ -107,19 +108,24 @@ public class ProgressBarThread extends Thread {
 		shell.setLayout(layout);
 		shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),
 				Controller.getWindowWidth(), Controller.getWindowHeight()));
+		
+		Composite first_composite = new Composite(shell,   SWT.NO_BACKGROUND);
+		first_composite.setLayout(layout); 
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = gridData.FILL;
-		shell.setLayoutData(gridData);
+		gridData.grabExcessVerticalSpace = true; 
+		gridData.horizontalAlignment = gridData.CENTER;
+		gridData.verticalAlignment = gridData.CENTER; 
+		first_composite.setLayoutData(gridData);
 
-		Label labelPogress = new Label(shell, SWT.CENTER);
+		Label labelPogress = new Label(first_composite, SWT.CENTER);
 		labelPogress.setText(labelTxt);
 		labelPogress.setFont(new Font(shell.getDisplay(), "Calibri", 15,
 				SWT.BOLD));
 		GridData grid = new GridData();
 		grid.horizontalAlignment = grid.CENTER;
 		labelPogress.setLayoutData(grid);
-		bar = new ProgressBar(shell, SWT.CENTER);
+		bar = new ProgressBar(first_composite, SWT.CENTER);
 
 		shell.open();
 		while (stop != 1) {
