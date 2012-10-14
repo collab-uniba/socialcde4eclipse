@@ -3,12 +3,17 @@
  */
 package it.uniba.di.socialcdeforeclipse.popup;
 
+import java.util.HashMap;
+
 import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -17,18 +22,44 @@ import org.eclipse.swt.widgets.Shell;
  * @author Flo
  *
  */
-public class SettingServicePanel extends Thread {
+public class SettingServicePanel implements Panel{
 
-	private Display display; 
+	private Shell shadow; 
 	private Shell shell; 
 	private int xCoordinate; 
 	private int yCoordinate;
 	private WService service; 
-	
+	private int xCoordinateWithOffset; 
+	private int yCoordinateWithOffset; 
 	
 	public int getxCoordinate() {
 		return xCoordinate;
 	}
+
+
+	
+	public int getxCoordinateWithOffset() {
+		return xCoordinateWithOffset;
+	}
+
+
+
+	public void setxCoordinateWithOffset(int xCoordinateWithOffset) {
+		this.xCoordinateWithOffset = xCoordinateWithOffset;
+	}
+
+
+
+	public int getyCoordinateWithOffset() {
+		return yCoordinateWithOffset;
+	}
+
+
+
+	public void setyCoordinateWithOffset(int yCoordinateWithOffset) {
+		this.yCoordinateWithOffset = yCoordinateWithOffset;
+	}
+
 
 
 	public void setxCoordinate(int xCoordinate) {
@@ -56,13 +87,23 @@ public class SettingServicePanel extends Thread {
 	}
 
 
-	public void run()
-	{
-		display = new Display();
-		shell = new Shell(display,SWT.NO_REDRAW_RESIZE);
+	
+
+	@Override
+	public void inizialize(Composite panel) {
+		shadow = new Shell(panel.getShell(),SWT.NO_TRIM);
+		shadow.setSize(Controller.getWindowWidth(),Controller.getWindowHeight()); 
+		shadow.setBounds(xCoordinate, yCoordinate, Controller.getWindowWidth(), Controller.getWindowHeight()); 
+		shadow.setLayout(new GridLayout(1,false)); 
+		shadow.setAlpha(100);
+		shadow.layout(); 
+		shadow.open(); 
+		
+		// TODO Auto-generated method stub
+		shell = new Shell(panel.getShell(),SWT.NO_REDRAW_RESIZE);
 		shell.setSize(300,100);
 
-		shell.setBounds(xCoordinate, yCoordinate,300,200);
+		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset,300,200);
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout); 
 		shell.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN)); 
@@ -81,16 +122,21 @@ public class SettingServicePanel extends Thread {
 		
 		shell.layout(); 
 		shell.open(); 
-		
-		
-		  while (!shell.isDisposed()) {
-		      if (!display.readAndDispatch()) {
-		        // If no more entries in event queue
-		        display.sleep();
-		      }
-		    }
+	}
 
-		    display.dispose();
+
+	@Override
+	public void dispose(Composite panel) {
+		// TODO Auto-generated method stub
+		shadow.dispose(); 
+		shell.dispose(); 
+	}
+
+
+	@Override
+	public HashMap<String, String> getInput() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

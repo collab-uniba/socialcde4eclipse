@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Listener;
@@ -88,23 +89,24 @@ public class DynamicHome implements Panel {
 		GridData gridData = new GridData();
 		gridData.verticalSpan = 2; 
 		labelAvatar.setLayoutData(gridData); 
+		labelAvatar.setData("ID_action", "labelAvatar");
 		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 		{
 			labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
-			labelAvatar.setImage(resize(labelAvatar.getImage(), 48, 48));
+			labelAvatar.setImage(resize(labelAvatar.getImage(), 46, 46));
 		}
 		else
 		{
 			try {
 				labelAvatar.setImage(get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
-				labelAvatar.setImage(resize(labelAvatar.getImage(), 48, 48)); 
+				labelAvatar.setImage(resize(labelAvatar.getImage(), 46, 46)); 
 				 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Eccezione lanciata"); 
 				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
-				labelAvatar.setImage(resize(labelAvatar.getImage(), 48, 48));
-				e.printStackTrace();
+				labelAvatar.setImage(resize(labelAvatar.getImage(), 46, 46));
+				//e.printStackTrace();
 			} 
 		}
 		controlli.add(labelAvatar); 
@@ -177,7 +179,7 @@ public class DynamicHome implements Panel {
 		
 		 WService[] wService = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		Label service;
-		SquareButton services; 
+		SquareButton2 services; 
 		//Button services; 
 		
 		if(wService.length > 0)
@@ -185,20 +187,20 @@ public class DynamicHome implements Panel {
 		
 			for( int i=0;i<wService.length;i++)
 			{
-		/*		
-				services = new Button(serviceComposite, SWT.BORDER); 
-				services.setText(wService[i].Name); 
+				/*
+				services = new Button(serviceComposite, SWT.NONE);
 				services.addPaintListener(new PaintListener() {
 					
 					@Override
 					public void paintControl(PaintEvent e) {
 						// TODO Auto-generated method stub
-						GC gcelement = e.gc;
-						gcelement.drawRectangle(0, 0, 100, 300); 
-						gcelement.drawText("Ciao", 0, 50); 
+						Button prova = (Button)  e.widget;
+						System.out.println("Dimensioni ottenute " +	prova.getBounds());
 						
 					}
-				});
+				}); 
+			
+				services.setText(wService[i].Name); 
 				if(wService[i].Registered)
 				{
 					services.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN));
@@ -209,26 +211,27 @@ public class DynamicHome implements Panel {
 				}
 				*/
 				
-				 services = new SquareButton(serviceComposite, SWT.NONE); 
-				 
+				 services = new SquareButton2(serviceComposite, SWT.NONE); 
+				
 				 services.setRoundedCorners(true);
 				
 				// Point p = services.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
 				 services.setText(wService[i].Name); 
+				 services.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD )); 
 				 //services.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN)); 
 				 
-				 services.setSize(100, 300);
+				 services.setSize(100, 100);
 					
 				controlli.add(services);
 				System.out.println("Link immagine " + wService[i].Image);
 				System.out.println("Registrato " + wService[i].Registered);
 				if(wService[i].Registered)
 				{
-				services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
+				services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
 				}
 				else
 				{
-					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
 				}
 				services.borderWidth = 3;
 				services.setData("ID_action","btnServices");
@@ -247,8 +250,11 @@ public class DynamicHome implements Panel {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//services.layout();
+				
+				
 				panel.layout();
+				 
+				System.out.println("Fine iterata"); 
 			}
 		} else {
 			service = new Label(serviceComposite, SWT.NONE);
@@ -259,8 +265,11 @@ public class DynamicHome implements Panel {
 			service.setLayoutData(gridData); 
 			controlli.add(service); 
 		}
-		 
+		
+		
+		
 		labelSettings.addListener(SWT.PUSH, azioni); 
+		labelAvatar.addListener(SWT.PUSH, azioni); 
 		
 		controlli.add(serviceComposite); 
 		 controlli.add(labelFollowers); 
@@ -274,9 +283,14 @@ public class DynamicHome implements Panel {
 		 controlli.add(labelHidden); 
 		 controlli.add(username); 
 		 controlli.add(labelAvatar); 
-		
+		Controller.setWindowName("Home"); 
 		Controller.temporaryInformation.put("Workbench", PlatformUI.getWorkbench().getActiveWorkbenchWindow()); 
-		}
+		System.out.println("Dimensione composite " + serviceComposite.getBounds());
+		serviceComposite.layout(); 
+		panel.layout(); 
+		
+		
+	}
 	
 	
 

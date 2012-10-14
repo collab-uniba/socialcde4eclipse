@@ -193,7 +193,7 @@ public class ActionRegistrationPanel {
 									Controller.setPreferences("ProxyHost", Controller.getProxy().getHost()); 
 									Controller.setPreferences("Username", Controller.getRegistrationPanel().getTxtUsername().getText()); 
 									Controller.setPreferences("ProxyRoot", Controller.getRegistrationPanel().getTxtProxyHost().getText()); 
-									
+									Controller.setPreferences("Password", Controller.getRegistrationPanel().getTxtPassword().getText()); 
 									Controller.setPreferences("Email", Controller.getRegistrationPanel().getTxtMail().getText()); 
 								}
 								else

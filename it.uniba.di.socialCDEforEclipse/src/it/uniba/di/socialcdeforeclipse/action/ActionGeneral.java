@@ -1,6 +1,8 @@
 package it.uniba.di.socialcdeforeclipse.action;
 
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Event;
@@ -17,6 +19,10 @@ public class ActionGeneral implements Listener , KeyListener {
 	public void handleEvent(Event event) {
 		// TODO Auto-generated method stub
 		
+		ArrayList<String> widgetProfile;
+		widgetProfile = new ArrayList<>();
+		widgetProfile.add("profilePanel");
+		widgetProfile.add("labelLogout");
 		Widget widget =  event.widget;
 		System.out.println("Window name " + Controller.getWindowName()); 
 		switch (Controller.getWindowName()) {
@@ -31,7 +37,20 @@ public class ActionGeneral implements Listener , KeyListener {
 				new ActionProfile(widget, event.type); 
 				break;
 			default:
-			
+				break;
+			case "Home":
+				if(widgetProfile.contains(widget.getData("ID_action").toString()))
+				{
+					new ActionProfile(widget, event.type); 
+				}
+				new ActionHomePanel(widget, event.type); 
+				break;
+			case "Settings":
+				if(widgetProfile.contains(widget.getData("ID_action").toString()))
+				{
+					new ActionProfile(widget, event.type); 
+				}
+				new ActionSettingPanel(widget, event.type); 
 				break;
 		}
 	

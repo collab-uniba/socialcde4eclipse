@@ -116,7 +116,7 @@ public class SocialCDEview extends ViewPart {
 
 			public void paintControl(PaintEvent e) {
 				System.out.println("Evento paint attivato");
-				
+				SquareButton2.yCoordinateValue = 5; 
 				if (Controller.getWindowHeight() == 0) {
 					if (Controller.getWindow().getSize().x == 0	&& Controller.getWindow().getSize().y == 0) {
 						Controller.getWindow().setBackgroundImage(	getImageStream(PATH_WALLPAPER));
@@ -129,11 +129,14 @@ public class SocialCDEview extends ViewPart {
 										Controller.getWindowWidth(),
 										Controller.getWindowHeight()));
 
+						
 					}
 
 					// TODO Auto-generated method stub
 					// Controller.getWindow().setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),100,100));
 				}
+				
+				
 			}
 		};
 

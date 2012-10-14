@@ -116,7 +116,7 @@ public class SettingPanel implements Panel {
 				System.out.println("Eccezione lanciata"); 
 				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
 				labelAvatar.setImage(resize(labelAvatar.getImage(), 48, 48));
-				e.printStackTrace();
+				//e.printStackTrace();
 			} 
 		}
 		controlli.add(labelAvatar); 
@@ -170,6 +170,7 @@ public class SettingPanel implements Panel {
 		Controller.getProfilePanel().getComposite_dinamic().layout(); 
 		Controller.getWindow().layout(); 
 		 
+		Controller.setWindowName("Settings"); 
 		
 	}
 

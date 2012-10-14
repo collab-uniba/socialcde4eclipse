@@ -115,7 +115,7 @@ public class ProfilePanel implements Panel{
 				System.out.println("Eccezione lanciata"); 
 				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
 				labelAvatar.setImage(resize(labelAvatar.getImage(), 14, 14));
-				e.printStackTrace();
+				//e.printStackTrace();
 			} 
 		}
 		labelAvatar.setToolTipText("Profile"); 

@@ -55,12 +55,12 @@ public class SquareButton extends Canvas {
 	public static int IMAGE_LEFT = 0;
 	public static int IMAGE_RIGHT = 1;
 	protected int imageStyle = 0;
-
+	private Boolean flagDimension = false; 
 
 	public SquareButton(Composite parent, int style) {
 		
 		super(parent, style | SWT.NO_BACKGROUND); 
-		this.setSize(100, 300); 
+		//this.setSize(100, 300); 
 		this.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
 		
@@ -68,7 +68,7 @@ public class SquareButton extends Canvas {
 		setDefaultColors();
 		addListeners();
 		this.layout(); 
-	//	this.setBounds(this.computeTrim(0, 0, 100, 300));
+		
 		this.redraw(); 
 		
 	}
@@ -302,6 +302,14 @@ public class SquareButton extends Canvas {
 
 
 	private void paintControl(PaintEvent e) {
+		
+		if(!flagDimension)
+		{
+			
+			this.setBounds(this.computeTrim(this.getClientArea().x, this.getClientArea().y, 100, 100));
+			System.out.println("Dimensioni fissate " + this.getClientArea() ); 
+			flagDimension = true; 
+		}
 		if (currentColor == null) {
 			currentColor = backgroundColor;
 			currentColor2 = backgroundColor2;

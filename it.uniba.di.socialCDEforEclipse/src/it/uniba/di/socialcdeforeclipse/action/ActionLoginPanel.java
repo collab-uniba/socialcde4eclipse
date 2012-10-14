@@ -154,6 +154,7 @@ public class ActionLoginPanel {
 								Controller.getLoginPanel().getLabelAlert().setVisible(true); 
 								pbWindow.setStop(1); 
 								pbWindow = null;
+								Controller.getWindow().redraw(); 
 								Controller.getWindow().layout(); 
 							}
 			        	
@@ -169,10 +170,12 @@ public class ActionLoginPanel {
 			
 			break;
 		case "labelRegistration":
-			
+			try {
 			if(eventType == SWT.Paint)
 			{
 				System.out.println("Evento paint label attivato");
+				
+					
 				
 				if(!Controller.getPreferences("Autologin").equals("") && Controller.getPreferences("FlagAutologin").equals("True"))
 				{
@@ -266,6 +269,10 @@ public class ActionLoginPanel {
 				Controller.getRegistrationPanel().inizialize(Controller.getWindow()); 
 				Controller.setLoginPanel(null); 
 				Controller.getWindow().layout(); 
+			}
+			
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 			break;
 			

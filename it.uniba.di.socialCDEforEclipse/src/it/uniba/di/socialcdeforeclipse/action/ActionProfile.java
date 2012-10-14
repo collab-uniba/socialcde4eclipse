@@ -60,19 +60,7 @@ public class ActionProfile {
 			}
 			
 			break;
-		case "labelSettings":
-			new ActionHomePanel(widget, eventType); 	
-			break;
-		case "SettingBtnOk":
-			new ActionSettingPanel(widget, eventType); 
-			break;
-		case "SettingBtnCancel":
-			new ActionSettingPanel(widget, eventType);
-			break;
-		case "btnServices":
-			new ActionHomePanel(widget, eventType);
-			break;
-
+		
 		default:
 			break;
 			
