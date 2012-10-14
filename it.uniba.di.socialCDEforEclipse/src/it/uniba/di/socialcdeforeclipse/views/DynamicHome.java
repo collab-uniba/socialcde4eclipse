@@ -179,7 +179,7 @@ public class DynamicHome implements Panel {
 		
 		 WService[] wService = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		Label service;
-		SquareButton2 services; 
+		SquareButton services; 
 		//Button services; 
 		
 		if(wService.length > 0)
@@ -211,7 +211,7 @@ public class DynamicHome implements Panel {
 				}
 				*/
 				
-				 services = new SquareButton2(serviceComposite, SWT.NONE); 
+				 services = new SquareButton(serviceComposite, SWT.NONE); 
 				
 				 services.setRoundedCorners(true);
 				
