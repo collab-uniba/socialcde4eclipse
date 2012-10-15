@@ -10,6 +10,8 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -119,6 +121,27 @@ public class SettingServicePanel implements Panel{
 		gridData.horizontalSpan = 2; 
 		gridData.widthHint = 300; 
 		labelRegistration.setLayoutData(gridData); 
+		
+			shadow.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+			shell.forceFocus();	
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				shell.forceFocus();		
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				shell.forceFocus();	
+			}
+		});
 		
 		shell.layout(); 
 		shell.open(); 

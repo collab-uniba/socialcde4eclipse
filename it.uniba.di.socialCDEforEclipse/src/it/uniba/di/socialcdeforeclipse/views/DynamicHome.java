@@ -93,19 +93,19 @@ public class DynamicHome implements Panel {
 		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 		{
 			labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
-			labelAvatar.setImage(resize(labelAvatar.getImage(), 46, 46));
+			labelAvatar.setImage(resize(labelAvatar.getImage(), 75, 75));
 		}
 		else
 		{
 			try {
 				labelAvatar.setImage(get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
-				labelAvatar.setImage(resize(labelAvatar.getImage(), 46, 46)); 
+				labelAvatar.setImage(resize(labelAvatar.getImage(), 75, 75)); 
 				 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Eccezione lanciata"); 
 				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
-				labelAvatar.setImage(resize(labelAvatar.getImage(), 46, 46));
+				labelAvatar.setImage(resize(labelAvatar.getImage(), 75, 75));
 				//e.printStackTrace();
 			} 
 		}

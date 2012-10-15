@@ -16,6 +16,8 @@ import it.uniba.di.socialcdeforeclipse.views.Panel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Font;
@@ -168,7 +170,7 @@ public class PinPanel implements Panel{
 		// TODO Auto-generated method stub
 		GridData gridData; 
 		
-		shadow = new Shell(panel.getShell(),SWT.NO_TRIM);
+		shadow = new Shell(panel.getShell(),  SWT.NO_TRIM);
 		shadow.setSize(Controller.getWindowWidth(),Controller.getWindowHeight()); 
 		shadow.setBounds(xCoordinate, yCoordinate, Controller.getWindowWidth(), Controller.getWindowHeight()); 
 		shadow.setLayout(new GridLayout(1,false)); 
@@ -177,7 +179,7 @@ public class PinPanel implements Panel{
 		shadow.open(); 
 		
 		
-		shell = new Shell(panel.getShell(), SWT.NO_TRIM | SWT.ON_TOP);
+		shell = new Shell(panel.getShell(),SWT.ON_TOP | SWT.NO_TRIM  );
 		shell.setSize(300,200);
 
 		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset,300,200);
@@ -251,6 +253,26 @@ public class PinPanel implements Panel{
 		btnOk.addListener(SWT.Selection, okListener); 
 		btnCancel.addListener(SWT.Selection, cancelListener); 
 		
+		shadow.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+			shell.forceFocus();	
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				shell.forceFocus();		
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				shell.forceFocus();	
+			}
+		});
 		
 		shell.layout(); 
 		shell.open(); 

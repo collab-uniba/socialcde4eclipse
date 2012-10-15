@@ -57,13 +57,20 @@ public class ActionHomePanel {
 		
 		case "labelAvatar":
 			System.out.println("Evento labelAvatar attivato"); 
-			ChooseAvatar available_avatar = new ChooseAvatar(); 
+			final ChooseAvatar available_avatar = new ChooseAvatar(); 
 			 available_avatar.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 			 available_avatar.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 			 available_avatar.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
-			 available_avatar.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
-			 available_avatar.inizialize(Controller.getWindow()); 
-			 
+			 available_avatar.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2); 
+			 available_avatar.setBackListener(new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					// TODO Auto-generated method stub
+					available_avatar.dispose(Controller.getWindow()); 
+				}
+			});
+			 available_avatar.inizialize(Controller.getWindow());
 			break;
 		case "labelSettings":
 			if(eventType == SWT.PUSH){
