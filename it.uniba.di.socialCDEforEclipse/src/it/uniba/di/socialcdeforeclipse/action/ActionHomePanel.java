@@ -13,6 +13,7 @@ import it.uniba.di.socialcdeforeclipse.popup.ChooseAvatar;
 import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
+import it.uniba.di.socialcdeforeclipse.views.SquareButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -85,13 +86,54 @@ public class ActionHomePanel {
 		 WService service = (WService) widget.getData("service"); 
 				if(service.Registered){
 					System.out.println("Servizio registrato");
-					SettingServicePanel serviceSetting = new SettingServicePanel(); 
+					final SettingServicePanel serviceSetting = new SettingServicePanel(); 
 					serviceSetting.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x ); 
 					serviceSetting.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y ); 
 					serviceSetting.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
 					serviceSetting.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
-
 					serviceSetting.setService(service); 
+					SquareButton.yCoordinateValue = 5;
+					serviceSetting.setBtnUnsubscriveListener(new Listener() {
+						
+						@Override
+						public void handleEvent(Event event) {
+							// TODO Auto-generated method stub
+							MessageBox messageBox = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_WARNING  | SWT.YES | SWT.NO);
+					        messageBox.setMessage("Are you sure you want to unsubscribe?");
+					        messageBox.setText("SocialCDEforEclipse Message");
+					       int response = messageBox.open();
+					       
+					       switch (response) {
+						case SWT.YES:
+							if(!Controller.getProxy().DeleteRegistredService(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), serviceSetting.getService().Id))
+							{
+								MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+						        messageBox2.setMessage("Something was wrong, please try again.");
+						        messageBox2.setText("SocialCDEforEclipse Message");
+						        messageBox2.open();
+							}
+							break;
+						case SWT.NO:
+						default:
+							break;
+						}
+					       serviceSetting.dispose(null); 
+					       SquareButton.yCoordinateValue = 5;
+					       Controller.selectDynamicWindow(0); 
+					       
+					       
+						}
+					});
+					
+					serviceSetting.setBtnSaveListener(new Listener() {
+						
+						@Override
+						public void handleEvent(Event event) {
+							// TODO Auto-generated method stub
+							
+						}
+					});
+					
 					serviceSetting.inizialize(Controller.getWindow()); 
 					
 				}

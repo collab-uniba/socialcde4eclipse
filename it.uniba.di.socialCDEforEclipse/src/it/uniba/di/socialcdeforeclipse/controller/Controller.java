@@ -27,6 +27,7 @@ import it.uniba.di.socialcdeforeclipse.views.ProfilePanel;
 import it.uniba.di.socialcdeforeclipse.views.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.views.RegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.views.SettingPanel;
+import it.uniba.di.socialcdeforeclipse.views.SquareButton;
 
 public class Controller {
 
@@ -259,6 +260,8 @@ public class Controller {
 				 gridData = new GridData(); 
 				gridData.grabExcessHorizontalSpace = true;
 				gridData.horizontalAlignment = gridData.FILL; 
+				gridData.grabExcessVerticalSpace = true; 
+				gridData.verticalAlignment = gridData.FILL; 
 				dynamicComposite.setLayoutData(gridData); 
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
 				Controller.getProfilePanel().getComposite_dinamic().layout();
@@ -269,11 +272,15 @@ public class Controller {
 				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
 				 gridData = new GridData(); 
 				gridData.grabExcessHorizontalSpace = true;
-				gridData.horizontalAlignment = gridData.FILL; 
+				gridData.horizontalAlignment = gridData.FILL;
+				gridData.grabExcessVerticalSpace = true; 
+				gridData.verticalAlignment = gridData.FILL; 
 				dynamicComposite.setLayoutData(gridData); 
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
 				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
 			}
+			SquareButton.yCoordinateValue = 5; 
+			SquareButton.counterPosition = 0; 
 			homeWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
 			pbWindow.setStop(1); 
 			

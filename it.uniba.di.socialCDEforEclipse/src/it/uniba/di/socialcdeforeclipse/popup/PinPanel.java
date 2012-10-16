@@ -191,7 +191,8 @@ public class PinPanel implements Panel{
 		
 		Composite firstComposite = new Composite(shell,SWT.None); 
 		firstComposite.setLayout(new GridLayout(2,false)); 
-		shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),300, 200));
+		firstComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		firstComposite.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),300, 200));
 		
 		gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
@@ -200,9 +201,10 @@ public class PinPanel implements Panel{
 		gridData.verticalAlignment = gridData.FILL; 
 		firstComposite.setLayoutData(gridData);
 		
-		labelRegistration = new Label(firstComposite, SWT.WRAP );
+		labelRegistration = new Label(firstComposite, SWT.WRAP | SWT.INHERIT_DEFAULT );
 		labelRegistration.setText("Registration of service : " + service.Name);
 		labelRegistration.setFont(new Font(shell.getDisplay(), "Calibri", 15, SWT.BOLD));
+		
 		gridData = new GridData(); 
 		gridData.horizontalSpan = 2; 
 		gridData.widthHint = 300; 

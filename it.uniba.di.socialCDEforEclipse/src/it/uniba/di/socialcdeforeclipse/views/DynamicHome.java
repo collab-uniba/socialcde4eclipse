@@ -53,6 +53,8 @@ public class DynamicHome implements Panel {
 	private Composite buttonComposite; 
 	private Composite serviceComposite; 
 	
+	public static Boolean setServiceCompositeHeight = false; 
+	
 	private final InputStream PATH_SKILLS = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Skills.png");
 	private final InputStream PATH_SETTINGS = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Settings.png");
 	private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
@@ -79,6 +81,8 @@ public class DynamicHome implements Panel {
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
+		
+		
 		
 		controlli = new ArrayList<Control>();
 		Listener azioni = new ActionGeneral();
@@ -167,17 +171,36 @@ public class DynamicHome implements Panel {
 		labelFollowers.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD ));
 		labelFollowers.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		
+		final  WService[] wService = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 		
-		serviceComposite = new Composite(panel,SWT.BORDER); 
-		gridData = new GridData(); 
-		gridData.horizontalSpan = 3;
-		gridData.grabExcessHorizontalSpace = true; 
-		gridData.horizontalAlignment = gridData.FILL; 
-		serviceComposite.setLayoutData(gridData); 
-		GridLayout serviceGrid = new GridLayout(2,true); 
+		serviceComposite = new Composite(panel,SWT.None);
+		System.out.println("servicecomposite size " + serviceComposite.getBounds()); 
+		//serviceComposite.setSize(serviceComposite.computeSize(serviceComposite.getSize().x, 100 * (wService.length/2)));
+		System.out.println("servicecomposite size after " + serviceComposite.getBounds()); 
+		GridLayout serviceGrid = new GridLayout(3,true); 
 		serviceComposite.setLayout(serviceGrid); 
+		gridData = new GridData(); 
+		gridData.horizontalSpan = 4;
+		gridData.grabExcessHorizontalSpace = true; 
+		gridData.grabExcessVerticalSpace = true; 
+		gridData.verticalAlignment = gridData.FILL; 
+		serviceComposite.setLayoutData(gridData); 
 		
-		 WService[] wService = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+	
+		 serviceComposite.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
+				// TODO Auto-generated method stub
+				Composite servComposite = (Composite) e.widget; 
+				
+				System.out.println("Evento paint listener lanciato " + servComposite.getBounds() ); 
+			}
+		});
+		
+		
+		
+		 
 		Label service;
 		SquareButton services; 
 		//Button services; 
@@ -252,9 +275,8 @@ public class DynamicHome implements Panel {
 				}
 				
 				
-				panel.layout();
-				 
-				System.out.println("Fine iterata"); 
+				
+				 System.out.println("Fine iterata"); 
 			}
 		} else {
 			service = new Label(serviceComposite, SWT.NONE);
@@ -287,6 +309,7 @@ public class DynamicHome implements Panel {
 		Controller.temporaryInformation.put("Workbench", PlatformUI.getWorkbench().getActiveWorkbenchWindow()); 
 		System.out.println("Dimensione composite " + serviceComposite.getBounds());
 		serviceComposite.layout(); 
+		serviceComposite.pack(); 
 		panel.layout(); 
 		
 		

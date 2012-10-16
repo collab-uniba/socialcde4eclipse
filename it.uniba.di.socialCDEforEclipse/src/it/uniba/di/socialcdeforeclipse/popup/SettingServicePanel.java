@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -43,6 +44,8 @@ public class SettingServicePanel implements Panel{
 	private WService service; 
 	private int xCoordinateWithOffset; 
 	private int yCoordinateWithOffset; 
+	private Listener btnSaveListener;
+	private Listener btnUnsubscriveListener; 
 	
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
 			.getResourceAsStream("images/Wallpaper.png");
@@ -63,6 +66,24 @@ public class SettingServicePanel implements Panel{
 		return new Image(Controller.getWindow().getDisplay(), stream);
 	}
 	
+	
+	
+	public Listener getBtnSaveListener() {
+		return btnSaveListener;
+	}
+
+	public void setBtnSaveListener(Listener btnSaveListener) {
+		this.btnSaveListener = btnSaveListener;
+	}
+
+	public Listener getBtnUnsubscriveListener() {
+		return btnUnsubscriveListener;
+	}
+
+	public void setBtnUnsubscriveListener(Listener btnUnsubscriveListener) {
+		this.btnUnsubscriveListener = btnUnsubscriveListener;
+	}
+
 	public int getxCoordinate() {
 		return xCoordinate;
 	}
@@ -140,6 +161,7 @@ public class SettingServicePanel implements Panel{
 		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset,300,200);
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout); 
+		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		shell.setBackgroundImage(imgWallpaper); 
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
@@ -211,6 +233,14 @@ public class SettingServicePanel implements Panel{
 			}
 		});
 		
+		Button btnUnsubscribe = new Button(shell, SWT.None); 
+		btnUnsubscribe.setText("Unsubcribe"); 
+		btnUnsubscribe.addListener(SWT.Selection, btnUnsubscriveListener);
+		
+		Button btnSave = new Button(shell, SWT.None); 
+		btnSave.setText("Save"); 
+		btnSave.addListener(SWT.Selection, btnSaveListener); 
+			
 		shell.layout(); 
 		shell.open(); 
 	}

@@ -62,7 +62,7 @@ public class SquareButton extends Canvas {
 	protected int imageStyle = 0;
 	
 	private Boolean flagDimension = false; 
-	private static int counterPosition = 0; 
+	public static int counterPosition = 0; 
 	public static int yCoordinateValue = 5; 
 	
 	public SquareButton(Composite parent, int style) {
@@ -309,7 +309,7 @@ public class SquareButton extends Canvas {
 
 	private void paintControl(PaintEvent e) {
 		
-		int[] xValue = {5,110}; 
+		int[] xValue = {5,110,215}; 
 		
 		
 		
@@ -320,18 +320,24 @@ public class SquareButton extends Canvas {
 		if( getClientArea().height != 100 && getClientArea().width != 100)
 		{
 			
-			if(counterPosition == 0)
-			{
+			switch (counterPosition) {
+			case 0:
 				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
 				counterPosition +=1;
-				 
-			}
-			else
-			{
+				break;
+			case 1:
+				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
+				counterPosition +=1; 
+				break;
+			case 2:
 				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
 				counterPosition = 0;
 				yCoordinateValue += 120;
+			default:
+				break;
 			}
+			
+			
 			
 			
 			System.out.println("Dimensioni fissate " + this.getBounds() ); 
@@ -429,7 +435,7 @@ public class SquareButton extends Canvas {
 			}
 		} else {
 			x = drawImage(gc, x, y);
-			drawText(gc, x -40, y+70);
+			drawText(gc, x -58, y+70);
 		}
 		
 		
