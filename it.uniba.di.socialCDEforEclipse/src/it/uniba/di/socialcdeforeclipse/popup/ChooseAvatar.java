@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
@@ -173,6 +174,7 @@ public class ChooseAvatar implements Panel {
 				try {
 					btn_avatar.setImage(resize(getImageStream(uriAvatar[i]
 							.toURL().openStream()), 75, 75));
+					btn_avatar.setData("URI", uriAvatar[i]); 
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -182,6 +184,29 @@ public class ChooseAvatar implements Panel {
 				}
 				// btn_avatar.setSize(140, 140);
 				System.out.println("URI n. " + i + " " + uriAvatar[i]);
+				btn_avatar.addListener(SWT.Selection, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						// TODO Auto-generated method stub
+						Button btnSelected = (Button) event.widget; 
+						if(Controller.getProxy().SaveAvatar(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),(URI) btnSelected.getData("URI")))
+						{
+							MessageBox messageBox = new MessageBox(firstComposite.getShell(), SWT.ICON_INFORMATION  | SWT.OK);
+						        messageBox.setMessage("Avatar saved");
+						        messageBox.setText("SocialCDEforEclipse Message");
+						        messageBox.open();
+						}
+						else
+						{
+							MessageBox messageBox = new MessageBox(firstComposite.getShell(), SWT.ICON_ERROR  | SWT.OK);
+					        messageBox.setMessage("Something was wrong, please try again.");
+					        messageBox.setText("SocialCDEforEclipse Message");
+					        messageBox.open();
+						}
+						
+					}
+				});
 			}
 			sc.setContent(firstComposite);
 			sc.setMinSize(265, 165);
@@ -190,6 +215,9 @@ public class ChooseAvatar implements Panel {
 			sc.setExpandHorizontal(true);
 			sc.setExpandVertical(true);
 			sc.layout();
+			
+			
+			
 		} else {
 			
 			shell.setBackgroundImage(img);

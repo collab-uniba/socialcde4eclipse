@@ -1515,7 +1515,7 @@ public class ProxyWrapper {
 
 		}
 		
-		if(result == "true")
+		if(result.equals("true"))
 		{
 			
 			return true;
