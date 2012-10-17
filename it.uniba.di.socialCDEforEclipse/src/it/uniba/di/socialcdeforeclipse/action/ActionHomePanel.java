@@ -2,6 +2,7 @@ package it.uniba.di.socialcdeforeclipse.action;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.ws.Dispatch;
@@ -25,6 +26,7 @@ import org.eclipse.swt.browser.WindowEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
@@ -130,7 +132,41 @@ public class ActionHomePanel {
 						@Override
 						public void handleEvent(Event event) {
 							// TODO Auto-generated method stub
+						
+							ArrayList<Button> btnCheckbox =	serviceSetting.getCheckboxCreated(); 
 							
+							int counter = 0; 
+							for(int i=0;i<btnCheckbox.size();i++)
+							{
+								if(btnCheckbox.get(i).getSelection())
+								{
+									counter +=1;
+								}
+							}
+							
+							String[] strFeature = new String[counter];
+							counter = 0; 
+							for(int i=0;i< btnCheckbox.size(); i++)
+							{
+								if(btnCheckbox.get(i).getSelection())
+								{
+									strFeature[counter] = btnCheckbox.get(i).getData("FeatureName").toString(); 
+									counter +=1;
+								}
+							}
+							
+							if(Controller.getProxy().UpdateChosenFeatures(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), serviceSetting.getService().Id, strFeature))
+							{
+								serviceSetting.dispose(null);
+							}
+							else
+							{
+								MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+						        messageBox2.setMessage("Something was wrong, please try again.");
+						        messageBox2.setText("SocialCDEforEclipse Message");
+						        messageBox2.open();
+			            		
+							}
 						}
 					});
 					

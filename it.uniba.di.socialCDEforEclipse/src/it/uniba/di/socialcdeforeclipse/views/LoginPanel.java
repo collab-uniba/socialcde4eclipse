@@ -74,6 +74,12 @@ public class LoginPanel implements Panel{
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
 		
+		for(int i=0;i< panel.getChildren().length;i++)
+		{
+			panel.getChildren()[i].dispose(); 
+		}
+		
+		
 		azioni = new ActionGeneral(); 
 		controlli = new ArrayList<Control>();
 		GridLayout layout = new GridLayout(3, false);

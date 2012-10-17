@@ -52,6 +52,7 @@ public class Controller {
 	
 	private static String currentUserPassword = null; 
 	
+
 	private static DynamicHome homeWindow = null;
 	
 	private static DynamicInteractionTimeline interactionTimelineWindow = null;

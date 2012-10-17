@@ -70,6 +70,12 @@ public class RegistrationPanel implements Panel {
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
+		
+		for(int i=0;i< panel.getChildren().length;i++)
+		{
+			panel.getChildren()[i].dispose(); 
+		}
+		
 		controlli = new ArrayList<Control>();
 		 azioni = new ActionGeneral();
 		

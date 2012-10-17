@@ -188,6 +188,80 @@ public class ProxyWrapper {
 		
 	}
 	
+	public Boolean UpdateChosenFeatures(String username, String password, int serviceInstanceId, String[] chosenFeatures)
+	{
+		String result = "";
+		String features = "["; 
+		if(!(chosenFeatures == null | chosenFeatures.length == 0))
+		{
+			for(int i=0;i<chosenFeatures.length;i++)
+			{
+				if(i == chosenFeatures.length -1)
+				{
+					features += " \"" + chosenFeatures[i] + "\" ";  
+				}
+				else
+				{
+					features += " \"" + chosenFeatures[i] + "\" ,";
+				}
+			}
+		}
+		features += "]";
+		
+		try {
+			URL url = new URL(host +"/UpdateChosenFeatures");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setUseCaches(false);
+			conn.setAllowUserInteraction(false);
+			conn.setRequestProperty("Content-Type", "application/json");
+
+			// Create the form content
+			OutputStream out = conn.getOutputStream();
+			Writer writer = new OutputStreamWriter(out, "UTF-8");
+			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"serviceInstanceId\":\"" + serviceInstanceId + "\" , \"chosenFeatures\" : " + features +  "}");
+			System.out.println("Feature selezionate { \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"serviceInstanceId\":\"" + serviceInstanceId + "\" , \"chosenFeatures\" : " + features +  "}" ); 
+			writer.close();
+			out.close();
+			int status = conn.getResponseCode();
+			System.out.println("RESPONSE CODE " + status);
+			System.out.println("Content type " + conn.getContentType());
+			if (status >= 200 && status <= 299) {
+				InputStreamReader in = new InputStreamReader(
+						conn.getInputStream());
+				BufferedReader br = new BufferedReader(in);
+				String output;
+				
+				while ((output = br.readLine()) != null) {
+					result += output;
+
+				}
+				br.close();
+				
+				
+			}
+
+			conn.disconnect();
+		} catch (Exception e) {
+			return  false;
+
+		}
+		
+		if(result.equals("true"))
+		{
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+		
+	}
+	
 	public boolean ChangePassword(String username, String oldPassword, String newPassword)
 	{
 		String result = "";

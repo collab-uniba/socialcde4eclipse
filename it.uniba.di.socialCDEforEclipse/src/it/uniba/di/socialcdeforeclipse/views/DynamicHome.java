@@ -187,16 +187,7 @@ public class DynamicHome implements Panel {
 		serviceComposite.setLayoutData(gridData); 
 		
 	
-		 serviceComposite.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				Composite servComposite = (Composite) e.widget; 
-				
-				System.out.println("Evento paint listener lanciato " + servComposite.getBounds() ); 
-			}
-		});
+		
 		
 		
 		
@@ -236,7 +227,7 @@ public class DynamicHome implements Panel {
 				
 				 services = new SquareButton(serviceComposite, SWT.NONE); 
 				
-				 services.setRoundedCorners(true);
+				 services.setRoundedCorners(false);
 				
 				// Point p = services.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
 				 services.setText(wService[i].Name); 
@@ -250,12 +241,19 @@ public class DynamicHome implements Panel {
 				System.out.println("Registrato " + wService[i].Registered);
 				if(wService[i].Registered)
 				{
-				services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
+					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
+					services.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN), null, Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
+					services.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN), null, Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
+					services.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN), null, Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
 				}
 				else
 				{
 					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+					services.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+					services.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+			        services.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
 				}
+				
 				services.borderWidth = 3;
 				services.setData("ID_action","btnServices");
 				services.setData("service" , wService[i]); 
