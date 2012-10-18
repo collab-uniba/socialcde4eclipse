@@ -1,7 +1,8 @@
-package it.uniba.di.socialcdeforeclipse.views;
+package it.uniba.di.socialcdeforeclipse.staticView;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.io.IOException;
 import java.io.InputStream;

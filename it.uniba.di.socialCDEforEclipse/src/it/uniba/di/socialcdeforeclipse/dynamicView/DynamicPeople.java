@@ -1,4 +1,6 @@
-package it.uniba.di.socialcdeforeclipse.views;
+package it.uniba.di.socialcdeforeclipse.dynamicView;
+
+import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.util.HashMap;
 

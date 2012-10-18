@@ -42,7 +42,7 @@ public class SquareButtonService extends Canvas {
 	protected Color selectedColor, selectedColor2;
 	protected int innerMarginWidth = 8;
 	protected int innerMarginHeight = 4;
-	protected int borderWidth = 1;
+	public int borderWidth = 1;
 	protected int imagePadding = 5;
 	protected boolean enabled = true;
 	protected boolean roundedCorners = true;

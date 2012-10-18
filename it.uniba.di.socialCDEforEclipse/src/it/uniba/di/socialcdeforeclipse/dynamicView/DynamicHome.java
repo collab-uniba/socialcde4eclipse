@@ -1,10 +1,12 @@
-package it.uniba.di.socialcdeforeclipse.views;
+package it.uniba.di.socialcdeforeclipse.dynamicView;
 
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.action.ActionProfile;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.views.Panel;
+import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -3,7 +3,7 @@ package it.uniba.di.socialcdeforeclipse.action;
 import java.io.InputStream;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.views.LoginPanel;
+import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;

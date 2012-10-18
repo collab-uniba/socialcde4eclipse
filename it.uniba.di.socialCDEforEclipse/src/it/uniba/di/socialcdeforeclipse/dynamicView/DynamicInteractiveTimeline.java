@@ -1,10 +1,12 @@
-package it.uniba.di.socialcdeforeclipse.views;
+package it.uniba.di.socialcdeforeclipse.dynamicView;
+
+import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.util.HashMap;
 
 import org.eclipse.swt.widgets.Composite;
 
-public class DynamicInteractionTimeline implements Panel{
+public class DynamicInteractiveTimeline implements Panel{
 
 	@Override
 	public void inizialize(Composite panel) {

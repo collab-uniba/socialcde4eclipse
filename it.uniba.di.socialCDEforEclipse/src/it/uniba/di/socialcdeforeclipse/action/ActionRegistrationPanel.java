@@ -3,11 +3,11 @@ package it.uniba.di.socialcdeforeclipse.action;
 import java.io.InputStream;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.dynamicView.InterceptingFilter;
 
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
-import it.uniba.di.socialcdeforeclipse.views.InterceptingFilter;
-import it.uniba.di.socialcdeforeclipse.views.LoginPanel;
-import it.uniba.di.socialcdeforeclipse.views.ProgressBarThread;
+import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
+import it.uniba.di.socialcdeforeclipse.staticView.ProgressBarThread;
 
 
 import org.eclipse.swt.SWT;

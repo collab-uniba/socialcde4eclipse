@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.views;
+package it.uniba.di.socialcdeforeclipse.dynamicView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
