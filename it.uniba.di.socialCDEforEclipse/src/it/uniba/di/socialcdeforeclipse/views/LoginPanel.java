@@ -79,6 +79,7 @@ public class LoginPanel implements Panel{
 			panel.getChildren()[i].dispose(); 
 		}
 		
+		panel.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
 		azioni = new ActionGeneral(); 
 		controlli = new ArrayList<Control>();
@@ -102,6 +103,8 @@ public class LoginPanel implements Panel{
 		labelAlert.setVisible(false);
 		gridData = new GridData();
 		gridData.horizontalSpan = 3; 
+		gridData.grabExcessHorizontalSpace = true; 
+		gridData.horizontalAlignment = gridData.FILL; 
 		labelAlert.setLayoutData(gridData);
 		labelAlert.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD ));  
 		labelAlert.setForeground(new Color(Controller.getWindow().getDisplay(),Controller.getWindow().getDisplay().getSystemColor(SWT.COLOR_RED).getRGB()));

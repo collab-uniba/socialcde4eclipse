@@ -154,8 +154,8 @@ public class ActionLoginPanel {
 								Controller.getLoginPanel().getLabelAlert().setVisible(true); 
 								pbWindow.setStop(1); 
 								pbWindow = null;
-								Controller.getWindow().redraw(); 
-								Controller.getWindow().layout(); 
+								//Controller.getWindow().redraw(); 
+								//Controller.getWindow().layout(); 
 							}
 			        	
 				          

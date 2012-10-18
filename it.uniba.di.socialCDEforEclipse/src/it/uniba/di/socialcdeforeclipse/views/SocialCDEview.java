@@ -105,7 +105,7 @@ public class SocialCDEview extends ViewPart {
 	public void createPartControl(Composite parent) {
 
 		Controller.setWindow(parent);
-		
+		parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
 		
 		System.out.println(  Controller.getWindow().getSize());

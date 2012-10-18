@@ -267,10 +267,16 @@ public class ActionHomePanel {
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				//e1.printStackTrace();
+				MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+		        messageBox2.setMessage("Something was wrong, please try again.");
+		        messageBox2.setText("SocialCDEforEclipse Message");
+		        messageBox2.open();
+				/*
 				SocialMessageBox msgBox = new SocialMessageBox();
         		msgBox.setMessage("Something was wrong, try again"); 
         		msgBox.setIcon(SWT.ICON_ERROR); 
         		msgBox.start(); 
+				*/
 			}
 		}
 		
@@ -294,12 +300,41 @@ public class ActionHomePanel {
             	}
             	else
             	{
+            		/*
             		SocialMessageBox msgBox = new SocialMessageBox();
             		msgBox.setMessage("Something was wrong, try again"); 
             		msgBox.setIcon(SWT.ICON_ERROR); 
-            		msgBox.start(); 
+            		msgBox.start();
+            		*/
+            		MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+    		        messageBox2.setMessage("Something was wrong, please try again.");
+    		        messageBox2.setText("SocialCDEforEclipse Message");
+    		        messageBox2.open();
+    		        pinWindow.dispose(null); 
             		System.out.println("Autorizzazione non confermata"); 
             	}
+            	
+            	try {
+            		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"); 
+            		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview").setFocus(); 
+            		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().hideView(((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser")); 
+
+				} catch (Exception e) {
+					// TODO: handle exception
+					try {
+						((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser");
+						((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().hideView(((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"));
+					} catch (NullPointerException|SWTException|PartInitException e1) {
+						// TODO Auto-generated catch block
+						//e1.printStackTrace();
+						SocialMessageBox msgBox = new SocialMessageBox();
+	            		msgBox.setMessage("Something was wrong, try again"); 
+	            		msgBox.setIcon(SWT.ICON_ERROR); 
+	            		msgBox.start(); 
+					}
+					
+					
+				}
             	break;
             case 2:
             	//System.out.println("Location " + Controller.temporaryInformation.get("AccessToken").toString());
