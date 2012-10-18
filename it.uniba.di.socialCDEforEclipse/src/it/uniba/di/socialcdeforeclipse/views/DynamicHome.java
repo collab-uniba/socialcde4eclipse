@@ -193,7 +193,7 @@ public class DynamicHome implements Panel {
 		
 		 
 		Label service;
-		SquareButton services; 
+		SquareButtonService services; 
 		//Button services; 
 		
 		if(wService.length > 0)
@@ -225,7 +225,7 @@ public class DynamicHome implements Panel {
 				}
 				*/
 				
-				 services = new SquareButton(serviceComposite, SWT.NONE); 
+				 services = new SquareButtonService(serviceComposite, SWT.NONE); 
 				
 				 services.setRoundedCorners(false);
 				

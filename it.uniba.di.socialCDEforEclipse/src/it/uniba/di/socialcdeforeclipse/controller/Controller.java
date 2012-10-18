@@ -27,7 +27,7 @@ import it.uniba.di.socialcdeforeclipse.views.ProfilePanel;
 import it.uniba.di.socialcdeforeclipse.views.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.views.RegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.views.SettingPanel;
-import it.uniba.di.socialcdeforeclipse.views.SquareButton;
+import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 public class Controller {
 
@@ -280,8 +280,8 @@ public class Controller {
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
 				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
 			}
-			SquareButton.yCoordinateValue = 5; 
-			SquareButton.counterPosition = 0; 
+			SquareButtonService.yCoordinateValue = 5; 
+			SquareButtonService.counterPosition = 0; 
 			homeWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
 			pbWindow.setStop(1); 
 			

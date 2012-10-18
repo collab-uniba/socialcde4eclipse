@@ -188,6 +188,7 @@ public class LoginPanel implements Panel{
 		gridData.horizontalSpan = 3; 
 		btnLogin.setLayoutData(gridData);
 		btnLogin.setData("ID_action", "btnLogin");
+		btnLogin.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
 		controlli.add(btnLogin);
 		
 		labelHidden = new Label(panel, SWT.NONE);

@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TypedListener;
 
-public class SquareButton extends Canvas {
+public class SquareButtonService extends Canvas {
 	protected Listener keyListener;
 	protected Image image, backgroundImage;
 	protected String text;
@@ -65,7 +65,7 @@ public class SquareButton extends Canvas {
 	public static int counterPosition = 0; 
 	public static int yCoordinateValue = 5; 
 	
-	public SquareButton(Composite parent, int style) {
+	public SquareButtonService(Composite parent, int style) {
 		super(parent, style | SWT.NO_BACKGROUND);
 		this.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
@@ -80,7 +80,7 @@ public class SquareButton extends Canvas {
 	protected void addListeners() {
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
-				SquareButton.this.widgetDisposed(e);
+				SquareButtonService.this.widgetDisposed(e);
 			}
 		});
 
@@ -89,28 +89,28 @@ public class SquareButton extends Canvas {
 		addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 
-				SquareButton.this.paintControl(e);
+				SquareButtonService.this.paintControl(e);
 			}
 		});
 
 		// MOUSE EVENTS
 		this.addListener(SWT.MouseEnter, new Listener() {
 			public void handleEvent(Event e) {
-				SquareButton.this.setHoverColor(e);
+				SquareButtonService.this.setHoverColor(e);
 			}
 		});
 		this.addListener(SWT.MouseExit, new Listener() {
 			public void handleEvent(Event e) {
 				if (isFocused)
-					SquareButton.this.setSelectedColor(e);
+					SquareButtonService.this.setSelectedColor(e);
 				else
-					SquareButton.this.setNormalColor(e);
+					SquareButtonService.this.setNormalColor(e);
 			}
 		});
 		this.addListener(SWT.MouseUp, new Listener() {
 			public void handleEvent(Event e) {
 				if (e.button == 1) {
-					SquareButton.this.setHoverColor(e);
+					SquareButtonService.this.setHoverColor(e);
 					if ((e.count == 1) && enabled
 							&& (getClientArea().contains(e.x, e.y))) {
 						doButtonClicked();
@@ -120,13 +120,13 @@ public class SquareButton extends Canvas {
 		});
 		this.addListener(SWT.MouseHover, new Listener() {
 			public void handleEvent(Event e) {
-				SquareButton.this.setHoverColor(e);
+				SquareButtonService.this.setHoverColor(e);
 			}
 		});
 		this.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event e) {
 				if (e.button == 1) {
-					SquareButton.this.setClickedColor(e);
+					SquareButtonService.this.setClickedColor(e);
 				}
 			}
 		});
@@ -149,14 +149,14 @@ public class SquareButton extends Canvas {
 		this.addListener(SWT.FocusIn, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = true;
-				SquareButton.this.setSelectedColor(e);
+				SquareButtonService.this.setSelectedColor(e);
 				redraw();
 			}
 		});
 		this.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = false;
-				SquareButton.this.setNormalColor(e);
+				SquareButtonService.this.setNormalColor(e);
 				redraw();
 			}
 		});
@@ -164,7 +164,7 @@ public class SquareButton extends Canvas {
 		this.addListener(SWT.KeyUp, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = true;
-				SquareButton.this.setSelectedColor(e);
+				SquareButtonService.this.setSelectedColor(e);
 				redraw();
 			}
 		});
@@ -175,7 +175,7 @@ public class SquareButton extends Canvas {
 				case ' ':
 				case '\r':
 				case '\n':
-					SquareButton.this.setClickedColor(e);
+					SquareButtonService.this.setClickedColor(e);
 					redraw();
 					doButtonClicked();
 					break;

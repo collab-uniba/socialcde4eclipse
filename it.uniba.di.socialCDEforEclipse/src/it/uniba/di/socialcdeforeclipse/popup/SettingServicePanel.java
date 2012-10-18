@@ -15,7 +15,7 @@ import it.uniba.di.socialCDEforEclipse.SharedLibrary.WFeature;
 import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
-import it.uniba.di.socialcdeforeclipse.views.SquareButton;
+import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;

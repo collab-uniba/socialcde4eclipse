@@ -14,7 +14,7 @@ import it.uniba.di.socialcdeforeclipse.popup.ChooseAvatar;
 import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
-import it.uniba.di.socialcdeforeclipse.views.SquareButton;
+import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -94,7 +94,7 @@ public class ActionHomePanel {
 					serviceSetting.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
 					serviceSetting.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
 					serviceSetting.setService(service); 
-					SquareButton.yCoordinateValue = 5;
+					SquareButtonService.yCoordinateValue = 5;
 					serviceSetting.setBtnUnsubscriveListener(new Listener() {
 						
 						@Override
@@ -120,7 +120,7 @@ public class ActionHomePanel {
 							break;
 						}
 					       serviceSetting.dispose(null); 
-					       SquareButton.yCoordinateValue = 5;
+					       SquareButtonService.yCoordinateValue = 5;
 					       Controller.selectDynamicWindow(0); 
 					       
 					       
