@@ -11,9 +11,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.WFeature;
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
+
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 

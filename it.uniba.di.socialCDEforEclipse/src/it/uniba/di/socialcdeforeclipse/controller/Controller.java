@@ -16,8 +16,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.WUser;
+
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
 import it.uniba.di.socialcdeforeclipse.views.DynamicHome;
 import it.uniba.di.socialcdeforeclipse.views.DynamicInteractionTimeline;
 import it.uniba.di.socialcdeforeclipse.views.DynamicInteractiveTimeline;

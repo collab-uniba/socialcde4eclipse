@@ -1,6 +1,9 @@
 package it.uniba.di.socialcdeforeclipse.model;
 
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.*;
+
+
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

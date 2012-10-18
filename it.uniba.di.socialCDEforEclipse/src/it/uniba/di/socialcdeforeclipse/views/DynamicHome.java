@@ -1,9 +1,10 @@
 package it.uniba.di.socialcdeforeclipse.views;
 
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
+
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.action.ActionProfile;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -9,12 +9,13 @@ import java.io.InputStream;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
 import it.uniba.di.socialcdeforeclipse.views.InterceptingFilter;
 import it.uniba.di.socialcdeforeclipse.views.ProfilePanel;
 
 import it.uniba.di.socialcdeforeclipse.views.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.views.RegistrationPanel;
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.*;
+
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;

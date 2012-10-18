@@ -9,8 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
+
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import org.eclipse.swt.SWT;

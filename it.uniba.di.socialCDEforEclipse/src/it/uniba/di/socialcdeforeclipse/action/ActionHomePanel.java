@@ -7,13 +7,13 @@ import java.util.HashMap;
 
 import javax.xml.ws.Dispatch;
 
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.WOAuthData;
-import it.uniba.di.socialCDEforEclipse.SharedLibrary.WService;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.popup.ChooseAvatar;
 import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;
