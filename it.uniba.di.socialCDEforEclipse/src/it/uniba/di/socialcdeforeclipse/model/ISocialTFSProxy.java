@@ -1,4 +1,11 @@
-package it.uniba.di.socialcdeforeclipse.sharedLibrary;
+package it.uniba.di.socialcdeforeclipse.model;
+
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WFeature;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WHidden;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WPost;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
 
 import java.net.URI;
 
