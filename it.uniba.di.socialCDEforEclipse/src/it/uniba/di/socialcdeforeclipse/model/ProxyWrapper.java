@@ -18,7 +18,7 @@ import com.google.gson.Gson.*;
  * @author Fauzzi Floriano
  *
  */
-public class ProxyWrapper {
+public class ProxyWrapper implements ISocialTFSProxy{
 	
 	private static String host = null;
 	
