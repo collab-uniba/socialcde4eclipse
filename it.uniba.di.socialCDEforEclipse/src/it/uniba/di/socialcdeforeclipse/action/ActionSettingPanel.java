@@ -2,6 +2,7 @@ package it.uniba.di.socialcdeforeclipse.action;
 
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
@@ -17,11 +18,12 @@ public class ActionSettingPanel {
 		case "SettingBtnOk":
 			if(eventType == SWT.Selection){
 				System.out.println("Azione setting avviata"); 
-				if(!Controller.getCurrentUserPassword().equals(Controller.getSettingWindow().getTxtOldPassword().getText())){
+				if(!Controller.getCurrentUserPassword().equals(Controller.getSettingWindow().getTxtOldPassword().getText()))
+				{
 					
 					Controller.getSettingWindow().getLabelAlert().setVisible(true); 
 					Controller.getSettingWindow().getLabelAlert().setText("Old passord not match with current password"); 
-					Controller.getWindow().layout(); 
+					//Controller.getWindow().layout(); 
 				
 				} else {
 					
@@ -34,10 +36,22 @@ public class ActionSettingPanel {
 				          case SWT.YES:
 				        	if(Controller.getProxy().ChangePassword(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), Controller.getSettingWindow().getTxtNewPassword().getText())){
 				        	
-				        		  MessageBox messageBox_ok = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_INFORMATION | SWT.YES);
+				        		  MessageBox messageBox_ok = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_INFORMATION | SWT.OK);
 				        		  messageBox_ok.setText("Information"); 
 				        		  messageBox_ok.setMessage("The new password is set up!"); 
-				        		  messageBox_ok.open(); 
+				        		  int response = messageBox_ok.open();
+				        		  
+				        		  if(response == SWT.OK)
+				        		  {
+				        			 
+				        			  Controller.setCurrentUserPassword(Controller.getSettingWindow().getTxtNewPassword().getText()); 
+								       SquareButtonService.yCoordinateValue = 5;
+								       SquareButtonService.counterPosition = 0;
+				        			  Controller.selectDynamicWindow(0); 
+				        			  Controller.getProfilePanel().getComposite_dinamic().layout(); 
+				        		  }
+				        		 
+				        		  
 				        	} 
 				        	break;
 				          default:

@@ -9,6 +9,7 @@ package it.uniba.di.socialcdeforeclipse.staticView;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.io.InputStream;
@@ -17,6 +18,8 @@ import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -36,7 +39,7 @@ public class LoginPanel implements Panel{
 	private Text txtUsername; 
 	private Label labelPassword; 
 	private Text txtPassword; 
-	private Button btnLogin; 
+	private GeneralButton btnLogin; 
 	private Button chkAutologin; 
 	private Button chkSavePassword; 
 	private Label labelImageHost; 
@@ -182,14 +185,18 @@ public class LoginPanel implements Panel{
 		labelHidden.setLayoutData(gridData);
 		controlli.add(labelHidden);
 	    
-		btnLogin = new Button(panel, SWT.NONE);
-		btnLogin.setText("Login");
-		gridData = new GridData();
-		gridData.horizontalAlignment = SWT.LEFT;
-		gridData.horizontalSpan = 3; 
-		btnLogin.setLayoutData(gridData);
+		btnLogin = new GeneralButton(panel, SWT.None); 
+		btnLogin.setText("Login"); 
+		btnLogin.setWidth(80);
+		btnLogin.setHeight(30); 
+		btnLogin.setxCoordinate(5);
+		btnLogin.setyCoordinate(152); 
+		btnLogin.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnLogin.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnLogin.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnLogin.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnLogin.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 		btnLogin.setData("ID_action", "btnLogin");
-		btnLogin.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
 		controlli.add(btnLogin);
 		
 		labelHidden = new Label(panel, SWT.NONE);
@@ -322,7 +329,7 @@ public class LoginPanel implements Panel{
 		txtPassword = newTxtPassword;
 	}
 
-	public Button getBtnLogin() {
+	public GeneralButton getBtnLogin() {
 		return btnLogin;
 	}
 	
@@ -348,7 +355,7 @@ public class LoginPanel implements Panel{
 	}
 
 
-	public void setBtnLogin(Button newbtnLogin) {
+	public void setBtnLogin(GeneralButton newbtnLogin) {
 		btnLogin = newbtnLogin;
 	}
 

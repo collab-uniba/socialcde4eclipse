@@ -1,6 +1,6 @@
 package it.uniba.di.socialcdeforeclipse.views;
 
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
+
 
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.jface.resource.ColorRegistry;
@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TypedListener;
 
-public class SquareButtonService extends Canvas {
+public class GeneralButton extends Canvas {
 	protected Listener keyListener;
 	protected Image image, backgroundImage;
 	protected String text;
@@ -61,11 +61,47 @@ public class SquareButtonService extends Canvas {
 	public static int IMAGE_RIGHT = 1;
 	protected int imageStyle = 0;
 	
-	private Boolean flagDimension = false; 
-	public static int counterPosition = 0; 
-	public static int yCoordinateValue = 5; 
+	private  int xCoordinate; 
+	private  int yCoordinate; 
+	private  int width; 
+	private  int height;
 	
-	public SquareButtonService(Composite parent, int style) {
+	
+	
+	
+	public  int getxCoordinate() {
+		return xCoordinate;
+	}
+
+	public  void setxCoordinate(int xCoordinate) {
+		this.xCoordinate = xCoordinate;
+	}
+
+	public  int getyCoordinate() {
+		return yCoordinate;
+	}
+
+	public  void setyCoordinate(int yCoordinate) {
+		this.yCoordinate = yCoordinate;
+	}
+
+	public  int getWidth() {
+		return width;
+	}
+
+	public  void setWidth(int width) {
+		this.width = width;
+	}
+
+	public  int getHeight() {
+		return height;
+	}
+
+	public  void setHeight(int height) {
+		this.height = height;
+	}
+
+	public GeneralButton(Composite parent, int style) {
 		super(parent, style | SWT.NO_BACKGROUND);
 		this.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
@@ -80,7 +116,7 @@ public class SquareButtonService extends Canvas {
 	protected void addListeners() {
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
-				SquareButtonService.this.widgetDisposed(e);
+				GeneralButton.this.widgetDisposed(e);
 			}
 		});
 
@@ -89,28 +125,28 @@ public class SquareButtonService extends Canvas {
 		addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 
-				SquareButtonService.this.paintControl(e);
+				GeneralButton.this.paintControl(e);
 			}
 		});
 
 		// MOUSE EVENTS
 		this.addListener(SWT.MouseEnter, new Listener() {
 			public void handleEvent(Event e) {
-				SquareButtonService.this.setHoverColor(e);
+				GeneralButton.this.setHoverColor(e);
 			}
 		});
 		this.addListener(SWT.MouseExit, new Listener() {
 			public void handleEvent(Event e) {
 				if (isFocused)
-					SquareButtonService.this.setSelectedColor(e);
+					GeneralButton.this.setSelectedColor(e);
 				else
-					SquareButtonService.this.setNormalColor(e);
+					GeneralButton.this.setNormalColor(e);
 			}
 		});
 		this.addListener(SWT.MouseUp, new Listener() {
 			public void handleEvent(Event e) {
 				if (e.button == 1) {
-					SquareButtonService.this.setHoverColor(e);
+					GeneralButton.this.setHoverColor(e);
 					if ((e.count == 1) && enabled
 							&& (getClientArea().contains(e.x, e.y))) {
 						doButtonClicked();
@@ -120,13 +156,13 @@ public class SquareButtonService extends Canvas {
 		});
 		this.addListener(SWT.MouseHover, new Listener() {
 			public void handleEvent(Event e) {
-				SquareButtonService.this.setHoverColor(e);
+				GeneralButton.this.setHoverColor(e);
 			}
 		});
 		this.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event e) {
 				if (e.button == 1) {
-					SquareButtonService.this.setClickedColor(e);
+					GeneralButton.this.setClickedColor(e);
 				}
 			}
 		});
@@ -149,14 +185,14 @@ public class SquareButtonService extends Canvas {
 		this.addListener(SWT.FocusIn, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = true;
-				SquareButtonService.this.setSelectedColor(e);
+				GeneralButton.this.setSelectedColor(e);
 				redraw();
 			}
 		});
 		this.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = false;
-				SquareButtonService.this.setNormalColor(e);
+				GeneralButton.this.setNormalColor(e);
 				redraw();
 			}
 		});
@@ -164,7 +200,7 @@ public class SquareButtonService extends Canvas {
 		this.addListener(SWT.KeyUp, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = true;
-				SquareButtonService.this.setSelectedColor(e);
+				GeneralButton.this.setSelectedColor(e);
 				redraw();
 			}
 		});
@@ -175,7 +211,7 @@ public class SquareButtonService extends Canvas {
 				case ' ':
 				case '\r':
 				case '\n':
-					SquareButtonService.this.setClickedColor(e);
+					GeneralButton.this.setClickedColor(e);
 					redraw();
 					doButtonClicked();
 					break;
@@ -309,39 +345,23 @@ public class SquareButtonService extends Canvas {
 
 	private void paintControl(PaintEvent e) {
 		
-		int[] xValue = {5,110,215}; 
+		 
 		
 		
 		
-		//System.out.println("Square botton paint event call " + this.getClientArea() + " e flag  " + this.flagDimension ); 
+		//System.out.println("Square botton paint event call " + this.getClientArea() ); 
 		
-		this.flagDimension = false; 
+		 
 		
-		if( getClientArea().height != 100 && getClientArea().width != 100)
+		if( getClientArea().height != this.height && getClientArea().width != this.width)
 		{
-			
-			switch (counterPosition) {
-			case 0:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
-				counterPosition +=1;
-				break;
-			case 1:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
-				counterPosition +=1; 
-				break;
-			case 2:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
-				counterPosition = 0;
-				yCoordinateValue += 120;
-			default:
-				break;
-			}
+			this.setBounds(this.xCoordinate, this.yCoordinate, this.width, this.height);
 			
 			
 			
 			
-			//System.out.println("Dimensioni fissate " + this.getBounds() ); 
-			flagDimension = true; 
+			System.out.println("Dimensioni fissate " + this.getBounds() ); 
+			
 		}
 
 		
@@ -360,7 +380,7 @@ public class SquareButtonService extends Canvas {
 			p.x = getClientArea().width;
 		}
 		//Rectangle rect = new Rectangle(0, 0, p.x, p.y);
-		Rectangle rect = new Rectangle(0, 0, 100,100);
+		Rectangle rect = new Rectangle(0, 0, this.width,this.height);
 		
 		GC gc = e.gc;
 		gc.setAntialias(SWT.ON);
@@ -435,7 +455,7 @@ public class SquareButtonService extends Canvas {
 			}
 		} else {
 			x = drawImage(gc, x, y);
-			drawText(gc, x -58, y+70);
+			drawText(gc, x, y);
 		}
 		
 		
@@ -451,7 +471,7 @@ public class SquareButtonService extends Canvas {
 	private int drawImage(GC gc, int x, int y) {
 		if (image == null)
 			return x;
-		gc.drawImage(image, x+20, y+5);
+		gc.drawImage(image, x, y);
 		return x + image.getBounds().width + imagePadding;
 	}
 

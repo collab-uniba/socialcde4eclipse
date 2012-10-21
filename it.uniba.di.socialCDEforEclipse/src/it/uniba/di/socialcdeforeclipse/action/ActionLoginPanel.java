@@ -102,7 +102,7 @@ public class ActionLoginPanel {
 									Controller.getLoginPanel().getLabelImagePassword().setImage(IMAGE_NO);
 									Controller.getLoginPanel().getLabelAlert().setVisible(true); 
 									
-									Controller.getWindow().layout(); 
+									//Controller.getWindow().layout(); 
 									pbWindow.setStop(1); 
 									pbWindow = null;
 									 

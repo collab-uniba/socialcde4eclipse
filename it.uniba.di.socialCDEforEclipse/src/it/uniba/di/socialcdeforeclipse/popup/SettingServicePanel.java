@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
+import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
@@ -263,14 +264,33 @@ public class SettingServicePanel implements Panel {
 		gridData.horizontalSpan = 2;
 		labelHidden.setLayoutData(gridData);
 
-		Button btnUnsubscribe = new Button(shell, SWT.None);
-		btnUnsubscribe.setText("Unsubcribe");
+		GeneralButton btnUnsubscribe = new GeneralButton(shell, SWT.None); 
+		btnUnsubscribe.setText("Unsubcribe"); 
+		btnUnsubscribe.setWidth(90);
+		btnUnsubscribe.setHeight(30); 
+		btnUnsubscribe.setxCoordinate(5);
+		btnUnsubscribe.setyCoordinate(133); 
+		btnUnsubscribe.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnUnsubscribe.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnUnsubscribe.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnUnsubscribe.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnUnsubscribe.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 		btnUnsubscribe.addListener(SWT.Selection, btnUnsubscriveListener);
-
-		Button btnSave = new Button(shell, SWT.None);
-		btnSave.setText("Save");
+		
+		GeneralButton btnSave = new GeneralButton(shell, SWT.None); 
+		btnSave.setText("Save"); 
+		btnSave.setWidth(90);
+		btnSave.setHeight(30); 
+		btnSave.setxCoordinate(105);
+		btnSave.setyCoordinate(133); 
+		btnSave.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnSave.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnSave.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnSave.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnSave.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 		btnSave.addListener(SWT.Selection, btnSaveListener);
-
+		
+		
 		shell.layout();
 		shell.open();
 	}

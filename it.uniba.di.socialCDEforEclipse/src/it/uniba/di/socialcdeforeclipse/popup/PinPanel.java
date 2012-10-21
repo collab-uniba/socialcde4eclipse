@@ -11,7 +11,9 @@ import java.util.HashMap;
 
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import org.eclipse.swt.SWT;
@@ -21,6 +23,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -49,14 +52,14 @@ public class PinPanel implements Panel{
 	private int xCoordinateWithOffset; 
 	private int yCoordinateWithOffset; 
 	private WService service; 
-	private int oauthVersion; 
+	private WOAuthData oauthData; 
 	private Label labelRegistration; 
 	private Label labelVerifierPin; 
 	private Text txtPin; 
 	private Label labelInformation; 
 	private Composite buttonComposite; 
-	private Button btnOk; 
-	private Button btnCancel; 
+	private GeneralButton btnOk; 
+	private GeneralButton btnCancel; 
 	private Listener okListener; 
 	private Listener cancelListener; 
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
@@ -124,11 +127,11 @@ public class PinPanel implements Panel{
 
 	
 
-	public Button getBtnCancel() {
+	public GeneralButton getBtnCancel() {
 		return btnCancel;
 	}
 
-	public void setBtnCancel(Button btnCancel) {
+	public void setBtnCancel(GeneralButton btnCancel) {
 		this.btnCancel = btnCancel;
 	}
 
@@ -142,12 +145,14 @@ public class PinPanel implements Panel{
 		this.service = service;
 	}
 
-	public int getOauthVersion() {
-		return oauthVersion;
+	
+
+	public WOAuthData getOauthData() {
+		return oauthData;
 	}
 
-	public void setOauthVersion(int oauthVersion) {
-		this.oauthVersion = oauthVersion;
+	public void setOauthData(WOAuthData oauthData) {
+		this.oauthData = oauthData;
 	}
 
 	public int getxCoordinate() {
@@ -211,19 +216,20 @@ public class PinPanel implements Panel{
 		gridData.widthHint = 300; 
 		labelRegistration.setLayoutData(gridData); 
 		
-		if(oauthVersion == 1)
+		if(service.OAuthVersion == 1)
 		{
 			labelVerifierPin = new Label(firstComposite, SWT.RIGHT); 
 			labelVerifierPin.setText("Verifier Pin"); 
 			labelVerifierPin.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.NONE ));
 			
 			txtPin = new Text(firstComposite, SWT.BORDER | SWT.WRAP); 
+			txtPin.setSize(120, 20); 
 			txtPin.setData("ID_action","txtPin");
-			gridData = new GridData();
-			gridData.horizontalAlignment = SWT.FILL;
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.minimumWidth = 120; 
-			txtPin.setLayoutData(gridData);
+			//gridData = new GridData();
+			//gridData.horizontalAlignment = SWT.FILL;
+			//gridData.grabExcessHorizontalSpace = true;
+			//gridData.minimumWidth = 150; 
+			//txtPin.setLayoutData(gridData);
 		}
 		else
 		{
@@ -244,15 +250,48 @@ public class PinPanel implements Panel{
 		buttonComposite.setLayout(new GridLayout(2,true));
 		gridData = new GridData(); 
 		gridData.horizontalSpan = 2;
-		gridData.horizontalAlignment = SWT.CENTER; 
+		gridData.horizontalIndent = 20; 
+		gridData.grabExcessHorizontalSpace = true;
+		gridData.horizontalAlignment = gridData.FILL; 
 		buttonComposite.setLayoutData(gridData); 
 		
-		btnOk = new Button(buttonComposite, SWT.None); 
+		btnOk = new GeneralButton(buttonComposite, SWT.None); 
 		btnOk.setText("Ok"); 
-		
+		btnOk.setWidth(80);
+		btnOk.setHeight(30); 
+		btnOk.setxCoordinate(5);
+		btnOk.setyCoordinate(5); 
+		btnOk.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+	
+		btnCancel = new GeneralButton(buttonComposite, SWT.None); 
+		btnCancel.setText("Cancel"); 
+		btnCancel.setWidth(80);
+		btnCancel.setHeight(30); 
+		btnCancel.setxCoordinate(90);
+		btnCancel.setyCoordinate(5); 
+		btnCancel.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		/*
 		btnCancel = new Button(buttonComposite, SWT.None); 
 		btnCancel.setText("Cancel"); 
-		
+		btnCancel.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
+				// TODO Auto-generated method stub
+				Button btn = (Button)  e.widget;
+				System.out.println("Btn cancel bounds " + btn.getBounds()); 
+				
+			}
+		});
+		*/
 		btnOk.addListener(SWT.Selection, okListener); 
 		btnCancel.addListener(SWT.Selection, cancelListener); 
 		

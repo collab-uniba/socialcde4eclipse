@@ -189,7 +189,7 @@ public class DynamicHome implements Panel {
 		gridData.verticalAlignment = gridData.FILL; 
 		serviceComposite.setLayoutData(gridData); 
 		
-	
+		System.out.println("Servizi trovati " + wService.length); 
 		
 		
 		

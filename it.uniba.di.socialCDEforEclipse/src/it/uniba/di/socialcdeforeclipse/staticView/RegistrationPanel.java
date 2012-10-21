@@ -2,6 +2,7 @@ package it.uniba.di.socialcdeforeclipse.staticView;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.io.InputStream;
@@ -11,6 +12,8 @@ import java.util.HashMap;
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -35,7 +38,7 @@ public class RegistrationPanel implements Panel {
 	private Text txtPassword; 
 	private Label labelPassword2; 
 	private Text txtPassword2;
-	private Button btnRegister; 
+	private  GeneralButton btnRegister; 
 	private Label labelAlert; 
 	private Label labelImageHost; 
 	private Label labelImageMail;
@@ -238,6 +241,25 @@ public class RegistrationPanel implements Panel {
 		labelHidden.setLayoutData(gridData); 
 		controlli.add(labelHidden);
 		
+		btnRegister = new GeneralButton(panel, SWT.None); 
+		btnRegister.setText("Register"); 
+		btnRegister.setWidth(80);
+		btnRegister.setHeight(30); 
+		btnRegister.setxCoordinate(391);
+		btnRegister.setyCoordinate(230); 
+		btnRegister.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnRegister.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnRegister.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnRegister.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnRegister.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		gridData = new GridData();
+		gridData.horizontalAlignment = SWT.LEFT;
+		gridData.horizontalSpan = 3; 
+		btnRegister.setLayoutData(gridData);
+		btnRegister.setData("ID_action", "btnRegister");
+		controlli.add(btnRegister);
+		
+		/*
 		btnRegister = new Button(panel, SWT.NONE);
 		btnRegister.setText("Register");
 		gridData = new GridData();
@@ -247,7 +269,7 @@ public class RegistrationPanel implements Panel {
 		btnRegister.setData("ID_action", "btnRegister");
 		btnRegister.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.NONE ));
 		controlli.add(btnRegister);
-		
+		*/
 		for(int i=0;i<5;i++)  {
 			labelHidden = new Label(panel, SWT.NONE);
 			labelHidden.setText("");

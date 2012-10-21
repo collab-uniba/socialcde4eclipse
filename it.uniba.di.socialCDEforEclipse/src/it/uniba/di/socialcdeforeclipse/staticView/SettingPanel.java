@@ -2,6 +2,7 @@ package it.uniba.di.socialcdeforeclipse.staticView;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.io.IOException;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 
 import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -35,8 +38,8 @@ public class SettingPanel implements Panel {
 	private Text txtOldPassword; 
 	private Label labelNewPassword; 
 	private Text txtNewPassword; 
-	private Button btnCancel; 
-	private Button btnOk; 
+	private GeneralButton btnCancel; 
+	private GeneralButton btnOk; 
 	private ArrayList<Control> controlli;
 	
 	private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
@@ -150,7 +153,42 @@ public class SettingPanel implements Panel {
 		layoutdata.horizontalSpan = 3; 
 		labelHidden.setLayoutData(layoutdata); 
 		controlli.add(labelHidden);
+
+		btnCancel = new GeneralButton(panel, SWT.None); 
+		btnCancel.setText("Cancel"); 
+		btnCancel.setWidth(80);
+		btnCancel.setHeight(30); 
+		btnCancel.setxCoordinate(5);
+		btnCancel.setyCoordinate(167); 
+		btnCancel.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		btnCancel.setData("ID_action", "SettingBtnCancel");
+		gridData = new GridData();
+		gridData.horizontalSpan = 2;
+		btnCancel.setLayoutData(gridData); 
+		controlli.add(btnCancel); 
 		
+		btnOk = new GeneralButton(panel, SWT.None); 
+		btnOk.setText("Ok"); 
+		btnOk.setWidth(80);
+		btnOk.setHeight(30); 
+		btnOk.setxCoordinate(140);
+		btnOk.setyCoordinate(167); 
+		btnOk.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		btnOk.setData("ID_action", "SettingBtnOk");
+		gridData = new GridData();
+		gridData.horizontalSpan = 2;
+		btnOk.setLayoutData(gridData); 
+		controlli.add(btnOk); 
+		
+		/*
 		btnCancel = new Button(panel, SWT.PUSH); 
 		btnCancel.setText("Cancel");
 		btnCancel.computeSize(SWT.DEFAULT, SWT.DEFAULT); 
@@ -164,7 +202,7 @@ public class SettingPanel implements Panel {
 		btnOk.setText("Ok"); 
 		btnOk.setData("ID_action", "SettingBtnOk");
 		controlli.add(btnOk); 
-		
+		*/
 		btnCancel.addListener(SWT.Selection, azioni); 
 		btnOk.addListener(SWT.Selection, azioni); 
 		 
@@ -196,19 +234,19 @@ public class SettingPanel implements Panel {
 		return Input_data; 
 	}
 
-	public Button getBtnCancel() {
+	public GeneralButton getBtnCancel() {
 		return btnCancel;
 	}
 
-	public void setBtnCancel(Button btnCancel) {
+	public void setBtnCancel(GeneralButton btnCancel) {
 		this.btnCancel = btnCancel;
 	}
 
-	public Button getBtnOk() {
+	public GeneralButton getBtnOk() {
 		return btnOk;
 	}
 
-	public void setBtnOk(Button btnOk) {
+	public void setBtnOk(GeneralButton btnOk) {
 		this.btnOk = btnOk;
 	}
 

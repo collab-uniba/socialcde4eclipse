@@ -38,11 +38,12 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.activities.WorkbenchActivityHelper;
 import org.eclipse.ui.browser.IWebBrowser;
 
 public class ActionHomePanel {
 
-	WOAuthData oauthData; 
+	//WOAuthData oauthData;
     
     PinPanel pinWindow = new PinPanel();
 		
@@ -121,6 +122,7 @@ public class ActionHomePanel {
 						}
 					       serviceSetting.dispose(null); 
 					       SquareButtonService.yCoordinateValue = 5;
+					       SquareButtonService.counterPosition = 0;
 					       Controller.selectDynamicWindow(0); 
 					       
 					       
@@ -180,16 +182,17 @@ public class ActionHomePanel {
 					{
 						 //int x = bounds.x + (Controller.getWindow().getShell().getBounds().width - 300) / 2;
 						 //int y = bounds.y + (Controller.getWindow().getShell().getBounds().height - 200) / 2;
-						
-					    
+					
+						 WOAuthData oauthData = Controller.getProxy().GetOAuthData(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),service.Id);
+						 //System.out.println("OauthData access secret " + oauthData.AccessSecret + " token " + oauthData.AccessToken + " oauth link " + oauthData.AuthorizationLink + " id " + pinWindow.getService().Id );
 						 pinWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 						 pinWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 						 pinWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
 						 pinWindow.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
 						 pinWindow.setService(service); 
-						 pinWindow.setOauthVersion(service.OAuthVersion);
+						 pinWindow.setOauthData(oauthData); 
 						
-						oauthData = Controller.getProxy().GetOAuthData(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),service.Id);
+						
 						System.out.println(oauthData.AuthorizationLink); 
 						Controller.temporaryInformation.put("CurrentURL", oauthData.AuthorizationLink); 
 						
@@ -286,26 +289,34 @@ public class ActionHomePanel {
 	
 	private void ServiceOkClick()
 	{
-		oauthData = Controller.getProxy().GetOAuthData(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),pinWindow.getService().Id);
 		
-		switch (pinWindow.getOauthVersion())
+		
+		switch (pinWindow.getService().OAuthVersion)
         {
             case 1:
-            	if(Controller.getProxy().Authorize(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(), pinWindow.getService().Id , pinWindow.getTxtPin().getText(), oauthData.AccessToken, oauthData.AccessSecret))
+            	System.out.println("dati autorizzazione username " + Controller.getCurrentUser().Username+ " passwrd " +Controller.getCurrentUserPassword()+" id servizio "+ pinWindow.getService().Id + " codice "  + pinWindow.getTxtPin().getText()+" token "+ Controller.temporaryInformation.get("AccessToken").toString() + " acc secret"+ pinWindow.getOauthData().AccessSecret);
+            	if(Controller.getProxy().Authorize(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(), pinWindow.getService().Id , pinWindow.getTxtPin().getText(),pinWindow.getOauthData().AccessToken, pinWindow.getOauthData().AccessSecret))
             	{
+            		pinWindow.dispose(Controller.getWindow()); 
+            		pinWindow.getService().Registered = true; 
+            		pinWindow.setOauthData(null); 
             		
+            		for(int i=0;i< ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences().length;i++)
+            		{
+            			System.out.println("View n. " + i + " partname " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getPartName());
+            			System.out.println("View n. " + i + " id " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getId());
+            			System.out.println("View n. " + i + " title " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getTitle());
+            		}
+            		
+            		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview").setFocus(); 
+            		Controller.selectDynamicWindow(0); 
             		//oauthData = null;
             		System.out.println("Ok pinwindow premuto");
             		//Controller.selectDynamicWindow(0); 
             	}
             	else
             	{
-            		/*
-            		SocialMessageBox msgBox = new SocialMessageBox();
-            		msgBox.setMessage("Something was wrong, try again"); 
-            		msgBox.setIcon(SWT.ICON_ERROR); 
-            		msgBox.start();
-            		*/
+            		
             		MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
     		        messageBox2.setMessage("Something was wrong, please try again.");
     		        messageBox2.setText("SocialCDEforEclipse Message");
@@ -344,7 +355,7 @@ public class ActionHomePanel {
                 	{
             			pinWindow.dispose(Controller.getWindow()); 
                 		pinWindow.getService().Registered = true; 
-                		oauthData = null;
+                		pinWindow.setOauthData(null); 
                 		
                 		for(int i=0;i< ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences().length;i++)
                 		{
