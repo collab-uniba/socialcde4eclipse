@@ -184,7 +184,7 @@ public class ActionHomePanel {
 						 //int y = bounds.y + (Controller.getWindow().getShell().getBounds().height - 200) / 2;
 					
 						 WOAuthData oauthData = Controller.getProxy().GetOAuthData(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),service.Id);
-						 //System.out.println("OauthData access secret " + oauthData.AccessSecret + " token " + oauthData.AccessToken + " oauth link " + oauthData.AuthorizationLink + " id " + pinWindow.getService().Id );
+						 System.out.println("OauthData access secret " + oauthData.AccessSecret + " token " + oauthData.AccessToken + " oauth link " + oauthData.AuthorizationLink + " id " + service.Id );
 						 pinWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 						 pinWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 						 pinWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
@@ -294,7 +294,7 @@ public class ActionHomePanel {
 		switch (pinWindow.getService().OAuthVersion)
         {
             case 1:
-            	System.out.println("dati autorizzazione username " + Controller.getCurrentUser().Username+ " passwrd " +Controller.getCurrentUserPassword()+" id servizio "+ pinWindow.getService().Id + " codice "  + pinWindow.getTxtPin().getText()+" token "+ Controller.temporaryInformation.get("AccessToken").toString() + " acc secret"+ pinWindow.getOauthData().AccessSecret);
+            	//System.out.println("dati autorizzazione username " + Controller.getCurrentUser().Username+ " passwrd " +Controller.getCurrentUserPassword()+" id servizio "+ pinWindow.getService().Id + " codice "  + pinWindow.getTxtPin().getText()+" token "+ Controller.temporaryInformation.get("AccessToken").toString() + " acc secret"+ pinWindow.getOauthData().AccessSecret);
             	if(Controller.getProxy().Authorize(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(), pinWindow.getService().Id , pinWindow.getTxtPin().getText(),pinWindow.getOauthData().AccessToken, pinWindow.getOauthData().AccessSecret))
             	{
             		pinWindow.dispose(Controller.getWindow()); 

@@ -471,7 +471,7 @@ public class GeneralButton extends Canvas {
 	private int drawImage(GC gc, int x, int y) {
 		if (image == null)
 			return x;
-		gc.drawImage(image, x, y);
+		gc.drawImage(image, x-5, y);
 		return x + image.getBounds().width + imagePadding;
 	}
 

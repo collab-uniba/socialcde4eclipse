@@ -46,7 +46,7 @@ public class ActionProfile {
 			break;
 		
 		case "labelLogout":
-			if(eventType == SWT.PUSH){
+			if(eventType == SWT.MouseDown){
 				Controller.closeAllDynamicPanel(); 
 				Controller.setCurrentUser(null);
 				Controller.setCurrentUserPassword(null);
