@@ -21,13 +21,13 @@ import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicHome;
 import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicInteractionTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicInteractiveTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicPeople;
+import it.uniba.di.socialcdeforeclipse.dynamicView.SettingPanel;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
 import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
 import it.uniba.di.socialcdeforeclipse.staticView.ProfilePanel;
 import it.uniba.di.socialcdeforeclipse.staticView.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
-import it.uniba.di.socialcdeforeclipse.staticView.SettingPanel;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 public class Controller {

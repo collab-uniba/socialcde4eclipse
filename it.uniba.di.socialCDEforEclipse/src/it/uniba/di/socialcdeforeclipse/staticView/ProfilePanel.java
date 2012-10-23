@@ -131,6 +131,7 @@ public class ProfilePanel implements Panel{
 		labelPeople.setImage(get_ImageStream(PATH_PEOPLE)); 
 		labelPeople.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
 		labelPeople.setToolTipText("People"); 
+		labelPeople.setData("ID_action", "labelPeople");
 		labelPeople.addPaintListener(new PaintListener() {
 		
 			@Override
@@ -221,6 +222,7 @@ public class ProfilePanel implements Panel{
 		
 		panel.addListener(SWT.Resize, azioni); 
 		labelLogout.addListener(SWT.MouseDown, azioni); 
+		labelPeople.addListener(SWT.MouseDown, azioni); 
 		
 	}
 

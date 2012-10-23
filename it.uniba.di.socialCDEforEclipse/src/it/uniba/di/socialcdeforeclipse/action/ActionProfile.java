@@ -3,11 +3,13 @@ package it.uniba.di.socialcdeforeclipse.action;
 import java.io.InputStream;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicPeople;
 import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
 public class ActionProfile {
@@ -32,7 +34,7 @@ public class ActionProfile {
 		}
 
 	
-	public ActionProfile(Widget widget, int eventType)	{
+	public ActionProfile(Widget widget, Event event)	{
 		
 		String widgetName = widget.getData("ID_action").toString(); 
 		
@@ -46,7 +48,7 @@ public class ActionProfile {
 			break;
 		
 		case "labelLogout":
-			if(eventType == SWT.MouseDown){
+			if(event.type == SWT.MouseDown){
 				Controller.closeAllDynamicPanel(); 
 				Controller.setCurrentUser(null);
 				Controller.setCurrentUserPassword(null);
@@ -57,6 +59,22 @@ public class ActionProfile {
 				Controller.getLoginPanel().inizialize(Controller.getWindow());
 				Controller.getWindow().layout(); 
 				Controller.setPreferences("FlagAutologin", "False");
+			}
+			
+			break;
+		
+		case "labelPeople":
+			
+			if(event.type == SWT.MouseDown){
+				
+				Controller.closeAllDynamicPanel(); 
+				Controller.setWindowName("People");
+				Controller.getProfilePanel().dispose(Controller.getWindow()); 
+				Controller.setProfilePanel(null); 
+				Controller.setPeopleWindow(new DynamicPeople()); 
+				Controller.getPeopleWindow().inizialize(Controller.getWindow());
+				Controller.getWindow().layout(); 
+				
 			}
 			
 			break;

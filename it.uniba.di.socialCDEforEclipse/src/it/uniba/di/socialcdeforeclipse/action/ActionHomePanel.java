@@ -51,7 +51,7 @@ public class ActionHomePanel {
 	
 
 
-	public ActionHomePanel(Widget widget, int eventType)	{
+	public ActionHomePanel(Widget widget, Event event)	{
 	
 		String widgetName = widget.getData("ID_action").toString(); 
 	    IViewPart browser = null; 
@@ -77,13 +77,13 @@ public class ActionHomePanel {
 			 available_avatar.inizialize(Controller.getWindow());
 			break;
 		case "labelSettings":
-			if(eventType == SWT.PUSH){
+			if(event.type == SWT.MouseDown){
 				System.out.println("Labelsettings azione"); 
 				Controller.selectDynamicWindow(1);
 			}
 			break;
 		case "btnServices":
-			if(eventType == SWT.Selection)
+			if(event.type == SWT.Selection)
 			{
 		
 		 WService service = (WService) widget.getData("service"); 

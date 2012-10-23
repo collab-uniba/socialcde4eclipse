@@ -21,6 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
 public class ActionLoginPanel {
@@ -50,7 +51,7 @@ public class ActionLoginPanel {
 		return scaled;
 		}
 	
-	public ActionLoginPanel(Widget widget, int eventType)	{
+	public ActionLoginPanel(Widget widget, Event event)	{
 		
 		String widgetName = widget.getData("ID_action").toString(); 
 		
@@ -66,7 +67,7 @@ public class ActionLoginPanel {
 			Controller.getWindow().layout(); 
 			break;
 		case "btnLogin":
-			if(eventType == SWT.Selection)	{
+			if(event.type == SWT.Selection)	{
 				System.out.println("------------------------------");
 			    System.out.println("getBounds: " + Controller.getWindow().getBounds());
 			    System.out.println("getLocation: " + Controller.getWindow().getLocation());
@@ -172,7 +173,7 @@ public class ActionLoginPanel {
 			break;
 		case "labelRegistration":
 			try {
-			if(eventType == SWT.Paint)
+			if(event.type == SWT.Paint)
 			{
 				System.out.println("Evento paint label attivato");
 				
@@ -278,7 +279,9 @@ public class ActionLoginPanel {
 			break;
 			
 		case "txtProxyHost":
-			if(eventType == SWT.FocusOut)
+			System.out.println("evento scattato " + (event.detail == SWT.TRAVERSE_TAB_NEXT ||
+					event.detail == SWT.TRAVERSE_TAB_PREVIOUS)); 
+			if(event.type == SWT.FocusOut)
 			{
 				if(InterceptingFilter.verifyText(Controller.getLoginPanel().getTxtProxyHost()))
 				{
@@ -301,19 +304,13 @@ public class ActionLoginPanel {
 					}
 				}
 			}
-			if(eventType == SWT.TAB)
-			{
-				System.out.println("Stampa " + Controller.getLoginPanel().getTxtProxyHost().getText().toCharArray().toString());
-				Controller.getLoginPanel().getTxtUsername().forceFocus(); 
-				Controller.getLoginPanel().getTxtProxyHost().setText(Controller.getLoginPanel().getTxtProxyHost().getText().replace("\\t", ""));
-				Controller.getWindow().layout(); 
-			}
+			
 			
 			break;
 			
 		case "txtUsername":
 			
-			if(eventType == SWT.FocusOut)
+			if(event.type == SWT.FocusOut)
 			{
 				if(InterceptingFilter.verifyText(Controller.getLoginPanel().getTxtUsername()))
 				{
@@ -356,21 +353,11 @@ public class ActionLoginPanel {
 				}
 			}
 			
-			if(eventType == SWT.TAB)
-			{
-				Controller.getLoginPanel().getTxtPassword().forceFocus(); 
-				
-			}
+			
 			
 			break;
 			
-		case "txtPassword":
-			if(eventType == SWT.TAB)
-			{
-				Controller.getLoginPanel().getBtnLogin().forceFocus(); 
-				
-			}
-			break;
+		
 			
 		default:
 			break;

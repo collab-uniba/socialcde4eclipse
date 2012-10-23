@@ -13,6 +13,7 @@ import it.uniba.di.socialcdeforeclipse.staticView.ProgressBarThread;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 
 public class ActionRegistrationPanel {
@@ -42,7 +43,7 @@ public class ActionRegistrationPanel {
 		}
 	
 	
-	public ActionRegistrationPanel(Widget widget, int eventType)
+	public ActionRegistrationPanel(Widget widget, Event event)
 	{
 		String widgetName = widget.getData("ID_action").toString(); 
 		
@@ -60,7 +61,7 @@ public class ActionRegistrationPanel {
 		
 		case "txtProxyHost":
 
-			if(eventType == SWT.FocusOut)
+			if(event.type == SWT.FocusOut)
 			{
 				if(InterceptingFilter.verifyText(Controller.getRegistrationPanel().getTxtProxyHost()))
 				{
@@ -88,7 +89,7 @@ public class ActionRegistrationPanel {
 		
 		case "txtUsername":
 			
-			if(eventType == SWT.FocusOut)
+			if(event.type == SWT.FocusOut)
 			{
 				if(InterceptingFilter.verifyText(Controller.getRegistrationPanel().getTxtUsername()))
 				{
@@ -136,7 +137,7 @@ public class ActionRegistrationPanel {
 			
 			break;
 		case "txtMail":
-			if(eventType == SWT.FocusOut){
+			if(event.type == SWT.FocusOut){
 				if(InterceptingFilter.verifyMail(Controller.getRegistrationPanel().getTxtMail().getText())){
 					Controller.getRegistrationPanel().getLabelImageMail().setImage(IMAGE_OK);
 					Controller.getRegistrationPanel().getLabelAlert().setVisible(false); 
@@ -155,7 +156,7 @@ public class ActionRegistrationPanel {
 			
 		case "btnRegister":
 			
-			if(eventType == SWT.Selection)
+			if(event.type == SWT.Selection)
 			{
 				System.out.println("Scatta evento registrazione"); 
 				pbWindow = new ProgressBarThread(); 

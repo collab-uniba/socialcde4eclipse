@@ -251,10 +251,10 @@ public class DynamicHome implements Panel {
 				}
 				else
 				{
-					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
-					services.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
-					services.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
-			        services.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+					services.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+					services.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
+			        services.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
 				}
 				
 				services.borderWidth = 3;
@@ -291,8 +291,8 @@ public class DynamicHome implements Panel {
 		
 		
 		
-		labelSettings.addListener(SWT.PUSH, azioni); 
-		labelAvatar.addListener(SWT.PUSH, azioni); 
+		labelSettings.addListener(SWT.MouseDown, azioni); 
+		labelAvatar.addListener(SWT.MouseDown, azioni); 
 		
 		controlli.add(serviceComposite); 
 		 controlli.add(labelFollowers); 

@@ -14,6 +14,8 @@ import java.util.HashMap;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -290,7 +292,7 @@ public class RegistrationPanel implements Panel {
 		labelLogin.setData("ID_action", "labelLogin");
 		controlli.add(labelLogin);
 		
-		
+		 panel.setTabList(new Control[] { txtProxyHost, txtMail , txtInvitationCode , txtUsername ,  txtPassword , txtPassword2 , btnRegister });
 		
 		System.out.println("Controlli " + panel.getChildren().length); 
 		
@@ -301,6 +303,74 @@ public class RegistrationPanel implements Panel {
 		txtUsername.addListener(SWT.FocusOut, azioni); 
 		labelLogin.addListener(SWT.Selection, azioni); 
 		txtMail.addListener(SWT.FocusOut, azioni); 
+		
+		txtProxyHost.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+			
+		});
+		
+		txtMail.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+			
+		});
+		
+		txtInvitationCode.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
+		
+		txtUsername.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
+		
+		txtPassword.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
+		
+		txtPassword2.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		}); 
 	}
 
 	@Override

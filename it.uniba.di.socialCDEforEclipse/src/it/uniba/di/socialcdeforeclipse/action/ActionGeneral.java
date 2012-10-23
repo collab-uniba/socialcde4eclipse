@@ -13,7 +13,7 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 
 
 
-public class ActionGeneral implements Listener , KeyListener {
+public class ActionGeneral implements Listener  {
 	
 	@Override
 	public void handleEvent(Event event) {
@@ -23,64 +23,47 @@ public class ActionGeneral implements Listener , KeyListener {
 		widgetProfile = new ArrayList<>();
 		widgetProfile.add("profilePanel");
 		widgetProfile.add("labelLogout");
+		widgetProfile.add("labelPeople"); 
 		Widget widget =  event.widget;
 		System.out.println("Window name " + Controller.getWindowName()); 
 		switch (Controller.getWindowName()) {
 			case "Registration":
-				new ActionRegistrationPanel(widget, event.type); 
+				new ActionRegistrationPanel(widget, event); 
 				break;
 			case "Login":
-				new ActionLoginPanel(widget, event.type); 
+				new ActionLoginPanel(widget, event); 
 				break;
 			case "Profile":
 				System.out.println("Action profile avviata"); 
-				new ActionProfile(widget, event.type); 
+				new ActionProfile(widget, event); 
 				break;
 			default:
 				break;
 			case "Home":
 				if(widgetProfile.contains(widget.getData("ID_action").toString()))
 				{
-					new ActionProfile(widget, event.type); 
+					new ActionProfile(widget, event); 
 				}
-				new ActionHomePanel(widget, event.type); 
+				else
+				{
+					new ActionHomePanel(widget, event); 
+				}
 				break;
 			case "Settings":
 				if(widgetProfile.contains(widget.getData("ID_action").toString()))
 				{
-					new ActionProfile(widget, event.type); 
+					new ActionProfile(widget, event); 
 				}
-				new ActionSettingPanel(widget, event.type); 
+				else
+				{
+					new ActionSettingPanel(widget, event); 
+				}
 				break;
 		}
 	
 		
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		Widget widget = e.widget; 
-		
-		switch (Controller.getWindowName()) {
-		case "Registration":
-			new ActionRegistrationPanel(widget, e.keyCode); 
-			break;
-		case "Login":
-			new ActionLoginPanel(widget, e.keyCode); 
-			break;
-		case "Profile":
-			new ActionProfile(widget, e.keyCode); 
-			break;
-		default:
-			break;
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 }

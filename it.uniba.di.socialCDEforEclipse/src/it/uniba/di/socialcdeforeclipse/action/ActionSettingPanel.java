@@ -5,18 +5,19 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Widget;
 
 public class ActionSettingPanel {
-	public  ActionSettingPanel(Widget widget, int eventType)	{
+	public  ActionSettingPanel(Widget widget, Event event)	{
 		
 		String widgetName = widget.getData("ID_action").toString();
 		
 		switch (widgetName) {
 			
 		case "SettingBtnOk":
-			if(eventType == SWT.Selection){
+			if(event.type == SWT.Selection){
 				System.out.println("Azione setting avviata"); 
 				if(!Controller.getCurrentUserPassword().equals(Controller.getSettingWindow().getTxtOldPassword().getText()))
 				{
@@ -74,7 +75,7 @@ public class ActionSettingPanel {
 			break;
 
 		case "SettingBtnCancel":
-			if(eventType == SWT.Selection){ 
+			if(event.type == SWT.Selection){ 
 					Controller.getSettingWindow().getBtnOk().redraw(); 
 					Controller.selectDynamicWindow(0);
 					Controller.getProfilePanel().getComposite_dinamic().layout(); 

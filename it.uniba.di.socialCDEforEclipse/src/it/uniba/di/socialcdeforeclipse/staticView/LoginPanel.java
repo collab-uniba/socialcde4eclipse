@@ -20,6 +20,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -127,6 +129,7 @@ public class LoginPanel implements Panel{
 		gridData.grabExcessHorizontalSpace = true;
 		txtProxyHost.setLayoutData(gridData);
 		txtProxyHost.setText(Controller.getPreferences("ProxyRoot").toString()); 
+		
 		controlli.add(txtProxyHost); 
 		
 		labelImageHost = new Label(panel,SWT.NONE);
@@ -248,18 +251,49 @@ public class LoginPanel implements Panel{
 		 labelRegistration.setData("ID_action", "labelRegistration");
 		 controlli.add(labelRegistration);
 		 
-		 	
+		
+		 panel.setTabList(new Control[] { txtProxyHost, txtUsername, txtPassword, btnLogin , chkAutologin , chkSavePassword });	
 		 
 		 System.out.println("Controlli " + panel.getChildren().length); 
+		
+		txtProxyHost.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
+		
+		txtUsername.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
+		
+		txtPassword.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
 		
 		btnLogin.addListener(SWT.Selection, azioni); 
 		labelRegistration.addListener(SWT.Selection, azioni); 
 		labelRegistration.addListener(SWT.Paint, azioni); 
 		txtProxyHost.addListener(SWT.FocusOut, azioni); 
-		txtProxyHost.addKeyListener((KeyListener) azioni); 
 		txtUsername.addListener(SWT.FocusOut, azioni); 
-		txtUsername.addKeyListener((KeyListener) azioni); 
-		txtPassword.addKeyListener((KeyListener) azioni); 
 		panel.addListener(SWT.Resize , azioni); 
 		panel.layout();
 		}

@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.staticView;
+package it.uniba.di.socialcdeforeclipse.dynamicView;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
@@ -15,6 +15,8 @@ import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -188,24 +190,45 @@ public class SettingPanel implements Panel {
 		btnOk.setLayoutData(gridData); 
 		controlli.add(btnOk); 
 		
-		/*
-		btnCancel = new Button(panel, SWT.PUSH); 
-		btnCancel.setText("Cancel");
-		btnCancel.computeSize(SWT.DEFAULT, SWT.DEFAULT); 
-	    btnCancel.setData("ID_action", "SettingBtnCancel");
-		gridData = new GridData();
-		gridData.horizontalSpan = 2;
-		btnCancel.setLayoutData(gridData); 
-		controlli.add(btnCancel); 
+		 panel.setTabList(new Control[] { txtOldPassword , txtNewPassword , btnOk , btnCancel });
+			
 		
-		btnOk = new Button(panel, SWT.PUSH); 
-		btnOk.setText("Ok"); 
-		btnOk.setData("ID_action", "SettingBtnOk");
-		controlli.add(btnOk); 
-		*/
 		btnCancel.addListener(SWT.Selection, azioni); 
 		btnOk.addListener(SWT.Selection, azioni); 
-		 
+		
+		txtOldPassword.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
+		
+		txtNewPassword.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		});
+		
+		btnOk.addTraverseListener(new TraverseListener() {
+			
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.detail == SWT.TRAVERSE_TAB_NEXT ||
+						e.detail == SWT.TRAVERSE_TAB_PREVIOUS)
+						e.doit = true;	
+			}
+		}); 
+		
 		Controller.getProfilePanel().getComposite_dinamic().layout(); 
 		Controller.getWindow().layout(); 
 		 
