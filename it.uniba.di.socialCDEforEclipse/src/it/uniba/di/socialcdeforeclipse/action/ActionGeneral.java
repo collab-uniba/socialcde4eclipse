@@ -22,6 +22,7 @@ public class ActionGeneral implements Listener  {
 		ArrayList<String> widgetProfile;
 		widgetProfile = new ArrayList<>();
 		widgetProfile.add("profilePanel");
+		widgetProfile.add("labelAvatarProfile"); 
 		widgetProfile.add("labelLogout");
 		widgetProfile.add("labelPeople"); 
 		Widget widget =  event.widget;

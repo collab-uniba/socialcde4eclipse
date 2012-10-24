@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Listener;
 public class ProfilePanel implements Panel{
 
 	private Listener azioni; 
-	private Label labelAvatar; 
+	private Label labelAvatarProfile; 
 	private Composite composite_static; 
 	private Label labelPeople; 
 	private Label labelHomeTimeline;
@@ -55,7 +55,7 @@ public class ProfilePanel implements Panel{
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
 
 
-	private Image resize(Image image, int width, int height) {
+	public Image resize(Image image, int width, int height) {
 		Image scaled = new Image(Controller.getWindow().getDisplay().getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
@@ -95,7 +95,7 @@ public class ProfilePanel implements Panel{
 		gridData.horizontalAlignment = gridData.FILL; 
 		composite_static.setLayoutData(gridData); 
 		
-		labelAvatar = new Label(composite_static, SWT.NONE);
+		labelAvatarProfile = new Label(composite_static, SWT.NONE);
 		System.out.println("Proxy " + Controller.getProxy().getHost()); 
 		System.out.println("Avatar" + Controller.getCurrentUser().Avatar); 
 		System.out.println("Username " + Controller.getPreferences("Username").toString()); 
@@ -103,27 +103,29 @@ public class ProfilePanel implements Panel{
 		System.out.println("Utente " + Controller.getCurrentUser().Id); 
 		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 		{
-			labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
-			labelAvatar.setImage(resize(labelAvatar.getImage(), 14, 14));
+			labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
+			labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 14, 14));
 		}
 		else
 		{
 			try {
-				labelAvatar.setImage(get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
-				labelAvatar.setImage(resize(labelAvatar.getImage(), 14, 14)); 
+				labelAvatarProfile.setImage(get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
+				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 14, 14)); 
 				 
 				
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Eccezione lanciata"); 
-				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
-				labelAvatar.setImage(resize(labelAvatar.getImage(), 14, 14));
+				labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
+				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 14, 14));
 				//e.printStackTrace();
 			} 
 		}
-		labelAvatar.setToolTipText("Profile"); 
-		controlli.add(labelAvatar); 
+		labelAvatarProfile.setToolTipText("Profile"); 
+		labelAvatarProfile.setData("ID_action", "labelAvatarProfile");
+		labelAvatarProfile.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
+		controlli.add(labelAvatarProfile); 
 		
 		
 		
@@ -221,6 +223,7 @@ public class ProfilePanel implements Panel{
 		panel.layout(); 
 		
 		panel.addListener(SWT.Resize, azioni); 
+		labelAvatarProfile.addListener(SWT.MouseDown, azioni); 
 		labelLogout.addListener(SWT.MouseDown, azioni); 
 		labelPeople.addListener(SWT.MouseDown, azioni); 
 		
@@ -277,6 +280,14 @@ public class ProfilePanel implements Panel{
 
 	public Composite getComposite_dinamic() {
 		return composite_dinamic;
+	}
+
+	public Label getLabelAvatarProfile() {
+		return labelAvatarProfile;
+	}
+
+	public void setLabelAvatarProfile(Label labelAvatarProfile) {
+		this.labelAvatarProfile = labelAvatarProfile;
 	}
 
 	public void setComposite_dinamic(Composite composite_dinamic) {

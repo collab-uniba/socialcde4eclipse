@@ -67,14 +67,17 @@ public class ActionProfile {
 			
 			if(event.type == SWT.MouseDown){
 				
-				Controller.closeAllDynamicPanel(); 
-				Controller.setWindowName("People");
-				Controller.getProfilePanel().dispose(Controller.getWindow()); 
-				Controller.setProfilePanel(null); 
-				Controller.setPeopleWindow(new DynamicPeople()); 
-				Controller.getPeopleWindow().inizialize(Controller.getWindow());
+				Controller.selectDynamicWindow(2); 
 				Controller.getWindow().layout(); 
 				
+			}
+			
+			break;
+			
+		case "labelAvatarProfile":
+			if (event.type == SWT.MouseDown) {
+				Controller.selectDynamicWindow(0); 
+				Controller.getWindow().layout(); 
 			}
 			
 			break;

@@ -296,16 +296,64 @@ public class Controller {
 			 gridData = new GridData(); 
 			gridData.grabExcessHorizontalSpace = true;
 			gridData.horizontalAlignment = gridData.FILL; 
+			gridData.grabExcessVerticalSpace = true; 
+			gridData.verticalAlignment = gridData.FILL;
 			dynamicComposite.setLayoutData(gridData);
 			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
+			}
+			else
+			{
+				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
+				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
+				 gridData = new GridData(); 
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = gridData.FILL;
+				gridData.grabExcessVerticalSpace = true; 
+				gridData.verticalAlignment = gridData.FILL; 
+				dynamicComposite.setLayoutData(gridData); 
+				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
 			}
 			settingWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic()); 
 			pbWindow.setStop(1); 
 		
 			Controller.getWindow().layout(); 
 			
-		default:
+		break;
+		case 2: 
+			peopleWindow = new DynamicPeople();
+			if(Controller.getProfilePanel().getComposite_dinamic() == null)
+			{
+			 dynamicComposite = new Composite(getWindow(),SWT.NONE); 
+			 gridData = new GridData(); 
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.horizontalAlignment = gridData.FILL; 
+			gridData.grabExcessVerticalSpace = true; 
+			gridData.verticalAlignment = gridData.FILL;
+			dynamicComposite.setLayoutData(gridData);
+			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
+			}
+			else
+			{
+				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
+				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
+				 gridData = new GridData(); 
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = gridData.FILL;
+				gridData.grabExcessVerticalSpace = true; 
+				gridData.verticalAlignment = gridData.FILL; 
+				dynamicComposite.setLayoutData(gridData); 
+				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+			}
+			peopleWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
+			pbWindow.setStop(1); 
+			
+			Controller.getWindow().layout(); 
 			break;
+			
+			default:
+				break;
 		}
 		
 	}

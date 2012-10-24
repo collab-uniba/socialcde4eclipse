@@ -97,6 +97,7 @@ public class DynamicHome implements Panel {
 		gridData.verticalSpan = 2; 
 		labelAvatar.setLayoutData(gridData); 
 		labelAvatar.setData("ID_action", "labelAvatar");
+		Controller.setCurrentUser(Controller.getProxy().GetUser(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword())); 
 		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 		{
 			labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 

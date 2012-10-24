@@ -1,5 +1,7 @@
 package it.uniba.di.socialcdeforeclipse.action;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import org.eclipse.swt.browser.OpenWindowListener;
 import org.eclipse.swt.browser.WindowEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
@@ -46,7 +49,7 @@ public class ActionHomePanel {
 	//WOAuthData oauthData;
     
     PinPanel pinWindow = new PinPanel();
-		
+    private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png");	
 	
 	
 
@@ -72,6 +75,29 @@ public class ActionHomePanel {
 				public void handleEvent(Event event) {
 					// TODO Auto-generated method stub
 					available_avatar.dispose(Controller.getWindow()); 
+					Controller.selectDynamicWindow(0); 
+					if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
+					{
+					  Controller.getProfilePanel().getLabelAvatarProfile().setImage(Controller.getProfilePanel().get_ImageStream(PATH_DEFAULT_AVATAR)); 
+					  Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 14, 14));
+					}
+					else
+					{
+						try {
+							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
+							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 14, 14)); 
+							 
+							
+							
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							System.out.println("Eccezione lanciata"); 
+							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().get_ImageStream(PATH_DEFAULT_AVATAR));
+							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 14, 14));
+							//e.printStackTrace();
+						} 
+					}
+					 
 				}
 			});
 			 available_avatar.inizialize(Controller.getWindow());

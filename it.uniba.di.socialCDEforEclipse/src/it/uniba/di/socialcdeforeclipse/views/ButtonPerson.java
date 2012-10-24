@@ -65,6 +65,7 @@ public class ButtonPerson extends Canvas {
 	private  int yCoordinate; 
 	private  int width; 
 	private  int height;
+	private Boolean flagDimension = false; 
 	
 	
 	
@@ -104,7 +105,7 @@ public class ButtonPerson extends Canvas {
 	public ButtonPerson(Composite parent, int style) {
 		super(parent, style | SWT.NO_BACKGROUND);
 		this.setBackgroundMode(SWT.INHERIT_DEFAULT);
-
+		System.out.println("Costruttore btn person evocato"); 
 		setDefaultColors();
 		addListeners();
 	}
@@ -349,14 +350,14 @@ public class ButtonPerson extends Canvas {
 		
 		
 		
-		//System.out.println("Square botton paint event call " + this.getClientArea() ); 
+		System.out.println("Square botton paint event call " + this.getClientArea() ); 
 		
 		 
 		
-		if( getClientArea().height != this.height && getClientArea().width != this.width)
+		if(this.getBounds().width != this.width && this.getBounds().height != this.height)
 		{
-			this.setBounds(this.xCoordinate, this.yCoordinate, this.width, this.height);
-			
+			this.setBounds(xCoordinate,yCoordinate, this.width, this.height);
+			flagDimension = true; 
 			
 			
 			
@@ -465,7 +466,7 @@ public class ButtonPerson extends Canvas {
 	private void drawText(GC gc, int x, int y) {
 		gc.setFont(font);
 		gc.setForeground(currentFontColor);
-		gc.drawText(text, x, y, SWT.DRAW_TRANSPARENT);
+		gc.drawText(text, 5, y+90, SWT.DRAW_TRANSPARENT);
 	}
 
 	private int drawImage(GC gc, int x, int y) {

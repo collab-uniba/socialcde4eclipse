@@ -128,7 +128,7 @@ public class ChooseAvatar implements Panel {
 		shell.setImage(getImageStream(PATH_ECLIPSE_ICON));
 
 		shell.setLayout(new GridLayout(1, false));
-
+		
 		URI[] uriAvatar = Controller.getProxy().GetAvailableAvatars(
 				Controller.getCurrentUser().Username,
 				Controller.getCurrentUserPassword());
@@ -168,12 +168,13 @@ public class ChooseAvatar implements Panel {
 			}
 
 			for (int i = 0; i < uriAvatar.length; i++) {
+				System.out.println("Analizzo Avatar " + i); 
+				System.out.println(uriAvatar[i].toString()); 
 				Button btn_avatar = new Button(firstComposite,
 						SWT.NO_BACKGROUND);
 
 				try {
-					btn_avatar.setImage(resize(getImageStream(uriAvatar[i]
-							.toURL().openStream()), 75, 75));
+					btn_avatar.setImage(resize(getImageStream(uriAvatar[i].toURL().openStream()), 75, 75));
 					btn_avatar.setData("URI", uriAvatar[i]); 
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
