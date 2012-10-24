@@ -13,6 +13,7 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.popup.ChooseAvatar;
 import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
+import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
@@ -58,9 +59,25 @@ public class ActionHomePanel {
 	
 		String widgetName = widget.getData("ID_action").toString(); 
 	    IViewPart browser = null; 
-		
+		System.out.println("Azione invocata " + widgetName); 
 		switch (widgetName) {
 		
+		case "labelSkills":
+			final SkillsPanel skillPanel = new SkillsPanel(); 
+			skillPanel.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+			skillPanel.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+			skillPanel.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
+			skillPanel.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2); 
+			skillPanel.setBackListener(new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					// TODO Auto-generated method stub
+					skillPanel.dispose(Controller.getWindow());
+				}
+			}); 
+			skillPanel.inizialize(Controller.getWindow()); 
+			break;
 		
 		case "labelAvatar":
 			System.out.println("Evento labelAvatar attivato"); 

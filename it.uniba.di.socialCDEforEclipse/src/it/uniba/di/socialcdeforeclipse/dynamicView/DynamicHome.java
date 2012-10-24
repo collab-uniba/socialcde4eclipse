@@ -133,6 +133,7 @@ public class DynamicHome implements Panel {
 		labelSkills = new Label(buttonComposite,SWT.RIGHT); 
 		labelSkills.setImage(get_ImageStream(PATH_SKILLS));
 		labelSkills.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
+		labelSkills.setData("ID_action", "labelSkills");
 		
 		labelSettings = new Label(buttonComposite,SWT.RIGHT); 
 		labelSettings.setImage(get_ImageStream(PATH_SETTINGS));
@@ -292,7 +293,8 @@ public class DynamicHome implements Panel {
 		
 		
 		
-		labelSettings.addListener(SWT.MouseDown, azioni); 
+		labelSettings.addListener(SWT.MouseDown, azioni);
+		labelSkills.addListener(SWT.MouseDown, azioni); 
 		labelAvatar.addListener(SWT.MouseDown, azioni); 
 		
 		controlli.add(serviceComposite); 
