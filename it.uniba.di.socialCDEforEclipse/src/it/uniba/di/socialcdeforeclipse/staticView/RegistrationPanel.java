@@ -247,7 +247,7 @@ public class RegistrationPanel implements Panel {
 		btnRegister.setText("Register"); 
 		btnRegister.setWidth(80);
 		btnRegister.setHeight(30); 
-		btnRegister.setxCoordinate(391);
+		btnRegister.setxCoordinate(5);
 		btnRegister.setyCoordinate(230); 
 		btnRegister.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
 		btnRegister.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);

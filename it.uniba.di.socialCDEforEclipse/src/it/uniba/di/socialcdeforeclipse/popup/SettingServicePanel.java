@@ -145,7 +145,7 @@ public class SettingServicePanel implements Panel {
 	@Override
 	public void inizialize(Composite panel) {
 
-		Image imgWallpaper = resize(getImageStream(PATH_WALLPAPER), 300, 200);
+		Image imgWallpaper = resize(getImageStream(PATH_WALLPAPER), 340, 200);
 
 		shadow = new Shell(panel.getShell(), SWT.NO_TRIM);
 		shadow.setSize(Controller.getWindowWidth(),
@@ -161,7 +161,7 @@ public class SettingServicePanel implements Panel {
 		shell = new Shell(panel.getShell(), SWT.NO_REDRAW_RESIZE);
 		shell.setSize(300, 100);
 
-		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 300, 200);
+		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 340, 200);
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);

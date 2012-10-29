@@ -61,7 +61,8 @@ public class SquareButtonService extends Canvas {
 	public static int IMAGE_RIGHT = 1;
 	protected int imageStyle = 0;
 	
-	private Boolean flagDimension = false; 
+	public  Boolean flagDimension = false; 
+	
 	public static int counterPosition = 0; 
 	public static int yCoordinateValue = 5; 
 	
@@ -310,12 +311,17 @@ public class SquareButtonService extends Canvas {
 	private void paintControl(PaintEvent e) {
 		
 		int[] xValue = {5,110,215}; 
+		/*
+		if(!flagDimension)
+		{
 		
-		
-		
+		this.setBounds(this.computeTrim(0, 0, 100, 100));
+		this.flagDimension = true; 
+		}
+		*/
 		//System.out.println("Square botton paint event call " + this.getClientArea() + " e flag  " + this.flagDimension ); 
 		
-		this.flagDimension = false; 
+		
 		
 		if( getClientArea().height != 100 && getClientArea().width != 100)
 		{

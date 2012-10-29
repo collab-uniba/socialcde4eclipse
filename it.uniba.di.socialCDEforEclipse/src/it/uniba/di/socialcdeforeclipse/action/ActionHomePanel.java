@@ -15,6 +15,7 @@ import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
+import it.uniba.di.socialcdeforeclipse.popup.TFSLogin;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
@@ -135,10 +136,10 @@ public class ActionHomePanel {
 					final SettingServicePanel serviceSetting = new SettingServicePanel(); 
 					serviceSetting.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x ); 
 					serviceSetting.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y ); 
-					serviceSetting.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
+					serviceSetting.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x  - 30 + (Controller.getWindow().getBounds().width - 300) / 2); 
 					serviceSetting.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
 					serviceSetting.setService(service); 
-					SquareButtonService.yCoordinateValue = 5;
+					//SquareButtonService.flagDimension = false; 
 					serviceSetting.setBtnUnsubscriveListener(new Listener() {
 						
 						@Override
@@ -164,8 +165,11 @@ public class ActionHomePanel {
 							break;
 						}
 					       serviceSetting.dispose(null); 
+					       //SquareButtonService.flagDimension = false; 
+					       
 					       SquareButtonService.yCoordinateValue = 5;
 					       SquareButtonService.counterPosition = 0;
+					       
 					       Controller.selectDynamicWindow(0); 
 					       
 					       
@@ -282,7 +286,44 @@ public class ActionHomePanel {
 					}
 					else if (service.RequireTFSAuthentication)
 					{
-						//tfs login
+						final TFSLogin tfsPanel = new TFSLogin(); 
+						 tfsPanel.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+						 tfsPanel.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+						 tfsPanel.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
+						 tfsPanel.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
+						 tfsPanel.setService(service); 
+						 tfsPanel.setOkListener(new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								System.out.println("Domain " + tfsPanel.getInput().get("Domain")); 
+								System.out.println("Username " + tfsPanel.getInput().get("Username").toString());
+								System.out.println("Password " + tfsPanel.getInput().get("Password").toString());
+								if(Controller.getProxy().RecordService(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), tfsPanel.getService().Id, tfsPanel.getInput().get("Username"),tfsPanel.getInput().get("Password"),tfsPanel.getInput().get("Domain")))
+								{
+									tfsPanel.dispose(null); 
+									Controller.selectDynamicWindow(0); 
+								}
+								else
+								{
+									MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+							        messageBox2.setMessage("Something was wrong, please try again.");
+							        messageBox2.setText("SocialCDEforEclipse Message");
+							        messageBox2.open();
+				            		
+								}
+							}
+						});
+						 tfsPanel.setCancelListener(new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								tfsPanel.dispose(null); 
+							}
+						});
+						 tfsPanel.inizialize(Controller.getWindow());
 					}
 				}
 			

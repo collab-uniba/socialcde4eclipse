@@ -83,7 +83,7 @@ public class ProfilePanel implements Panel{
 		
 		panel.setLayout(layout);
 		panel.setBackgroundImage(resize(get_ImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight())); 
-		panel.setData("ID_action","profilePanel");
+		//panel.setData("ID_action","profilePanel");
 		
 		GridLayout grid_static = new GridLayout(15,false);
 		grid_static.makeColumnsEqualWidth = true; 
@@ -222,7 +222,7 @@ public class ProfilePanel implements Panel{
 
 		panel.layout(); 
 		
-		panel.addListener(SWT.Resize, azioni); 
+		//panel.addListener(SWT.Resize, azioni); 
 		labelAvatarProfile.addListener(SWT.MouseDown, azioni); 
 		labelLogout.addListener(SWT.MouseDown, azioni); 
 		labelPeople.addListener(SWT.MouseDown, azioni); 

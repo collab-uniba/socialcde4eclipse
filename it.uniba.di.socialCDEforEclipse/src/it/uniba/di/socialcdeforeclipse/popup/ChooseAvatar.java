@@ -24,6 +24,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -90,8 +91,7 @@ public class ChooseAvatar implements Panel {
 	}
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay()
-				.getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);

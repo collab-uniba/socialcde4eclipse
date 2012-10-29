@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.io.InputStream;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
@@ -14,6 +15,10 @@ import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -22,6 +27,9 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -29,6 +37,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -52,15 +62,7 @@ public class SocialCDEview extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "it.uniba.di.socialcdeforeclipse.views.SocialCDEview";
-	private TableViewer viewer;
-	private Action action1;
-	private Action action2;
-	private Action doubleClickAction;
-	private Label label;
-	private ProxyWrapper Proxy;
 
-	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
-			.getResourceAsStream("images/Wallpaper.png");
 
 	/*
 	 * The content provider class is responsible for providing objects to the
@@ -70,13 +72,12 @@ public class SocialCDEview extends ViewPart {
 	 * example).
 	 */
 	public Image getImageStream(InputStream stream) {
-		return new Image(Controller.getWindow().getDisplay(), stream);
+		return new Image(Display.getCurrent(), stream);
 
 	}
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay()
-				.getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -102,39 +103,84 @@ public class SocialCDEview extends ViewPart {
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
 	 */
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent2) {
+		
+		
+		
+		final ScrolledComposite scrollComposite = new ScrolledComposite(parent2, SWT.V_SCROLL | SWT.H_SCROLL);
+		Composite parent = new Composite(scrollComposite, SWT.NONE);
+		scrollComposite.setContent(parent);
+		
+		
+		scrollComposite.setExpandVertical(true);
+		scrollComposite.setExpandHorizontal(true);
+		
+		
+		scrollComposite.addControlListener(new ControlAdapter() {
+			public void controlResized(ControlEvent e) {
+				Rectangle r = scrollComposite.getClientArea();
+				scrollComposite.setMinSize(parent2.computeSize(r.width, SWT.DEFAULT));
+			}
+		});
 
 	
-		Controller.setWindow(parent);
-		parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
+	/*	
+		parent.getVerticalBar().setMinimum(0);  
+		parent.getHorizontalBar().setMinimum(0); 
+		 */
 		
+		 parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
-		System.out.println(  Controller.getWindow().getSize());
+		Controller.setWindow(parent); 
+		
+		 
+		
+		System.out.println(Controller.getWindow().getSize());
 		System.out.println(Controller.getWindow().getShell().getSize());
 		System.out.println(Controller.getWindow().toDisplay(Controller.getWindow().getShell().getSize()));
 
 		final PaintListener paintEvent = new PaintListener() {
 
+		
+			
+			
 			public void paintControl(PaintEvent e) {
+				
 				System.out.println("Evento paint attivato");
+				System.out.println("Dimensioni window " +  Controller.getWindow().getSize());
+				System.out.println("Dimensioni shell " + Controller.getWindow().getShell().getSize());
+				System.out.println("Dimensioni window parent " +  Controller.getWindow().getParent().getSize());
+				System.out.println("Dimensioni window height impostate "+ Controller.getWindowHeight()); 
+						
 				SquareButtonService.yCoordinateValue = 5; 
 				SquareButtonService.counterPosition = 0; 
 				
-				if (Controller.getWindowHeight() == 0) {
-					if (Controller.getWindow().getSize().x == 0	&& Controller.getWindow().getSize().y == 0) {
-						Controller.getWindow().setBackgroundImage(	getImageStream(PATH_WALLPAPER));
+				if (Controller.getWindowHeight() != Controller.getWindow().getParent().getSize().y || Controller.getWindowWidth() != Controller.getWindow().getParent().getSize().x ) {
+					
+					
+					if (Controller.getWindow().getParent().getSize().x == 0	&& Controller.getWindow().getParent().getSize().y == 0) {
+						Controller.getWindow().setBackgroundImage(	 getImageStream(this.getClass().getClassLoader()
+								.getResourceAsStream("images/Wallpaper.png")));
 					} else {
-						System.out.println("Inizio "	+ Controller.getWindow().getSize());
-						Controller.setWindowHeight(Controller.getWindow().getSize().y);
-						Controller.setWindowWidth(Controller.getWindow().getSize().x);
+						System.out.println("Inizio "	+ Controller.getWindow().getParent().getSize());
+						Controller.setWindowHeight(Controller.getWindow().getParent().getSize().y);
+						Controller.setWindowWidth(Controller.getWindow().getParent().getSize().x);
 						Controller.getWindow().setBackgroundImage(
-								resize(getImageStream(PATH_WALLPAPER),
+								resize( getImageStream(this.getClass().getClassLoader()
+										.getResourceAsStream("images/Wallpaper.png")),
 										Controller.getWindowWidth(),
 										Controller.getWindowHeight()));
+						try {
+							this.getClass().getClassLoader()
+							.getResourceAsStream("images/Wallpaper.png").close();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 
 						
 					}
-
+					
 					// TODO Auto-generated method stub
 					// Controller.getWindow().setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),100,100));
 				}

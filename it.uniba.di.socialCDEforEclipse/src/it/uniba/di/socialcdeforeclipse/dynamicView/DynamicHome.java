@@ -98,25 +98,24 @@ public class DynamicHome implements Panel {
 		labelAvatar.setLayoutData(gridData); 
 		labelAvatar.setData("ID_action", "labelAvatar");
 		Controller.setCurrentUser(Controller.getProxy().GetUser(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword())); 
-		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
-		{
-			labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
-			labelAvatar.setImage(resize(labelAvatar.getImage(), 75, 75));
-		}
-		else
-		{
+		
 			try {
 				labelAvatar.setImage(get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
 				labelAvatar.setImage(resize(labelAvatar.getImage(), 75, 75)); 
 				 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				System.out.println("Eccezione lanciata"); 
+				//System.out.println("Eccezione lanciata"); 
 				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
 				labelAvatar.setImage(resize(labelAvatar.getImage(), 75, 75));
 				//e.printStackTrace();
 			} 
-		}
+			catch (NullPointerException e) {
+				// TODO: handle exception
+				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
+				labelAvatar.setImage(resize(labelAvatar.getImage(), 75, 75));
+			}
+		
 		controlli.add(labelAvatar); 
 		
 		username = new Label(panel, SWT.NONE); 
@@ -179,9 +178,9 @@ public class DynamicHome implements Panel {
 		final  WService[] wService = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 		
 		serviceComposite = new Composite(panel,SWT.None);
-		System.out.println("servicecomposite size " + serviceComposite.getBounds()); 
+		//System.out.println("servicecomposite size " + serviceComposite.getBounds()); 
 		//serviceComposite.setSize(serviceComposite.computeSize(serviceComposite.getSize().x, 100 * (wService.length/2)));
-		System.out.println("servicecomposite size after " + serviceComposite.getBounds()); 
+		//System.out.println("servicecomposite size after " + serviceComposite.getBounds()); 
 		GridLayout serviceGrid = new GridLayout(3,true); 
 		serviceComposite.setLayout(serviceGrid); 
 		gridData = new GridData(); 
@@ -191,7 +190,7 @@ public class DynamicHome implements Panel {
 		gridData.verticalAlignment = gridData.FILL; 
 		serviceComposite.setLayoutData(gridData); 
 		
-		System.out.println("Servizi trovati " + wService.length); 
+		//System.out.println("Servizi trovati " + wService.length); 
 		
 		
 		
@@ -205,7 +204,7 @@ public class DynamicHome implements Panel {
 		{
 		
 			for( int i=0;i<wService.length;i++)
-			{
+			{ 
 				/*
 				services = new Button(serviceComposite, SWT.NONE);
 				services.addPaintListener(new PaintListener() {
@@ -244,6 +243,8 @@ public class DynamicHome implements Panel {
 				controlli.add(services);
 				System.out.println("Link immagine " + wService[i].Image);
 				System.out.println("Registrato " + wService[i].Registered);
+				System.out.println("Autorizzazione TFS " + wService[i].RequireTFSAuthentication); 
+				System.out.println("Dominio TFS " + wService[i].RequireTFSDomain); 
 				if(wService[i].Registered)
 				{
 					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
@@ -279,7 +280,7 @@ public class DynamicHome implements Panel {
 				
 				
 				
-				 System.out.println("Fine iterata"); 
+				// System.out.println("Fine iterata"); 
 			}
 		} else {
 			service = new Label(serviceComposite, SWT.NONE);
@@ -314,8 +315,13 @@ public class DynamicHome implements Panel {
 		System.out.println("Dimensione composite " + serviceComposite.getBounds());
 		serviceComposite.layout(); 
 		serviceComposite.pack(); 
+		
+		panel.pack(); 
 		panel.layout(); 
 		
+		
+		Controller.getWindow().pack(); 
+		Controller.getWindow().layout(); 
 		
 	}
 	

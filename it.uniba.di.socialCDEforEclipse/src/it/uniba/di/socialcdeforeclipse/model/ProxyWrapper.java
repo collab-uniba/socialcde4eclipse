@@ -587,6 +587,8 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		try {
 			URL url = new URL(host +"/RecordService");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			System.out.println("Record service path "  + url.toString()); 
+			
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
@@ -597,8 +599,8 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			// Create the form content
 			OutputStream out = conn.getOutputStream();
 			Writer writer = new OutputStreamWriter(out, "UTF-8");
-			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"service\":\"" + service + "\", \"usernameOnService\":\"" + usernameOnService + "\", \"passwordOnService\": \"" + passwordOnService + "\", \"domain\":\""+ domain + "}");
-			
+			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"service\":\"" + service + "\", \"usernameOnService\":\"" + usernameOnService + "\", \"passwordOnService\": \"" + passwordOnService + "\", \"domain\":\""+ domain + "\"}");
+			System.out.println("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"service\":\"" + service + "\", \"usernameOnService\":\"" + usernameOnService + "\", \"passwordOnService\": \"" + passwordOnService + "\", \"domain\":\""+ domain + "\"}");
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
@@ -625,7 +627,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 		}
 		
-		if(result == "true")
+		if(result.equals("true"))
 		{
 			
 			return true;

@@ -46,9 +46,12 @@ public class ActionSettingPanel {
 				        		  {
 				        			 
 				        			  Controller.setCurrentUserPassword(Controller.getSettingWindow().getTxtNewPassword().getText()); 
-								       SquareButtonService.yCoordinateValue = 5;
+								      /* 
+				        			  SquareButtonService.yCoordinateValue = 5;
 								       SquareButtonService.counterPosition = 0;
-				        			  Controller.selectDynamicWindow(0); 
+								       */
+				        			//  SquareButtonService.flagDimension = false;
+								       Controller.selectDynamicWindow(0); 
 				        			  Controller.getProfilePanel().getComposite_dinamic().layout(); 
 				        		  }
 				        		 

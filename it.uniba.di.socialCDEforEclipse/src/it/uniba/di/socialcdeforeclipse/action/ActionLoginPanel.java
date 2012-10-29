@@ -14,6 +14,7 @@ import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
 import it.uniba.di.socialcdeforeclipse.staticView.ProfilePanel;
 import it.uniba.di.socialcdeforeclipse.staticView.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
+import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 
 
@@ -140,6 +141,8 @@ public class ActionLoginPanel {
 								
 									Controller.getLoginPanel().dispose(Controller.getWindow()); 
 									Controller.setLoginPanel(null); 
+									SquareButtonService.yCoordinateValue = 5;
+									SquareButtonService.counterPosition = 0; 
 									Controller.getProfilePanel().inizialize(Controller.getWindow()); 
 									
 									pbWindow.setStop(1); 

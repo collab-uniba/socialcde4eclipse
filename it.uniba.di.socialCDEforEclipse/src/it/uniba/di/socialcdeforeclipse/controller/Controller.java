@@ -12,8 +12,13 @@ import java.util.HashMap;
 import java.util.prefs.Preferences;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 
@@ -270,7 +275,8 @@ public class Controller {
 			}
 			else
 			{
-				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
+				Controller.getProfilePanel().getComposite_dinamic().dispose();
+				
 				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
 				 gridData = new GridData(); 
 				gridData.grabExcessHorizontalSpace = true;
@@ -281,8 +287,11 @@ public class Controller {
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
 				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
 			}
+			//SquareButtonService.flagDimension = false; 
+			
 			SquareButtonService.yCoordinateValue = 5; 
 			SquareButtonService.counterPosition = 0; 
+			
 			homeWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
 			pbWindow.setStop(1); 
 			
@@ -321,32 +330,47 @@ public class Controller {
 			
 		break;
 		case 2: 
+			
+			
 			peopleWindow = new DynamicPeople();
 			if(Controller.getProfilePanel().getComposite_dinamic() == null)
 			{
 			 dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-			 gridData = new GridData(); 
+			
+			gridData = new GridData(); 
 			gridData.grabExcessHorizontalSpace = true;
 			gridData.horizontalAlignment = gridData.FILL; 
 			gridData.grabExcessVerticalSpace = true; 
 			gridData.verticalAlignment = gridData.FILL;
 			dynamicComposite.setLayoutData(gridData);
+			
 			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
 			}
 			else
 			{
 				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
 				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-				 gridData = new GridData(); 
+				 
+				
+				gridData = new GridData(); 
 				gridData.grabExcessHorizontalSpace = true;
 				gridData.horizontalAlignment = gridData.FILL;
 				gridData.grabExcessVerticalSpace = true; 
 				gridData.verticalAlignment = gridData.FILL; 
 				dynamicComposite.setLayoutData(gridData); 
+				
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
 				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
 			}
+			 
+			
+			
+			 
+			 
 			peopleWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
+			
+			
+			
 			pbWindow.setStop(1); 
 			
 			Controller.getWindow().layout(); 

@@ -100,6 +100,7 @@ public class ProgressBarThread extends Thread {
 		display = new Display();
 
 		shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+		System.out.println("Utilizzo dimensioni " + Controller.getWindowWidth() + " altezza " + Controller.getWindowHeight()); 
 		shell.setSize(Controller.getWindowWidth(), Controller.getWindowHeight());
 
 		shell.setBounds(xCoordinate, yCoordinate, Controller.getWindowWidth(),

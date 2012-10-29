@@ -91,7 +91,7 @@ public class LoginPanel implements Panel{
 		controlli = new ArrayList<Control>();
 		GridLayout layout = new GridLayout(3, false);
 		panel.setLayout(layout);
-		panel.setData("ID_action","loginPanel"); 
+		//panel.setData("ID_action","loginPanel"); 
 		//panel.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),100,100)); 
 		System.out.println("larghezza " + Controller.getWindowWidth() + " altezza " + Controller.getWindowHeight() );  
 		
@@ -294,7 +294,7 @@ public class LoginPanel implements Panel{
 		labelRegistration.addListener(SWT.Paint, azioni); 
 		txtProxyHost.addListener(SWT.FocusOut, azioni); 
 		txtUsername.addListener(SWT.FocusOut, azioni); 
-		panel.addListener(SWT.Resize , azioni); 
+		//panel.addListener(SWT.Resize , azioni); 
 		panel.layout();
 		}
 	
