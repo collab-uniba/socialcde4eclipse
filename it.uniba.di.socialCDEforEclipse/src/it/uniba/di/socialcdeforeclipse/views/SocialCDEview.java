@@ -119,7 +119,7 @@ public class SocialCDEview extends ViewPart {
 		scrollComposite.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				Rectangle r = scrollComposite.getClientArea();
-				scrollComposite.setMinSize(parent2.computeSize(r.width, SWT.DEFAULT));
+				scrollComposite.setMinSize(parent2.computeSize(r.width, Controller.getWindowHeight()));
 			}
 		});
 
@@ -148,15 +148,18 @@ public class SocialCDEview extends ViewPart {
 				
 				System.out.println("Evento paint attivato");
 				System.out.println("Dimensioni window " +  Controller.getWindow().getSize());
+				/*
 				System.out.println("Dimensioni shell " + Controller.getWindow().getShell().getSize());
 				System.out.println("Dimensioni window parent " +  Controller.getWindow().getParent().getSize());
 				System.out.println("Dimensioni window height impostate "+ Controller.getWindowHeight()); 
-						
+				*/		
 				SquareButtonService.yCoordinateValue = 5; 
 				SquareButtonService.counterPosition = 0; 
 				
+				
 				if (Controller.getWindowHeight() != Controller.getWindow().getParent().getSize().y || Controller.getWindowWidth() != Controller.getWindow().getParent().getSize().x ) {
 					
+				System.out.println("Confronto altezza (" + Controller.getWindowHeight() + " con " + Controller.getWindow().getParent().getSize().y + ") e larghezza (" + Controller.getWindowWidth() + " con " + Controller.getWindow().getParent().getSize().x + ")" );	
 					
 					if (Controller.getWindow().getParent().getSize().x == 0	&& Controller.getWindow().getParent().getSize().y == 0) {
 						Controller.getWindow().setBackgroundImage(	 getImageStream(this.getClass().getClassLoader()
@@ -165,11 +168,13 @@ public class SocialCDEview extends ViewPart {
 						System.out.println("Inizio "	+ Controller.getWindow().getParent().getSize());
 						Controller.setWindowHeight(Controller.getWindow().getParent().getSize().y);
 						Controller.setWindowWidth(Controller.getWindow().getParent().getSize().x);
+					
 						Controller.getWindow().setBackgroundImage(
 								resize( getImageStream(this.getClass().getClassLoader()
 										.getResourceAsStream("images/Wallpaper.png")),
 										Controller.getWindowWidth(),
 										Controller.getWindowHeight()));
+						
 						try {
 							this.getClass().getClassLoader()
 							.getResourceAsStream("images/Wallpaper.png").close();
@@ -177,7 +182,7 @@ public class SocialCDEview extends ViewPart {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-
+					
 						
 					}
 					

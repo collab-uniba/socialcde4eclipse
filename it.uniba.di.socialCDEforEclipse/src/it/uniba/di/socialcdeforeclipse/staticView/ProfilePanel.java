@@ -96,11 +96,13 @@ public class ProfilePanel implements Panel{
 		composite_static.setLayoutData(gridData); 
 		
 		labelAvatarProfile = new Label(composite_static, SWT.NONE);
+		/*
 		System.out.println("Proxy " + Controller.getProxy().getHost()); 
 		System.out.println("Avatar" + Controller.getCurrentUser().Avatar); 
 		System.out.println("Username " + Controller.getPreferences("Username").toString()); 
 		System.out.println("Password " + Controller.getPreferences("Password").toString());
 		System.out.println("Utente " + Controller.getCurrentUser().Id); 
+		*/
 		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 		{
 			labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
@@ -134,15 +136,7 @@ public class ProfilePanel implements Panel{
 		labelPeople.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
 		labelPeople.setToolTipText("People"); 
 		labelPeople.setData("ID_action", "labelPeople");
-		labelPeople.addPaintListener(new PaintListener() {
 		
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				Label lbl = (Label) e.widget; 
-			System.out.println("Paint labelpeople " + lbl.getBounds());	
-			}
-		});
 		
 		controlli.add(labelPeople); 
 		
@@ -150,45 +144,21 @@ public class ProfilePanel implements Panel{
 		labelHomeTimeline.setImage(get_ImageStream(PATH_HOME)); 
 		labelHomeTimeline.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
 		labelHomeTimeline.setToolTipText("Home Timeline"); 
-		labelHomeTimeline.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				Label lbl = (Label) e.widget; 
-			System.out.println("Paint Home Timeline " + lbl.getBounds());	
-			}
-		});
+		
 		controlli.add(labelHomeTimeline); 
 		
 		labelInteractionTimeline = new Label(composite_static,SWT.PUSH);
 		labelInteractionTimeline.setImage(get_ImageStream(PATH_INTERACTION_TIMELINE)); 
 		labelInteractionTimeline.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
 		labelInteractionTimeline.setToolTipText("Interation Timeline"); 
-		labelInteractionTimeline.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				Label lbl = (Label) e.widget; 
-			System.out.println("Paint label Interaction timeline " + lbl.getBounds());	
-			}
-		});
+		
 		controlli.add(labelInteractionTimeline); 
 		
 		labelInteractiveTimeline = new Label(composite_static,SWT.PUSH); 
 		labelInteractiveTimeline.setImage(get_ImageStream(PATH_INTERACTIVE_TIMELINE)); 
 		labelInteractiveTimeline.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
 		labelInteractiveTimeline.setToolTipText("Interactive Timeline"); 
-		labelInteractiveTimeline.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				Label lbl = (Label) e.widget; 
-			System.out.println("Paint label interactive timeline " + lbl.getBounds());	
-			}
-		});
+		
 		controlli.add(labelInteractiveTimeline); 
 		
 		labelLogout = new Label(composite_static, SWT.BUTTON_MASK); 
@@ -198,15 +168,7 @@ public class ProfilePanel implements Panel{
 		labelLogout.setToolTipText("Logout"); 
 		 gridData = new GridData(); 
 		gridData.grabExcessHorizontalSpace = true;	
-		labelLogout.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				Label lbl = (Label) e.widget; 
-			System.out.println("Paint label logout " + lbl.getBounds());	
-			}
-		});
+		
 		labelLogout.setLayoutData(gridData); 
 		
 		controlli.add(labelLogout);

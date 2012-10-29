@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -44,8 +45,7 @@ public class SkillsPanel implements Panel {
 			.getResourceAsStream("images/Wallpaper.png");
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay()
-				.getDefault(), width, height);
+		Image scaled = new Image(Display.getCurrent().getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -128,7 +128,7 @@ public class SkillsPanel implements Panel {
 		else
 		{
 			Label noSkills = new Label(shell, SWT.None); 
-			noSkills.setText("There are no skills or there are no \"Get your skills\" feature selected.\n Try again later."); 
+			noSkills.setText("There are no skills or there are no \"Get your skills\" \n feature selected.\n Try again later."); 
 		}
 		
 	GeneralButton	btnBack = new GeneralButton(shell, SWT.None); 

@@ -63,7 +63,7 @@ public class DynamicHome implements Panel {
 	private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay().getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -150,7 +150,7 @@ public class DynamicHome implements Panel {
 		
 		
 		labelPost = new Label(postComposite,SWT.WRAP | SWT.CENTER); 
-		labelPost.setText("Posts\r\n" + Controller.getCurrentUser().Statuses); 
+		labelPost.setText("Posts\r\n" + Controller.getCurrentUser().getStatuses()); 
 		labelPost.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD ));
 		labelPost.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true)); 
 		
@@ -161,7 +161,7 @@ public class DynamicHome implements Panel {
 		controlli.add(verticalSeparator); 
 		
 		labelFollowing = new Label(postComposite,SWT.WRAP | SWT.CENTER); 
-		labelFollowing.setText("Following\r\n" + Controller.getCurrentUser().Followings); 
+		labelFollowing.setText("Following\r\n" + Controller.getCurrentUser().getFollowings()); 
 		labelFollowing.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD ));
 		labelFollowing.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true)); 
 		
@@ -171,7 +171,7 @@ public class DynamicHome implements Panel {
 		verticalSeparator.setLayoutData(gridData);
 		
 		labelFollowers = new Label(postComposite, SWT.WRAP | SWT.CENTER); 
-		labelFollowers.setText("Followers\r\n" + Controller.getCurrentUser().Followers); 
+		labelFollowers.setText("Followers\r\n" + Controller.getCurrentUser().getFollowers()); 
 		labelFollowers.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD ));
 		labelFollowers.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		
@@ -241,10 +241,12 @@ public class DynamicHome implements Panel {
 				 services.setSize(100, 100);
 					
 				controlli.add(services);
+				/*
 				System.out.println("Link immagine " + wService[i].Image);
 				System.out.println("Registrato " + wService[i].Registered);
 				System.out.println("Autorizzazione TFS " + wService[i].RequireTFSAuthentication); 
 				System.out.println("Dominio TFS " + wService[i].RequireTFSDomain); 
+				*/
 				if(wService[i].Registered)
 				{
 					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
