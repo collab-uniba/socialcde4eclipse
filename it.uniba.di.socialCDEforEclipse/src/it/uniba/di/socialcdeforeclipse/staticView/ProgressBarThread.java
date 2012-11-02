@@ -5,6 +5,7 @@ import java.io.InputStream;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -68,8 +69,7 @@ public class ProgressBarThread extends Thread {
 	}
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay()
-				.getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -107,8 +107,10 @@ public class ProgressBarThread extends Thread {
 				Controller.getWindowHeight());
 		GridLayout layout = new GridLayout(1, false);
 		shell.setLayout(layout);
-		shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),
-				Controller.getWindowWidth(), Controller.getWindowHeight()));
+		//shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),Controller.getWindowWidth(), Controller.getWindowHeight()));
+		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		shell.setBackground(new Color(Display.getCurrent(),249,250,237)); 
+		
 		
 		Composite first_composite = new Composite(shell,   SWT.NO_BACKGROUND);
 		first_composite.setLayout(layout); 

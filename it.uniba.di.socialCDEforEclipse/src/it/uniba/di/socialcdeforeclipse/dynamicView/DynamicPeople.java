@@ -153,7 +153,9 @@ public class DynamicPeople implements Panel{
 					} 
 				}
 				person.setText(suggestion[i].Username);
-				 
+				person.setData("IdProfile", suggestion[i].Id); 
+				person.addListener(SWT.Selection,azioni); 
+				person.setData("ID_action","User");
 				controlli.add(combo);
 				
 				 
@@ -213,6 +215,9 @@ public class DynamicPeople implements Panel{
 					e.printStackTrace();
 				}
 				person.setText(following[i].Username);
+				person.setData("IdProfile", following[i].Id); 
+				person.addListener(SWT.Selection,azioni); 
+				person.setData("ID_action","User");
 				controlli.add(combo);
 			}
 		}
@@ -270,6 +275,9 @@ public class DynamicPeople implements Panel{
 					e.printStackTrace();
 				}
 				person.setText(followers[i].Username);
+				person.setData("IdProfile", followers[i].Id); 
+				person.addListener(SWT.Selection,azioni); 
+				person.setData("ID_action","User");
 				controlli.add(combo);
 			}
 		}
@@ -328,9 +336,14 @@ public class DynamicPeople implements Panel{
 				e.printStackTrace();
 			}
 			person.setText(hiddenUsers[i].Username);
+			person.setData("IdProfile", hiddenUsers[i].Id); 
+			person.addListener(SWT.Selection,azioni); 
+			person.setData("ID_action","User");
 			controlli.add(combo);
 		}
 	}
+	
+	Controller.setWindowName("People"); 
 	
 	panel2.redraw(); 
 	

@@ -323,20 +323,22 @@ public class SquareButtonService extends Canvas {
 		
 		
 		
-		if( getClientArea().height != 100 && getClientArea().width != 100)
+		if( getClientArea().height != 80 && getClientArea().width != 70)
 		{
 			
+			this.setBounds(this.computeTrim(0, 0, 70, 70));
+			/*
 			switch (counterPosition) {
 			case 0:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
+				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
 				counterPosition +=1;
 				break;
 			case 1:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
+				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
 				counterPosition +=1; 
 				break;
 			case 2:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 100, 100));
+				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
 				counterPosition = 0;
 				yCoordinateValue += 120;
 			default:
@@ -347,7 +349,7 @@ public class SquareButtonService extends Canvas {
 			
 			
 			//System.out.println("Dimensioni fissate " + this.getBounds() ); 
-			flagDimension = true; 
+			flagDimension = true;*/ 
 		}
 
 		
@@ -366,7 +368,7 @@ public class SquareButtonService extends Canvas {
 			p.x = getClientArea().width;
 		}
 		//Rectangle rect = new Rectangle(0, 0, p.x, p.y);
-		Rectangle rect = new Rectangle(0, 0, 100,100);
+		Rectangle rect = new Rectangle(0, 0, 70,70);
 		
 		GC gc = e.gc;
 		gc.setAntialias(SWT.ON);
@@ -434,14 +436,14 @@ public class SquareButtonService extends Canvas {
 
 		// side image and/or button text, if any
 		if (imageStyle == IMAGE_RIGHT) {
-			drawText(gc, x, y);
+			//drawText(gc, x, y);
 			if (image != null) {
 				x = rect.width - x - image.getBounds().width + imagePadding;
 				drawImage(gc, x, y);
 			}
 		} else {
 			x = drawImage(gc, x, y);
-			drawText(gc, x -58, y+70);
+			//drawText(gc, x -58, y+70);
 		}
 		
 		
@@ -457,7 +459,7 @@ public class SquareButtonService extends Canvas {
 	private int drawImage(GC gc, int x, int y) {
 		if (image == null)
 			return x;
-		gc.drawImage(image, x+20, y+5);
+		gc.drawImage(image, x, y+5);
 		return x + image.getBounds().width + imagePadding;
 	}
 

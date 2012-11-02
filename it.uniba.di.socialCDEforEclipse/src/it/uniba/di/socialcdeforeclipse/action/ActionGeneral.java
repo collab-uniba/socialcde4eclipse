@@ -60,6 +60,16 @@ public class ActionGeneral implements Listener  {
 					new ActionSettingPanel(widget, event); 
 				}
 				break;
+			case "People":
+				if(widgetProfile.contains(widget.getData("ID_action").toString()))
+				{
+					new ActionProfile(widget, event); 
+				}
+				else
+				{
+					new ActionDynamicPeople(widget, event); 
+				}
+				break;
 		}
 	
 		

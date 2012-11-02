@@ -16,6 +16,7 @@ import java.util.HashMap;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -25,6 +26,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
@@ -56,7 +58,7 @@ public class ProfilePanel implements Panel{
 
 
 	public Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay().getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -82,7 +84,8 @@ public class ProfilePanel implements Panel{
 		GridLayout layout = new GridLayout(1, false);
 		
 		panel.setLayout(layout);
-		panel.setBackgroundImage(resize(get_ImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight())); 
+		panel.setBackground(new Color(Display.getCurrent(),249,250,237)); 
+		//panel.setBackgroundImage(resize(get_ImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight())); 
 		//panel.setData("ID_action","profilePanel");
 		
 		GridLayout grid_static = new GridLayout(15,false);
@@ -90,6 +93,7 @@ public class ProfilePanel implements Panel{
 		
 		composite_static = new Composite( panel, SWT.NONE );
 		composite_static.setLayout( grid_static );
+		composite_static.setBackground(new Color(Display.getCurrent(), 192,192,186)); 
 		GridData gridData = new GridData(); 
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL; 
@@ -106,21 +110,20 @@ public class ProfilePanel implements Panel{
 		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 		{
 			labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
-			labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 14, 14));
+			labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 32, 32));
 		}
 		else
 		{
 			try {
 				labelAvatarProfile.setImage(get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
-				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 14, 14)); 
+				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 32, 32)); 
 				 
 				
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Eccezione lanciata"); 
-				labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
-				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 14, 14));
+				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 32, 32));
 				//e.printStackTrace();
 			} 
 		}

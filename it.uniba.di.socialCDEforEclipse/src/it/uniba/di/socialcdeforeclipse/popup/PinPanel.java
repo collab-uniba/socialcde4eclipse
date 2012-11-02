@@ -67,7 +67,7 @@ public class PinPanel implements Panel{
 	
 	
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay().getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -198,7 +198,7 @@ public class PinPanel implements Panel{
 		Composite firstComposite = new Composite(shell,SWT.None); 
 		firstComposite.setLayout(new GridLayout(2,false)); 
 		firstComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		firstComposite.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),300, 200));
+		firstComposite.setBackground(new Color(Display.getCurrent(),249,250,237));
 		
 		gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
@@ -261,10 +261,10 @@ public class PinPanel implements Panel{
 		btnOk.setHeight(30); 
 		btnOk.setxCoordinate(5);
 		btnOk.setyCoordinate(5); 
-		btnOk.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnOk.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnOk.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnOk.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnOk.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnOk.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnOk.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnOk.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
 		btnOk.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 	
 		btnCancel = new GeneralButton(buttonComposite, SWT.None); 
@@ -273,10 +273,10 @@ public class PinPanel implements Panel{
 		btnCancel.setHeight(30); 
 		btnCancel.setxCoordinate(90);
 		btnCancel.setyCoordinate(5); 
-		btnCancel.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnCancel.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnCancel.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnCancel.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnCancel.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnCancel.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnCancel.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnCancel.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
 		btnCancel.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 		/*
 		btnCancel = new Button(buttonComposite, SWT.None); 

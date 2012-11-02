@@ -45,7 +45,7 @@ public class SkillsPanel implements Panel {
 			.getResourceAsStream("images/Wallpaper.png");
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Display.getCurrent().getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -83,7 +83,7 @@ public class SkillsPanel implements Panel {
 		GridLayout layout = new GridLayout(1, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackgroundImage(imgWallpaper);
+		shell.setBackground(new Color(Display.getCurrent(),249,250,237)); 
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL;
@@ -137,10 +137,10 @@ public class SkillsPanel implements Panel {
 		btnBack.setHeight(30); 
 		btnBack.setxCoordinate(116);
 		btnBack.setyCoordinate(161); 
-		btnBack.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnBack.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnBack.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnBack.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnBack.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnBack.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnBack.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnBack.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
 		btnBack.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 		btnBack.addListener(SWT.Selection, backListener);
 		

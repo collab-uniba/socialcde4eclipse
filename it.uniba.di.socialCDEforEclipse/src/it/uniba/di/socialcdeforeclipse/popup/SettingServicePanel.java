@@ -165,7 +165,7 @@ public class SettingServicePanel implements Panel {
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackgroundImage(imgWallpaper);
+		shell.setBackground(new Color(Display.getCurrent(),249,250,237));
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL;
@@ -197,7 +197,7 @@ public class SettingServicePanel implements Panel {
 		
 		
 		 Canvas btnImgServce = new Canvas(shell, SWT.None);
-		 btnImgServce.setBackground(new Color(Controller.getWindow().getDisplay(), 143,207,226)); 
+		 btnImgServce.setBackground(new Color(Display.getCurrent(), 230, 230, 223)); 
 		 
 		 
 		 btnImgServce.addPaintListener(new PaintListener() {
@@ -270,10 +270,10 @@ public class SettingServicePanel implements Panel {
 		btnUnsubscribe.setHeight(30); 
 		btnUnsubscribe.setxCoordinate(5);
 		btnUnsubscribe.setyCoordinate(133); 
-		btnUnsubscribe.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnUnsubscribe.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnUnsubscribe.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnUnsubscribe.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnUnsubscribe.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnUnsubscribe.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnUnsubscribe.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnUnsubscribe.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
 		btnUnsubscribe.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 		btnUnsubscribe.addListener(SWT.Selection, btnUnsubscriveListener);
 		
@@ -283,10 +283,10 @@ public class SettingServicePanel implements Panel {
 		btnSave.setHeight(30); 
 		btnSave.setxCoordinate(105);
 		btnSave.setyCoordinate(133); 
-		btnSave.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnSave.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnSave.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnSave.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnSave.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnSave.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnSave.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
+		btnSave.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
 		btnSave.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 		btnSave.addListener(SWT.Selection, btnSaveListener);
 		

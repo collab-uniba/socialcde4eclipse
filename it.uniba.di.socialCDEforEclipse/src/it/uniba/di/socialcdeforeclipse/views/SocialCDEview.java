@@ -25,6 +25,7 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
@@ -162,19 +163,22 @@ public class SocialCDEview extends ViewPart {
 				System.out.println("Confronto altezza (" + Controller.getWindowHeight() + " con " + Controller.getWindow().getParent().getSize().y + ") e larghezza (" + Controller.getWindowWidth() + " con " + Controller.getWindow().getParent().getSize().x + ")" );	
 					
 					if (Controller.getWindow().getParent().getSize().x == 0	&& Controller.getWindow().getParent().getSize().y == 0) {
-						Controller.getWindow().setBackgroundImage(	 getImageStream(this.getClass().getClassLoader()
-								.getResourceAsStream("images/Wallpaper.png")));
+						
+						Controller.getWindow().setBackground(new Color(Display.getCurrent(),249,250,237));
+						//Controller.getWindow().setBackgroundImage(	 getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png")));
 					} else {
 						System.out.println("Inizio "	+ Controller.getWindow().getParent().getSize());
 						Controller.setWindowHeight(Controller.getWindow().getParent().getSize().y);
 						Controller.setWindowWidth(Controller.getWindow().getParent().getSize().x);
-					
+						Controller.getWindow().setBackground(new Color(Display.getCurrent(),249,250,237));
+						/*
 						Controller.getWindow().setBackgroundImage(
 								resize( getImageStream(this.getClass().getClassLoader()
 										.getResourceAsStream("images/Wallpaper.png")),
 										Controller.getWindowWidth(),
 										Controller.getWindowHeight()));
-						
+						*/
+						/*
 						try {
 							this.getClass().getClassLoader()
 							.getResourceAsStream("images/Wallpaper.png").close();
@@ -182,7 +186,7 @@ public class SocialCDEview extends ViewPart {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-					
+					*/
 						
 					}
 					

@@ -26,6 +26,7 @@ import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicHome;
 import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicInteractionTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicInteractiveTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicPeople;
+import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicUserTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamicView.SettingPanel;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
@@ -68,6 +69,8 @@ public class Controller {
 	private static DynamicPeople peopleWindow = null;
 	
 	private static SettingPanel settingWindow = null;
+	
+	private static DynamicUserTimeline dynamicUserWindow = null;
 	
 	public static HashMap<String, Object> temporaryInformation =  new HashMap<String,Object>();  
 	
@@ -211,6 +214,13 @@ public class Controller {
 	
 	//other methods
 	public static void closeAllDynamicPanel(){
+		if(dynamicUserWindow != null)
+		{
+			dynamicUserWindow.dispose(Controller.getProfilePanel().getComposite_dinamic());
+			dynamicUserWindow = null;
+		}
+		
+		
 	   if(homeWindow != null){
 		   homeWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
 		   homeWindow = null;
@@ -375,7 +385,42 @@ public class Controller {
 			
 			Controller.getWindow().layout(); 
 			break;
+		case 3:
+			dynamicUserWindow = new DynamicUserTimeline(); 
+			if(Controller.getProfilePanel().getComposite_dinamic() == null)
+			{
+			 dynamicComposite = new Composite(getWindow(),SWT.NONE); 
 			
+			gridData = new GridData(); 
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.horizontalAlignment = gridData.FILL; 
+			gridData.grabExcessVerticalSpace = true; 
+			gridData.verticalAlignment = gridData.FILL;
+			dynamicComposite.setLayoutData(gridData);
+			
+			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
+			}
+			else
+			{
+				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
+				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
+				 
+				
+				gridData = new GridData(); 
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = gridData.FILL;
+				gridData.grabExcessVerticalSpace = true; 
+				gridData.verticalAlignment = gridData.FILL; 
+				dynamicComposite.setLayoutData(gridData); 
+				
+				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+			}
+			dynamicUserWindow.setIdProfile(Integer.parseInt(Controller.temporaryInformation.get("idProfile").toString()));
+			dynamicUserWindow.inizialize( Controller.getProfilePanel().getComposite_dinamic() ); 
+			pbWindow.setStop(1); 
+			
+			break;
 			default:
 				break;
 		}
