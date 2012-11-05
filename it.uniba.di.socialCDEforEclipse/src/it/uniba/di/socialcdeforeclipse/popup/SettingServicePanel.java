@@ -55,7 +55,9 @@ public class SettingServicePanel implements Panel {
 	private Listener btnSaveListener;
 	private Listener btnUnsubscriveListener;
 	private ArrayList<Button> checkboxCreated; 
-
+	private Boolean selectAllItems = false; 
+	
+	
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
 			.getResourceAsStream("images/Wallpaper.png");
 
@@ -70,6 +72,14 @@ public class SettingServicePanel implements Panel {
 		gc.dispose();
 		image.dispose(); // don't forget about me!
 		return scaled;
+	}
+
+	public Boolean getSelectAllItems() {
+		return selectAllItems;
+	}
+
+	public void setSelectAllItems(Boolean selectAllItems) {
+		this.selectAllItems = selectAllItems;
 	}
 
 	private Image getImageStream(InputStream stream) {
@@ -145,7 +155,7 @@ public class SettingServicePanel implements Panel {
 	@Override
 	public void inizialize(Composite panel) {
 
-		Image imgWallpaper = resize(getImageStream(PATH_WALLPAPER), 340, 200);
+		
 
 		shadow = new Shell(panel.getShell(), SWT.NO_TRIM);
 		shadow.setSize(Controller.getWindowWidth(),
@@ -228,7 +238,7 @@ public class SettingServicePanel implements Panel {
 			Button featureService = new Button(shell, SWT.CHECK);
 			featureService.setText(featuresService[i].Description);
 			featureService.setData("FeatureName", featuresService[i].Name ); 
-			if (featuresService[i].IsChosen) {
+			if (featuresService[i].IsChosen || selectAllItems) {
 				featureService.setSelection(true);
 				 
 			}

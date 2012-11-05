@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -23,6 +25,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
@@ -31,8 +34,8 @@ public class DynamicPeople implements Panel{
 	
 	
 	private ArrayList<Control> controlli;
-	 
-	private Composite combo;
+	  
+	
 	 
 	
 	
@@ -58,9 +61,10 @@ public class DynamicPeople implements Panel{
 	public void inizialize(Composite panel2) {
 		// TODO Auto-generated method stub
 		
-		 
+	 
 		
-		
+		 Image imageAvatar;
+		  
 	
 	
 		
@@ -71,7 +75,7 @@ public class DynamicPeople implements Panel{
 		
 		controlli = new ArrayList<Control>();
 		Listener azioni = new ActionGeneral();
-		panel2.setLayout(new GridLayout(3, true));
+		panel2.setLayout(new GridLayout(1, true));
 		
 		
 		 
@@ -106,60 +110,93 @@ public class DynamicPeople implements Panel{
 			System.out.println("Persone suggerite " + suggestion.length);
 			 
 			
-			for (int i = 0; i < suggestion.length ; i++) {
-
-				 combo = new Composite(panel2, SWT.None); 
-				 combo.setLayout(new GridLayout(1,false)); 
-				combo.setLayoutData(new GridData(100, 120)); 
-				
-				
-				ButtonPerson person = new ButtonPerson(combo, SWT.None); 
-				person.setxCoordinate(0); 
-				 
-				person.setyCoordinate(0); 
-				person.setWidth(100);
-				person.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD )); 
-				person.setHeight(120); 
 			
-				person.setDefaultColors(new Color(Controller.getWindow().getDisplay(), 81,179,225), new Color(Controller.getWindow().getDisplay(), 81,179,225), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
-				person.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-				person.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-				person.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+			for(int i=0;i< suggestion.length;i++)
+			{
+				Composite compositeSuggestionUser = new Composite(panel2, SWT.BORDER); 
+				compositeSuggestionUser.setLayout(new GridLayout(4, false));
+				grid = new GridData(); 
+				grid.grabExcessHorizontalSpace = true; 
+				grid.horizontalAlignment = GridData.FILL; 
+				compositeSuggestionUser.setLayoutData(grid); 
+				
+				compositeSuggestionUser.addListener(SWT.MouseMove, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						// TODO Auto-generated method stub
+						System.out.println("Mouse move attivato"); 
+						Composite cmp = (Composite)  event.widget; 
+						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
+						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+						cmp.redraw(); 
+						cmp.layout(); 
+						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+						Controller.getWindow().layout(); 
+						
+					}
+				});
+				
+				compositeSuggestionUser.addListener(SWT.MouseExit, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						// TODO Auto-generated method stub
+						System.out.println("Mouse exit attivato");
+						Composite cmp = (Composite)  event.widget; 
+						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
+						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+						cmp.redraw(); 
+						cmp.layout(); 
+						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+						Controller.getWindow().layout(); 
+					}
+				});
+				controlli.add(compositeSuggestionUser); 
+				
+				Label labelUserImage = new Label(compositeSuggestionUser, SWT.None); 
 				try {
-					System.out.println("Immagine link " + suggestion[i].Avatar);
-					System.out.println("Immagine di " + suggestion[i].Username);
-					Image imageProposed = getImageStream(new URL(suggestion[i].Avatar).openStream()); 
-					System.out.println("Immagine dim " + imageProposed.getBounds() + " di " + suggestion[i].Username); 
-					person.setImage( resize(imageProposed,80,80));
+					labelUserImage.setImage(resize(getImageStream(new URL(suggestion[i].Avatar).openStream()),80,80));
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
-					person.setImage(resize(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png")),80,80)); 
-					try {
-						this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png").close();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} 
 					//e.printStackTrace();
+					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+					labelUserImage.setImage(resize(imageAvatar,80,80)); 
+					imageAvatar.dispose(); 
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					//e.printStackTrace();
-					person.setImage(resize(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png")),80,80));
-					try {
-						this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png").close();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} 
-				}
-				person.setText(suggestion[i].Username);
-				person.setData("IdProfile", suggestion[i].Id); 
-				person.addListener(SWT.Selection,azioni); 
-				person.setData("ID_action","User");
-				controlli.add(combo);
+					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+					labelUserImage.setImage(resize(imageAvatar,80,80)); 
+					imageAvatar.dispose();  
+				} 
+				controlli.add(labelUserImage); 
 				
-				 
+				Label labelUserText = new Label(compositeSuggestionUser, SWT.None); 
+				labelUserText.setText(suggestion[i].Username); 
+				controlli.add(labelUserText); 
+
+			    Label labelHidden = new Label(compositeSuggestionUser, SWT.NONE);
+				labelHidden.setText("");
+				labelHidden.setVisible(false);
+				controlli.add(labelHidden);
+				
+				Label labelNext = new Label(compositeSuggestionUser, SWT.None); 
+				labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+				grid = new GridData(); 
+				grid.grabExcessHorizontalSpace = true; 
+				grid.horizontalAlignment = GridData.END; 
+				labelNext.setLayoutData(grid); 
+				controlli.add(labelNext); 
+				
+				compositeSuggestionUser.addListener(SWT.MouseDown, azioni); 
+				compositeSuggestionUser.setData("ID_action", "User_selected"); 
+				compositeSuggestionUser.setData("User_type", "Suggested"); 
+				compositeSuggestionUser.setData("User_data",suggestion[i]); 
+				
 			}
+			
+			
 		}
 		
 		Label labelFollowings = new Label(panel2, SWT.NONE); 
@@ -187,43 +224,99 @@ public class DynamicPeople implements Panel{
 		else
 		{
 			
-			//System.out.println("Persone suggerite " + following.length);
+			GridData grid2; 
 			
-			for (int i = 0; i < following.length; i++) {
-
-				 combo = new Composite(panel2, SWT.None); 
-				 combo.setLayout(new GridLayout(1,false)); 
-					combo.setLayoutData(new GridData(100, 120));
-				ButtonPerson person = new ButtonPerson(combo, SWT.None); 
-				person.setxCoordinate(0); 
-				person.setyCoordinate(0); 
-				person.setWidth(100);
-				person.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD )); 
-				person.setHeight(120); 
-			
-				person.setDefaultColors(new Color(Controller.getWindow().getDisplay(), 81,179,225), new Color(Controller.getWindow().getDisplay(), 81,179,225), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
-				person.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-				person.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-				person.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+			for(int i=0;i< following.length;i++)
+			{
+				
+				Composite compositeFollowingUser = new Composite(panel2, SWT.BORDER); 
+				compositeFollowingUser.setLayout(new GridLayout(4, false));
+				grid2 = new GridData(); 
+				grid2.grabExcessHorizontalSpace = true; 
+				grid2.horizontalAlignment = GridData.FILL; 
+				compositeFollowingUser.setLayoutData(grid2); 
+				
+				
+				compositeFollowingUser.addListener(SWT.MouseMove, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						// TODO Auto-generated method stub
+						System.out.println("Mouse move attivato"); 
+						Composite cmp = (Composite)  event.widget; 
+						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
+						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+						cmp.redraw(); 
+						cmp.layout(); 
+						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+						Controller.getWindow().layout(); 
+						
+					}
+				});
+				
+				compositeFollowingUser.addListener(SWT.MouseExit, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						// TODO Auto-generated method stub
+						System.out.println("Mouse exit attivato");
+						Composite cmp = (Composite)  event.widget; 
+						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
+						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+						cmp.redraw(); 
+						cmp.layout(); 
+						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+						Controller.getWindow().layout(); 
+					}
+				});
+				controlli.add(compositeFollowingUser); 
+				
+				Label labelUserImage = new Label(compositeFollowingUser, SWT.None); 
 				try {
-					person.setImage(getImageStream(new URL(following[i].Avatar).openStream()));
+					labelUserImage.setImage(resize(getImageStream(new URL(following[i].Avatar).openStream()),80,80));
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+					labelUserImage.setImage(resize(imageAvatar,80,80)); 
+					imageAvatar.dispose(); 
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				person.setText(following[i].Username);
-				person.setData("IdProfile", following[i].Id); 
-				person.addListener(SWT.Selection,azioni); 
-				person.setData("ID_action","User");
-				controlli.add(combo);
+					//e.printStackTrace();
+					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+					labelUserImage.setImage(resize(imageAvatar,80,80)); 
+					imageAvatar.dispose();  
+				} 
+				
+				controlli.add(labelUserImage); 
+				
+				Label labelUserText = new Label(compositeFollowingUser, SWT.None); 
+				labelUserText.setText(following[i].Username); 
+				controlli.add(labelUserText);
+/*
+			    Label labelHidden = new Label(compositeFollowingUser, SWT.NONE);
+				labelHidden.setText("");
+				labelHidden.setVisible(false);
+				controlli.add(labelHidden);
+*/				
+				Label labelNext = new Label(compositeFollowingUser, SWT.None); 
+				labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+				grid2 = new GridData(); 
+				grid2.grabExcessHorizontalSpace = true; 
+				grid2.horizontalAlignment = GridData.END; 
+				labelNext.setLayoutData(grid2); 
+				controlli.add(labelNext);
+				
+				compositeFollowingUser.addListener(SWT.MouseDown, azioni); 
+				compositeFollowingUser.setData("ID_action", "User_selected"); 
+				compositeFollowingUser.setData("User_type", "Following"); 
+				compositeFollowingUser.setData("User_data",following[i]); 
+				
 			}
 		}
 		
 		Label labelFollowers = new Label(panel2, SWT.NONE); 
-		labelFollowers.setText("Followers:"); 
+		labelFollowers.setText("Followers: "); 
 		labelFollowers.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
 		grid.horizontalSpan = 3; 
 		grid.grabExcessHorizontalSpace = true;
@@ -245,48 +338,102 @@ public class DynamicPeople implements Panel{
 		}
 		else
 		{
-			
-		//	System.out.println("Persone suggerite " + followers.length);
-			
-			for (int i = 0; i < followers.length; i++) {
-
-				 combo = new Composite(panel2, SWT.None); 
-				 combo.setLayout(new GridLayout(1,false)); 
-				 combo.setLayoutData(new GridData(100, 120));
+			GridData grid2; 
+			for(int i=0;i< followers.length;i++)
+			{
 				
-				ButtonPerson person = new ButtonPerson(combo, SWT.None); 
-				person.setxCoordinate(0); 
-				person.setyCoordinate(0); 
-				person.setWidth(100);
-				person.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD )); 
-				person.setHeight(120); 
-			
-				person.setDefaultColors(new Color(Controller.getWindow().getDisplay(), 81,179,225), new Color(Controller.getWindow().getDisplay(), 81,179,225), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
-				person.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-				person.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-				person.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+				Composite compositeFollowersUser = new Composite(panel2, SWT.BORDER); 
+				compositeFollowersUser.setLayout(new GridLayout(4, false));
+				grid2 = new GridData(); 
+				grid2.grabExcessHorizontalSpace = true; 
+				grid2.horizontalAlignment = GridData.FILL; 
+				compositeFollowersUser.setLayoutData(grid2); 
+				
+				
+				compositeFollowersUser.addListener(SWT.MouseMove, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						// TODO Auto-generated method stub
+						System.out.println("Mouse move attivato"); 
+						Composite cmp = (Composite)  event.widget; 
+						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
+						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+						cmp.redraw(); 
+						cmp.layout(); 
+						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+						Controller.getWindow().layout(); 
+						
+					}
+				});
+				
+				compositeFollowersUser.addListener(SWT.MouseExit, new Listener() {
+					
+					@Override
+					public void handleEvent(Event event) {
+						// TODO Auto-generated method stub
+						System.out.println("Mouse exit attivato");
+						Composite cmp = (Composite)  event.widget; 
+						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
+						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+						cmp.redraw(); 
+						cmp.layout(); 
+						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+						Controller.getWindow().layout(); 
+					}
+				});
+				controlli.add(compositeFollowersUser); 
+				
+				Label labelUserImage = new Label(compositeFollowersUser, SWT.None); 
 				try {
-					person.setImage(resize(getImageStream(new URL(followers[i].Avatar).openStream()),80,80));
+					labelUserImage.setImage(resize(getImageStream(new URL(followers[i].Avatar).openStream()),80,80));
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+					labelUserImage.setImage(resize(imageAvatar,80,80)); 
+					imageAvatar.dispose(); 
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				person.setText(followers[i].Username);
-				person.setData("IdProfile", followers[i].Id); 
-				person.addListener(SWT.Selection,azioni); 
-				person.setData("ID_action","User");
-				controlli.add(combo);
+					//e.printStackTrace();
+					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+					labelUserImage.setImage(resize(imageAvatar,80,80)); 
+					imageAvatar.dispose();  
+				} 
+				controlli.add(labelUserImage); 
+				
+				Label labelUserText = new Label(compositeFollowersUser, SWT.None); 
+				labelUserText.setText(followers[i].Username); 
+				grid2 = new GridData(); 
+				grid2.horizontalAlignment = GridData.FILL; 
+				labelUserText.setLayoutData(grid2); 
+				controlli.add(labelUserText); 
+/*
+			    Label labelHidden = new Label(compositeFollowersUser, SWT.NONE);
+				labelHidden.setText("");
+				labelHidden.setVisible(false);
+				controlli.add(labelHidden);
+				*/
+				Label labelNext = new Label(compositeFollowersUser, SWT.None); 
+				labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+				grid2 = new GridData(); 
+				grid2.grabExcessHorizontalSpace = true; 
+				grid2.horizontalAlignment = GridData.END; 
+				labelNext.setLayoutData(grid2); 
+				controlli.add(labelNext); 
+				
+				compositeFollowersUser.addListener(SWT.MouseDown, azioni); 
+				
+				compositeFollowersUser.setData("ID_action", "User_selected"); 
+				compositeFollowersUser.setData("User_type", "Followers"); 
+				compositeFollowersUser.setData("User_data",followers[i]); 
 			}
 		}
 	
 		Label labelHidden = new Label(panel2, SWT.NONE); 
 		labelHidden.setText("Hidden:"); 
 		labelHidden.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
-		grid.horizontalSpan = 3; 
-		labelHidden.setLayoutData(grid); 
+		grid.horizontalSpan = 3;  
 		controlli.add(labelHidden);	
 		
 	WUser[]	hiddenUsers = Controller.getProxy().GetHiddenUsers(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
@@ -304,42 +451,96 @@ public class DynamicPeople implements Panel{
 	else
 	{
 		
-		//System.out.println("Persone nascoste " + hiddenUsers.length);
-		
-		for (int i = 0; i < hiddenUsers.length; i++) {
-
-			 combo = new Composite(panel2, SWT.None); 
-			 combo.setLayout(new GridLayout(1,false)); 
-			grid = new GridData(); 
-			grid.widthHint = 100;
-			grid.heightHint = 120;  
-			combo.setLayoutData(grid);
+		GridData grid2; 
+		for(int i=0;i< hiddenUsers.length;i++)
+		{
 			
-			ButtonPerson person = new ButtonPerson(combo, SWT.None); 
-			person.setxCoordinate(0); 
-			person.setyCoordinate(0); 
-			person.setWidth(100);
-			person.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD )); 
-			person.setHeight(120); 
-		
-			person.setDefaultColors(new Color(Controller.getWindow().getDisplay(), 81,179,225), new Color(Controller.getWindow().getDisplay(), 81,179,225), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
-			person.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-			person.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-			person.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), Display.getCurrent().getSystemColor(SWT.COLOR_BLUE), null, Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+			Composite compositeHiddenUser = new Composite(panel2, SWT.BORDER); 
+			compositeHiddenUser.setLayout(new GridLayout(4, false));
+			grid2 = new GridData(); 
+			grid2.grabExcessHorizontalSpace = true; 
+			grid2.horizontalAlignment = GridData.FILL; 
+			compositeHiddenUser.setLayoutData(grid2); 
+			
+			
+			compositeHiddenUser.addListener(SWT.MouseMove, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					// TODO Auto-generated method stub
+					System.out.println("Mouse move attivato"); 
+					Composite cmp = (Composite)  event.widget; 
+					cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
+					cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+					cmp.redraw(); 
+					cmp.layout(); 
+					Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+					Controller.getWindow().layout(); 
+					
+				}
+			});
+			
+			compositeHiddenUser.addListener(SWT.MouseExit, new Listener() {
+				
+				@Override
+				public void handleEvent(Event event) {
+					// TODO Auto-generated method stub
+					System.out.println("Mouse exit attivato");
+					Composite cmp = (Composite)  event.widget; 
+					cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
+					cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+					cmp.redraw(); 
+					cmp.layout(); 
+					Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+					Controller.getWindow().layout(); 
+				}
+			});
+			controlli.add(compositeHiddenUser); 
+			
+			Label labelUserImage = new Label(compositeHiddenUser, SWT.None); 
 			try {
-				person.setImage(resize(getImageStream(new URL(hiddenUsers[i].Avatar).openStream()),80,80));
+				labelUserImage.setImage(resize(getImageStream(new URL(hiddenUsers[i].Avatar).openStream()),80,80));
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+				labelUserImage.setImage(resize(imageAvatar,80,80)); 
+				imageAvatar.dispose(); 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			person.setText(hiddenUsers[i].Username);
-			person.setData("IdProfile", hiddenUsers[i].Id); 
-			person.addListener(SWT.Selection,azioni); 
-			person.setData("ID_action","User");
-			controlli.add(combo);
+				//e.printStackTrace();
+				imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+				labelUserImage.setImage(resize(imageAvatar,80,80)); 
+				imageAvatar.dispose();  
+			} 
+			controlli.add(labelUserImage); 
+			
+			Label labelUserText = new Label(compositeHiddenUser, SWT.None); 
+			labelUserText.setText(hiddenUsers[i].Username); 
+			grid2 = new GridData(); 
+			grid2.horizontalAlignment = GridData.FILL; 
+			labelUserText.setLayoutData(grid2); 
+			controlli.add(labelUserText); 
+/*
+		    Label labelHidden = new Label(compositeFollowersUser, SWT.NONE);
+			labelHidden.setText("");
+			labelHidden.setVisible(false);
+			controlli.add(labelHidden);
+			*/
+			Label labelNext = new Label(compositeHiddenUser, SWT.None); 
+			labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+			grid2 = new GridData(); 
+			grid2.grabExcessHorizontalSpace = true; 
+			grid2.horizontalAlignment = GridData.END; 
+			labelNext.setLayoutData(grid2); 
+			controlli.add(labelNext); 
+			
+			compositeHiddenUser.addListener(SWT.MouseDown, azioni); 
+			
+			compositeHiddenUser.setData("ID_action", "User_selected"); 
+			compositeHiddenUser.setData("User_type", "Hidden"); 
+			compositeHiddenUser.setData("User_data",hiddenUsers[i]); 
+			
 		}
 	}
 	

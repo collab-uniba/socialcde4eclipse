@@ -120,7 +120,7 @@ public class SocialCDEview extends ViewPart {
 		scrollComposite.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				Rectangle r = scrollComposite.getClientArea();
-				scrollComposite.setMinSize(parent2.computeSize(r.width, Controller.getWindowHeight()));
+				scrollComposite.setMinSize(parent2.computeSize(r.width, SWT.DEFAULT));
 			}
 		});
 

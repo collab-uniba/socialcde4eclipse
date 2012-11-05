@@ -97,13 +97,13 @@ public class ActionHomePanel {
 					if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 					{
 					  Controller.getProfilePanel().getLabelAvatarProfile().setImage(Controller.getProfilePanel().get_ImageStream(PATH_DEFAULT_AVATAR)); 
-					  Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 14, 14));
+					  Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 32, 32));
 					}
 					else
 					{
 						try {
 							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
-							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 14, 14)); 
+							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 32, 32)); 
 							 
 							
 							
@@ -111,7 +111,7 @@ public class ActionHomePanel {
 							// TODO Auto-generated catch block
 							System.out.println("Eccezione lanciata"); 
 							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().get_ImageStream(PATH_DEFAULT_AVATAR));
-							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 14, 14));
+							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 32,32));
 							//e.printStackTrace();
 						} 
 					}
@@ -396,7 +396,95 @@ public class ActionHomePanel {
             		Controller.selectDynamicWindow(0); 
             		//oauthData = null;
             		System.out.println("Ok pinwindow premuto");
-            		//Controller.selectDynamicWindow(0); 
+            		//Controller.selectDynamicWindow(0);
+            		
+            		final SettingServicePanel serviceSetting = new SettingServicePanel(); 
+					serviceSetting.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x ); 
+					serviceSetting.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y ); 
+					serviceSetting.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x  - 30 + (Controller.getWindow().getBounds().width - 300) / 2); 
+					serviceSetting.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
+					serviceSetting.setSelectAllItems(true); 
+					serviceSetting.setService(pinWindow.getService()); 
+					serviceSetting.setBtnUnsubscriveListener(new Listener() {
+						
+						@Override
+						public void handleEvent(Event event) {
+							// TODO Auto-generated method stub
+							MessageBox messageBox = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_WARNING  | SWT.YES | SWT.NO);
+					        messageBox.setMessage("Are you sure you want to unsubscribe?");
+					        messageBox.setText("SocialCDEforEclipse Message");
+					       int response = messageBox.open();
+					       
+					       switch (response) {
+						case SWT.YES:
+							if(!Controller.getProxy().DeleteRegistredService(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), serviceSetting.getService().Id))
+							{
+								MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+						        messageBox2.setMessage("Something was wrong, please try again.");
+						        messageBox2.setText("SocialCDEforEclipse Message");
+						        messageBox2.open();
+							}
+							break;
+						case SWT.NO:
+						default:
+							break;
+						}
+					       serviceSetting.dispose(null); 
+					       //SquareButtonService.flagDimension = false; 
+					       
+					       SquareButtonService.yCoordinateValue = 5;
+					       SquareButtonService.counterPosition = 0;
+					       
+					       Controller.selectDynamicWindow(0); 
+					       
+					       
+						}
+					});
+					
+					serviceSetting.setBtnSaveListener(new Listener() {
+						
+						@Override
+						public void handleEvent(Event event) {
+							// TODO Auto-generated method stub
+						
+							ArrayList<Button> btnCheckbox =	serviceSetting.getCheckboxCreated(); 
+							
+							int counter = 0; 
+							for(int i=0;i<btnCheckbox.size();i++)
+							{
+								if(btnCheckbox.get(i).getSelection())
+								{
+									counter +=1;
+								}
+							}
+							
+							String[] strFeature = new String[counter];
+							counter = 0; 
+							for(int i=0;i< btnCheckbox.size(); i++)
+							{
+								if(btnCheckbox.get(i).getSelection())
+								{
+									strFeature[counter] = btnCheckbox.get(i).getData("FeatureName").toString(); 
+									counter +=1;
+								}
+							}
+							
+							if(Controller.getProxy().UpdateChosenFeatures(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), serviceSetting.getService().Id, strFeature))
+							{
+								serviceSetting.dispose(null);
+							}
+							else
+							{
+								MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+						        messageBox2.setMessage("Something was wrong, please try again.");
+						        messageBox2.setText("SocialCDEforEclipse Message");
+						        messageBox2.open();
+			            		
+							}
+						}
+					});
+					
+					serviceSetting.inizialize(Controller.getWindow()); 
             	}
             	else
             	{
@@ -450,6 +538,94 @@ public class ActionHomePanel {
                 		
                 		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview").setFocus(); 
                 		Controller.selectDynamicWindow(0); 
+                		
+                		final SettingServicePanel serviceSetting = new SettingServicePanel(); 
+    					serviceSetting.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x ); 
+    					serviceSetting.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y ); 
+    					serviceSetting.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x  - 30 + (Controller.getWindow().getBounds().width - 300) / 2); 
+    					serviceSetting.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
+    					serviceSetting.setSelectAllItems(true); 
+    					serviceSetting.setService(pinWindow.getService()); 
+    					serviceSetting.setBtnUnsubscriveListener(new Listener() {
+    						
+    						@Override
+    						public void handleEvent(Event event) {
+    							// TODO Auto-generated method stub
+    							MessageBox messageBox = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_WARNING  | SWT.YES | SWT.NO);
+    					        messageBox.setMessage("Are you sure you want to unsubscribe?");
+    					        messageBox.setText("SocialCDEforEclipse Message");
+    					       int response = messageBox.open();
+    					       
+    					       switch (response) {
+    						case SWT.YES:
+    							if(!Controller.getProxy().DeleteRegistredService(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), serviceSetting.getService().Id))
+    							{
+    								MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+    						        messageBox2.setMessage("Something was wrong, please try again.");
+    						        messageBox2.setText("SocialCDEforEclipse Message");
+    						        messageBox2.open();
+    							}
+    							break;
+    						case SWT.NO:
+    						default:
+    							break;
+    						}
+    					       serviceSetting.dispose(null); 
+    					       //SquareButtonService.flagDimension = false; 
+    					       
+    					       SquareButtonService.yCoordinateValue = 5;
+    					       SquareButtonService.counterPosition = 0;
+    					       
+    					       Controller.selectDynamicWindow(0); 
+    					       
+    					       
+    						}
+    					});
+    					
+    					serviceSetting.setBtnSaveListener(new Listener() {
+    						
+    						@Override
+    						public void handleEvent(Event event) {
+    							// TODO Auto-generated method stub
+    						
+    							ArrayList<Button> btnCheckbox =	serviceSetting.getCheckboxCreated(); 
+    							
+    							int counter = 0; 
+    							for(int i=0;i<btnCheckbox.size();i++)
+    							{
+    								if(btnCheckbox.get(i).getSelection())
+    								{
+    									counter +=1;
+    								}
+    							}
+    							
+    							String[] strFeature = new String[counter];
+    							counter = 0; 
+    							for(int i=0;i< btnCheckbox.size(); i++)
+    							{
+    								if(btnCheckbox.get(i).getSelection())
+    								{
+    									strFeature[counter] = btnCheckbox.get(i).getData("FeatureName").toString(); 
+    									counter +=1;
+    								}
+    							}
+    							
+    							if(Controller.getProxy().UpdateChosenFeatures(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), serviceSetting.getService().Id, strFeature))
+    							{
+    								serviceSetting.dispose(null);
+    							}
+    							else
+    							{
+    								MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+    						        messageBox2.setMessage("Something was wrong, please try again.");
+    						        messageBox2.setText("SocialCDEforEclipse Message");
+    						        messageBox2.open();
+    			            		
+    							}
+    						}
+    					});
+    					
+    					serviceSetting.inizialize(Controller.getWindow()); 
                 		
                 	}
                 	else

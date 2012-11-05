@@ -16,6 +16,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -143,7 +144,7 @@ public class ChooseAvatar implements Panel {
 
 			firstComposite = new Composite(sc, SWT.None);
 			firstComposite.setLayout(new GridLayout(3, false));
-			firstComposite.setBackgroundImage(img);
+			firstComposite.setBackground(new Color(Display.getCurrent(),249,250,237));
 
 			if (uriAvatar.length > 3) {
 				sc.addControlListener(new ControlListener() {
@@ -193,10 +194,9 @@ public class ChooseAvatar implements Panel {
 						Button btnSelected = (Button) event.widget; 
 						if(Controller.getProxy().SaveAvatar(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),(URI) btnSelected.getData("URI")))
 						{
-							MessageBox messageBox = new MessageBox(firstComposite.getShell(), SWT.ICON_INFORMATION  | SWT.OK);
-						        messageBox.setMessage("Avatar saved");
-						        messageBox.setText("SocialCDEforEclipse Message");
-						        messageBox.open();
+							btnSelected.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_CYAN)); 
+							
+							
 						}
 						else
 						{
