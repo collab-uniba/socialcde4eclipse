@@ -2,6 +2,9 @@ package it.uniba.di.socialcdeforeclipse.sharedLibrary;
 
 import java.util.Date;
 
+
+
+
 public class WPost {
 	/// <summary>
     /// Identifier of the post.
@@ -66,6 +69,7 @@ public class WPost {
 
 	public void setCreateAt(Date createAt) {
 		CreateAt = createAt;
-	}  
-    
+	}
 }
+
+

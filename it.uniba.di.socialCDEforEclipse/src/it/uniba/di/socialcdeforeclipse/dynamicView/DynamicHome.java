@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -179,6 +180,17 @@ public class DynamicHome implements Panel {
 		labelFollowers.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		
 		final  WService[] wService = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
+		
+		if(wService.length > 10)
+		{
+			Controller.setScrollHeight(Controller.getWindowHeight() + (10* wService.length)  );
+			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
+		}
+		else
+		{
+			Controller.setScrollHeight(Controller.getWindowHeight()); 
+			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
+		}
 		
 		serviceComposite = new Composite(panel,SWT.None);
 		//System.out.println("servicecomposite size " + serviceComposite.getBounds()); 
@@ -352,6 +364,8 @@ public class DynamicHome implements Panel {
 		
 		Controller.getWindow().pack(); 
 		Controller.getWindow().layout(); 
+		
+		System.out.println("Id utente corrente " + Controller.getCurrentUser().Id); 
 		
 	}
 	

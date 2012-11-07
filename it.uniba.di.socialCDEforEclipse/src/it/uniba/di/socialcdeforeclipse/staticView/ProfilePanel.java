@@ -84,7 +84,7 @@ public class ProfilePanel implements Panel{
 		GridLayout layout = new GridLayout(1, false);
 		
 		panel.setLayout(layout);
-		panel.setBackground(new Color(Display.getCurrent(),249,250,237)); 
+		panel.setBackground(new Color(Display.getCurrent(),255,255,255)); 
 		//panel.setBackgroundImage(resize(get_ImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight())); 
 		//panel.setData("ID_action","profilePanel");
 		

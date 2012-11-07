@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.*;
@@ -63,7 +64,7 @@ public class SocialCDEview extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "it.uniba.di.socialcdeforeclipse.views.SocialCDEview";
-
+	
 
 	/*
 	 * The content provider class is responsible for providing objects to the
@@ -105,8 +106,12 @@ public class SocialCDEview extends ViewPart {
 	 * it.
 	 */
 	public void createPartControl(final Composite parent2) {
-		
-		
+		String myUrl = "http:\\/\\/www.example.com\\/example";
+		String  tmpString =  myUrl.replace("/","");
+		 
+
+		System.out.println( "Original = " + myUrl );
+		System.out.println( "Result   = " + tmpString );
 		
 		final ScrolledComposite scrollComposite = new ScrolledComposite(parent2, SWT.V_SCROLL | SWT.H_SCROLL);
 		Composite parent = new Composite(scrollComposite, SWT.NONE);
@@ -120,7 +125,21 @@ public class SocialCDEview extends ViewPart {
 		scrollComposite.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				Rectangle r = scrollComposite.getClientArea();
-				scrollComposite.setMinSize(parent2.computeSize(r.width, SWT.DEFAULT));
+				System.out.println("Dimensioni scrollheight "); 
+				
+				if(Controller.getWindowName().equals("Login") || Controller.getWindowName().equals("Registration"))
+				{
+					scrollComposite.setMinSize(Controller.getWindowWidth(),Controller.getWindowHeight());
+				}
+				else
+				{
+					System.out.println("Pannello dinamico, dimensioni larghezza " + Controller.getWindowWidth() + " altezza " + ( Controller.getProfilePanel().getComposite_static().getSize().y + Controller.getProfilePanel().getComposite_dinamic().getSize().y)); 
+					scrollComposite.setMinSize(Controller.getWindowWidth(),Controller.getScrollHeight()  );
+				}
+				
+				
+				
+				
 			}
 		});
 
@@ -164,29 +183,14 @@ public class SocialCDEview extends ViewPart {
 					
 					if (Controller.getWindow().getParent().getSize().x == 0	&& Controller.getWindow().getParent().getSize().y == 0) {
 						
-						Controller.getWindow().setBackground(new Color(Display.getCurrent(),249,250,237));
+						Controller.getWindow().setBackground(new Color(Display.getCurrent(),255,255,255));
 						//Controller.getWindow().setBackgroundImage(	 getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png")));
 					} else {
 						System.out.println("Inizio "	+ Controller.getWindow().getParent().getSize());
 						Controller.setWindowHeight(Controller.getWindow().getParent().getSize().y);
 						Controller.setWindowWidth(Controller.getWindow().getParent().getSize().x);
-						Controller.getWindow().setBackground(new Color(Display.getCurrent(),249,250,237));
-						/*
-						Controller.getWindow().setBackgroundImage(
-								resize( getImageStream(this.getClass().getClassLoader()
-										.getResourceAsStream("images/Wallpaper.png")),
-										Controller.getWindowWidth(),
-										Controller.getWindowHeight()));
-						*/
-						/*
-						try {
-							this.getClass().getClassLoader()
-							.getResourceAsStream("images/Wallpaper.png").close();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					*/
+						Controller.getWindow().setBackground(new Color(Display.getCurrent(),255,255,255));
+						
 						
 					}
 					
@@ -216,83 +220,11 @@ public class SocialCDEview extends ViewPart {
 			}
 		});
 		
-		//Controller.setPreferences("Autologin", "");
+		
 		Controller.setWindow(parent);
 		Controller.selectWindow(parent);
 
-		// Controller.getWindow().removePaintListener(paintEvent);
-
-		/*
-		 * 
-		 * Proxy = new ProxyWrapper(); URI[] servizi =
-		 * Proxy.GetAvailableAvatars("floriano", "pamela2781983"); String s =
-		 * "ciao";
-		 * 
-		 * Preferences prefs = Preferences.userRoot().node(
-		 * this.getClass().getName()); String ID1 = "Test1"; String ID2 =
-		 * "Test2"; String ID3 = "Test3";
-		 */
-
-		// First we will get the values
-		// Define a boolean value
-		/*
-		 * System.out.println(prefs.getBoolean(ID1, true)); // Define a string
-		 * with default "Hello World System.out.println(prefs.get(ID2,
-		 * "Hello World")); // Define a integer with default 50
-		 * System.out.println(prefs.getInt(ID3, 50));
-		 */
-		// Now set the values
-		/*
-		 * prefs.putBoolean(ID1, false); prefs.put(ID2, "Hello Europa");
-		 * prefs.putInt(ID3, 45);
-		 * 
-		 * // Delete the preference settings for the first value
-		 * prefs.remove(ID1);
-		 */
-		// System.out.println(prefs.get(ID2, ""));
-		// This happens in the method which creates the user interface
-		// parent is the composite which is available
-		/*
-		 * GridLayout layout = new GridLayout(2, false);
-		 * parent.setLayout(layout); Label label = new Label(parent, SWT.NONE);
-		 * 
-		 * 
-		 * 
-		 * label.setText("Select a person:" ); IPreferencesService service =
-		 * Platform.getPreferencesService();
-		 * 
-		 * boolean value = service.getBoolean(this.getSite().getPluginId(),
-		 * "MyPreference", true, null);
-		 * 
-		 * final ComboViewer viewer = new ComboViewer(parent, SWT.READ_ONLY); //
-		 * ArrayContentProvider does not store state, // therefore you can
-		 * re-use instances
-		 * viewer.setContentProvider(ArrayContentProvider.getInstance());
-		 * 
-		 * viewer.setLabelProvider(new LabelProvider() {
-		 * 
-		 * 
-		 * @Override public String getText(Object element) { if (element
-		 * instanceof Persons) { Persons person = (Persons) element; return
-		 * person.getFirstName(); } return super.getText(element); } });
-		 */
-		/*
-		 * Persons[] persons = new Persons[] { new Persons("Lars", "Vogel"), new
-		 * Persons("Tim", "Taler"), new Persons("Jim", "Knopf") };
-		 */
-		// Set set the input to the Viewer.
-		// This input will be send to the
-		// content provider
-		/*
-		 * viewer.setInput(persons); // React to the selection of the viewer //
-		 * Note that the viewer return the real object and not just a string //
-		 * representation viewer.addSelectionChangedListener(new
-		 * ISelectionChangedListener() {
-		 * 
-		 * @Override public void selectionChanged(SelectionChangedEvent event) {
-		 * IStructuredSelection selection = (IStructuredSelection)
-		 * event.getSelection(); } });
-		 */
+		
 	}
 
 	/**

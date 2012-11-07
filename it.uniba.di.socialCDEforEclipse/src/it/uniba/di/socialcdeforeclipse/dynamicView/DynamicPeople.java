@@ -3,7 +3,7 @@ package it.uniba.di.socialcdeforeclipse.dynamicView;
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
-import it.uniba.di.socialcdeforeclipse.views.ButtonPerson;
+import it.uniba.di.socialcdeforeclipse.views.ButtonAvatar;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.io.IOException;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
@@ -318,9 +319,10 @@ public class DynamicPeople implements Panel{
 		Label labelFollowers = new Label(panel2, SWT.NONE); 
 		labelFollowers.setText("Followers: "); 
 		labelFollowers.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
+		grid = new GridData(); 
 		grid.horizontalSpan = 3; 
-		grid.grabExcessHorizontalSpace = true;
-		grid.horizontalAlignment = GridData.FILL; 
+		grid.grabExcessHorizontalSpace = true; 
+		grid.horizontalAlignment = GridData.FILL;  
 		labelFollowers.setLayoutData(grid); 
 		controlli.add(labelFollowers);
 		
@@ -545,6 +547,17 @@ public class DynamicPeople implements Panel{
 	}
 	
 	Controller.setWindowName("People"); 
+	int totalLink = (suggestion.length + following.length + followers.length + hiddenUsers.length);  
+	if( totalLink > 5 )
+	{
+		Controller.setScrollHeight(Controller.getWindowHeight() + (totalLink * 70)); 
+	    ((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
+	}
+	else
+	{
+		Controller.setScrollHeight(Controller.getWindowHeight());
+		((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
+	}
 	
 	panel2.redraw(); 
 	

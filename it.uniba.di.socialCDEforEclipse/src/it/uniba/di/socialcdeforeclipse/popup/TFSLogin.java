@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -83,7 +84,7 @@ public class TFSLogin implements Panel {
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackgroundImage(imgWallpaper);
+		shell.setBackground(new Color(Display.getCurrent(), 255,255,255)); 
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL;
@@ -110,7 +111,7 @@ public class TFSLogin implements Panel {
 			labelDomain.setText("Domain:"); 
 			labelDomain.setFont(new Font(shell.getDisplay(), "Calibri", 12, SWT.BOLD));
 			
-			textDomain = new Text(shell, SWT.None); 
+			textDomain = new Text(shell, SWT.BORDER); 
 			gridData = new GridData();
 			gridData.horizontalAlignment = SWT.FILL;
 			gridData.grabExcessHorizontalSpace = true;
@@ -120,7 +121,7 @@ public class TFSLogin implements Panel {
 			labelUsername.setText("Username"); 
 			labelUsername.setFont(new Font(shell.getDisplay(), "Calibri", 12, SWT.BOLD));
 			
-			textUsername = new Text(shell, SWT.None); 
+			textUsername = new Text(shell, SWT.BORDER); 
 			gridData = new GridData();
 			gridData.horizontalAlignment = SWT.FILL;
 			gridData.grabExcessHorizontalSpace = true;
@@ -131,7 +132,7 @@ public class TFSLogin implements Panel {
 			labelPassword.setText("Password"); 
 			labelPassword.setFont(new Font(shell.getDisplay(), "Calibri", 12, SWT.BOLD));
 			
-			textPassword = new Text(shell, SWT.PASSWORD); 
+			textPassword = new Text(shell, SWT.PASSWORD | SWT.BORDER); 
 			gridData = new GridData();
 			gridData.horizontalAlignment = SWT.FILL;
 			gridData.grabExcessHorizontalSpace = true;

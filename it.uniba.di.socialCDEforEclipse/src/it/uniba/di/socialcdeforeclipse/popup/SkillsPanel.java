@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Text;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
 import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
@@ -39,31 +40,16 @@ public class SkillsPanel implements Panel {
 	private int yCoordinate;
 	private int xCoordinateWithOffset;
 	private int yCoordinateWithOffset;
+	private WUser user_selected; 
 	private Listener backListener; 
 	
-	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
-			.getResourceAsStream("images/Wallpaper.png");
-
-	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Display.getDefault(), width, height);
-		GC gc = new GC(scaled);
-		gc.setAntialias(SWT.ON);
-		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0, image.getBounds().width,
-				image.getBounds().height, 0, 0, width, height);
-		gc.dispose();
-		image.dispose(); // don't forget about me!
-		return scaled;
-	}
-
-	private Image getImageStream(InputStream stream) {
-		return new Image(Controller.getWindow().getDisplay(), stream);
-	}
+	
+	
 	
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
-		Image imgWallpaper = resize(getImageStream(PATH_WALLPAPER), 300, 200);
+	
 
 		shadow = new Shell(panel.getShell(), SWT.NO_TRIM);
 		shadow.setSize(Controller.getWindowWidth(),
@@ -83,10 +69,10 @@ public class SkillsPanel implements Panel {
 		GridLayout layout = new GridLayout(1, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(),249,250,237)); 
+		shell.setBackground(new Color(Display.getCurrent(),255,255,255)); 
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = gridData.FILL;
+		gridData.horizontalAlignment = GridData.FILL;
 		shell.setLayoutData(gridData);
 
 		Label labelSkills = new Label(shell, SWT.WRAP);
@@ -98,7 +84,7 @@ public class SkillsPanel implements Panel {
 		gridData.widthHint = 300;
 		labelSkills.setLayoutData(gridData);
 		
-		String[] skills = Controller.getProxy().GetSkills(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), Controller.getCurrentUser().Username);
+		String[] skills = Controller.getProxy().GetSkills(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user_selected.Username);
 		
 		if(skills.length > 0)
 		{
@@ -175,6 +161,14 @@ public class SkillsPanel implements Panel {
 
 	
 	
+	public WUser getUser_selected() {
+		return user_selected;
+	}
+
+	public void setUser_selected(WUser user_selected) {
+		this.user_selected = user_selected;
+	}
+
 	public Listener getBackListener() {
 		return backListener;
 	}

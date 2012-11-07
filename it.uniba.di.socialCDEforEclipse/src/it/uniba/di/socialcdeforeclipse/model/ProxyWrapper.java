@@ -12,7 +12,12 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.Date;
+
+import org.eclipse.swt.widgets.DateTime;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.Gson.*;
 
@@ -764,6 +769,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		
 		 try {
 				URL url = new URL(host +"/GetUserTimeline");
+				System.out.println("Stringa conn " + host +"/GetUserTimeline"); 
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("POST");
 				conn.setDoOutput(true);
@@ -776,7 +782,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				OutputStream out = conn.getOutputStream();
 				Writer writer = new OutputStreamWriter(out, "UTF-8");
 				writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"ownerName\":\""+ ownerName + "\" , \"since\":\"" + since + "\" , \"to\":\"" + to  + "\"}");
-				
+				System.out.println(" parametri " + "{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"ownerName\":\""+ ownerName + "\" , \"since\":\"" + since + "\" , \"to\":\"" + to  + "\"}"); 
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
@@ -793,14 +799,16 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 					}
 					br.close();
-					
+					System.out.println("risultato " + result);
+					System.out.println("occorrences " + countOccurrences(result, '{')); 
 					wpost = new WPost[countOccurrences(result,'{')];
-					Gson gson = new Gson();
+					Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new JsonDateDeserializer()).create();
 					wpost =  gson.fromJson(result,WPost[].class);
 				}
 
 				conn.disconnect();
 			} catch (Exception e) {
+				e.printStackTrace();
 				wpost = null;
 
 			}
@@ -1021,7 +1029,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 		}
 		
-		if(result == "true")
+		if(result.equals("true"))
 		{
 			
 			return true;
@@ -1038,6 +1046,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		String result = "";
 		try {
 			URL url = new URL(host +"/UnFollow");
+			System.out.println("Request " + host +"/UnFollow");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
@@ -1050,7 +1059,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			OutputStream out = conn.getOutputStream();
 			Writer writer = new OutputStreamWriter(out, "UTF-8");
 			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"followId\":\"" + followId  + "\"}");
-			
+			System.out.println("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"followId\":\"" + followId  + "\"}"); 
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
@@ -1076,8 +1085,8 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			return  false;
 
 		}
-		
-		if(result == "true")
+		System.out.println("Risultato " + result); 
+		if(result.equals("true"))
 		{
 			
 			return true;
@@ -1436,7 +1445,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 		}
 		
-		if(result == "true")
+		if(result.equals("true"))
 		{
 			
 			return true;
@@ -1505,6 +1514,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		
 		try {
 			URL url = new URL(host +"/GetAvailableAvatars");
+			System.out.println("Reguest avatar " + host +"/GetAvailableAvatars");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);

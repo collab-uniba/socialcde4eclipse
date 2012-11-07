@@ -9,14 +9,14 @@
             id="it.uniba.di.socialCDEforEclipse">
       </category>
       <view
-            name="SocialCDEforEclipse"
+            name="SocialCDE for Eclipse"
             icon="icons/sample.gif"
             category="it.uniba.di.socialCDEforEclipse"
             class="it.uniba.di.socialcdeforeclipse.views.SocialCDEview"
             id="it.uniba.di.socialcdeforeclipse.views.SocialCDEview">
       </view>
       <view
-            name="SocialCDEforEclipse Browser"
+            name="SocialCDE for Eclipse Browser"
             icon="icons/sample.gif"
             category="it.uniba.di.socialCDEforEclipse"
             class="it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"

@@ -175,7 +175,7 @@ public class SettingServicePanel implements Panel {
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(),249,250,237));
+		shell.setBackground(new Color(Display.getCurrent(),255,255,255));
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL;

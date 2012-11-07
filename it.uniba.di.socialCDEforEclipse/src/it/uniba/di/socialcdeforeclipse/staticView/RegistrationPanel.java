@@ -89,7 +89,7 @@ public class RegistrationPanel implements Panel {
 		
 		GridLayout layout = new GridLayout(3, false);
 		panel.setLayout(layout);
-		Controller.getWindow().setBackgroundImage(resize(getImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight())); 
+		Controller.getWindow().setBackground(new Color(Display.getCurrent(),255,255,255)); 
 		panel.setData("ID_action","registrationPanel");
 		
 		

@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TypedListener;
 
-public class ButtonPerson extends Canvas {
+public class ButtonAvatar extends Canvas {
 	protected Listener keyListener;
 	protected Image image, backgroundImage;
 	protected String text;
@@ -102,7 +102,7 @@ public class ButtonPerson extends Canvas {
 		this.height = height;
 	}
 
-	public ButtonPerson(Composite parent, int style) {
+	public ButtonAvatar(Composite parent, int style) {
 		super(parent, style | SWT.NO_BACKGROUND);
 		this.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		System.out.println("Costruttore btn person evocato"); 
@@ -117,7 +117,7 @@ public class ButtonPerson extends Canvas {
 	protected void addListeners() {
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
-				ButtonPerson.this.widgetDisposed(e);
+				ButtonAvatar.this.widgetDisposed(e);
 			}
 		});
 
@@ -126,28 +126,28 @@ public class ButtonPerson extends Canvas {
 		addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 
-				ButtonPerson.this.paintControl(e);
+				ButtonAvatar.this.paintControl(e);
 			}
 		});
 
 		// MOUSE EVENTS
 		this.addListener(SWT.MouseEnter, new Listener() {
 			public void handleEvent(Event e) {
-				ButtonPerson.this.setHoverColor(e);
+				ButtonAvatar.this.setHoverColor(e);
 			}
 		});
 		this.addListener(SWT.MouseExit, new Listener() {
 			public void handleEvent(Event e) {
 				if (isFocused)
-					ButtonPerson.this.setSelectedColor(e);
+					ButtonAvatar.this.setSelectedColor(e);
 				else
-					ButtonPerson.this.setNormalColor(e);
+					ButtonAvatar.this.setNormalColor(e);
 			}
 		});
 		this.addListener(SWT.MouseUp, new Listener() {
 			public void handleEvent(Event e) {
 				if (e.button == 1) {
-					ButtonPerson.this.setHoverColor(e);
+					ButtonAvatar.this.setHoverColor(e);
 					if ((e.count == 1) && enabled
 							&& (getClientArea().contains(e.x, e.y))) {
 						doButtonClicked();
@@ -157,13 +157,13 @@ public class ButtonPerson extends Canvas {
 		});
 		this.addListener(SWT.MouseHover, new Listener() {
 			public void handleEvent(Event e) {
-				ButtonPerson.this.setHoverColor(e);
+				ButtonAvatar.this.setHoverColor(e);
 			}
 		});
 		this.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event e) {
 				if (e.button == 1) {
-					ButtonPerson.this.setClickedColor(e);
+					ButtonAvatar.this.setClickedColor(e);
 				}
 			}
 		});
@@ -186,14 +186,14 @@ public class ButtonPerson extends Canvas {
 		this.addListener(SWT.FocusIn, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = true;
-				ButtonPerson.this.setSelectedColor(e);
+				ButtonAvatar.this.setSelectedColor(e);
 				redraw();
 			}
 		});
 		this.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = false;
-				ButtonPerson.this.setNormalColor(e);
+				ButtonAvatar.this.setNormalColor(e);
 				redraw();
 			}
 		});
@@ -201,7 +201,7 @@ public class ButtonPerson extends Canvas {
 		this.addListener(SWT.KeyUp, new Listener() {
 			public void handleEvent(Event e) {
 				isFocused = true;
-				ButtonPerson.this.setSelectedColor(e);
+				ButtonAvatar.this.setSelectedColor(e);
 				redraw();
 			}
 		});
@@ -212,7 +212,7 @@ public class ButtonPerson extends Canvas {
 				case ' ':
 				case '\r':
 				case '\n':
-					ButtonPerson.this.setClickedColor(e);
+					ButtonAvatar.this.setClickedColor(e);
 					redraw();
 					doButtonClicked();
 					break;
@@ -259,12 +259,12 @@ public class ButtonPerson extends Canvas {
 		hoverFontColor = getSavedColor(0, 0, 0);
 		clickedFontColor = getSavedColor(255, 255, 255);
 		inactiveFontColor = getSavedColor(187, 187, 187);
-		selectedFontColor = getSavedColor(160, 107, 38);
+		selectedFontColor = getSavedColor(187, 187, 187);
 		borderColor = getSavedColor(187, 187, 187);
 		hoverBorderColor = getSavedColor(147, 147, 147);
 		clickedBorderColor = getSavedColor(147, 147, 147);
 		inactiveBorderColor = getSavedColor(200, 200, 200);
-		selectedBorderColor = getSavedColor(160, 107, 38);
+		selectedBorderColor = getSavedColor(187,187,187);
 		backgroundColor = getSavedColor(248, 248, 248);
 		backgroundColor2 = getSavedColor(228, 228, 228);
 		clickedColor = getSavedColor(120, 120, 120);
@@ -350,21 +350,39 @@ public class ButtonPerson extends Canvas {
 		
 		
 		
-		System.out.println("Square botton paint event call " + this.getClientArea() ); 
+		System.out.println("Button avatar paint event call " + this.getClientArea() ); 
 		
 		 
 		
-		if(this.getBounds().width != this.width && this.getBounds().height != this.height)
+		if( this.getClientArea().height != 80 || this.getClientArea().width != 85)
 		{
-			this.setBounds(xCoordinate,yCoordinate, this.width, this.height);
-			flagDimension = true; 
+			
+			this.setBounds(0,0,85,80);
+			System.out.println("Dimensione impostata " + this.getClientArea());
+			/*
+			switch (counterPosition) {
+			case 0:
+				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
+				counterPosition +=1;
+				break;
+			case 1:
+				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
+				counterPosition +=1; 
+				break;
+			case 2:
+				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
+				counterPosition = 0;
+				yCoordinateValue += 120;
+			default:
+				break;
+			}
 			
 			
 			
-			System.out.println("Dimensioni fissate " + this.getBounds() ); 
 			
+			//System.out.println("Dimensioni fissate " + this.getBounds() ); 
+			flagDimension = true;*/ 
 		}
-
 		
 		if (currentColor == null) {
 			currentColor = backgroundColor;
@@ -381,7 +399,7 @@ public class ButtonPerson extends Canvas {
 			p.x = getClientArea().width;
 		}
 		//Rectangle rect = new Rectangle(0, 0, p.x, p.y);
-		Rectangle rect = new Rectangle(0, 0, this.width,this.height);
+		Rectangle rect = new Rectangle(0, 0, 85,80);
 		
 		GC gc = e.gc;
 		gc.setAntialias(SWT.ON);
@@ -452,10 +470,10 @@ public class ButtonPerson extends Canvas {
 			drawText(gc, x, y);
 			if (image != null) {
 				x = rect.width - x - image.getBounds().width + imagePadding;
-				drawImage(gc, x, y);
+				drawImage(gc, x+2, y);
 			}
 		} else {
-			x = drawImage(gc, x, y);
+			x = drawImage(gc, x+2, y);
 			drawText(gc, x, y);
 		}
 		

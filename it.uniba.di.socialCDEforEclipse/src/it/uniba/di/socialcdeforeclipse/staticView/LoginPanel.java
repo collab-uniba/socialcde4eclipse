@@ -58,7 +58,7 @@ public class LoginPanel implements Panel{
 	private static Listener azioni; 
 	
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay().getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);

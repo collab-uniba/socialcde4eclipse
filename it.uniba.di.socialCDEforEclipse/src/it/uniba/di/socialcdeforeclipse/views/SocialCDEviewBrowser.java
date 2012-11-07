@@ -134,7 +134,7 @@ public class SocialCDEviewBrowser extends ViewPart {
 			@Override
 			public void changed(LocationEvent event) {
 				// TODO Auto-generated method stub
-				 
+				 System.out.println("Indirizzo trovato " + event.location.toString()); 
 				if(event.location.contains("#") && service.Name.equals("Facebook"))
 				{
 					
@@ -146,6 +146,7 @@ public class SocialCDEviewBrowser extends ViewPart {
 					System.out.println("Parte trovata " + event.location.split("=")[1].toString()); 
 					Controller.temporaryInformation.put("AccessToken", event.location.split("=")[1].toString());
 				}
+				
 				
 			}
 		}); 

@@ -198,7 +198,7 @@ public class PinPanel implements Panel{
 		Composite firstComposite = new Composite(shell,SWT.None); 
 		firstComposite.setLayout(new GridLayout(2,false)); 
 		firstComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		firstComposite.setBackground(new Color(Display.getCurrent(),249,250,237));
+		firstComposite.setBackground(new Color(Display.getCurrent(),255,255,255));
 		
 		gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;

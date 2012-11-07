@@ -109,7 +109,7 @@ public class ProgressBarThread extends Thread {
 		shell.setLayout(layout);
 		//shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),Controller.getWindowWidth(), Controller.getWindowHeight()));
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(),249,250,237)); 
+		shell.setBackground(new Color(Display.getCurrent(),255,255,255)); 
 		
 		
 		Composite first_composite = new Composite(shell,   SWT.NO_BACKGROUND);
@@ -129,7 +129,7 @@ public class ProgressBarThread extends Thread {
 		grid.horizontalAlignment = grid.CENTER;
 		labelPogress.setLayoutData(grid);
 		bar = new ProgressBar(first_composite, SWT.CENTER);
-
+		max = 100; 
 		shell.open();
 		while (stop != 1) {
 			try {

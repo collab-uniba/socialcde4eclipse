@@ -70,6 +70,16 @@ public class ActionGeneral implements Listener  {
 					new ActionDynamicPeople(widget, event); 
 				}
 				break;
+			case "userTimeline":
+				if(widgetProfile.contains(widget.getData("ID_action").toString()))
+				{
+					new ActionProfile(widget, event); 
+				}
+				else
+				{
+					new ActionDynamicUserTimeline(widget, event); 
+				}
+				break;
 		}
 	
 		

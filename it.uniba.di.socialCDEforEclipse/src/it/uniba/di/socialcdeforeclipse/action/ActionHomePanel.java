@@ -69,6 +69,7 @@ public class ActionHomePanel {
 			skillPanel.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 			skillPanel.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
 			skillPanel.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2); 
+			skillPanel.setUser_selected(Controller.getCurrentUser()); 
 			skillPanel.setBackListener(new Listener() {
 				
 				@Override

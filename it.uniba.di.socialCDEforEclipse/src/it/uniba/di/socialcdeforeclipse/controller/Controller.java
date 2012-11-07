@@ -47,6 +47,8 @@ public class Controller {
 	
 	private static int windowHeight = 0; 
 	
+	private static int scrollHeight = 0; 
+	
 	private static String windowName = null;
 	
 	private static RegistrationPanel registrationPanel = null;
@@ -76,15 +78,35 @@ public class Controller {
 	
 	//getter and setter for attributes
 	
+
+	
 	
 	
 	public static LoginPanel getLoginPanel() {
 		return loginPanel;
 	}
-
-
+	
 	
 
+	public static DynamicUserTimeline getDynamicUserWindow() {
+		return dynamicUserWindow;
+	}
+
+
+
+	public static void setDynamicUserWindow(DynamicUserTimeline dynamicUserWindow) {
+		Controller.dynamicUserWindow = dynamicUserWindow;
+	}
+
+
+
+	public static int getScrollHeight() {
+		return scrollHeight;
+	}
+
+	public static void setScrollHeight(int scrollHeight) {
+		Controller.scrollHeight = scrollHeight;
+	}
 
 	public static int getWindowWidth() {
 		return windowWidth;
@@ -256,12 +278,20 @@ public class Controller {
 		GridData gridData; 
 		ProgressBarThread pbWindow; 
 		System.out.println("Inizio ricaricamento della pagina..");
-			
-			
+		System.out.println("Classico  " + Controller.getWindow().toDisplay(Controller.getWindow().getLocation())); 
+		System.out.println("Classico parent " + Controller.getWindow().toDisplay(Controller.getWindow().getParent().getLocation()));
+		System.out.println("Classico parent2 " + Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getLocation()));
+		System.out.println("Classico parent3 " + Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getParent().getLocation()));
+		System.out.println("Classico parent4 " + Controller.getWindow().getLocation());
+		System.out.println("Classico parent5 " + Controller.getWindow().toControl(Controller.getWindow().getParent().getParent().getParent().getLocation()));
+		
 		 	pbWindow = new ProgressBarThread(); 
 			pbWindow.setLabelTxt("Operation in progress..");
-			pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
-			pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+			pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getParent().getLocation()).x); 
+			pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getParent().getLocation()).y);
+			//pbWindow.setyCoordinate(Controller.getWindow().toControl(Controller.getWindow().getParent().getParent().getParent().getLocation()).y);
+			//pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+			//pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 			//pbThread.setWidth(Controller.getWindow().getSize().x);
 			//pbThread.setHeight(Controller.getWindow().getSize().y); 
 			pbWindow.start();  
@@ -364,9 +394,9 @@ public class Controller {
 				
 				gridData = new GridData(); 
 				gridData.grabExcessHorizontalSpace = true;
-				gridData.horizontalAlignment = gridData.FILL;
+				gridData.horizontalAlignment = GridData.FILL;
 				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = gridData.FILL; 
+				gridData.verticalAlignment = GridData.FILL; 
 				dynamicComposite.setLayoutData(gridData); 
 				
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
@@ -386,6 +416,7 @@ public class Controller {
 			Controller.getWindow().layout(); 
 			break;
 		case 3:
+			System.out.println("Selezionato caso n.3"); 
 			dynamicUserWindow = new DynamicUserTimeline(); 
 			if(Controller.getProfilePanel().getComposite_dinamic() == null)
 			{
@@ -416,9 +447,13 @@ public class Controller {
 				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
 				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
 			}
-			dynamicUserWindow.setIdProfile(Integer.parseInt(Controller.temporaryInformation.get("idProfile").toString()));
+			
+			dynamicUserWindow.setUser( (WUser)  Controller.temporaryInformation.get("User_selected")); 
+			dynamicUserWindow.setUserType((String) Controller.temporaryInformation.get("User_type"));
 			dynamicUserWindow.inizialize( Controller.getProfilePanel().getComposite_dinamic() ); 
 			pbWindow.setStop(1); 
+			
+			Controller.getWindow().layout(); 
 			
 			break;
 			default:
