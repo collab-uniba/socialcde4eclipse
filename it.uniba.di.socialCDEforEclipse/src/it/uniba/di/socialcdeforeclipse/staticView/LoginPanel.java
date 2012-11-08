@@ -239,7 +239,37 @@ public class LoginPanel implements Panel{
 			labelHidden.setLayoutData(gridData);
 			controlli.add(labelHidden);
 		}
+		
+		btnLogin.setData("labelAlert",labelAlert); 
+		btnLogin.setData("txtProxyHost",txtProxyHost); 
+		btnLogin.setData("labelImageHost", labelImageHost); 
+		btnLogin.setData("txtUsername",txtUsername); 
+		btnLogin.setData("labelImageUsername", labelImageUsername); 
+		btnLogin.setData("txtPassword", txtPassword); 
+		btnLogin.setData("labelImagePassword", labelImagePassword); 
+		btnLogin.setData("chkAutologin",chkAutologin); 
+		btnLogin.setData("chkSavePassword", chkSavePassword); 
+		
+		txtUsername.setData("labelAlert",labelAlert); 
+		txtUsername.setData("txtProxyHost",txtProxyHost); 
+		txtUsername.setData("labelImageHost", labelImageHost); 
+		txtUsername.setData("txtUsername",txtUsername); 
+		txtUsername.setData("labelImageUsername", labelImageUsername); 
+		txtUsername.setData("txtPassword", txtPassword); 
+		txtUsername.setData("labelImagePassword", labelImagePassword); 
+		txtUsername.setData("chkAutologin",chkAutologin); 
+		txtUsername.setData("chkSavePassword", chkSavePassword); 
 
+		txtProxyHost.setData("labelAlert",labelAlert); 
+		txtProxyHost.setData("txtProxyHost",txtProxyHost); 
+		txtProxyHost.setData("labelImageHost", labelImageHost); 
+		txtProxyHost.setData("txtUsername",txtUsername); 
+		txtProxyHost.setData("labelImageUsername", labelImageUsername); 
+		txtProxyHost.setData("txtPassword", txtPassword); 
+		txtProxyHost.setData("labelImagePassword", labelImagePassword); 
+		txtProxyHost.setData("chkAutologin",chkAutologin); 
+		txtProxyHost.setData("chkSavePassword", chkSavePassword); 
+		
 		
 		 labelRegistration = new Link(panel, SWT.NONE);
 		 labelRegistration.setText("<a>I have no account, I want to register</a>"); 
@@ -248,7 +278,18 @@ public class LoginPanel implements Panel{
 		 gridData.horizontalSpan = 3; 
 		 gridData.horizontalIndent = 55; 
 		 labelRegistration.setLayoutData(gridData); 
+		 
 		 labelRegistration.setData("ID_action", "labelRegistration");
+		 labelRegistration.setData("labelAlert",labelAlert); 
+		 labelRegistration.setData("txtProxyHost",txtProxyHost); 
+		 labelRegistration.setData("labelImageHost", labelImageHost); 
+		 labelRegistration.setData("txtUsername",txtUsername); 
+		 labelRegistration.setData("labelImageUsername", labelImageUsername); 
+		 labelRegistration.setData("txtPassword", txtPassword); 
+		 labelRegistration.setData("labelImagePassword", labelImagePassword); 
+		 labelRegistration.setData("chkAutologin",chkAutologin); 
+		 labelRegistration.setData("chkSavePassword", chkSavePassword); 
+		 
 		 controlli.add(labelRegistration);
 		 
 		
@@ -328,98 +369,7 @@ public class LoginPanel implements Panel{
 	//Getter and setter methods
 	
 	
-	public Label getLabelAlert() {
-		return labelAlert;
-	}
-
 	
-
-
-	public void setLabelAlert(Label newLabelAlert) {
-		this.labelAlert = newLabelAlert;
-	}
-
-	public Text getTxtProxyHost() {
-		return txtProxyHost;
-	}
-
-	public void setTxtProxyHost(Text newTxtProxyHost) {
-		txtProxyHost = newTxtProxyHost;
-	}
-
-	public Text getTxtUsername() {
-		return txtUsername;
-	}
-
-	public void setTxtUsername(Text newTxtUsername) {
-		txtUsername = newTxtUsername;
-	}
-
-	public Text getTxtPassword() {
-		return txtPassword;
-	}
-
-	public void setTxtPassword(Text newTxtPassword) {
-		txtPassword = newTxtPassword;
-	}
-
-	public GeneralButton getBtnLogin() {
-		return btnLogin;
-	}
-	
-	
-
-	public Button getChkAutologin() {
-		return chkAutologin;
-	}
-
-
-	public void setChkAutologin(Button newchkAutologin) {
-		chkAutologin = newchkAutologin;
-	}
-
-
-	public Button getChkSavepassword() {
-		return chkSavePassword;
-	}
-
-
-	public void setChkSavepassword(Button chkSavepassword) {
-		chkSavePassword = chkSavepassword;
-	}
-
-
-	public void setBtnLogin(GeneralButton newbtnLogin) {
-		btnLogin = newbtnLogin;
-	}
-
-	public Label getLabelImageHost() {
-		return labelImageHost;
-	}
-
-	public void setLabelImageHost(Label labelImageHost) {
-		this.labelImageHost = labelImageHost;
-	}
-
-	public Label getLabelImageUsername() {
-		return labelImageUsername;
-	}
-
-	public void setLabelImageUsername(Label labelImageUsername) {
-		this.labelImageUsername = labelImageUsername;
-	}
-
-	public Label getLabelImagePassword() {
-		return labelImagePassword;
-	}
-
-	public void setLabelImagePassword(Label labelImagePassword) {
-		this.labelImagePassword = labelImagePassword;
-	}
-	
-	public InputStream getPathWallpaper() {
-		return PATH_WALLPAPER;
-	}
 	
 	public InputStream getPathIconOk() {
 		return PATH_ICON_OK;

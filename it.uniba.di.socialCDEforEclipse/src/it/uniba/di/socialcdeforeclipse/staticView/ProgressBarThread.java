@@ -103,7 +103,7 @@ public class ProgressBarThread extends Thread {
 		System.out.println("Utilizzo dimensioni " + Controller.getWindowWidth() + " altezza " + Controller.getWindowHeight()); 
 		shell.setSize(Controller.getWindowWidth(), Controller.getWindowHeight());
 
-		shell.setBounds(xCoordinate, yCoordinate, Controller.getWindowWidth(),
+		shell.setBounds(Controller.getProgressBarPositionX(), Controller.getProgressBarPositionY(), Controller.getWindowWidth(),
 				Controller.getWindowHeight());
 		GridLayout layout = new GridLayout(1, false);
 		shell.setLayout(layout);

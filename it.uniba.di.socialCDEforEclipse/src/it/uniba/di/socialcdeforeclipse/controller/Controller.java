@@ -76,6 +76,10 @@ public class Controller {
 	
 	public static HashMap<String, Object> temporaryInformation =  new HashMap<String,Object>();  
 	
+	public static int progressBarPositionX = 0;
+	
+	public static int progressBarPositionY = 0;
+	
 	//getter and setter for attributes
 	
 
@@ -87,6 +91,30 @@ public class Controller {
 	}
 	
 	
+
+	public static int getProgressBarPositionX() {
+		return progressBarPositionX;
+	}
+
+
+
+	public static void setProgressBarPositionX(int progressBarPositionX) {
+		Controller.progressBarPositionX = progressBarPositionX;
+	}
+
+
+
+	public static int getProgressBarPositionY() {
+		return progressBarPositionY;
+	}
+
+
+
+	public static void setProgressBarPositionY(int progressBarPositionY) {
+		Controller.progressBarPositionY = progressBarPositionY;
+	}
+
+
 
 	public static DynamicUserTimeline getDynamicUserWindow() {
 		return dynamicUserWindow;

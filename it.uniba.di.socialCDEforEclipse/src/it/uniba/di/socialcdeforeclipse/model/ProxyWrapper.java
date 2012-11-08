@@ -59,6 +59,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 	}
 
 	
+	
 	public boolean IsAvailable(String username)
 	{
 		
@@ -103,6 +104,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		
 	}
 
+	
 	public Boolean IsWebServiceRunning(){
 		
 		String output = "";
@@ -526,7 +528,18 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		return woutAuthData;
 		
 	}
-
+	/**
+	 * Finish the OAuth version 1 authentication procedure
+	 * <p>
+	 * It can be accessed by a POST request "&lt;ServiceHost&gt;/AuthorizeOAuth1"
+	 * @param username Name that identifies the user.
+	 * @param password Password to check user identity.
+	 * @param service Identifier of the service.
+	 * @param verifier Verifier pin provided by the service.
+	 * @param accessToken Access Token for the service instance.
+	 * @param accessSecret Access Secret for the service instance.
+	 * @return True if the authentication is successful, false otherwise.
+	 * */
 	public boolean Authorize(String username, String password, int service, String verifier, String accessToken, String accessSecret)
 	{
 		

@@ -54,7 +54,6 @@ public class RegistrationPanel implements Panel {
 	private Listener azioni; 
 	private final InputStream PATH_ICON_OK = this.getClass().getClassLoader().getResourceAsStream("images/yes_icon.png"); 
 	private final InputStream PATH_ICON_ERROR = this.getClass().getClassLoader().getResourceAsStream("images/no_icon.png");
-	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
 
 	public Image getImageStream(InputStream stream)
 	{
@@ -113,6 +112,7 @@ public class RegistrationPanel implements Panel {
 		labelAlert.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD ));  
 		labelAlert.setForeground(new Color(Controller.getWindow().getDisplay(),Controller.getWindow().getDisplay().getSystemColor(SWT.COLOR_RED).getRGB()));
 		controlli.add(labelAlert);
+		 
 		
 		labelProxyHost = new Label(panel, SWT.LEFT);
 		labelProxyHost.setText("Proxy server host");
@@ -134,7 +134,8 @@ public class RegistrationPanel implements Panel {
 	    gridData.widthHint = 32; 
 	    labelImageHost.setLayoutData(gridData);
 	    controlli.add(labelImageHost); 
-			
+	     
+	    
 		labelMail = new Label(panel, SWT.LEFT);
 		labelMail.setText("Email");
 		labelMail.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.NONE ));
@@ -147,6 +148,7 @@ public class RegistrationPanel implements Panel {
 		txtMail.setLayoutData(gridData);
 		txtMail.setData("ID_action","txtMail");
 		controlli.add(txtMail);
+		 
 		
 		labelImageMail = new Label(panel,SWT.NONE);
 	    gridData = new GridData(); 
@@ -154,6 +156,7 @@ public class RegistrationPanel implements Panel {
 	    gridData.widthHint = 32; 
 	    labelImageMail.setLayoutData(gridData); 
 	    controlli.add(labelImageMail);
+	    
 	    
 		labelInvitationCode = new Label(panel, SWT.LEFT);
 		labelInvitationCode.setText("Invitation code");
@@ -167,6 +170,7 @@ public class RegistrationPanel implements Panel {
 		txtInvitationCode.setLayoutData(gridData);
 		txtInvitationCode.setData("ID_action","txtInvitationCode");
 		controlli.add(txtInvitationCode);
+		 
 		
 		labelImageInvitationCode = new Label(panel,SWT.NONE);
 	    gridData = new GridData(); 
@@ -174,6 +178,7 @@ public class RegistrationPanel implements Panel {
 	    gridData.widthHint = 32; 
 	    labelImageInvitationCode.setLayoutData(gridData); 
 	    controlli.add(labelImageInvitationCode);
+	     
 	    
 		labelUsername = new Label(panel, SWT.LEFT);
 		labelUsername.setText("Username");
@@ -187,6 +192,7 @@ public class RegistrationPanel implements Panel {
 		txtUsername.setLayoutData(gridData);
 		txtUsername.setData("ID_action","txtUsername");
 		controlli.add(txtUsername);
+		 
 		
 		labelUmageUsername = new Label(panel,SWT.NONE);
 	    gridData = new GridData(); 
@@ -194,6 +200,7 @@ public class RegistrationPanel implements Panel {
 	    gridData.widthHint = 32; 
 	    labelUmageUsername.setLayoutData(gridData); 
 	    controlli.add(labelUmageUsername);
+	   
 	    
 		labelPassword = new Label(panel,SWT.LEFT);
 		labelPassword.setText("Password");
@@ -207,6 +214,7 @@ public class RegistrationPanel implements Panel {
 		txtPassword.setLayoutData(gridData);
 		txtPassword.setData("ID_action","txtPassword");
 		controlli.add(txtPassword);
+		 
 		
 		labelImagePassword = new Label(panel,SWT.NONE);
 	    gridData = new GridData(); 
@@ -214,6 +222,7 @@ public class RegistrationPanel implements Panel {
 	    gridData.widthHint = 32; 
 	    labelImagePassword.setLayoutData(gridData); 
 	    controlli.add(labelImagePassword);
+	  
 	    
 		labelPassword2 = new Label(panel,SWT.LEFT);
 		labelPassword2.setText("Confirm Password");
@@ -227,6 +236,7 @@ public class RegistrationPanel implements Panel {
 		txtPassword2.setLayoutData(gridData);
 		txtPassword2.setData("ID_action","txtPassword2");
 		controlli.add(txtPassword2);
+		 
 		
 		labelImagePassword2 = new Label(panel,SWT.NONE);
 	    gridData = new GridData(); 
@@ -234,6 +244,7 @@ public class RegistrationPanel implements Panel {
 	    gridData.widthHint = 32; 
 	    labelImagePassword2.setLayoutData(gridData); 
 	    controlli.add(labelImagePassword2);
+		 
 	    
 	    labelHidden = new Label(panel, SWT.NONE);
 		labelHidden.setText("");
@@ -249,29 +260,77 @@ public class RegistrationPanel implements Panel {
 		btnRegister.setHeight(30); 
 		btnRegister.setxCoordinate(5);
 		btnRegister.setyCoordinate(230); 
-		btnRegister.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnRegister.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnRegister.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		btnRegister.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
+		btnRegister.setDefaultColors(new Color(panel.getDisplay(),  179, 180, 168), new Color(panel.getDisplay(),  179, 180, 168) , null, null);
+		btnRegister.setClickedColors(new Color(panel.getDisplay(),  179, 180, 168), new Color(panel.getDisplay(),  179, 180, 168) , null, null);
+		btnRegister.setHoverColors(new Color(panel.getDisplay(),  179, 180, 168), new Color(panel.getDisplay(),  179, 180, 168) , null, null);
+		btnRegister.setSelectedColors(new Color(panel.getDisplay(),  179, 180, 168), new Color(panel.getDisplay(),  179, 180, 168) , null, null);
 		btnRegister.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		
 		gridData = new GridData();
 		gridData.horizontalAlignment = SWT.LEFT;
 		gridData.horizontalSpan = 3; 
 		btnRegister.setLayoutData(gridData);
 		btnRegister.setData("ID_action", "btnRegister");
+		
+		btnRegister.setData("LabelAlert", labelAlert);
+		btnRegister.setData("ProxyHost", txtProxyHost); 
+		btnRegister.setData("LabelImageHost", labelImageHost);
+		btnRegister.setData("Email", txtMail);
+		btnRegister.setData("LabelImageMail", labelImageMail); 
+		btnRegister.setData("InvitationCode", txtInvitationCode);
+		btnRegister.setData("LabelImageInvitationCode", labelImageInvitationCode);
+		btnRegister.setData("Username", txtUsername);
+		btnRegister.setData("LabelUmageUsername", labelUmageUsername);
+		btnRegister.setData("Password1", txtPassword);
+		btnRegister.setData("LabelImagePassword", labelImagePassword);
+		btnRegister.setData("Password2", txtPassword2);
+		btnRegister.setData("LabelImagePassword2", labelImagePassword2);
+		
+		txtProxyHost.setData("LabelAlert", labelAlert);
+		txtProxyHost.setData("ProxyHost", txtProxyHost); 
+		txtProxyHost.setData("LabelImageHost", labelImageHost);
+		txtProxyHost.setData("Email", txtMail);
+		txtProxyHost.setData("LabelImageMail", labelImageMail); 
+		txtProxyHost.setData("InvitationCode", txtInvitationCode);
+		txtProxyHost.setData("LabelImageInvitationCode", labelImageInvitationCode);
+		txtProxyHost.setData("Username", txtUsername);
+		txtProxyHost.setData("LabelUmageUsername", labelUmageUsername);
+		txtProxyHost.setData("Password1", txtPassword);
+		txtProxyHost.setData("LabelImagePassword", labelImagePassword);
+		txtProxyHost.setData("Password2", txtPassword2);
+		txtProxyHost.setData("LabelImagePassword2", labelImagePassword2);
+		
+		txtMail.setData("LabelAlert", labelAlert);
+		txtMail.setData("ProxyHost", txtProxyHost); 
+		txtMail.setData("LabelImageHost", labelImageHost);
+		txtMail.setData("Email", txtMail);
+		txtMail.setData("LabelImageMail", labelImageMail); 
+		txtMail.setData("InvitationCode", txtInvitationCode);
+		txtMail.setData("LabelImageInvitationCode", labelImageInvitationCode);
+		txtMail.setData("Username", txtUsername);
+		txtMail.setData("LabelImageUsername", labelUmageUsername);
+		txtMail.setData("Password1", txtPassword);
+		txtMail.setData("LabelImagePassword", labelImagePassword);
+		txtMail.setData("Password2", txtPassword2);
+		txtMail.setData("LabelImagePassword2", labelImagePassword2);
+		
+		txtUsername.setData("LabelAlert", labelAlert);
+		txtUsername.setData("ProxyHost", txtProxyHost); 
+		txtUsername.setData("LabelImageHost", labelImageHost);
+		txtUsername.setData("Email", txtMail);
+		txtUsername.setData("LabelImageMail", labelImageMail); 
+		txtUsername.setData("InvitationCode", txtInvitationCode);
+		txtUsername.setData("LabelImageInvitationCode", labelImageInvitationCode);
+		txtUsername.setData("Username", txtUsername);
+		txtUsername.setData("LabelImageUsername", labelUmageUsername);
+		txtUsername.setData("Password1", txtPassword);
+		txtUsername.setData("LabelImagePassword", labelImagePassword);
+		txtUsername.setData("Password2", txtPassword2);
+		txtUsername.setData("LabelImagePassword2", labelImagePassword2);
+		
 		controlli.add(btnRegister);
 		
-		/*
-		btnRegister = new Button(panel, SWT.NONE);
-		btnRegister.setText("Register");
-		gridData = new GridData();
-		gridData.horizontalAlignment = SWT.RIGHT;
-		gridData.horizontalSpan = 3; 
-		btnRegister.setLayoutData(gridData);
-		btnRegister.setData("ID_action", "btnRegister");
-		btnRegister.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.NONE ));
-		controlli.add(btnRegister);
-		*/
+		
 		for(int i=0;i<5;i++)  {
 			labelHidden = new Label(panel, SWT.NONE);
 			labelHidden.setText("");
@@ -303,6 +362,7 @@ public class RegistrationPanel implements Panel {
 		txtUsername.addListener(SWT.FocusOut, azioni); 
 		labelLogin.addListener(SWT.Selection, azioni); 
 		txtMail.addListener(SWT.FocusOut, azioni); 
+		
 		
 		txtProxyHost.addTraverseListener(new TraverseListener() {
 			
@@ -407,109 +467,7 @@ public class RegistrationPanel implements Panel {
 
 	
 
-	public Text getTxtProxyHost() {
-		return txtProxyHost;
-	}
-
-	public void setTxtProxyHost(Text newTxtProxyHost) {
-		txtProxyHost = newTxtProxyHost;
-	}
-
-	public Text getTxtMail() {
-		return txtMail;
-	}
-
-	public void setTxtMail(Text newTxtMail) {
-		txtMail = newTxtMail;
-	}
-
-	public Text getTxtInvitationCode() {
-		return txtInvitationCode;
-	}
-
-	public void setTxtInvitationCode(Text newTxtInvitationCode) {
-		txtInvitationCode = newTxtInvitationCode;
-	}
-
-	public Text getTxtUsername() {
-		return txtUsername;
-	}
-
-	public void setTxtUsername(Text newTxtUsername) {
-		txtUsername = newTxtUsername;
-	}
-
-	public Text getTxtPassword() {
-		return txtPassword;
-	}
-
-	public void setTxtPassword(Text newTxtPassword) {
-		txtPassword = newTxtPassword;
-	}
-
-	public Text getTxtPassword2() {
-		return txtPassword2;
-	}
-
-	public void setTxtPassword2(Text newTxtPassword2) {
-		txtPassword2 = newTxtPassword2;
-	}
-
-	public Label getLabelAlert() {
-		return labelAlert;
-	}
-
-	public void setLabelAlert(Label newlabelAlert) {
-		this.labelAlert = newlabelAlert;
-	}
-
-	public Label getLabelImageHost() {
-		return labelImageHost;
-	}
-
-	public void setLabelImageHost(Label newLabelImageHost) {
-		this.labelImageHost = newLabelImageHost;
-	}
-
-	public Label getLabelImageMail() {
-		return labelImageMail;
-	}
-
-	public void setLabelImageMail(Label newLabelImageMail) {
-		this.labelImageMail = newLabelImageMail;
-	}
-
-	public Label getLabelImageInvitationCode() {
-		return labelImageInvitationCode;
-	}
-
-	public void setLabelImageInvitationCode(Label newLabelImageInvitationCode) {
-		this.labelImageInvitationCode = newLabelImageInvitationCode;
-	}
-
-	public Label getLabelImageUsername() {
-		return labelUmageUsername;
-	}
-
-	public void setLabelImageUsername(Label newLabelImageUsername) {
-		this.labelUmageUsername = newLabelImageUsername;
-	}
-
-	public Label getLabelImagePassword() {
-		return labelImagePassword;
-	}
-
-	public void setLabelImagePassword(Label newLabelImagePassword) {
-		this.labelImagePassword = newLabelImagePassword;
-	}
-
-	public Label getLabelImagePassword2() {
-		return labelImagePassword2;
-	}
-
-	public void setLabelImagePassword2(Label newLabelImagePassword2) {
-		this.labelImagePassword2 = newLabelImagePassword2;
-	}
+	
 
 	public InputStream getPathIconOk() {
 		return PATH_ICON_OK;
@@ -519,9 +477,7 @@ public class RegistrationPanel implements Panel {
 		return PATH_ICON_ERROR;
 	}
 
-	public InputStream getPathWallpaper() {
-		return PATH_WALLPAPER;
-	}
+	
 
 	
 	

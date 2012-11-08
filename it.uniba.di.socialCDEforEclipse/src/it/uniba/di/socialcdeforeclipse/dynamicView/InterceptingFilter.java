@@ -1,17 +1,15 @@
 package it.uniba.di.socialcdeforeclipse.dynamicView;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-
-import org.eclipse.swt.widgets.Text;
-
+	
 public class InterceptingFilter {
 
-	public static boolean verifyText(Text txt)
+	public static boolean verifyText(String txt)
 	{
-		return (txt.getText() == "" ? false : true); 
+		return (txt == "" ? false : true); 
 		
 	}
 	
@@ -22,45 +20,43 @@ public class InterceptingFilter {
 		return  m.matches();
 	}
 	
-	public static boolean verifyRegistrationPanel()
+	public static boolean verifyRegistrationPanel(HashMap<String, String> values)
 	{
-		String alert = "";
+		Boolean flag = true;
 		
-		if(verifyText(Controller.getRegistrationPanel().getTxtUsername()))
+	
+		if(!verifyText(values.get("Password1") ) )
 		{
-			alert = (Controller.isUsernameAvailable(Controller.getRegistrationPanel().getTxtUsername().getText()) ? "" : "Username not available. Please choose another one."); 
-		}
-		else
-		{
-			alert = "Please enter an username valid!";
+			flag =false; 
 		}
 		
-		if((!verifyText(Controller.getRegistrationPanel().getTxtPassword())) && alert == "")
+		if(!verifyText(values.get("Username")) && flag )
 		{
-			alert = "Please enter a password valid!"; 
+			flag = false; 
 		}
 		
-		if((!verifyText(Controller.getRegistrationPanel().getTxtPassword2())) && alert == "")
+		
+		if((!verifyText( values.get("Password2"))) && flag)
 		{
-			alert = "Please rewrite the password in the appropriate field!"; 
+			flag = false; 
 		}
-		else if(verifyText(Controller.getRegistrationPanel().getTxtPassword2()) && verifyText(Controller.getRegistrationPanel().getTxtPassword()) && !Controller.getRegistrationPanel().getTxtPassword2().getText().equals(Controller.getRegistrationPanel().getTxtPassword().getText()))
+		else if(verifyText( values.get("Password1")) && verifyText( values.get("Password2")) && !(values.get("Password2").equals(values.get("Password1"))))
 		{
-			alert = "Passwords do not match!"; 
+			flag = false;
 		}
 			
-		if((!verifyMail(Controller.getRegistrationPanel().getTxtMail().getText()))&& alert == "")
+		if((!verifyMail(  values.get("Email")))&& flag)
 		{
-			alert = "Please enter an email valid!"; 
+			flag = false; 
 		}
 		
-		if((!verifyText(Controller.getRegistrationPanel().getTxtInvitationCode())) && alert == "")
+		if((!verifyText(  values.get("InvitationCode"))) && flag)
 		{
-			alert = "Please enter an invitation code valid!";
+			flag = false; 
 		}
 		
 		
-		return (alert == "" ? true : false); 
+		return flag; 
 		
 		
 	}

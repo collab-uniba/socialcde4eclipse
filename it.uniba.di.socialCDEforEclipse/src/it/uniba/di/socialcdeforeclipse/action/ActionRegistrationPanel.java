@@ -1,6 +1,8 @@
 package it.uniba.di.socialcdeforeclipse.action;
 
 import java.io.InputStream;
+import java.util.HashMap;
+
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.dynamicView.InterceptingFilter;
@@ -14,14 +16,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
 public class ActionRegistrationPanel {
 	  
 	private ProgressBarThread pbWindow; 
-	private final static Image IMAGE_OK = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconOk());
-	private final static Image IMAGE_NO = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconError());
-	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
+	private static Image IMAGE_OK;
+	private static Image IMAGE_NO; 
+	
 	
 
 	
@@ -43,43 +47,45 @@ public class ActionRegistrationPanel {
 		}
 	
 	
-	public ActionRegistrationPanel(Widget widget, Event event)
+	public ActionRegistrationPanel()
+	{
+		
+	}
+	
+	public ActionRegistrationPanel(final Widget widget, Event event)
 	{
 		String widgetName = widget.getData("ID_action").toString(); 
-		
+		IMAGE_OK = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconOk());
+		IMAGE_NO = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconError());
+       
+
 		switch (widgetName) {
 		
-		case "registrationPanel":
-			
-			Controller.setWindowHeight(Controller.getWindow().getSize().y); 
-			Controller.setWindowWidth(Controller.getWindow().getSize().x);
-			Controller.getWindow().setBackgroundImage(resize(getImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight()));
-			Controller.getWindow().layout(); 
-
-			
-			break;
+		
 		
 		case "txtProxyHost":
 
 			if(event.type == SWT.FocusOut)
 			{
-				if(InterceptingFilter.verifyText(Controller.getRegistrationPanel().getTxtProxyHost()))
+				
+				if(InterceptingFilter.verifyText( ((Text) widget.getData("ProxyHost")).getText()))
 				{
 					Controller.setProxy(new ProxyWrapper()); 
-					Controller.getProxy().setHost(Controller.getRegistrationPanel().getTxtProxyHost().getText()); 
+					Controller.getProxy().setHost(((Text) widget.getData("ProxyHost")).getText()); 
 					if(Controller.getProxy().IsWebServiceRunning())
 					{
 						
-						Controller.getRegistrationPanel().getLabelImageHost().setImage(IMAGE_OK); 
-						Controller.getRegistrationPanel().getLabelAlert().setVisible(false);
+						( (Label) widget.getData("LabelImageHost")).setImage(IMAGE_OK); 
+						( (Label) widget.getData("LabelImageHost")).setVisible(true);
 					}
 					else
 					{
 						
 						Controller.setProxy(null); 
-						Controller.getRegistrationPanel().getLabelAlert().setText("Please insert a valid proxy!");
-						Controller.getRegistrationPanel().getLabelAlert().setVisible(true); 
-						Controller.getRegistrationPanel().getLabelImageHost().setImage(IMAGE_NO);
+						
+						( (Label) widget.getData("LabelAlert")).setText("Please insert a valid proxy!");
+						( (Label) widget.getData("LabelAlert")).setVisible(true); 
+						( (Label) widget.getData("LabelImageHost")).setImage(IMAGE_NO);
 						Controller.getWindow().layout(); 
 					}
 				}
@@ -91,46 +97,46 @@ public class ActionRegistrationPanel {
 			
 			if(event.type == SWT.FocusOut)
 			{
-				if(InterceptingFilter.verifyText(Controller.getRegistrationPanel().getTxtUsername()))
+				if(InterceptingFilter.verifyText( ((Text) widget.getData("Username")).getText()))
 				{
 					if(Controller.getProxy() != null)
 					{
-						if(!Controller.getProxy().IsAvailable(Controller.getRegistrationPanel().getTxtUsername().getText()))
+						if(!Controller.getProxy().IsAvailable(((Text) widget.getData("Username")).getText()))
 						{
 							
 							
 
-							Controller.getRegistrationPanel().getLabelAlert().setText("Please insert a valid username");  
-							Controller.getRegistrationPanel().getLabelAlert().setVisible(true); 
-							Controller.getRegistrationPanel().getLabelImageUsername().setImage(IMAGE_NO);
+							( (Label) widget.getData("LabelAlert")).setText("Please insert a valid username");  
+							( (Label) widget.getData("LabelAlert")).setVisible(true); 
+							( (Label) widget.getData("LabelImageUsername")).setImage(IMAGE_NO);
 							Controller.getWindow().layout(); 
 						}
 						else
 						{
 							
-							Controller.getRegistrationPanel().getLabelImageUsername().setImage(IMAGE_OK);
-							Controller.getRegistrationPanel().getLabelAlert().setVisible(false); 
+							( (Label) widget.getData("LabelImageUsername")).setImage(IMAGE_OK);
+							( (Label) widget.getData("LabelAlert")).setVisible(false); 
 							Controller.getWindow().layout(); 
 						}
 					}
 					else
 					{
-						Controller.getRegistrationPanel().getLabelAlert().setText("Please insert a valid proxy first!");  
-						Controller.getRegistrationPanel().getLabelAlert().setVisible(true); 
+						( (Label) widget.getData("LabelAlert")).setText("Please insert a valid proxy first!");  
+						( (Label) widget.getData("LabelAlert")).setVisible(true); 
 						 
 
 						
-						Controller.getRegistrationPanel().getLabelImageUsername().setImage(IMAGE_NO);
-						Controller.getRegistrationPanel().getLabelImageHost().setImage(IMAGE_NO);
+						( (Label) widget.getData("LabelImageUsername")).setImage(IMAGE_NO);
+						( (Label) widget.getData("LabelImageHost")).setImage(IMAGE_NO);
 						Controller.getWindow().layout();
 					
 					}
 				}
 				else
 				{
-					Controller.getRegistrationPanel().getLabelAlert().setText("Please insert a valid username!");  
-					Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-					Controller.getRegistrationPanel().getLabelImageUsername().setImage(IMAGE_NO);
+					( (Label) widget.getData("LabelAlert")).setText("Please insert a valid username!");  
+					( (Label) widget.getData("LabelAlert")).setVisible(true);
+					( (Label) widget.getData("LabelImageUsername")).setImage(IMAGE_NO);
 					Controller.getWindow().layout(); 
 				}
 			}
@@ -138,19 +144,21 @@ public class ActionRegistrationPanel {
 			break;
 		case "txtMail":
 			if(event.type == SWT.FocusOut){
-				if(InterceptingFilter.verifyMail(Controller.getRegistrationPanel().getTxtMail().getText())){
-					Controller.getRegistrationPanel().getLabelImageMail().setImage(IMAGE_OK);
-					Controller.getRegistrationPanel().getLabelAlert().setVisible(false); 
+				if(InterceptingFilter.verifyMail(  ((Text) widget ).getText()) ){
+					( (Label) widget.getData("LabelImageMail")).setImage(IMAGE_OK);
+					( (Label) widget.getData("LabelAlert")).setVisible(false); 
 					Controller.getWindow().layout(); 
 		
 				} else {
-					Controller.getRegistrationPanel().getLabelAlert().setText("Please insert a valid mail!");  
-					Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-					Controller.getRegistrationPanel().getLabelImageMail().setImage(IMAGE_NO);
+					( (Label) widget.getData("LabelAlert")).setText("Please insert a valid mail!");  
+					( (Label) widget.getData("LabelAlert")).setVisible(true);
+					( (Label) widget.getData("LabelImageMail")).setImage(IMAGE_NO);
 					Controller.getWindow().layout(); 
 					
 				}
 			}
+			
+			
 			
 			break;
 			
@@ -163,115 +171,122 @@ public class ActionRegistrationPanel {
 				pbWindow.setLabelTxt("Login in progress..");
 				pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 				pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+				Controller.setProgressBarPositionX(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+				Controller.setProgressBarPositionY(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
+
 				//pbThread.setWidth(Controller.getWindow().getSize().x);
 				//pbThread.setHeight(Controller.getWindow().getSize().y); 
 				pbWindow.start(); 
+				HashMap<String, String> dataExtracted = new HashMap<String,String>(); 
+				dataExtracted.put("Username", ((Text) widget.getData("Username")).getText());
+				dataExtracted.put("Password1", ((Text) widget.getData("Password1")).getText());
+				dataExtracted.put("Password2", ((Text) widget.getData("Password2")).getText());
+				dataExtracted.put("InvitationCode", ((Text) widget.getData("InvitationCode")).getText()); 
+				dataExtracted.put("Email", ((Text) widget.getData("Email")).getText());
+				dataExtracted.put("ProxyHost", ((Text) widget.getData("ProxyHost")).getText());
+				int res = actionRegister(dataExtracted);
+				dataExtracted.clear(); 
 				
-				Controller.getWindow().getDisplay().asyncExec(new Runnable() {
-			        public void run() {
-			        	
-			        	if(InterceptingFilter.verifyRegistrationPanel())
-						{
-							if(Controller.getProxy() != null)
-							{
-								System.out.println("Proxy corretto"); 
-								//registra
-							 int res = Controller.getProxy().SubscribeUser(Controller.getRegistrationPanel().getTxtMail().getText(), Controller.getRegistrationPanel().getTxtInvitationCode().getText(), Controller.getRegistrationPanel().getTxtUsername().getText());
-							 System.out.println("Valore di res "+ res);
-							 switch (res) {
-							case -1:
-								Controller.getRegistrationPanel().getLabelAlert().setText("There's a problem. Check your connection and try again");
-								Controller.getWindow().layout();
-								pbWindow.setStop(1);  
-								pbWindow = null;
-								break;
-							case 0:
-								
-								boolean password = Controller.getProxy().ChangePassword(Controller.getRegistrationPanel().getTxtUsername().getText(), Controller.getRegistrationPanel().getTxtInvitationCode().getText(),Controller.getRegistrationPanel().getTxtPassword().getText()); 
-								System.out.println("Valore di password "+ password); 
-								if(password)
-								{
-									Controller.setPreferences("ProxyHost", Controller.getProxy().getHost()); 
-									Controller.setPreferences("Username", Controller.getRegistrationPanel().getTxtUsername().getText()); 
-									Controller.setPreferences("ProxyRoot", Controller.getRegistrationPanel().getTxtProxyHost().getText()); 
-									Controller.setPreferences("Password", Controller.getRegistrationPanel().getTxtPassword().getText()); 
-									Controller.setPreferences("Email", Controller.getRegistrationPanel().getTxtMail().getText()); 
-								}
-								else
-								{
-									Controller.getRegistrationPanel().getLabelAlert().setText("There's a problem. Check your connection and try again");
-									Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-									Controller.getWindow().layout();
-									pbWindow.setStop(1); 
-									pbWindow = null;
-								}
-								
-								break;
-							case 1: // if e-mail address does not exist in the database
-								Controller.getRegistrationPanel().getLabelAlert().setText("Please insert the email on which you recived the invite");
-								Controller.getRegistrationPanel().getLabelAlert().setVisible(true); 
-								Controller.getWindow().layout();
-								pbWindow.setStop(1); 
-								pbWindow = null;
-								break;
-							case 2:
-								// if password does not match with the e-mail address sent
-			                    Controller.getRegistrationPanel().getLabelAlert().setText("Please insert the invitation code that you recived in the invite");
-			                    Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-			                    Controller.getWindow().layout();
-			                    pbWindow.setStop(1); 
-								pbWindow = null;
-			                    break;
-			                case 3: // if username is already used by another user
-			                    Controller.getRegistrationPanel().getLabelAlert().setText("The Username chosen is not aviable");
-			                    Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-			                    Controller.getWindow().layout();
-			                    pbWindow.setStop(1); 
-								pbWindow = null;
-			                    break;
-							default:
-								Controller.getRegistrationPanel().getLabelAlert().setText("Response not valid from the server"); 
-								Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-								Controller.getWindow().layout();
-								pbWindow.setStop(1); 
-								pbWindow = null;
-								break;
-							}
-							 
-							 if(res == 0)
-							 {
-								
-								 Controller.getRegistrationPanel().dispose(Controller.getWindow());
-								 Controller.setRegistration_panel(null); 
-								 Controller.setWindowName("Login"); 
-								 Controller.setLoginPanel(new LoginPanel()); 
-								 Controller.getLoginPanel().inizialize(Controller.getWindow()); 
-								 pbWindow.setStop(1); 
-								 pbWindow = null;
-							 }
-							 
-							}
-							else
-							{
-								Controller.getRegistrationPanel().getLabelAlert().setText("Please enter a valid proxy!"); 
-								Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-								Controller.getWindow().layout(); 
-								pbWindow.setStop(1); 
-								pbWindow = null;
-							}
-						}
-						else
-						{
-							Controller.getRegistrationPanel().getLabelAlert().setText("Please compile all field correctly!");
-							Controller.getRegistrationPanel().getLabelAlert().setVisible(true);
-							Controller.getWindow().layout(); 
-							pbWindow.setStop(1); 
-							pbWindow = null;
-						}
-			        	
-			        	
-			        }});
+				switch (res) {
 				
+				case -3:
+					( (Label) widget.getData("LabelAlert")).setText("Please compile all field correctly!");
+					( (Label) widget.getData("LabelAlert")).setVisible(true);
+					break;
+			
+				case -2:
+					( (Label) widget.getData("LabelAlert")).setText("Please enter a valid proxy!"); 
+					( (Label) widget.getData("LabelAlert")).setVisible(true);
+					break;
+				
+				case -1:
+					( (Label) widget.getData("LabelAlert")).setText("There's a problem. Check your connection and try again");
+					/*
+					Controller.getWindow().layout();
+					pbWindow.setStop(1);  
+					pbWindow = null;
+					*/
+					break;
+				case 0:
+					
+					boolean password = Controller.getProxy().ChangePassword(((Text) widget.getData("Username")).getText(), ((Text) widget.getData("InvitationCode")).getText(),((Text) widget.getData("Password1")).getText()); 
+					System.out.println("Valore di password "+ password); 
+					if(password)
+					{
+						Controller.setPreferences("ProxyHost", Controller.getProxy().getHost()); 
+						Controller.setPreferences("Username", ((Text) widget.getData("Username")).getText()); 
+						Controller.setPreferences("ProxyRoot",((Text) widget.getData("ProxyHost")).getText()); 
+						Controller.setPreferences("Password", ((Text) widget.getData("Password1")).getText()); 
+						Controller.setPreferences("Email",((Text) widget.getData("Email")).getText()); 
+					}
+					else
+					{
+						( (Label) widget.getData("LabelAlert")).setText("There's a problem. Check your connection and try again");
+						( (Label) widget.getData("LabelAlert")).setVisible(true);
+						/*
+						Controller.getWindow().layout();
+						pbWindow.setStop(1); 
+						pbWindow = null;
+						*/
+					}
+					
+					break;
+				case 1: // if e-mail address does not exist in the database
+					( (Label) widget.getData("LabelAlert")).setText("Please insert the email on which you recived the invite");
+					( (Label) widget.getData("LabelAlert")).setVisible(true); 
+					/*
+					Controller.getWindow().layout();
+					pbWindow.setStop(1); 
+					pbWindow = null;
+					*/
+					break;
+				case 2:
+					// if password does not match with the e-mail address sent
+					( (Label) widget.getData("LabelAlert")).setText("Please insert the invitation code that you recived in the invite");
+					( (Label) widget.getData("LabelAlert")).setVisible(true);
+					/*
+                    Controller.getWindow().layout();
+                    pbWindow.setStop(1); 
+					pbWindow = null;
+					*/
+                    break;
+                case 3: // if username is already used by another user
+                	( (Label) widget.getData("LabelAlert")).setText("The Username chosen is not aviable");
+                	( (Label) widget.getData("LabelAlert")).setVisible(true);
+                	/*
+                    Controller.getWindow().layout();
+                    pbWindow.setStop(1); 
+					pbWindow = null;
+					*/
+                    break;
+				default:
+					( (Label) widget.getData("LabelAlert")).setText("Response not valid from the server"); 
+					( (Label) widget.getData("LabelAlert")).setVisible(true);
+					/*
+					Controller.getWindow().layout();
+					pbWindow.setStop(1); 
+					pbWindow = null;
+					*/
+					break;
+				}
+				
+				 if(res == 0)
+				 {
+					
+					 Controller.getRegistrationPanel().dispose(Controller.getWindow());
+					 Controller.setRegistration_panel(null); 
+					 Controller.setWindowName("Login"); 
+					 Controller.setLoginPanel(new LoginPanel()); 
+					 Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+					 /*
+					 pbWindow.setStop(1); 
+					 pbWindow = null;
+					 */
+				 }
+				
+				Controller.getWindow().layout();
+				pbWindow.setStop(1); 
+				pbWindow = null;
 				
 			}
 			
@@ -290,5 +305,50 @@ public class ActionRegistrationPanel {
 		}	
 		
 	}
+	
+	public  int actionRegister( HashMap<String, String> dataExtracted)
+	{
+		int res = -4;
+	        	if(InterceptingFilter.verifyRegistrationPanel(dataExtracted))
+				{
+					if(Controller.getProxy() != null)
+					{
+						System.out.println("Proxy corretto"); 
+						//registra
+					 res = Controller.getProxy().SubscribeUser( dataExtracted.get("Email"),  dataExtracted.get("InvitationCode"), dataExtracted.get("Username"));
+					 System.out.println("Valore di res "+ res);
+					 
+					 
+					
+					 
+					}
+					else
+					{
+						res = -2; 
+						
+						/*
+						Controller.getWindow().layout(); 
+						pbWindow.setStop(1); 
+						pbWindow = null;
+						*/
+					}
+				}
+				else
+				{
+					res = -3; 
+					
+					/*
+					Controller.getWindow().layout(); 
+					pbWindow.setStop(1); 
+					pbWindow = null;
+					*/
+				}
+	        	
+	        	
+	        	return res; 
+	}
+	
+	
+	
 
 }

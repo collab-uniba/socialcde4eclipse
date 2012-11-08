@@ -230,14 +230,14 @@ public class TFSLogin implements Panel {
 		
 	if(service.RequireTFSDomain)
 	{
-			Input.put("Domain", (InterceptingFilter.verifyText(textDomain) ? textDomain.getText() : null).toString() );
+			Input.put("Domain", (InterceptingFilter.verifyText(textDomain.getText()) ? textDomain.getText() : null).toString() );
 	}
 	else
 	{
 		Input.put("Domain", null );
 	}
-			Input.put("Username", (InterceptingFilter.verifyText(textUsername) ? textUsername.getText() : null).toString()); 
-			Input.put("Password", (InterceptingFilter.verifyText(textPassword) ? textPassword.getText() : null).toString()); 
+			Input.put("Username", (InterceptingFilter.verifyText(textUsername.getText()) ? textUsername.getText() : null).toString()); 
+			Input.put("Password", (InterceptingFilter.verifyText(textPassword.getText()) ? textPassword.getText() : null).toString()); 
 		return Input;
 	}
 

@@ -21,9 +21,8 @@ import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Widget;
+import org.eclipse.swt.widgets.*;
 
 public class ActionLoginPanel {
 	
@@ -52,13 +51,18 @@ public class ActionLoginPanel {
 		return scaled;
 		}
 	
+	public ActionLoginPanel()
+	{
+		
+	}
+	
 	public ActionLoginPanel(Widget widget, Event event)	{
 		
 		String widgetName = widget.getData("ID_action").toString(); 
 		
-		Controller.getLoginPanel().getLabelAlert().setVisible(false);
-		Controller.getLoginPanel().getLabelImageUsername().setImage(null);
-		Controller.getLoginPanel().getLabelImagePassword().setImage(null);
+		((Label) widget.getData("labelAlert")).setVisible(false);
+		((Label) widget.getData("labelImageUsername")).setImage(null);
+		((Label) widget.getData("labelImagePassword")).setImage(null);
 		switch (widgetName) {
 		
 		case "loginPanel":
@@ -74,9 +78,11 @@ public class ActionLoginPanel {
 			    System.out.println("getLocation: " + Controller.getWindow().getLocation());
 			    System.out.println("getSize: " + Controller.getWindow().getSize());
 			    System.out.println("to display " + Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y));
-			    System.out.println("label: " + Controller.getLoginPanel().getLabelAlert().getLocation());
+			    System.out.println("label: " + ((Label) widget.getData("labelAlert")).getLocation());
 			    pbWindow = new ProgressBarThread(); 
 				pbWindow.setLabelTxt("Login in progress..");
+				Controller.setProgressBarPositionX(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+				Controller.setProgressBarPositionY(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 				pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 				pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 				 pbWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
@@ -87,22 +93,22 @@ public class ActionLoginPanel {
 			    
 			        	if(Controller.getProxy() == null)	{
 							Controller.setProxy(new ProxyWrapper()); 
-							Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText()); 
+							Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText()); 
 						} else	{
-							Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText());
+							Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText());
 						}
 							if(Controller.getProxy().IsWebServiceRunning())  {
 								System.out.println("step 2");
-								user = Controller.getProxy().GetUser(Controller.getLoginPanel().getTxtUsername().getText(), Controller.getLoginPanel().getTxtPassword().getText()); 
+								user = Controller.getProxy().GetUser(((Text) widget.getData("txtUsername")).getText(), ((Text) widget.getData("txtPassword")).getText()); 
 								
 								if(user == null)  {
 									
 									
 								        	    
-									Controller.getLoginPanel().getLabelAlert().setText("username or password not valid!");
-									Controller.getLoginPanel().getLabelImageUsername().setImage(IMAGE_NO);
-									Controller.getLoginPanel().getLabelImagePassword().setImage(IMAGE_NO);
-									Controller.getLoginPanel().getLabelAlert().setVisible(true); 
+									((Label) widget.getData("labelAlert")).setText("username or password not valid!");
+									((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
+									((Label) widget.getData("labelImagePassword")).setImage(IMAGE_NO);
+									((Label) widget.getData("labelAlert")).setVisible(true); 
 									
 									//Controller.getWindow().layout(); 
 									pbWindow.setStop(1); 
@@ -112,15 +118,15 @@ public class ActionLoginPanel {
 									
 								} else	{
 									
-									if(Controller.getLoginPanel().getChkSavepassword().getSelection()) {
-										Controller.setPreferences("Password",Controller.getLoginPanel().getTxtPassword().getText()); 
+									if(((Button) widget.getData("chkSavePassword")).getSelection()) {
+										Controller.setPreferences("Password",((Text) widget.getData("txtPassword")).getText()); 
 									}
 									else
 									{
 										Controller.setPreferences("Password","");
 									}
 									
-									if(Controller.getLoginPanel().getChkAutologin().getSelection())	{
+									if(((Button) widget.getData("chkAutologin")).getSelection())	{
 										Controller.setPreferences("Autologin", "True"); 
 										Controller.setPreferences("FlagAutologin", "False");
 									}
@@ -132,9 +138,9 @@ public class ActionLoginPanel {
 									System.out.println("Utente corretto!"); 
 									Controller.setCurrentUser(user); 
 									Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
-									Controller.setPreferences("ProxyRoot", Controller.getLoginPanel().getTxtProxyHost().getText());
+									Controller.setPreferences("ProxyRoot", ((Text) widget.getData("txtProxyHost")).getText());
 									Controller.setPreferences("Username", user.Username);
-									Controller.setCurrentUserPassword(Controller.getLoginPanel().getTxtPassword().getText());
+									Controller.setCurrentUserPassword(((Text) widget.getData("txtPassword")).getText());
 
 									Controller.setWindowName("Profile");
 									Controller.setProfilePanel(new ProfilePanel()); 
@@ -154,9 +160,9 @@ public class ActionLoginPanel {
 									
 								}
 							}  else	{
-								Controller.getLoginPanel().getLabelAlert().setText("The connection with the Proxy failed"); 
-								Controller.getLoginPanel().getLabelImageHost().setImage(IMAGE_NO);
-								Controller.getLoginPanel().getLabelAlert().setVisible(true); 
+								((Label) widget.getData("labelAlert")).setText("The connection with the Proxy failed"); 
+								((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
+								((Label) widget.getData("labelAlert")).setVisible(true); 
 								pbWindow.setStop(1); 
 								pbWindow = null;
 								//Controller.getWindow().redraw(); 
@@ -191,28 +197,30 @@ public class ActionLoginPanel {
 						pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 						 pbWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
 						 pbWindow.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
+							Controller.setProgressBarPositionX(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
+							Controller.setProgressBarPositionY(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 						 pbWindow.start();  
 						System.out.println("step 1");
 					    
 					    
 					        	if(Controller.getProxy() == null)	{
 									Controller.setProxy(new ProxyWrapper()); 
-									Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText()); 
+									Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText()); 
 								} else	{
-									Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText());
+									Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText());
 								}
 									if(Controller.getProxy().IsWebServiceRunning())  {
 										System.out.println("step 2");
-										user = Controller.getProxy().GetUser(Controller.getLoginPanel().getTxtUsername().getText(), Controller.getLoginPanel().getTxtPassword().getText()); 
+										user = Controller.getProxy().GetUser(((Text) widget.getData("txtUsername")).getText(), ((Text) widget.getData("txtPassword")).getText()); 
 										
 										if(user == null)  {
 											
 											
 										        	    
-											Controller.getLoginPanel().getLabelAlert().setText("username or password not valid!");
-											Controller.getLoginPanel().getLabelImageUsername().setImage(IMAGE_NO);
-											Controller.getLoginPanel().getLabelImagePassword().setImage(IMAGE_NO);
-											Controller.getLoginPanel().getLabelAlert().setVisible(true); 
+											((Label) widget.getData("labelAlert")).setText("username or password not valid!");
+											((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
+											((Label) widget.getData("labelImagePassword")).setImage(IMAGE_NO);
+											((Label) widget.getData("labelAlert")).setVisible(true); 
 											
 											Controller.getWindow().layout(); 
 											pbWindow.setStop(1); 
@@ -222,19 +230,19 @@ public class ActionLoginPanel {
 											
 										} else	{
 											
-											if(Controller.getLoginPanel().getChkSavepassword().getSelection()) {
-												Controller.setPreferences("Password",Controller.getLoginPanel().getTxtPassword().getText()); 
+											if(((Button) widget.getData("chkSavePassword")).getSelection()) {
+												Controller.setPreferences("Password",((Text) widget.getData("txtPassword")).getText()); 
 											}
 											
-											if(Controller.getLoginPanel().getChkAutologin().getSelection())	{
+											if(((Button) widget.getData("chkAutologin")).getSelection())	{
 												Controller.setPreferences("Autologin", "True"); 
 											}
 											System.out.println("Utente corretto!"); 
 											Controller.setCurrentUser(user); 
 											Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
-											Controller.setPreferences("ProxyRoot", Controller.getLoginPanel().getTxtProxyHost().getText());
+											Controller.setPreferences("ProxyRoot", ((Text) widget.getData("txtProxyHost")).getText());
 											Controller.setPreferences("Username", user.Username);
-											Controller.setCurrentUserPassword(Controller.getLoginPanel().getTxtPassword().getText());
+											Controller.setCurrentUserPassword(((Text) widget.getData("txtPassword")).getText());
 
 											Controller.setWindowName("Profile");
 											Controller.setProfilePanel(new ProfilePanel()); 
@@ -252,9 +260,9 @@ public class ActionLoginPanel {
 											
 										}
 									}  else	{
-										Controller.getLoginPanel().getLabelAlert().setText("The connection with the Proxy failed"); 
-										Controller.getLoginPanel().getLabelImageHost().setImage(IMAGE_NO);
-										Controller.getLoginPanel().getLabelAlert().setVisible(true); 
+										((Label) widget.getData("labelAlert")).setText("The connection with the Proxy failed"); 
+										((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
+										((Label) widget.getData("labelAlert")).setVisible(true); 
 										pbWindow.setStop(1); 
 										pbWindow = null;
 										Controller.getWindow().layout(); 
@@ -286,23 +294,23 @@ public class ActionLoginPanel {
 					event.detail == SWT.TRAVERSE_TAB_PREVIOUS)); 
 			if(event.type == SWT.FocusOut)
 			{
-				if(InterceptingFilter.verifyText(Controller.getLoginPanel().getTxtProxyHost()))
+				if(InterceptingFilter.verifyText(((Text) widget.getData("txtProxyHost")).getText()))
 				{
 					Controller.setProxy(new ProxyWrapper()); 
-					Controller.getProxy().setHost(Controller.getLoginPanel().getTxtProxyHost().getText()); 
+					Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText()); 
 					if(Controller.getProxy().IsWebServiceRunning())
 					{
 						
-						Controller.getLoginPanel().getLabelImageHost().setImage(IMAGE_OK); 
-						Controller.getLoginPanel().getLabelAlert().setVisible(false);
+						((Label) widget.getData("labelImageHost")).setImage(IMAGE_OK); 
+						((Label) widget.getData("labelAlert")).setVisible(false);
 					}
 					else
 					{
 						
 						Controller.setProxy(null); 
-						Controller.getLoginPanel().getLabelAlert().setText("Please insert a valid proxy!");
-						Controller.getLoginPanel().getLabelAlert().setVisible(true); 
-						Controller.getLoginPanel().getLabelImageHost().setImage(IMAGE_NO);
+						((Label) widget.getData("labelAlert")).setText("Please insert a valid proxy!");
+						((Label) widget.getData("labelAlert")).setVisible(true); 
+						((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
 						Controller.getWindow().layout(); 
 					}
 				}
@@ -315,43 +323,43 @@ public class ActionLoginPanel {
 			
 			if(event.type == SWT.FocusOut)
 			{
-				if(InterceptingFilter.verifyText(Controller.getLoginPanel().getTxtUsername()))
+				if(InterceptingFilter.verifyText(((Text) widget.getData("txtUsername")).getText()))
 				{
 					if(Controller.getProxy() != null)
 					{
-						if(Controller.getProxy().IsAvailable(Controller.getLoginPanel().getTxtUsername().getText()))
+						if(Controller.getProxy().IsAvailable(((Text) widget.getData("txtUsername")).getText()))
 						{
 							
-							Controller.getLoginPanel().getLabelImageUsername().setImage(IMAGE_OK);
-							Controller.getLoginPanel().getLabelAlert().setVisible(false); 
+							((Label) widget.getData("labelImageUsername")).setImage(IMAGE_OK);
+							((Label) widget.getData("labelAlert")).setVisible(false); 
 							Controller.getWindow().layout();
 						}
 						else
 						{
-							Controller.getLoginPanel().getLabelAlert().setText("Please insert a valid username");  
-							Controller.getLoginPanel().getLabelAlert().setVisible(true); 
-							Controller.getLoginPanel().getLabelImageUsername().setImage(IMAGE_NO);
+							((Label) widget.getData("labelAlert")).setText("Please insert a valid username");  
+							((Label) widget.getData("labelAlert")).setVisible(true); 
+							((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
 							Controller.getWindow().layout(); 
 						}
 					}
 					else
 					{
-						Controller.getLoginPanel().getLabelAlert().setText("Please insert a valid proxy first!");  
-						Controller.getLoginPanel().getLabelAlert().setVisible(true); 
+						((Label) widget.getData("labelAlert")).setText("Please insert a valid proxy first!");  
+						((Label) widget.getData("labelAlert")).setVisible(true); 
 						 
 
 						
-						Controller.getLoginPanel().getLabelImageUsername().setImage(IMAGE_NO);
-						Controller.getLoginPanel().getLabelImageHost().setImage(IMAGE_NO);
+						((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
+						((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
 						Controller.getWindow().layout();
 					
 					}
 				}
 				else
 				{
-					Controller.getLoginPanel().getLabelAlert().setText("Please insert a valid username!");  
-					Controller.getLoginPanel().getLabelAlert().setVisible(true);
-					Controller.getLoginPanel().getLabelImageUsername().setImage(IMAGE_NO);
+					((Label) widget.getData("labelAlert")).setText("Please insert a valid username!");  
+					((Label) widget.getData("labelAlert")).setVisible(true);
+					((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
 					Controller.getWindow().layout(); 
 				}
 			}
