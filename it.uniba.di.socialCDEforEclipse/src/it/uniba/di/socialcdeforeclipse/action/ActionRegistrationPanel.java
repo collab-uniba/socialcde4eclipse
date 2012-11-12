@@ -58,7 +58,7 @@ public class ActionRegistrationPanel {
 		IMAGE_OK = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconOk());
 		IMAGE_NO = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconError());
        
-			
+
 		switch (widgetName) {
 		
 		

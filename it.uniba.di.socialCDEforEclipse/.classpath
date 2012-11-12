@@ -6,5 +6,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="JUnitTest"/>
 	<classpathentry kind="lib" path="lib/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/jdom-2.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

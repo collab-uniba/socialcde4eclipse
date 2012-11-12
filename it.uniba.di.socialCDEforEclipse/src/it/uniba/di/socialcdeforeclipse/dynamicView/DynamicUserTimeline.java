@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
@@ -119,8 +117,6 @@ public class DynamicUserTimeline implements Panel {
 	public void setUser(WUser user) {
 		this.user = user;
 	}
-	
-
 
 	
 
@@ -142,6 +138,8 @@ public class DynamicUserTimeline implements Panel {
 		gridData.horizontalSpan = 4; 
 		compositeBack.setLayoutData(gridData); 
 
+		
+		
 		Label labelBack = new Label(compositeBack, SWT.None); 
 		labelBack.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
 		labelBack.setImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Back.png"))); 
@@ -381,54 +379,9 @@ public class DynamicUserTimeline implements Panel {
 			gridData.widthHint = 100; 
 			message.setLayoutData(gridData); 
 			
-			Calendar dateNow = Calendar.getInstance();
-			
-			//System.out.println("Data considerata " + dateNow.);
-			
-			System.out.println("Data confrontata " + posts[i].getCreateAt() ); 
-			
-			// Calculates the difference in milliseconds.
-			long millisDiff = dateNow.getTimeInMillis() - posts[i].getCreateAt().getTimeInMillis();
-			 
-			// Calculates days/hours/minutes/seconds.
-			int seconds = (int) (millisDiff / 1000 % 60);
-			int minutes = (int) (millisDiff / 60000 % 60);
-			int hours = (int) (millisDiff / 3600000 % 24);
-			int days = (int) (millisDiff / 86400000);
-			
 			
 			Label messageDate = new Label(userPostComposite, SWT.None); 
-			
-			if(days > 0)
-			{
-				if(days == 1)
-				{
-					messageDate.setText("About " + days + " day and " + hours + " hours ago from " + posts[i].getService().getName());
-				}
-				else if(days > 30)
-				{
-					messageDate.setText("More than 30 days ago");
-				}
-				else
-				{
-					messageDate.setText("About " + days + " days ago from " + posts[i].getService().getName());
-				}
-			}
-			else if (hours > 0)
-			{
-				messageDate.setText("About " +hours + " hours ago from " + posts[i].getService().getName());
-			}
-			else if( minutes > 0)
-			{
-				messageDate.setText("About " +minutes + " minutes ago from " + posts[i].getService().getName());
-			}
-			else if(seconds > 0)
-			{
-				messageDate.setText("About " +seconds + " seconds ago from " + posts[i].getService().getName());
-			}
-			
-			
-			
+			messageDate.setText(posts[i].getCreateAt() + " from " + posts[i].getService().getName()); 
 			messageDate.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 8, SWT.ITALIC ));
 			gridData = new GridData(); 
 			gridData.grabExcessHorizontalSpace = true; 

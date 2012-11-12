@@ -1,6 +1,5 @@
 package it.uniba.di.socialcdeforeclipse.sharedLibrary;
 
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -30,7 +29,7 @@ public class WPost {
     /// <summary>
     /// Creation date of the post.
     /// </summary>
-    public Calendar CreateAt;
+    public Date CreateAt;
 
 	public long getId() {
 		return Id;
@@ -64,11 +63,11 @@ public class WPost {
 		Message = message;
 	}
 
-	public Calendar getCreateAt() {
+	public Date getCreateAt() {
 		return CreateAt;
 	}
 
-	public void setCreateAt(Calendar createAt) {
+	public void setCreateAt(Date createAt) {
 		CreateAt = createAt;
 	}
 }

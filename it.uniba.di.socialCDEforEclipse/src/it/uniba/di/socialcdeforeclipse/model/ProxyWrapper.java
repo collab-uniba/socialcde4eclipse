@@ -12,7 +12,6 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.eclipse.swt.widgets.DateTime;
@@ -816,7 +815,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 					System.out.println("risultato " + result);
 					System.out.println("occorrences " + countOccurrences(result, '{')); 
 					wpost = new WPost[countOccurrences(result,'{')];
-					Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, new JsonDateDeserializer()).create();
+					Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new JsonDateDeserializer()).create();
 					wpost =  gson.fromJson(result,WPost[].class);
 				}
 
