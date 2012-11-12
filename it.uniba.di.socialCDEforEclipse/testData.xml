@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestData>
+<CorrectData>
+	<Proxy>http://localhost:8081</Proxy>
+	<Email>floriano87@hotmail.com</Email>
+	<Invitation_Code>abcde</Invitation_Code>
+	<Username>Floriano</Username>
+	<Password>patrizio</Password> 
+	<Second_Password>patrizio</Second_Password>
+</CorrectData>
+<WrongData>
+	<Proxy>www.google.it</Proxy>
+	<Email>prova@hotmail.com</Email>
+	<Invitation_Code>wrongabcde</Invitation_Code>
+	<Username>Floriano</Username>
+	<Password>antonio</Password> 
+	<Second_Password>antonio</Second_Password>
+</WrongData>
+</TestData>

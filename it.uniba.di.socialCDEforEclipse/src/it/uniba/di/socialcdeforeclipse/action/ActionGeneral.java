@@ -1,7 +1,9 @@
 package it.uniba.di.socialcdeforeclipse.action;
 
 
+import java.rmi.server.UID;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -14,6 +16,8 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 
 
 public class ActionGeneral implements Listener  {
+	
+	private HashMap<String, Object> uiData; 
 	
 	@Override
 	public void handleEvent(Event event) {
@@ -32,7 +36,11 @@ public class ActionGeneral implements Listener  {
 				new ActionRegistrationPanel(widget, event); 
 				break;
 			case "Login":
-				new ActionLoginPanel(widget, event); 
+				uiData = Controller.getLoginPanel().getData(); 
+				uiData.put("Event", event); 
+				uiData.put("Event_type", event.type); 
+				uiData.put("ID_action", widget.getData("ID_action").toString()); 
+				new ActionLoginPanel(uiData); 
 				break;
 			case "Profile":
 				System.out.println("Action profile avviata"); 

@@ -6,6 +6,7 @@ package it.uniba.di.socialcdeforeclipse.action;
 
 
 import java.io.InputStream;
+import java.util.HashMap;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.dynamicView.InterceptingFilter;
@@ -21,7 +22,6 @@ import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.*;
 
 public class ActionLoginPanel {
@@ -56,13 +56,14 @@ public class ActionLoginPanel {
 		
 	}
 	
-	public ActionLoginPanel(Widget widget, Event event)	{
+	public ActionLoginPanel(HashMap<String, Object> uiData)	{
 		
-		String widgetName = widget.getData("ID_action").toString(); 
-		
-		((Label) widget.getData("labelAlert")).setVisible(false);
-		((Label) widget.getData("labelImageUsername")).setImage(null);
-		((Label) widget.getData("labelImagePassword")).setImage(null);
+		String widgetName = uiData.get("ID_action").toString(); 
+		int type = (int) uiData.get("Event_type"); 
+		Event event = (Event)  uiData.get("Event"); 
+		((Label) uiData.get("labelAlert")).setVisible(false);
+		((Label) uiData.get("labelImageUsername")).setImage(null);
+		((Label) uiData.get("labelImagePassword")).setImage(null);
 		switch (widgetName) {
 		
 		case "loginPanel":
@@ -72,13 +73,13 @@ public class ActionLoginPanel {
 			Controller.getWindow().layout(); 
 			break;
 		case "btnLogin":
-			if(event.type == SWT.Selection)	{
+			if(type == SWT.Selection)	{
 				System.out.println("------------------------------");
 			    System.out.println("getBounds: " + Controller.getWindow().getBounds());
 			    System.out.println("getLocation: " + Controller.getWindow().getLocation());
 			    System.out.println("getSize: " + Controller.getWindow().getSize());
 			    System.out.println("to display " + Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y));
-			    System.out.println("label: " + ((Label) widget.getData("labelAlert")).getLocation());
+			    System.out.println("label: " + ((Label) uiData.get("labelAlert")).getLocation());
 			    pbWindow = new ProgressBarThread(); 
 				pbWindow.setLabelTxt("Login in progress..");
 				Controller.setProgressBarPositionX(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
@@ -93,22 +94,22 @@ public class ActionLoginPanel {
 			    
 			        	if(Controller.getProxy() == null)	{
 							Controller.setProxy(new ProxyWrapper()); 
-							Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText()); 
+							Controller.getProxy().setHost(((Text) uiData.get("txtProxyHost")).getText()); 
 						} else	{
-							Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText());
+							Controller.getProxy().setHost(((Text) uiData.get("txtProxyHost")).getText());
 						}
 							if(Controller.getProxy().IsWebServiceRunning())  {
 								System.out.println("step 2");
-								user = Controller.getProxy().GetUser(((Text) widget.getData("txtUsername")).getText(), ((Text) widget.getData("txtPassword")).getText()); 
+								user = Controller.getProxy().GetUser(((Text) uiData.get("txtUsername")).getText(), ((Text) uiData.get("txtPassword")).getText()); 
 								
 								if(user == null)  {
 									
 									
 								        	    
-									((Label) widget.getData("labelAlert")).setText("username or password not valid!");
-									((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
-									((Label) widget.getData("labelImagePassword")).setImage(IMAGE_NO);
-									((Label) widget.getData("labelAlert")).setVisible(true); 
+									((Label) uiData.get("labelAlert")).setText("username or password not valid!");
+									((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
+									((Label) uiData.get("labelImagePassword")).setImage(IMAGE_NO);
+									((Label) uiData.get("labelAlert")).setVisible(true); 
 									
 									//Controller.getWindow().layout(); 
 									pbWindow.setStop(1); 
@@ -118,15 +119,15 @@ public class ActionLoginPanel {
 									
 								} else	{
 									
-									if(((Button) widget.getData("chkSavePassword")).getSelection()) {
-										Controller.setPreferences("Password",((Text) widget.getData("txtPassword")).getText()); 
+									if(((Button) uiData.get("chkSavePassword")).getSelection()) {
+										Controller.setPreferences("Password",((Text) uiData.get("txtPassword")).getText()); 
 									}
 									else
 									{
 										Controller.setPreferences("Password","");
 									}
 									
-									if(((Button) widget.getData("chkAutologin")).getSelection())	{
+									if(((Button) uiData.get("chkAutologin")).getSelection())	{
 										Controller.setPreferences("Autologin", "True"); 
 										Controller.setPreferences("FlagAutologin", "False");
 									}
@@ -138,9 +139,9 @@ public class ActionLoginPanel {
 									System.out.println("Utente corretto!"); 
 									Controller.setCurrentUser(user); 
 									Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
-									Controller.setPreferences("ProxyRoot", ((Text) widget.getData("txtProxyHost")).getText());
+									Controller.setPreferences("ProxyRoot", ((Text) uiData.get("txtProxyHost")).getText());
 									Controller.setPreferences("Username", user.Username);
-									Controller.setCurrentUserPassword(((Text) widget.getData("txtPassword")).getText());
+									Controller.setCurrentUserPassword(((Text) uiData.get("txtPassword")).getText());
 
 									Controller.setWindowName("Profile");
 									Controller.setProfilePanel(new ProfilePanel()); 
@@ -160,9 +161,9 @@ public class ActionLoginPanel {
 									
 								}
 							}  else	{
-								((Label) widget.getData("labelAlert")).setText("The connection with the Proxy failed"); 
-								((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
-								((Label) widget.getData("labelAlert")).setVisible(true); 
+								((Label) uiData.get("labelAlert")).setText("The connection with the Proxy failed"); 
+								((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
+								((Label) uiData.get("labelAlert")).setVisible(true); 
 								pbWindow.setStop(1); 
 								pbWindow = null;
 								//Controller.getWindow().redraw(); 
@@ -182,7 +183,7 @@ public class ActionLoginPanel {
 			break;
 		case "labelRegistration":
 			try {
-			if(event.type == SWT.Paint)
+			if(type == SWT.Paint)
 			{
 				System.out.println("Evento paint label attivato");
 				
@@ -205,22 +206,22 @@ public class ActionLoginPanel {
 					    
 					        	if(Controller.getProxy() == null)	{
 									Controller.setProxy(new ProxyWrapper()); 
-									Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText()); 
+									Controller.getProxy().setHost(((Text) uiData.get("txtProxyHost")).getText()); 
 								} else	{
-									Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText());
+									Controller.getProxy().setHost(((Text) uiData.get("txtProxyHost")).getText());
 								}
 									if(Controller.getProxy().IsWebServiceRunning())  {
 										System.out.println("step 2");
-										user = Controller.getProxy().GetUser(((Text) widget.getData("txtUsername")).getText(), ((Text) widget.getData("txtPassword")).getText()); 
+										user = Controller.getProxy().GetUser(((Text) uiData.get("txtUsername")).getText(), ((Text) uiData.get("txtPassword")).getText()); 
 										
 										if(user == null)  {
 											
 											
 										        	    
-											((Label) widget.getData("labelAlert")).setText("username or password not valid!");
-											((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
-											((Label) widget.getData("labelImagePassword")).setImage(IMAGE_NO);
-											((Label) widget.getData("labelAlert")).setVisible(true); 
+											((Label) uiData.get("labelAlert")).setText("username or password not valid!");
+											((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
+											((Label) uiData.get("labelImagePassword")).setImage(IMAGE_NO);
+											((Label) uiData.get("labelAlert")).setVisible(true); 
 											
 											Controller.getWindow().layout(); 
 											pbWindow.setStop(1); 
@@ -230,19 +231,19 @@ public class ActionLoginPanel {
 											
 										} else	{
 											
-											if(((Button) widget.getData("chkSavePassword")).getSelection()) {
-												Controller.setPreferences("Password",((Text) widget.getData("txtPassword")).getText()); 
+											if(((Button) uiData.get("chkSavePassword")).getSelection()) {
+												Controller.setPreferences("Password",((Text) uiData.get("txtPassword")).getText()); 
 											}
 											
-											if(((Button) widget.getData("chkAutologin")).getSelection())	{
+											if(((Button) uiData.get("chkAutologin")).getSelection())	{
 												Controller.setPreferences("Autologin", "True"); 
 											}
 											System.out.println("Utente corretto!"); 
 											Controller.setCurrentUser(user); 
 											Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
-											Controller.setPreferences("ProxyRoot", ((Text) widget.getData("txtProxyHost")).getText());
+											Controller.setPreferences("ProxyRoot", ((Text) uiData.get("txtProxyHost")).getText());
 											Controller.setPreferences("Username", user.Username);
-											Controller.setCurrentUserPassword(((Text) widget.getData("txtPassword")).getText());
+											Controller.setCurrentUserPassword(((Text) uiData.get("txtPassword")).getText());
 
 											Controller.setWindowName("Profile");
 											Controller.setProfilePanel(new ProfilePanel()); 
@@ -260,9 +261,9 @@ public class ActionLoginPanel {
 											
 										}
 									}  else	{
-										((Label) widget.getData("labelAlert")).setText("The connection with the Proxy failed"); 
-										((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
-										((Label) widget.getData("labelAlert")).setVisible(true); 
+										((Label) uiData.get("labelAlert")).setText("The connection with the Proxy failed"); 
+										((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
+										((Label) uiData.get("labelAlert")).setVisible(true); 
 										pbWindow.setStop(1); 
 										pbWindow = null;
 										Controller.getWindow().layout(); 
@@ -294,23 +295,23 @@ public class ActionLoginPanel {
 					event.detail == SWT.TRAVERSE_TAB_PREVIOUS)); 
 			if(event.type == SWT.FocusOut)
 			{
-				if(InterceptingFilter.verifyText(((Text) widget.getData("txtProxyHost")).getText()))
+				if(InterceptingFilter.verifyText(((Text) uiData.get("txtProxyHost")).getText()))
 				{
 					Controller.setProxy(new ProxyWrapper()); 
-					Controller.getProxy().setHost(((Text) widget.getData("txtProxyHost")).getText()); 
+					Controller.getProxy().setHost(((Text) uiData.get("txtProxyHost")).getText()); 
 					if(Controller.getProxy().IsWebServiceRunning())
 					{
 						
-						((Label) widget.getData("labelImageHost")).setImage(IMAGE_OK); 
-						((Label) widget.getData("labelAlert")).setVisible(false);
+						((Label) uiData.get("labelImageHost")).setImage(IMAGE_OK); 
+						((Label) uiData.get("labelAlert")).setVisible(false);
 					}
 					else
 					{
 						
 						Controller.setProxy(null); 
-						((Label) widget.getData("labelAlert")).setText("Please insert a valid proxy!");
-						((Label) widget.getData("labelAlert")).setVisible(true); 
-						((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
+						((Label) uiData.get("labelAlert")).setText("Please insert a valid proxy!");
+						((Label) uiData.get("labelAlert")).setVisible(true); 
+						((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
 						Controller.getWindow().layout(); 
 					}
 				}
@@ -321,45 +322,45 @@ public class ActionLoginPanel {
 			
 		case "txtUsername":
 			
-			if(event.type == SWT.FocusOut)
+			if(type == SWT.FocusOut)
 			{
-				if(InterceptingFilter.verifyText(((Text) widget.getData("txtUsername")).getText()))
+				if(InterceptingFilter.verifyText(((Text) uiData.get("txtUsername")).getText()))
 				{
 					if(Controller.getProxy() != null)
 					{
-						if(Controller.getProxy().IsAvailable(((Text) widget.getData("txtUsername")).getText()))
+						if(Controller.getProxy().IsAvailable(((Text) uiData.get("txtUsername")).getText()))
 						{
 							
-							((Label) widget.getData("labelImageUsername")).setImage(IMAGE_OK);
-							((Label) widget.getData("labelAlert")).setVisible(false); 
+							((Label) uiData.get("labelImageUsername")).setImage(IMAGE_OK);
+							((Label) uiData.get("labelAlert")).setVisible(false); 
 							Controller.getWindow().layout();
 						}
 						else
 						{
-							((Label) widget.getData("labelAlert")).setText("Please insert a valid username");  
-							((Label) widget.getData("labelAlert")).setVisible(true); 
-							((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
+							((Label) uiData.get("labelAlert")).setText("Please insert a valid username");  
+							((Label) uiData.get("labelAlert")).setVisible(true); 
+							((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
 							Controller.getWindow().layout(); 
 						}
 					}
 					else
 					{
-						((Label) widget.getData("labelAlert")).setText("Please insert a valid proxy first!");  
-						((Label) widget.getData("labelAlert")).setVisible(true); 
+						((Label) uiData.get("labelAlert")).setText("Please insert a valid proxy first!");  
+						((Label) uiData.get("labelAlert")).setVisible(true); 
 						 
 
 						
-						((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
-						((Label) widget.getData("labelImageHost")).setImage(IMAGE_NO);
+						((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
+						((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
 						Controller.getWindow().layout();
 					
 					}
 				}
 				else
 				{
-					((Label) widget.getData("labelAlert")).setText("Please insert a valid username!");  
-					((Label) widget.getData("labelAlert")).setVisible(true);
-					((Label) widget.getData("labelImageUsername")).setImage(IMAGE_NO);
+					((Label) uiData.get("labelAlert")).setText("Please insert a valid username!");  
+					((Label) uiData.get("labelAlert")).setVisible(true);
+					((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
 					Controller.getWindow().layout(); 
 				}
 			}

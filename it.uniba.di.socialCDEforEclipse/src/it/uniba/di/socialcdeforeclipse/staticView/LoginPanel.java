@@ -356,6 +356,22 @@ public class LoginPanel implements Panel{
 		
 	}
 
+	public HashMap<String, Object> getData()
+	{
+		HashMap<String, Object> uiData = new HashMap<String, Object>();
+		uiData.put("labelAlert",labelAlert); 
+		uiData.put("txtProxyHost",txtProxyHost); 
+		uiData.put("labelImageHost", labelImageHost); 
+		uiData.put("txtUsername",txtUsername); 
+		uiData.put("labelImageUsername", labelImageUsername); 
+		uiData.put("txtPassword", txtPassword); 
+		uiData.put("labelImagePassword", labelImagePassword); 
+		uiData.put("chkAutologin",chkAutologin); 
+		uiData.put("chkSavePassword", chkSavePassword); 
+		uiData.put("btnLogin",btnLogin);
+		return uiData; 
+	}
+	
 	@Override
 	public HashMap<String, String> getInput() {
 		// TODO Auto-generated method stub
