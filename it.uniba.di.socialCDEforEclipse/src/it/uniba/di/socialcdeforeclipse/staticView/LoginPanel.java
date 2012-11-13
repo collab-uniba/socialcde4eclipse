@@ -240,35 +240,7 @@ public class LoginPanel implements Panel{
 			controlli.add(labelHidden);
 		}
 		
-		btnLogin.setData("labelAlert",labelAlert); 
-		btnLogin.setData("txtProxyHost",txtProxyHost); 
-		btnLogin.setData("labelImageHost", labelImageHost); 
-		btnLogin.setData("txtUsername",txtUsername); 
-		btnLogin.setData("labelImageUsername", labelImageUsername); 
-		btnLogin.setData("txtPassword", txtPassword); 
-		btnLogin.setData("labelImagePassword", labelImagePassword); 
-		btnLogin.setData("chkAutologin",chkAutologin); 
-		btnLogin.setData("chkSavePassword", chkSavePassword); 
 		
-		txtUsername.setData("labelAlert",labelAlert); 
-		txtUsername.setData("txtProxyHost",txtProxyHost); 
-		txtUsername.setData("labelImageHost", labelImageHost); 
-		txtUsername.setData("txtUsername",txtUsername); 
-		txtUsername.setData("labelImageUsername", labelImageUsername); 
-		txtUsername.setData("txtPassword", txtPassword); 
-		txtUsername.setData("labelImagePassword", labelImagePassword); 
-		txtUsername.setData("chkAutologin",chkAutologin); 
-		txtUsername.setData("chkSavePassword", chkSavePassword); 
-
-		txtProxyHost.setData("labelAlert",labelAlert); 
-		txtProxyHost.setData("txtProxyHost",txtProxyHost); 
-		txtProxyHost.setData("labelImageHost", labelImageHost); 
-		txtProxyHost.setData("txtUsername",txtUsername); 
-		txtProxyHost.setData("labelImageUsername", labelImageUsername); 
-		txtProxyHost.setData("txtPassword", txtPassword); 
-		txtProxyHost.setData("labelImagePassword", labelImagePassword); 
-		txtProxyHost.setData("chkAutologin",chkAutologin); 
-		txtProxyHost.setData("chkSavePassword", chkSavePassword); 
 		
 		
 		 labelRegistration = new Link(panel, SWT.NONE);

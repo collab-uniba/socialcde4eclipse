@@ -33,7 +33,11 @@ public class ActionGeneral implements Listener  {
 		System.out.println("Window name " + Controller.getWindowName()); 
 		switch (Controller.getWindowName()) {
 			case "Registration":
-				new ActionRegistrationPanel(widget, event); 
+				uiData = Controller.getRegistrationPanel().getData(); 
+				uiData.put("Event", event); 
+				uiData.put("Event_type", event.type); 
+				uiData.put("ID_action", widget.getData("ID_action").toString()); 
+				new ActionRegistrationPanel(uiData); 
 				break;
 			case "Login":
 				uiData = Controller.getLoginPanel().getData(); 

@@ -109,6 +109,14 @@ public class ActionLoginPanel {
 									((Label) uiData.get("labelAlert")).setText("username or password not valid!");
 									((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
 									((Label) uiData.get("labelImagePassword")).setImage(IMAGE_NO);
+									
+									((Label) uiData.get("labelImagePassword")).setData("Image_ok", false);
+									((Label) uiData.get("labelImagePassword")).setData("Image_no", true);
+									
+									((Label) uiData.get("labelImageUsername")).setData("Image_ok", false);
+									((Label) uiData.get("labelImageUsername")).setData("Image_no", true);
+									
+									
 									((Label) uiData.get("labelAlert")).setVisible(true); 
 									
 									//Controller.getWindow().layout(); 
@@ -163,6 +171,10 @@ public class ActionLoginPanel {
 							}  else	{
 								((Label) uiData.get("labelAlert")).setText("The connection with the Proxy failed"); 
 								((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
+								
+								((Label) uiData.get("labelImageHost")).setData("Image_no", true);
+								((Label) uiData.get("labelImageHost")).setData("Image_ok", false);
+								
 								((Label) uiData.get("labelAlert")).setVisible(true); 
 								pbWindow.setStop(1); 
 								pbWindow = null;
@@ -221,6 +233,14 @@ public class ActionLoginPanel {
 											((Label) uiData.get("labelAlert")).setText("username or password not valid!");
 											((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
 											((Label) uiData.get("labelImagePassword")).setImage(IMAGE_NO);
+											
+											((Label) uiData.get("labelImageUsername")).setData("Image_no", true);
+											((Label) uiData.get("labelImageUsername")).setData("Image_ok", false);
+											
+											((Label) uiData.get("labelImagePassword")).setData("Image_no", true);
+											((Label) uiData.get("labelImagePassword")).setData("Image_ok", false);
+
+											
 											((Label) uiData.get("labelAlert")).setVisible(true); 
 											
 											Controller.getWindow().layout(); 
@@ -263,6 +283,10 @@ public class ActionLoginPanel {
 									}  else	{
 										((Label) uiData.get("labelAlert")).setText("The connection with the Proxy failed"); 
 										((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
+										
+										((Label) uiData.get("labelImageHost")).setData("Image_no", true);
+										((Label) uiData.get("labelImageHost")).setData("Image_ok", false);
+										
 										((Label) uiData.get("labelAlert")).setVisible(true); 
 										pbWindow.setStop(1); 
 										pbWindow = null;
@@ -291,9 +315,8 @@ public class ActionLoginPanel {
 			break;
 			
 		case "txtProxyHost":
-			System.out.println("evento scattato " + (event.detail == SWT.TRAVERSE_TAB_NEXT ||
-					event.detail == SWT.TRAVERSE_TAB_PREVIOUS)); 
-			if(event.type == SWT.FocusOut)
+			
+			if(type == SWT.FocusOut)
 			{
 				if(InterceptingFilter.verifyText(((Text) uiData.get("txtProxyHost")).getText()))
 				{
@@ -304,6 +327,11 @@ public class ActionLoginPanel {
 						
 						((Label) uiData.get("labelImageHost")).setImage(IMAGE_OK); 
 						((Label) uiData.get("labelAlert")).setVisible(false);
+						
+						((Label) uiData.get("labelImageHost")).setData("Image_ok", true);
+						((Label) uiData.get("labelImageHost")).setData("Image_no", false);
+						
+						
 					}
 					else
 					{
@@ -312,8 +340,23 @@ public class ActionLoginPanel {
 						((Label) uiData.get("labelAlert")).setText("Please insert a valid proxy!");
 						((Label) uiData.get("labelAlert")).setVisible(true); 
 						((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
+						
+						((Label) uiData.get("labelImageHost")).setData("Image_no", true);
+						((Label) uiData.get("labelImageHost")).setData("Image_ok", false);
+						
+						
 						Controller.getWindow().layout(); 
 					}
+				}
+				else
+				{
+					Controller.setProxy(null); 
+					((Label) uiData.get("labelAlert")).setText("Please insert a valid proxy!");
+					((Label) uiData.get("labelAlert")).setVisible(true); 
+					((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
+					
+					((Label) uiData.get("labelImageHost")).setData("Image_no", true);
+					((Label) uiData.get("labelImageHost")).setData("Image_ok", false);
 				}
 			}
 			
@@ -333,6 +376,11 @@ public class ActionLoginPanel {
 							
 							((Label) uiData.get("labelImageUsername")).setImage(IMAGE_OK);
 							((Label) uiData.get("labelAlert")).setVisible(false); 
+							
+							((Label) uiData.get("labelImageUsername")).setData("Image_ok", true);
+							((Label) uiData.get("labelImageUsername")).setData("Image_no", false);
+							
+							
 							Controller.getWindow().layout();
 						}
 						else
@@ -340,6 +388,10 @@ public class ActionLoginPanel {
 							((Label) uiData.get("labelAlert")).setText("Please insert a valid username");  
 							((Label) uiData.get("labelAlert")).setVisible(true); 
 							((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
+							
+							((Label) uiData.get("labelImageUsername")).setData("Image_ok", false);
+							((Label) uiData.get("labelImageUsername")).setData("Image_no", true);
+							
 							Controller.getWindow().layout(); 
 						}
 					}
@@ -347,11 +399,16 @@ public class ActionLoginPanel {
 					{
 						((Label) uiData.get("labelAlert")).setText("Please insert a valid proxy first!");  
 						((Label) uiData.get("labelAlert")).setVisible(true); 
-						 
-
 						
 						((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
 						((Label) uiData.get("labelImageHost")).setImage(IMAGE_NO);
+						
+						((Label) uiData.get("labelImageUsername")).setData("Image_ok", false);
+						((Label) uiData.get("labelImageUsername")).setData("Image_no", true);
+						
+						((Label) uiData.get("labelImageHost")).setData("Image_ok", false);
+						((Label) uiData.get("labelImageHost")).setData("Image_no", true);
+						
 						Controller.getWindow().layout();
 					
 					}
@@ -361,6 +418,10 @@ public class ActionLoginPanel {
 					((Label) uiData.get("labelAlert")).setText("Please insert a valid username!");  
 					((Label) uiData.get("labelAlert")).setVisible(true);
 					((Label) uiData.get("labelImageUsername")).setImage(IMAGE_NO);
+					
+					((Label) uiData.get("labelImageUsername")).setData("Image_ok", false);
+					((Label) uiData.get("labelImageUsername")).setData("Image_no", true);
+					
 					Controller.getWindow().layout(); 
 				}
 			}

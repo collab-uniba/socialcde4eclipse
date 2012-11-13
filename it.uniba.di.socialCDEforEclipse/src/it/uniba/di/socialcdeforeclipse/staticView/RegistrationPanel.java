@@ -464,6 +464,26 @@ public class RegistrationPanel implements Panel {
 		return Input_data; 
 		
 	}
+	
+	public HashMap<String, Object> getData()
+	{
+		HashMap<String, Object> uiData = new HashMap<String, Object>();
+		uiData.put("LabelAlert", labelAlert);
+		uiData.put("ProxyHost", txtProxyHost); 
+		uiData.put("LabelImageHost", labelImageHost);
+		uiData.put("Email", txtMail);
+		uiData.put("LabelImageMail", labelImageMail); 
+		uiData.put("InvitationCode", txtInvitationCode);
+		uiData.put("LabelImageInvitationCode", labelImageInvitationCode);
+		uiData.put("Username", txtUsername);
+		uiData.put("LabelImageUsername", labelUmageUsername);
+		uiData.put("Password1", txtPassword);
+		uiData.put("LabelImagePassword", labelImagePassword);
+		uiData.put("Password2", txtPassword2);
+		uiData.put("LabelImagePassword2", labelImagePassword2);
+		
+		return uiData; 
+	}
 
 	
 
