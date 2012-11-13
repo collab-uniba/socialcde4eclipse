@@ -172,8 +172,8 @@ public class ActionRegistrationPanel {
 			
 			break;
 		case "txtMail":
-			if(event.type == SWT.FocusOut){
-				if(InterceptingFilter.verifyMail(  ((Text) uiData.get("Mail") ).getText()) ){
+			if(type == SWT.FocusOut){
+				if(InterceptingFilter.verifyMail(  ((Text) uiData.get("Email") ).getText()) ){
 					( (Label) uiData.get("LabelImageMail")).setImage(IMAGE_OK);
 					
 					((Label) uiData.get("LabelImageMail")).setData("Image_ok", true);
