@@ -1,4 +1,4 @@
-package us44_UI;
+package login.plugintest;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +25,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class UI_UnitTestForLogin extends TestCase {
+public class PluginTestLogin extends TestCase {
 
 	/**
 	 * Unit test for User story number 26.

@@ -1,4 +1,4 @@
-package us26_UI;
+package registration.plugintest;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +26,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class UI_UnitTestForEmail extends TestCase {
+public class PluginTestEmail extends TestCase {
 
 	/**
 	 * Unit test if UI for User story number 26.

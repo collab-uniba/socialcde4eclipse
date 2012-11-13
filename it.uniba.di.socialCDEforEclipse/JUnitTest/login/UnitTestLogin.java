@@ -1,4 +1,4 @@
-package us44;
+package login;
 
 import junit.framework.TestCase;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
@@ -7,7 +7,7 @@ import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UnitTestForLogin extends TestCase {
+public class UnitTestLogin extends TestCase {
 	/**
 	 * Unit test for User story number 26.
 	 * 

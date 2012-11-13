@@ -1,4 +1,4 @@
-package us26_UI;
+package registration.plugintest;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +14,7 @@ import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
 
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
@@ -26,19 +27,25 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class UI_UnitTestForProxyHost extends TestCase {
+public class PluginTestUsername extends TestCase {
 
 	/**
 	 * Unit test if UI for User story number 26.
 	 * 
 	 * Field considered: ProxyHost
 	 * 
-	 * Equivalence classes considered: 1.Empty string 2.String that not link to
-	 * server 3.String that link to server
+	 * Field considered: Username
+	 * 
+	 * Equivalence classes considered: 
+	 * 1.Empty string 
+	 * 2.Not valid username 
+	 * 3.Valid username
+	 * 
 	 * */
 	
 	HashMap<String, Object> dati; 
-	Document document; 
+	Document document;
+
 	
 	@Before
 	public void setUp() throws Exception {
@@ -56,31 +63,29 @@ public class UI_UnitTestForProxyHost extends TestCase {
 		}
 		
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
-		
+	
 		Controller.setWindowName("Registration");
 		Controller.getLoginPanel().dispose(Controller.getWindow()); 
 		Controller.setRegistration_panel(new RegistrationPanel()); 
 		Controller.getRegistrationPanel().inizialize(Controller.getWindow()); 
 		Controller.setLoginPanel(null); 
 		Controller.getWindow().layout(); 
-	
 	}
 	
 	@Test
 	public void testCase1() { 
-		
-  		
+
 	  assertNotNull(Controller.getRegistrationPanel());
 	  dati = Controller.getRegistrationPanel().getData(); 
-	  dati.put("ID_action", "txtProxyHost"); 
+	  dati.put("ID_action", "txtUsername"); 
 	  dati.put("Event_type", SWT.FocusOut); 
-	  ( (Text)  dati.get("ProxyHost")).setText(""); 
+	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
+	  ( (Text)  dati.get("Username")).setText(""); 
 	  new ActionRegistrationPanel(dati);
-	  assertNull(Controller.getProxy());
 	  assertTrue( ((Label) dati.get("LabelAlert")).getVisible()); 
-	  assertEquals("Please insert a valid proxy!", ((Label) dati.get("LabelAlert")).getText()); 
-	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageHost")).getData("Image_no")  );
-	  assertFalse(  (Boolean)	((Label)  dati.get("LabelImageHost")).getData("Image_ok")  );	
+	  assertEquals("Please insert a valid username!", ((Label) dati.get("LabelAlert")).getText()); 
+	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_no")  );
+	  assertFalse(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_ok")  );	
 	
 	  
 	}
@@ -88,16 +93,20 @@ public class UI_UnitTestForProxyHost extends TestCase {
 	@Test
 	public void testCase2() { 
 	  assertNotNull(Controller.getRegistrationPanel());
-	  dati = Controller.getRegistrationPanel().getData();  
+	  dati = Controller.getRegistrationPanel().getData(); 
 	  dati.put("ID_action", "txtProxyHost"); 
 	  dati.put("Event_type", SWT.FocusOut); 
-	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("WrongData").getChild("Proxy").getText()); 
+	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
 	  new ActionRegistrationPanel(dati);
-	  assertNull(Controller.getProxy());
+	  dati.put("ID_action", "txtUsername"); 
+	  dati.put("Event_type", SWT.FocusOut);  
+	  ( (Text)  dati.get("Username")).setText(document.getRootElement().getChild("CorrectData").getChild("Username").getText()); 
+	  new ActionRegistrationPanel(dati);
+	  assertNotNull(Controller.getProxy());
 	  assertTrue( ((Label) dati.get("LabelAlert")).getVisible()); 
-	  assertEquals("Please insert a valid proxy!", ((Label) dati.get("LabelAlert")).getText()); 
-	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageHost")).getData("Image_no")  );
-	  assertFalse(  (Boolean)	((Label)  dati.get("LabelImageHost")).getData("Image_ok")  );	
+	  assertEquals("Please insert a valid username!", ((Label) dati.get("LabelAlert")).getText()); 
+	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_no")  );
+	  assertFalse(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_ok")  );	
 	
 	  
 	}
@@ -106,13 +115,19 @@ public class UI_UnitTestForProxyHost extends TestCase {
 	public void testCase3() { 
 	  assertNotNull(Controller.getRegistrationPanel());
 	  dati = Controller.getRegistrationPanel().getData(); 
+	  
 	  dati.put("ID_action", "txtProxyHost"); 
 	  dati.put("Event_type", SWT.FocusOut); 
 	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
 	  new ActionRegistrationPanel(dati);
-	  assertTrue(Controller.getProxy().IsWebServiceRunning());
-	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageHost")).getData("Image_ok")  );
-	  assertFalse(  (Boolean)	((Label)  dati.get("LabelImageHost")).getData("Image_no")  );
+	  
+	  dati.put("ID_action", "txtUsername"); 
+	  dati.put("Event_type", SWT.FocusOut);
+	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
+	  ( (Text)  dati.get("Username")).setText(document.getRootElement().getChild("WrongData").getChild("Username").getText()); 
+	  new ActionRegistrationPanel(dati);
+	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_ok")  );
+	  assertFalse(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_no")  );
 		
 	
 	  
@@ -122,5 +137,6 @@ public class UI_UnitTestForProxyHost extends TestCase {
 	public void tearDown() throws Exception {
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
 	}
+	
 
 }

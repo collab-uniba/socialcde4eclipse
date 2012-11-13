@@ -1,30 +1,65 @@
 package it.uniba.di.socialcdeforeclipse.action;
 
 import java.awt.Dimension;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+
+import javax.print.attribute.standard.MediaSize.Other;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.popup.HideUserPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
+import it.uniba.di.socialcdeforeclipse.sharedLibrary.WPost;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Widget;
 
 public class ActionDynamicUserTimeline {
 
+	private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
+	
+	public Image get_ImageStream(InputStream stream)
+	{
+		return  new Image(Controller.getWindow().getDisplay(),stream); 
+	}
+	
+	private Image resize(Image image, int width, int height) {
+		Image scaled = new Image(Display.getDefault(), width, height);
+		GC gc = new GC(scaled);
+		gc.setAntialias(SWT.ON);
+		gc.setInterpolation(SWT.HIGH);
+		gc.drawImage(image, 0, 0,
+		image.getBounds().width, image.getBounds().height,
+		0, 0, width, height);
+		gc.dispose();
+		image.dispose(); // don't forget about me!
+		return scaled;
+		}
+	
+	
 	public ActionDynamicUserTimeline(final Widget widget, Event event)
 	{
 		String widgetName = widget.getData("ID_action").toString();
@@ -156,18 +191,173 @@ public class ActionDynamicUserTimeline {
 		case "otherPostAvailable":
 			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  widget.getData("userPostMaster")).getChildren().length); 
 			 
-			 if( ((int)  widget.getData("otherPost")) > 10)
-			 {
-				 widget.setData("otherPost", ((int)  widget.getData("otherPost")) -10);
-			 }
-			 Label lbl = new Label((Composite)  widget.getData("userPostMaster"), SWT.None); 
-			lbl.setText("String aggiunta"); 
+			
+			 
+			 WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ((WUser) widget.getData("user")).Username,((long)  widget.getData("lastPostId")),0);
+			 
+			 
+			 System.out.println("number post " +  posts.length); 
+			 
+			 
+			 widget.setData("firstPostId", widget.getData("lastPostId")); 
+				
+				
+				for(int i=0;i< posts.length; i++)
+				{
+
+					
+					Composite userPostComposite = new Composite(((Composite)  widget.getData("userPostMaster")), SWT.BORDER);
+					userPostComposite.setLayout(new GridLayout(2, false)); 
+					GridData gridData = new GridData(); 
+					gridData.grabExcessHorizontalSpace = true; 
+					gridData.horizontalAlignment = GridData.FILL; 
+					userPostComposite.setLayoutData(gridData); 
+					
+					Label labelUserAvatar = new Label(userPostComposite,SWT.NONE); 
+					gridData = new GridData();
+					gridData.verticalSpan = 2; 
+					labelUserAvatar.setLayoutData(gridData); 
+					labelUserAvatar.setData("ID_action", "labelAvatar");
+					 
+					
+						try {
+							labelUserAvatar.setImage(get_ImageStream(new URL( posts[i].getUser().Avatar).openStream()));
+							labelUserAvatar.setImage(resize(labelUserAvatar.getImage(), 75, 75)); 
+							 
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							//System.out.println("Eccezione lanciata"); 
+							labelUserAvatar.setImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png")));
+							labelUserAvatar.setImage(resize(labelUserAvatar.getImage(), 75, 75));
+							//e.printStackTrace();
+						} 
+						catch (NullPointerException e) {
+							// TODO: handle exception
+							labelUserAvatar.setImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"))); 
+							labelUserAvatar.setImage(resize(labelUserAvatar.getImage(), 75, 75));
+						}
+						
+					Label username = new Label(userPostComposite, SWT.None); 
+					username.setText(posts[i].getUser().Username); 
+					username.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 15, SWT.BOLD ));  
+					gridData = new GridData(); 
+					gridData.grabExcessHorizontalSpace = false; 
+					gridData.horizontalAlignment = GridData.FILL;
+					username.setLayoutData(gridData); 
+					
+					Label message = new Label(userPostComposite, SWT.None | SWT.WRAP); 
+					message.setText(posts[i].getMessage()); 
+					gridData = new GridData(); 
+					gridData.grabExcessHorizontalSpace = true; 
+					gridData.horizontalAlignment = GridData.FILL; 
+					gridData.horizontalSpan = 2; 
+					gridData.widthHint = 100; 
+					message.setLayoutData(gridData); 
+					
+					Calendar nowDate = Calendar.getInstance(); 
+					Calendar dateSelected = posts[i].getCreateAt(); 
+					long millisDiff = nowDate.getTime().getTime() - dateSelected.getTime().getTime();
+					
+					int seconds = (int) (millisDiff / 1000 % 60);
+					int minutes = (int) (millisDiff / 60000 % 60);
+					int hours = (int) (millisDiff / 3600000 % 24);
+					int days = (int) (millisDiff / 86400000);
+					
+					Label messageDate = new Label(userPostComposite, SWT.None); 
+					
+					if(days > 1 && days < 30)
+					{
+						messageDate.setText("About " + days + " days ago from " + posts[i].getService().getName());
+					}
+					else if(days > 30)
+					{
+						messageDate.setText("More than one month ago from " + posts[i].getService().getName());
+					}
+					else if(days == 1)
+					{
+						messageDate.setText("About " + days + " day ago from " + posts[i].getService().getName());
+					}
+					else
+					{
+						if( hours > 1)
+						{
+							messageDate.setText("About " + hours + " hours ago from " + posts[i].getService().getName());
+						}
+						else if(hours == 1)
+						{
+							messageDate.setText("About " + hours + " hour ago from " + posts[i].getService().getName());
+						}
+						else
+						{
+
+							if( minutes > 1)
+							{
+								messageDate.setText("About " + minutes + " minutes ago from " + posts[i].getService().getName());
+							}
+							else if(minutes == 1)
+							{
+								messageDate.setText("About " + minutes + " minute ago from " + posts[i].getService().getName());
+							}
+							else
+							{
+
+								if( seconds > 1)
+								{
+									messageDate.setText("About " + seconds + " seconds ago from " + posts[i].getService().getName());
+								}
+								else if(seconds == 1)
+								{
+									messageDate.setText("About " + seconds + " second ago from " + posts[i].getService().getName());
+								}
+								else
+								{
+									messageDate.setText("Few seconds ago from " + posts[i].getService().getName());
+								}
+							}
+						}
+					}
+					 
+					messageDate.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 8, SWT.ITALIC ));
+					gridData = new GridData(); 
+					gridData.grabExcessHorizontalSpace = true; 
+					gridData.horizontalAlignment = GridData.END; 
+					gridData.horizontalSpan = 2; 
+					messageDate.setLayoutData(gridData); 
+					
+					
+				 widget.setData("lastPostId",posts[i].Id);
+				}
+				System.out.println("Altezza impostata " + Controller.getWindowHeight() + (150 * ((Composite)  widget.getData("userPostMaster")).getChildren().length) ); 
+				Controller.setScrollHeight(Controller.getWindowHeight() + (250 * ((Composite)  widget.getData("userPostMaster")).getChildren().length)  );
+				((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
+
+				 WPost[] newPosts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ((WUser) widget.getData("user")).Username,((long)  widget.getData("lastPostId")),0);
+				 System.out.println("Nuovi post disponibili " + newPosts.length);
+			if( newPosts.length == 0)
+			{
+				System.out.println("Other post 0 rilevato"); 
+				((Link)  widget).setVisible(false);
+				Label noPostAvailable = new Label(((Composite)  widget.getData("otherPostWarning")),SWT.NONE); 
+				noPostAvailable.setText("There are no older post available.");
+				noPostAvailable.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.None));
+				GridData  gridData = new GridData();
+				gridData.grabExcessHorizontalSpace = true; 
+				gridData.horizontalAlignment = GridData.CENTER;
+				noPostAvailable.setLayoutData(gridData); 
+			}
 			
 			((Composite)  widget.getData("userPostMaster")).layout();
 			((Composite)  widget.getData("userPostMaster")).redraw();
+			((Composite)  widget.getData("otherPostWarning")).layout();
+			((Composite)  widget.getData("otherPostWarning")).redraw();
 			Controller.getProfilePanel().getComposite_dinamic().layout(); 
-			Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+			Controller.getProfilePanel().getComposite_dinamic().redraw();
+			((ScrolledComposite)	Controller.getWindow().getParent()).layout(); 
+			((ScrolledComposite)	Controller.getWindow().getParent()).redraw(); 
+			
+			
 			System.out.println("N. figli " + ((Composite)  widget.getData("userPostMaster")).getChildren().length ); 
+			 
 			break;
 
 		default:

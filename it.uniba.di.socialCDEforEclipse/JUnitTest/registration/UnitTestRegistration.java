@@ -1,7 +1,7 @@
 /**
  * 
  */
-package us26;
+package registration;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
@@ -20,7 +20,7 @@ import junit.framework.TestCase;
  * @author Flo
  *
  */
-public class UnitTestForRegistration extends TestCase {
+public class UnitTestRegistration extends TestCase {
 	/**
 	 * Unit test for User story number 26.
 	 * 

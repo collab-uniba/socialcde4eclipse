@@ -107,6 +107,8 @@ public class ProfilePanel implements Panel{
 		System.out.println("Password " + Controller.getPreferences("Password").toString());
 		System.out.println("Utente " + Controller.getCurrentUser().Id); 
 		*/
+		System.out.println("Avatar trovato" + Controller.getCurrentUser().Avatar); 
+		
 		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
 		{
 			labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
@@ -123,7 +125,7 @@ public class ProfilePanel implements Panel{
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Eccezione lanciata"); 
-				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 32, 32));
+				labelAvatarProfile.setImage(resize(get_ImageStream(PATH_DEFAULT_AVATAR), 32, 32));
 				//e.printStackTrace();
 			} 
 		}

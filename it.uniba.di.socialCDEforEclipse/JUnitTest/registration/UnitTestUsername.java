@@ -1,4 +1,4 @@
-package us26;
+package registration;
 
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
-public class UnitTestForUsername extends TestCase {
+public class UnitTestUsername extends TestCase {
 	/**
 	 * Unit test for User story number 26.
 	 * 

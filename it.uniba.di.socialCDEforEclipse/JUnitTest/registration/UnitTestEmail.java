@@ -1,4 +1,4 @@
-package us26;
+package registration;
 
 import it.uniba.di.socialcdeforeclipse.dynamicView.InterceptingFilter;
 
@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
-public class UnitTestForEmail extends TestCase {
+public class UnitTestEmail extends TestCase {
 	/**
 	 * Unit test for User story number 26.
 	 * 
@@ -33,6 +33,12 @@ public class UnitTestForEmail extends TestCase {
 	@Test
 	public void testCase3() {
 		String email = "prova.123@email.com";
+		assertTrue(InterceptingFilter.verifyMail(email));
+	}
+	
+	@Test
+	public void testCase4() {
+		String email = ".@.com";
 		assertTrue(InterceptingFilter.verifyMail(email));
 	}
 }
