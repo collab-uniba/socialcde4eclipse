@@ -3,6 +3,8 @@ package us26_UI;
 import static org.junit.Assert.*;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import junit.framework.TestCase;
@@ -14,6 +16,9 @@ import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
 
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,11 +44,24 @@ public class UI_UnitTestForUsername extends TestCase {
 	 * */
 	
 	HashMap<String, Object> dati; 
-	
+	Document document;
 
 	
 	@Before
 	public void setUp() throws Exception {
+		
+		SAXBuilder builder = new SAXBuilder();
+		try {
+			document = builder.build(new File("./testData.xml").getCanonicalPath());
+		} catch (JDOMException e) {
+			System.out.println("Eccezione lanciata"); 
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
 	
 		Controller.setWindowName("Registration");
@@ -56,13 +74,12 @@ public class UI_UnitTestForUsername extends TestCase {
 	
 	@Test
 	public void testCase1() { 
-		
-  		
+
 	  assertNotNull(Controller.getRegistrationPanel());
 	  dati = Controller.getRegistrationPanel().getData(); 
 	  dati.put("ID_action", "txtUsername"); 
 	  dati.put("Event_type", SWT.FocusOut); 
-	  ( (Text)  dati.get("ProxyHost")).setText("http://apat.di.uniba.it:8081"); 
+	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
 	  ( (Text)  dati.get("Username")).setText(""); 
 	  new ActionRegistrationPanel(dati);
 	  assertTrue( ((Label) dati.get("LabelAlert")).getVisible()); 
@@ -79,11 +96,11 @@ public class UI_UnitTestForUsername extends TestCase {
 	  dati = Controller.getRegistrationPanel().getData(); 
 	  dati.put("ID_action", "txtProxyHost"); 
 	  dati.put("Event_type", SWT.FocusOut); 
-	  ( (Text)  dati.get("ProxyHost")).setText("http://apat.di.uniba.it:8081"); 
+	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
 	  new ActionRegistrationPanel(dati);
 	  dati.put("ID_action", "txtUsername"); 
 	  dati.put("Event_type", SWT.FocusOut);  
-	  ( (Text)  dati.get("Username")).setText("Floriano"); 
+	  ( (Text)  dati.get("Username")).setText(document.getRootElement().getChild("CorrectData").getChild("Username").getText()); 
 	  new ActionRegistrationPanel(dati);
 	  assertNotNull(Controller.getProxy());
 	  assertTrue( ((Label) dati.get("LabelAlert")).getVisible()); 
@@ -101,13 +118,13 @@ public class UI_UnitTestForUsername extends TestCase {
 	  
 	  dati.put("ID_action", "txtProxyHost"); 
 	  dati.put("Event_type", SWT.FocusOut); 
-	  ( (Text)  dati.get("ProxyHost")).setText("http://apat.di.uniba.it:8081"); 
+	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
 	  new ActionRegistrationPanel(dati);
 	  
 	  dati.put("ID_action", "txtUsername"); 
 	  dati.put("Event_type", SWT.FocusOut);
-	  ( (Text)  dati.get("ProxyHost")).setText("http://apat.di.uniba.it:8081"); 
-	  ( (Text)  dati.get("Username")).setText("Giacomo345"); 
+	  ( (Text)  dati.get("ProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
+	  ( (Text)  dati.get("Username")).setText(document.getRootElement().getChild("WrongData").getChild("Username").getText()); 
 	  new ActionRegistrationPanel(dati);
 	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_ok")  );
 	  assertFalse(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_no")  );

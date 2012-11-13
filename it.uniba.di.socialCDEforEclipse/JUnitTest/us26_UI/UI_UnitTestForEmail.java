@@ -86,7 +86,6 @@ public class UI_UnitTestForEmail extends TestCase {
 	  dati.put("Event_type", SWT.FocusOut); 
 	  ( (Text)  dati.get("Email")).setText(""); 
 	  new ActionRegistrationPanel(dati);
-	  assertNull(Controller.getProxy());
 	  assertTrue( ((Label) dati.get("LabelAlert")).getVisible()); 
 	  assertEquals("Please insert a valid mail!", ((Label) dati.get("LabelAlert")).getText()); 
 	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageMail")).getData("Image_no")  );
@@ -103,7 +102,6 @@ public class UI_UnitTestForEmail extends TestCase {
 	  dati.put("Event_type", SWT.FocusOut); 
 	  ( (Text)  dati.get("Email")).setText(document.getRootElement().getChild("WrongData").getChild("Proxy").getText()); 
 	  new ActionRegistrationPanel(dati);
-	  assertNull(Controller.getProxy());
 	  assertTrue( ((Label) dati.get("LabelAlert")).getVisible()); 
 	  assertEquals("Please insert a valid mail!", ((Label) dati.get("LabelAlert")).getText()); 
 	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageMail")).getData("Image_no")  );

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TestData>
 <CorrectData>
-	<Proxy>http://localhost:8081</Proxy>
+	<Proxy>http://apat.di.uniba.it:8081</Proxy>
 	<Email>floriano87@hotmail.com</Email>
 	<Invitation_Code>abcde</Invitation_Code>
 	<Username>Floriano</Username>
@@ -12,7 +12,7 @@
 	<Proxy>www.google.it</Proxy>
 	<Email>prova@hotmail.com</Email>
 	<Invitation_Code>wrongabcde</Invitation_Code>
-	<Username>Floriano</Username>
+	<Username>Ermenegildo</Username>
 	<Password>antonio</Password> 
 	<Second_Password>antonio</Second_Password>
 </WrongData>
