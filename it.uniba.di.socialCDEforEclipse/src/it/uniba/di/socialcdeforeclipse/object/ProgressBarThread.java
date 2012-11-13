@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.staticView;
+package it.uniba.di.socialcdeforeclipse.object;
 
 import java.io.InputStream;
 

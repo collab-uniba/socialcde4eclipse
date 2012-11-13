@@ -15,6 +15,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -152,7 +153,17 @@ public class ActionDynamicUserTimeline {
 			hideUserSetting.inizialize(Controller.getWindow()); 
 			 
 			break;
+		case "otherPostAvailable":
+			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  widget.getData("userPostMaster")).getChildren().length); 
+			Label lbl = new Label((Composite)  widget.getData("userPostMaster"), SWT.None); 
+			lbl.setText("String aggiunta"); 
 			
+			((Composite)  widget.getData("userPostMaster")).layout();
+			((Composite)  widget.getData("userPostMaster")).redraw();
+			Controller.getProfilePanel().getComposite_dinamic().layout(); 
+			Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+			System.out.println("N. figli " + ((Composite)  widget.getData("userPostMaster")).getChildren().length ); 
+			break;
 
 		default:
 			break;

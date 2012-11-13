@@ -29,10 +29,10 @@ import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicPeople;
 import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicUserTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamicView.SettingPanel;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.socialcdeforeclipse.object.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
 import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
 import it.uniba.di.socialcdeforeclipse.staticView.ProfilePanel;
-import it.uniba.di.socialcdeforeclipse.staticView.ProgressBarThread;
 import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 

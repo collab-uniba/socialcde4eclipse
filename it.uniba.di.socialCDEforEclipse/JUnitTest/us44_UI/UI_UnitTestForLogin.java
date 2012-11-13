@@ -67,7 +67,7 @@ public class UI_UnitTestForLogin extends TestCase {
 		  dati = Controller.getLoginPanel().getData(); 
 		  dati.put("ID_action", "btnLogin"); 
 		  dati.put("Event_type", SWT.Selection); 
-		  ( (Text)  dati.get("txtProxyHost")).setText("http://apat.di.uniba.it:80812");
+		  ( (Text)  dati.get("txtProxyHost")).setText(document.getRootElement().getChild("WrongData").getChild("Proxy").getText());
 		  ( (Text)  dati.get("txtUsername")).setText("Floriano");
 		  ( (Text)  dati.get("txtPassword")).setText("gualtiero");
 		  new ActionLoginPanel(dati);
@@ -83,9 +83,9 @@ public class UI_UnitTestForLogin extends TestCase {
 		  dati = Controller.getLoginPanel().getData(); 
 		  dati.put("ID_action", "btnLogin"); 
 		  dati.put("Event_type", SWT.Selection); 
-		  ( (Text)  dati.get("txtProxyHost")).setText("http://apat.di.uniba.it:8081");
-		  ( (Text)  dati.get("txtUsername")).setText("Floriano");
-		  ( (Text)  dati.get("txtPassword")).setText("antonio");
+		  ( (Text)  dati.get("txtProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
+		  ( (Text)  dati.get("txtUsername")).setText(document.getRootElement().getChild("CorrectData").getChild("Username").getText());
+		  ( (Text)  dati.get("txtPassword")).setText(document.getRootElement().getChild("WrongData").getChild("Password").getText());
 		  new ActionLoginPanel(dati);
 		  assertEquals("username or password not valid!", ((Label) dati.get("labelAlert")).getText());
 		  assertTrue( ((Label)  dati.get("labelImageHost")).getVisible());  
@@ -103,9 +103,9 @@ public class UI_UnitTestForLogin extends TestCase {
 	  dati = Controller.getLoginPanel().getData(); 
 	  dati.put("ID_action", "btnLogin"); 
 	  dati.put("Event_type", SWT.Selection); 
-	  ( (Text)  dati.get("txtProxyHost")).setText("http://apat.di.uniba.it:8081");
-	  ( (Text)  dati.get("txtUsername")).setText("Floriano");
-	  ( (Text)  dati.get("txtPassword")).setText("gualtiero");
+	  ( (Text)  dati.get("txtProxyHost")).setText(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
+	  ( (Text)  dati.get("txtUsername")).setText(document.getRootElement().getChild("CorrectData").getChild("Username").getText());
+	  ( (Text)  dati.get("txtPassword")).setText(document.getRootElement().getChild("CorrectData").getChild("Password").getText());
 	  new ActionLoginPanel(dati);
 	  assertTrue(Controller.getProxy().IsWebServiceRunning());
 	  assertNotNull(Controller.getCurrentUser()); 

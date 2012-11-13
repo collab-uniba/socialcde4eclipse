@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.junit.Test.None;
 
@@ -50,6 +51,10 @@ public class DynamicUserTimeline implements Panel {
 	private Listener azioni;
 	private WUser user; 
 	private String userType; 
+	private static int otherPost = 0; 
+	private static long firstPostId = 0; 
+	private static long lastPostId = 0; 
+	private static int counterPost = 0; 
 	
 	private final InputStream PATH_SKILLS = this.getClass().getClassLoader().getResourceAsStream("images/skills.png");
 	private final InputStream PATH_FOLLOW = this.getClass().getClassLoader().getResourceAsStream("images/follow.png");
@@ -310,7 +315,7 @@ public class DynamicUserTimeline implements Panel {
 		
 		System.out.println("Post ottenuti " + posts.length); 
 
-		Composite userPostMaster = new Composite(panel, SWT.None); 
+		Composite userPostMaster = new Composite(panel, SWT.BORDER); 
 		userPostMaster.setLayout(new GridLayout(1,false)); 
 		gridData = new GridData(); 
 		gridData.horizontalSpan = 4;
@@ -320,7 +325,7 @@ public class DynamicUserTimeline implements Panel {
 		
 		if(posts.length > 5)
 		{
-			Controller.setScrollHeight(Controller.getWindowHeight() + (150 * posts.length)  );
+			Controller.setScrollHeight(Controller.getWindowHeight() + (100 * posts.length)  );
 			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
 		}
 		else
@@ -329,8 +334,26 @@ public class DynamicUserTimeline implements Panel {
 			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
 		}
 		
-		for(int i=0;i< posts.length; i++)
+		
+		int postNumbers = 0; 
+		
+		if(posts.length > 10)
 		{
+			postNumbers = 10;
+			otherPost = posts.length - 10;
+		}
+		else
+		{
+			postNumbers = posts.length; 
+			otherPost = 0; 
+			
+		}
+		firstPostId = posts[counterPost].Id; 
+		
+		
+		for(int i=counterPost;i< postNumbers; i++)
+		{
+			counterPost +=1;
 			Composite userPostComposite = new Composite(userPostMaster, SWT.BORDER);
 			userPostComposite.setLayout(new GridLayout(2, false)); 
 			gridData = new GridData(); 
@@ -388,6 +411,47 @@ public class DynamicUserTimeline implements Panel {
 			gridData.horizontalAlignment = GridData.END; 
 			gridData.horizontalSpan = 2; 
 			messageDate.setLayoutData(gridData); 
+			
+			lastPostId = posts[counterPost].Id;
+		}
+		
+		Composite otherPostWarning = new Composite(panel, SWT.None); 
+		otherPostWarning.setLayout(new GridLayout(1,false)); 
+		gridData = new GridData(); 
+		gridData.horizontalSpan = 4;
+		gridData.grabExcessHorizontalSpace = true; 
+		gridData.horizontalAlignment = GridData.FILL; 
+		otherPostWarning.setLayoutData(gridData);
+		
+		if(otherPost > 0)
+		{
+			Link otherPostAvailable = new Link(otherPostWarning, SWT.NONE); 
+			otherPostAvailable.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
+			otherPostAvailable.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.UNDERLINE_LINK));
+			otherPostAvailable.setText("<a>Click to view older posts</a>"); 
+			gridData = new GridData();
+			gridData.grabExcessHorizontalSpace = true; 
+			gridData.horizontalAlignment = GridData.CENTER;
+			otherPostAvailable.setLayoutData(gridData); 
+			
+			otherPostAvailable.addListener(SWT.Selection, azioni); 
+			otherPostAvailable.setData("ID_action", "otherPostAvailable");
+			otherPostAvailable.setData("otherPost", otherPost);
+			otherPostAvailable.setData("firstPostId", firstPostId);
+			otherPostAvailable.setData("lastPostId", lastPostId);
+			otherPostAvailable.setData("counterPost", counterPost);
+			otherPostAvailable.setData("userPostMaster", userPostMaster);
+			
+		}
+		else
+		{
+			Label noPostAvailable = new Label(otherPostWarning,SWT.NONE); 
+			noPostAvailable.setText("There are no older post available.");
+			noPostAvailable.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.None));
+			gridData = new GridData();
+			gridData.grabExcessHorizontalSpace = true; 
+			gridData.horizontalAlignment = GridData.CENTER;
+			noPostAvailable.setLayoutData(gridData); 
 		}
 		
 		labelBack.addListener(SWT.MouseDown,azioni); 

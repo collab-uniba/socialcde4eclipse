@@ -5,8 +5,8 @@
 	<Email>floriano87@hotmail.com</Email>
 	<Invitation_Code>abcde</Invitation_Code>
 	<Username>Floriano</Username>
-	<Password>patrizio</Password> 
-	<Second_Password>patrizio</Second_Password>
+	<Password>gualtiero</Password> 
+	<Second_Password>gualtiero</Second_Password>
 </CorrectData>
 <WrongData>
 	<Proxy>www.google.it</Proxy>
