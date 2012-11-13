@@ -155,7 +155,12 @@ public class ActionDynamicUserTimeline {
 			break;
 		case "otherPostAvailable":
 			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  widget.getData("userPostMaster")).getChildren().length); 
-			Label lbl = new Label((Composite)  widget.getData("userPostMaster"), SWT.None); 
+			 
+			 if( ((int)  widget.getData("otherPost")) > 10)
+			 {
+				 widget.setData("otherPost", ((int)  widget.getData("otherPost")) -10);
+			 }
+			 Label lbl = new Label((Composite)  widget.getData("userPostMaster"), SWT.None); 
 			lbl.setText("String aggiunta"); 
 			
 			((Composite)  widget.getData("userPostMaster")).layout();

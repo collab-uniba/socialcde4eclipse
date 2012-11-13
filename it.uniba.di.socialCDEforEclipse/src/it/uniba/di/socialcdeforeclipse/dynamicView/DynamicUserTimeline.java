@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
@@ -402,15 +403,76 @@ public class DynamicUserTimeline implements Panel {
 			gridData.widthHint = 100; 
 			message.setLayoutData(gridData); 
 			
+			Calendar nowDate = Calendar.getInstance(); 
+			Calendar dateSelected = posts[i].getCreateAt(); 
+			long millisDiff = nowDate.getTime().getTime() - dateSelected.getTime().getTime();
+			
+			int seconds = (int) (millisDiff / 1000 % 60);
+			int minutes = (int) (millisDiff / 60000 % 60);
+			int hours = (int) (millisDiff / 3600000 % 24);
+			int days = (int) (millisDiff / 86400000);
 			
 			Label messageDate = new Label(userPostComposite, SWT.None); 
-			messageDate.setText(posts[i].getCreateAt() + " from " + posts[i].getService().getName()); 
+			
+			if(days > 1 && days < 30)
+			{
+				messageDate.setText("About " + days + " days ago from " + posts[i].getService().getName());
+			}
+			else if(days > 30)
+			{
+				messageDate.setText("More than one month ago from " + posts[i].getService().getName());
+			}
+			else if(days == 1)
+			{
+				messageDate.setText("About " + days + " day ago from " + posts[i].getService().getName());
+			}
+			else
+			{
+				if( hours > 1)
+				{
+					messageDate.setText("About " + hours + " hours ago from " + posts[i].getService().getName());
+				}
+				else if(hours == 1)
+				{
+					messageDate.setText("About " + hours + " hour ago from " + posts[i].getService().getName());
+				}
+				else
+				{
+
+					if( minutes > 1)
+					{
+						messageDate.setText("About " + minutes + " minutes ago from " + posts[i].getService().getName());
+					}
+					else if(minutes == 1)
+					{
+						messageDate.setText("About " + minutes + " minute ago from " + posts[i].getService().getName());
+					}
+					else
+					{
+
+						if( seconds > 1)
+						{
+							messageDate.setText("About " + seconds + " seconds ago from " + posts[i].getService().getName());
+						}
+						else if(seconds == 1)
+						{
+							messageDate.setText("About " + seconds + " second ago from " + posts[i].getService().getName());
+						}
+						else
+						{
+							messageDate.setText("Few seconds ago from " + posts[i].getService().getName());
+						}
+					}
+				}
+			}
+			 
 			messageDate.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 8, SWT.ITALIC ));
 			gridData = new GridData(); 
 			gridData.grabExcessHorizontalSpace = true; 
 			gridData.horizontalAlignment = GridData.END; 
 			gridData.horizontalSpan = 2; 
 			messageDate.setLayoutData(gridData); 
+			
 			
 			lastPostId = posts[counterPost].Id;
 		}
@@ -441,6 +503,8 @@ public class DynamicUserTimeline implements Panel {
 			otherPostAvailable.setData("lastPostId", lastPostId);
 			otherPostAvailable.setData("counterPost", counterPost);
 			otherPostAvailable.setData("userPostMaster", userPostMaster);
+			otherPostAvailable.setData("otherPostWarning", otherPostWarning); 
+			
 			
 		}
 		else
