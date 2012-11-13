@@ -129,11 +129,11 @@ public class UI_UnitTestForRegistration extends TestCase {
 	  dati.put("Event_type", SWT.Selection); 
 	  Controller.setProxy(null); 
 	  ( (Text)  dati.get("ProxyHost")).setText("http://localhost:8081");
-	  ( (Text)  dati.get("Email")).setText("o3761055@rtrtr.com"); 
-	  ( (Text)  dati.get("InvitationCode")).setText("w7(]MIo+e#");
-	  ( (Text)  dati.get("Username")).setText("Giacomo234");
-	  ( (Text)  dati.get("Password1")).setText("antionio");
-	  ( (Text)  dati.get("Password2")).setText("antionio");
+	  ( (Text)  dati.get("Email")).setText("o3822340@rtrtr.com"); 
+	  ( (Text)  dati.get("InvitationCode")).setText("0T9y-K_!Ct");
+	  ( (Text)  dati.get("Username")).setText("Antonio");
+	  ( (Text)  dati.get("Password1")).setText("antionio24");
+	  ( (Text)  dati.get("Password2")).setText("antionio24");
 	  
 	  new ActionRegistrationPanel(dati);
 	  assertNotNull(Controller.getProxy());

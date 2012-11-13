@@ -57,8 +57,8 @@ public class ActionRegistrationPanel {
 		String widgetName = uiData.get("ID_action").toString(); 
 		int type = (int) uiData.get("Event_type"); 
 		Event event = (Event)  uiData.get("Event"); 
-		IMAGE_OK = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconOk());
-		IMAGE_NO = Controller.getRegistrationPanel().getImageStream(Controller.getRegistrationPanel().getPathIconError());
+		IMAGE_NO = Controller.getRegistrationPanel().getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/no_icon.png"));
+		IMAGE_OK = Controller.getRegistrationPanel().getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/yes_icon.png"));
        
 
 		switch (widgetName) {
@@ -99,13 +99,26 @@ public class ActionRegistrationPanel {
 						Controller.getWindow().layout(); 
 					}
 				}
+				else
+				{
+					Controller.setProxy(null); 
+					
+					( (Label) uiData.get("LabelAlert")).setText("Please insert a valid proxy!");
+					( (Label) uiData.get("LabelAlert")).setVisible(true); 
+					( (Label) uiData.get("LabelImageHost")).setImage(IMAGE_NO);
+					
+					((Label) uiData.get("LabelImageHost")).setData("Image_ok", false);
+					((Label) uiData.get("LabelImageHost")).setData("Image_no", true);
+					
+					Controller.getWindow().layout(); 
+				}
 			}
 			
 			break;
 		
 		case "txtUsername":
 			
-			if(event.type == SWT.FocusOut)
+			if(type == SWT.FocusOut)
 			{
 				if(InterceptingFilter.verifyText( ((Text) uiData.get("Username")).getText()))
 				{
@@ -116,7 +129,7 @@ public class ActionRegistrationPanel {
 							
 							
 
-							( (Label) uiData.get("LabelAlert")).setText("Please insert a valid username");  
+							( (Label) uiData.get("LabelAlert")).setText("Please insert a valid username!");  
 							( (Label) uiData.get("LabelAlert")).setVisible(true); 
 							( (Label) uiData.get("LabelImageUsername")).setImage(IMAGE_NO);
 							
@@ -361,8 +374,18 @@ public class ActionRegistrationPanel {
 					}
 					else
 					{
-						res = -2; 
+						Controller.setProxy(new ProxyWrapper()); 
+						Controller.getProxy().setHost(dataExtracted.get("ProxyHost")); 
 						
+						if(Controller.getProxy().IsWebServiceRunning())
+						{
+							 res = Controller.getProxy().SubscribeUser( dataExtracted.get("Email"),  dataExtracted.get("InvitationCode"), dataExtracted.get("Username"));
+							 System.out.println("Valore di res "+ res);
+						}
+						else
+						{
+							res = -2; 
+						}
 						/*
 						Controller.getWindow().layout(); 
 						pbWindow.setStop(1); 

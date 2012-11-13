@@ -30,8 +30,8 @@ public class ActionLoginPanel {
 
 	private ProgressBarThread pbWindow;
 	private WUser user;
-	private final static Image IMAGE_NO = Controller.getLoginPanel().getImageStream(Controller.getLoginPanel().getPathIconError());
-	private final static Image IMAGE_OK = Controller.getLoginPanel().getImageStream(Controller.getLoginPanel().getPathIconOk());
+	private static Image IMAGE_NO;
+	private static Image IMAGE_OK;
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
 	
 	public Image getImageStream(InputStream stream)
@@ -57,6 +57,9 @@ public class ActionLoginPanel {
 	}
 	
 	public ActionLoginPanel(HashMap<String, Object> uiData)	{
+		
+		IMAGE_NO = Controller.getLoginPanel().getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/no_icon.png"));
+		IMAGE_OK = Controller.getLoginPanel().getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/yes_icon.png"));
 		
 		String widgetName = uiData.get("ID_action").toString(); 
 		int type = (int) uiData.get("Event_type"); 

@@ -65,7 +65,6 @@ public class UI_UnitTestForUsername extends TestCase {
 	  ( (Text)  dati.get("ProxyHost")).setText("http://apat.di.uniba.it:8081"); 
 	  ( (Text)  dati.get("Username")).setText(""); 
 	  new ActionRegistrationPanel(dati);
-	  assertNull(Controller.getProxy());
 	  assertTrue( ((Label) dati.get("LabelAlert")).getVisible()); 
 	  assertEquals("Please insert a valid username!", ((Label) dati.get("LabelAlert")).getText()); 
 	  assertTrue(  (Boolean)	((Label)  dati.get("LabelImageUsername")).getData("Image_no")  );
