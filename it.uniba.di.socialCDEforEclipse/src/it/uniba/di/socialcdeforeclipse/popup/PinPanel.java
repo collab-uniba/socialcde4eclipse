@@ -327,8 +327,10 @@ public class PinPanel implements Panel{
 		shadow.dispose(); 
 	}
 
+	
+
 	@Override
-	public HashMap<String, String> getInput() {
+	public HashMap<String, Object> getData() {
 		// TODO Auto-generated method stub
 		return null;
 	}

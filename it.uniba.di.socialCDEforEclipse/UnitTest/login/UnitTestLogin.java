@@ -1,9 +1,15 @@
 package login;
 
+import java.io.File;
+import java.io.IOException;
+
 import junit.framework.TestCase;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,20 +23,33 @@ public class UnitTestLogin extends TestCase {
 	 * */
 	
 	ProxyWrapper pw; 
-	
+	Document document; 
 	@Before
 	public void setUp()
 	{
-		pw = new ProxyWrapper();  
+		pw = new ProxyWrapper(); 
 		
+		SAXBuilder builder = new SAXBuilder();
+		try {
+			document = builder.build(new File("./testData.xml").getCanonicalPath());
+		} catch (JDOMException e) {
+			System.out.println("Eccezione lanciata"); 
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testCase1()
 	{
-		String proxyServer = "http://apat.di.uniba.it:8081"; 
-		String username = "Floriano"; 
-		String password = "gualtiero"; 
+		
+		
+		String proxyServer = document.getRootElement().getChild("CorrectData").getChild("Proxy").getText(); 
+		String username = document.getRootElement().getChild("CorrectData").getChild("Username").getText(); 
+		String password = document.getRootElement().getChild("CorrectData").getChild("Password").getText(); 
 		
 		pw.setHost(proxyServer); 
 		assertTrue(pw.IsWebServiceRunning()); 
@@ -42,9 +61,9 @@ public class UnitTestLogin extends TestCase {
 	@Test
 	public void testCase2()
 	{
-		String proxyServer = "http://apat.di.uniba.it:8081"; 
-		String username = "Floriano"; 
-		String password = "antonio"; 
+		String proxyServer = document.getRootElement().getChild("CorrectData").getChild("Proxy").getText(); 
+		String username = document.getRootElement().getChild("CorrectData").getChild("Username").getText(); 
+		String password = document.getRootElement().getChild("WrongData").getChild("Password").getText(); 
 		
 		pw.setHost(proxyServer); 
 		assertTrue(pw.IsWebServiceRunning()); 

@@ -207,11 +207,7 @@ public class ProfilePanel implements Panel{
 		panel.setLayout(null); 
 	}
 
-	@Override
-	public HashMap<String, String> getInput() {
-		// TODO Auto-generated method stub
-		return null; 
-	}
+	
 
 	public Composite getComposite_static() {
 		return composite_static;
@@ -259,6 +255,12 @@ public class ProfilePanel implements Panel{
 
 	public void setComposite_dinamic(Composite composite_dinamic) {
 		this.composite_dinamic = composite_dinamic;
+	}
+
+	@Override
+	public HashMap<String, Object> getData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

@@ -14,7 +14,6 @@ import it.uniba.di.socialcdeforeclipse.popup.ChooseAvatar;
 import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
-import it.uniba.di.socialcdeforeclipse.popup.SocialMessageBox;
 import it.uniba.di.socialcdeforeclipse.popup.TFSLogin;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
 import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
@@ -298,9 +297,11 @@ public class ActionHomePanel {
 							@Override
 							public void handleEvent(Event event) {
 								// TODO Auto-generated method stub
+								/*
 								System.out.println("Domain " + tfsPanel.getInput().get("Domain")); 
 								System.out.println("Username " + tfsPanel.getInput().get("Username").toString());
 								System.out.println("Password " + tfsPanel.getInput().get("Password").toString());
+								
 								if(Controller.getProxy().RecordService(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), tfsPanel.getService().Id, tfsPanel.getInput().get("Username"),tfsPanel.getInput().get("Password"),tfsPanel.getInput().get("Domain")))
 								{
 									tfsPanel.dispose(null); 
@@ -314,6 +315,7 @@ public class ActionHomePanel {
 							        messageBox2.open();
 				            		
 								}
+								*/
 							}
 						});
 						 tfsPanel.setCancelListener(new Listener() {
@@ -511,10 +513,12 @@ public class ActionHomePanel {
 					} catch (NullPointerException|SWTException|PartInitException e1) {
 						// TODO Auto-generated catch block
 						//e1.printStackTrace();
-						SocialMessageBox msgBox = new SocialMessageBox();
-	            		msgBox.setMessage("Something was wrong, try again"); 
-	            		msgBox.setIcon(SWT.ICON_ERROR); 
-	            		msgBox.start(); 
+						MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+				        messageBox2.setMessage("Something was wrong, please try again.");
+				        messageBox2.setText("SocialCDEforEclipse Message");
+				        messageBox2.open();
+						
+						
 					}
 					
 					
@@ -643,10 +647,12 @@ public class ActionHomePanel {
 					
 					pinWindow.dispose(Controller.getWindow()); 
 					
-					SocialMessageBox msgBox = new SocialMessageBox();
-            		msgBox.setMessage("Something was wrong, try again"); 
-            		msgBox.setIcon(SWT.ICON_ERROR); 
-            		msgBox.start(); 
+					MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+			        messageBox2.setMessage("Something was wrong, please try again.");
+			        messageBox2.setText("SocialCDEforEclipse Message");
+			        messageBox2.open();
+					
+				
             		
 					
 					
@@ -667,10 +673,11 @@ public class ActionHomePanel {
 					} catch (NullPointerException|SWTException|PartInitException e1) {
 						// TODO Auto-generated catch block
 						//e1.printStackTrace();
-						SocialMessageBox msgBox = new SocialMessageBox();
-	            		msgBox.setMessage("Something was wrong, try again"); 
-	            		msgBox.setIcon(SWT.ICON_ERROR); 
-	            		msgBox.start(); 
+						MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
+				        messageBox2.setMessage("Something was wrong, please try again.");
+				        messageBox2.setText("SocialCDEforEclipse Message");
+				        messageBox2.open();
+				        
 					}
 					
 					

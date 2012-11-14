@@ -89,6 +89,11 @@ public class ProxyWrapper implements ISocialTFSProxy{
  			return false;
  		}
 		
+		if(username.equals("") || username.equals(" "))
+		{
+			return false; 
+		}
+		
 		if(output.equals("true"))
 		{
 			
@@ -101,6 +106,8 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			System.out.println("Risultato negativo"); 
 				return false; 
 		}
+		
+		
 		
 		
 	}

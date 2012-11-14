@@ -249,15 +249,6 @@ public class SettingPanel implements Panel {
 		panel.setLayout(null); 
 	}
 
-	@Override
-	public HashMap<String, String> getInput() {
-		// TODO Auto-generated method stub
-		HashMap<String, String> Input_data = new HashMap<>();
-		Input_data.put("oldPassword", txtOldPassword.getText()); 
-		Input_data.put("newPassword", txtNewPassword.getText()); 
-		return Input_data; 
-	}
-
 	public GeneralButton getBtnCancel() {
 		return btnCancel;
 	}
@@ -304,6 +295,12 @@ public class SettingPanel implements Panel {
 
 	public void setTxtNewPassword(Text txtNewPassword) {
 		this.txtNewPassword = txtNewPassword;
+	}
+
+	@Override
+	public HashMap<String, Object> getData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

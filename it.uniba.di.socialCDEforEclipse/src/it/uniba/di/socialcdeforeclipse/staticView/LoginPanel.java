@@ -329,6 +329,7 @@ public class LoginPanel implements Panel{
 		
 	}
 
+	@Override
 	public HashMap<String, Object> getData()
 	{
 		HashMap<String, Object> uiData = new HashMap<String, Object>();
@@ -345,16 +346,7 @@ public class LoginPanel implements Panel{
 		return uiData; 
 	}
 	
-	@Override
-	public HashMap<String, String> getInput() {
-		// TODO Auto-generated method stub
-		HashMap<String, String> Input_data = new HashMap<>();
-		Input_data.put("Proxy", txtProxyHost.getText()); 
-		Input_data.put("Username", txtUsername.getText()); 
-		Input_data.put("Password", txtPassword.getText());  
-		return Input_data; 
-		
-	}
+	
 	//Getter and setter methods
 	
 	

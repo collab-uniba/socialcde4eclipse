@@ -449,21 +449,7 @@ public class RegistrationPanel implements Panel {
 	
 	}
 
-	
 
-	@Override
-	public HashMap<String, String> getInput() {
-		// TODO Auto-generated method stub
-		HashMap<String, String> Input_data = new HashMap<>();
-		Input_data.put("Proxy", txtProxyHost.getText()); 
-		Input_data.put("Invitation_code", txtInvitationCode.getText()); 
-		Input_data.put("Username", txtUsername.getText()); 
-		Input_data.put("Password", txtPassword.getText()); 
-		Input_data.put("Password2", txtPassword2.getText()); 
-		Input_data.put("Email", txtMail.getText()); 
-		return Input_data; 
-		
-	}
 	
 	public HashMap<String, Object> getData()
 	{

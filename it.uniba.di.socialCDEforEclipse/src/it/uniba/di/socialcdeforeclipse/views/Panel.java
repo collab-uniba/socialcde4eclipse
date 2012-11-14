@@ -10,7 +10,7 @@ public interface Panel {
 
 	public void dispose(Composite panel);
 	
-	public HashMap<String, String> getInput(); 
+	public HashMap<String, Object> getData(); 
 	
 	 
 }

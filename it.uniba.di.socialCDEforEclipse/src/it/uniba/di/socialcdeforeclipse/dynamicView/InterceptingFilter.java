@@ -15,9 +15,16 @@ public class InterceptingFilter {
 	
 	public static boolean verifyMail(String mail)
 	{
-		Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
-		Matcher m = p.matcher(mail);
-		return  m.matches();
+		if(mail.startsWith(".") || mail.startsWith("@"))
+		{
+			return false; 
+		}
+		else
+		{
+			Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+			Matcher m = p.matcher(mail);
+			return  m.matches();
+		}
 	}
 	
 	public static boolean verifyRegistrationPanel(HashMap<String, String> values)

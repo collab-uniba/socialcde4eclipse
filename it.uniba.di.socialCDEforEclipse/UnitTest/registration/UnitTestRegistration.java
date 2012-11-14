@@ -7,10 +7,15 @@ import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 
 import org.eclipse.swt.widgets.Text;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,16 +39,30 @@ public class UnitTestRegistration extends TestCase {
 	 * 
 	 * */
 	
+	Document document;
+
 	
 	@Before
 	public void setUp()
 	{
+		SAXBuilder builder = new SAXBuilder();
+		try {
+			document = builder.build(new File("./testData.xml").getCanonicalPath());
+		} catch (JDOMException e) {
+			System.out.println("Eccezione lanciata"); 
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		//For testCase 4, I suppose that an invitation email was send to o3401944@rtrtr.com and 
 		// an username like 'John' is available
 		ProxyWrapper pw = new ProxyWrapper(); 
-		pw.setHost("http://localhost:8081"); 
+		pw.setHost(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText()); 
 		Controller.setProxy(pw); 
-		assertTrue(pw.IsAvailable("John")); 
+		assertTrue(pw.IsAvailable(document.getRootElement().getChild("CorrectData").getChild("Username").getText())); 
 	
 	}
 	
@@ -70,12 +89,12 @@ public class UnitTestRegistration extends TestCase {
 	public void testCase2() {
 		
 		HashMap<String, String> dataExtracted = new HashMap<String,String>(); 
-		dataExtracted.put("Username", "Giacomo35");
+		dataExtracted.put("Username", document.getRootElement().getChild("WrongData").getChild("Username").getText());
 		dataExtracted.put("Password1", "");
 		dataExtracted.put("Password2", "");
 		dataExtracted.put("InvitationCode", ""); 
-		dataExtracted.put("Email", "prova.123@ciao.com");
-		dataExtracted.put("ProxyHost", "http:\\localhost:8081");
+		dataExtracted.put("Email", document.getRootElement().getChild("WrongData").getChild("Email").getText());
+		dataExtracted.put("ProxyHost", document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
 		
 		ActionRegistrationPanel action = new ActionRegistrationPanel();
 		
@@ -88,12 +107,12 @@ public class UnitTestRegistration extends TestCase {
 	public void testCase3() {
 		
 		HashMap<String, String> dataExtracted = new HashMap<String,String>(); 
-		dataExtracted.put("Username", "Giacomo35");
-		dataExtracted.put("Password1", "antonio");
-		dataExtracted.put("Password2", "antonio");
-		dataExtracted.put("InvitationCode", "hsdjgdshafshg"); 
-		dataExtracted.put("Email", "prova.123@ciao.com");
-		dataExtracted.put("ProxyHost", "http:\\localhost:8081");
+		dataExtracted.put("Username", document.getRootElement().getChild("WrongData").getChild("Username").getText());
+		dataExtracted.put("Password1", document.getRootElement().getChild("WrongData").getChild("Password").getText());
+		dataExtracted.put("Password2", document.getRootElement().getChild("WrongData").getChild("Second_Password").getText());
+		dataExtracted.put("InvitationCode", document.getRootElement().getChild("WrongData").getChild("Invitation_Code").getText()); 
+		dataExtracted.put("Email", document.getRootElement().getChild("WrongData").getChild("Email").getText());
+		dataExtracted.put("ProxyHost", document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
 		ActionRegistrationPanel action = new ActionRegistrationPanel();
 		
 		int res = action.actionRegister(dataExtracted);
@@ -105,12 +124,12 @@ public class UnitTestRegistration extends TestCase {
 	public void testCase4() {
 		
 		HashMap<String, String> dataExtracted = new HashMap<String,String>(); 
-		dataExtracted.put("Username", "John");
-		dataExtracted.put("Password1", "john12");
-		dataExtracted.put("Password2", "john12");
-		dataExtracted.put("InvitationCode", "zS9^y[6JBk"); 
-		dataExtracted.put("Email", "o3401944@rtrtr.com");
-		dataExtracted.put("ProxyHost", "http:\\localhost:8081");
+		dataExtracted.put("Username", document.getRootElement().getChild("CorrectData").getChild("Username").getText());
+		dataExtracted.put("Password1", document.getRootElement().getChild("CorrectData").getChild("Password").getText());
+		dataExtracted.put("Password2", document.getRootElement().getChild("CorrectData").getChild("Second_Password").getText());
+		dataExtracted.put("InvitationCode", document.getRootElement().getChild("CorrectData").getChild("Invitation_Code").getText()); 
+		dataExtracted.put("Email", document.getRootElement().getChild("CorrectData").getChild("Email").getText());
+		dataExtracted.put("ProxyHost", document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
 		ActionRegistrationPanel action = new ActionRegistrationPanel();
 		
 		int res = action.actionRegister(dataExtracted);

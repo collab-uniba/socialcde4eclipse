@@ -223,23 +223,7 @@ public class TFSLogin implements Panel {
 		shadow.dispose(); 
 	}
 
-	@Override
-	public HashMap<String, String> getInput() {
-		// TODO Auto-generated method stub
-		HashMap<String, String> Input = new HashMap<String,String>(); 
-		
-	if(service.RequireTFSDomain)
-	{
-			Input.put("Domain", (InterceptingFilter.verifyText(textDomain.getText()) ? textDomain.getText() : null).toString() );
-	}
-	else
-	{
-		Input.put("Domain", null );
-	}
-			Input.put("Username", (InterceptingFilter.verifyText(textUsername.getText()) ? textUsername.getText() : null).toString()); 
-			Input.put("Password", (InterceptingFilter.verifyText(textPassword.getText()) ? textPassword.getText() : null).toString()); 
-		return Input;
-	}
+	
 
 	
 	
@@ -297,6 +281,12 @@ public class TFSLogin implements Panel {
 
 	public void setService(WService service) {
 		this.service = service;
+	}
+
+	@Override
+	public HashMap<String, Object> getData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
