@@ -58,6 +58,9 @@ public class DynamicHome implements Panel {
 	private Composite buttonComposite; 
 	private Composite serviceComposite; 
 	
+	private Label service;
+	
+	
 	//public static Boolean setServiceCompositeHeight = false; 
 	
 	private final InputStream PATH_SKILLS = this.getClass().getClassLoader().getResourceAsStream("images/skills.png");
@@ -211,7 +214,7 @@ public class DynamicHome implements Panel {
 		
 		
 		 
-		Label service;
+		
 		SquareButtonService services; 
 		//Button services; 
 		
@@ -273,56 +276,7 @@ public class DynamicHome implements Panel {
 					serviceStatus.setText("Status: Not registered");
 					serviceStatus.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
 				}
-				/*
-				 services = new SquareButtonService(serviceComposite, SWT.NONE); 
 				
-				 services.setRoundedCorners(false);
-				
-				
-				 services.setText(wService[i].Name); 
-				 services.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD )); 
-				 
-				 
-				 services.setSize(100, 100);
-					
-				controlli.add(services);
-				
-				if(wService[i].Registered)
-				{
-					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
-					services.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN), null, Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
-					services.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN), null, Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
-					services.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_CYAN), null, Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
-				}
-				else
-				{
-					services.setDefaultColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
-					services.setClickedColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
-					services.setHoverColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
-			        services.setSelectedColors(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED),null);
-				}
-				
-				services.borderWidth = 3;
-				services.setData("ID_action","btnServices");
-				services.setData("service" , wService[i]); 
-				services.addListener(SWT.Selection, azioni); 
-				 
-				try {
-					 
-					services.setImage(get_ImageStream(new URL(Controller.getPreferences("ProxyRoot") +  wService[i].Image).openStream()));
-					
-					 
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				*/
-				
-				 
 			}
 		} else {
 			service = new Label(serviceComposite, SWT.NONE);
@@ -380,13 +334,29 @@ public class DynamicHome implements Panel {
 		 controlli.get(i).dispose(); 
 			
 		}
-		panel.setLayout(null); 
+		//panel.setLayout(null); 
 	}
 
 	@Override
 	public HashMap<String, Object> getData() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		HashMap<String, Object> uiData = new HashMap<String, Object>();
+		
+		uiData.put("serviceComposite",serviceComposite); 
+		uiData.put("labelFollowers",labelFollowers); 
+		uiData.put("labelFollowing",labelFollowing); 
+		uiData.put("labelPost",labelPost); 
+		uiData.put("postComposite",postComposite); 
+		uiData.put("labelSettings",labelSettings);
+		uiData.put("labelSkills",labelSkills); 
+		uiData.put("buttonComposite",buttonComposite);
+		uiData.put("labelHidden",labelHidden); 
+		uiData.put("username",username); 
+		uiData.put("labelAvatar",labelAvatar); 
+		uiData.put("service", service); 
+		
+		return uiData;
 	}
 
 	
