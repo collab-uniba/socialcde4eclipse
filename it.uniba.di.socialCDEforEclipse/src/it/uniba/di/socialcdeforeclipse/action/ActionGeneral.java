@@ -89,7 +89,11 @@ public class ActionGeneral implements Listener  {
 				}
 				else
 				{
-					new ActionDynamicUserTimeline(widget, event); 
+					uiData = Controller.getDynamicUserWindow().getData(); 
+					uiData.put("Event", event); 
+					uiData.put("Event_type", event.type); 
+					uiData.put("ID_action", widget.getData("ID_action").toString()); 
+					new ActionDynamicUserTimeline(uiData); 
 				}
 				break;
 		}

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -60,10 +61,12 @@ public class ActionDynamicUserTimeline {
 		}
 	
 	
-	public ActionDynamicUserTimeline(final Widget widget, Event event)
+	public ActionDynamicUserTimeline(HashMap<String, Object> uiData)
 	{
-		String widgetName = widget.getData("ID_action").toString();
-		final WUser user_selected = (WUser)  widget.getData("user");
+		String widgetName = uiData.get("ID_action").toString(); 
+		int type = (int) uiData.get("Event_type"); 
+		Event event = (Event)  uiData.get("Event");
+		final WUser user_selected = ( (WUser) uiData.get("userSelected") );
 		
 		
 		switch (widgetName) {
@@ -72,11 +75,13 @@ public class ActionDynamicUserTimeline {
 			break;
 			
 		case "labelFollow":
+			 
 			System.out.println(" Follow chiamato");
 			if(Controller.getProxy().Follow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user_selected.Id))
 			{
+				uiData.put("error", false);
 				System.out.println("Follow riuscito"); 
-			  Label	labelUnfollow = new Label(((Label) widget).getParent()  ,SWT.RIGHT); 
+			  Label	labelUnfollow = new Label(((Label) uiData.get("labelFollow")).getParent()  ,SWT.RIGHT); 
 				labelUnfollow.setImage(Controller.getDynamicUserWindow().get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/UnFollow.png")));
 				labelUnfollow.setCursor( new Cursor(Display.getCurrent(), SWT.CURSOR_HAND)); 
 				labelUnfollow.setData("user", user_selected); 
@@ -86,21 +91,32 @@ public class ActionDynamicUserTimeline {
 				 Controller.getProfilePanel().getComposite_dinamic().layout(); 
 				 labelUnfollow.setBounds(dimensionLabel);
 				 labelUnfollow.setData("ID_action", "labelUnfollow"); 
-				 labelUnfollow.addListener(SWT.MouseDown, Controller.getDynamicUserWindow().getAzioni());
-						 
-					
+				 labelUnfollow.addListener(SWT.MouseDown,  ((Listener) uiData.get("action")));
+				 uiData.put("imageUnFollow", true); 
+				 uiData.put("imageFollow", false);	
 				 Controller.getDynamicUserWindow().setLabelFollow(labelUnfollow); 
 				Controller.getProfilePanel().getComposite_dinamic().redraw(dimensionLabel.x, dimensionLabel.y, dimensionLabel.width, dimensionLabel.height, true);
 				Controller.getProfilePanel().getComposite_dinamic().layout(); 
 			}
+			else
+			{
+				uiData.put("error", true);
+				MessageBox messageBox = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_WARNING  | SWT.YES);
+		        messageBox.setMessage("Something was wrong, please try again!");
+		        messageBox.setText("SocialCDEforEclipse Message");
+		        messageBox.open();
+		         
+			}
 			break;
 			
 		case "labelUnfollow":
+		
 			System.out.println(" Unfollow chiamato");
 			if(Controller.getProxy().UnFollow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user_selected.Id))
 			{
+				uiData.put("error", false);
 				System.out.println("unFollow riuscito"); 
-				Label labelFollow = new Label(((Label) widget).getParent(),SWT.RIGHT); 
+				Label labelFollow = new Label(((Label) uiData.get("labelFollow")).getParent(),SWT.RIGHT); 
 				labelFollow.setImage(Controller.getDynamicUserWindow().get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Follow.png")));
 				labelFollow.setCursor( new Cursor(Display.getCurrent(), SWT.CURSOR_HAND)); 
 				labelFollow.setData("user", user_selected); 
@@ -110,16 +126,28 @@ public class ActionDynamicUserTimeline {
 				 Controller.getProfilePanel().getComposite_dinamic().layout(); 
 				 labelFollow.setBounds(dimensionLabel); 
 				 labelFollow.setData("ID_action", "labelFollow");
-				 labelFollow.addListener(SWT.MouseDown, Controller.getDynamicUserWindow().getAzioni());
-				 
+				 labelFollow.addListener(SWT.MouseDown, ((Listener) uiData.get("action")));
+				 //uiData.put("labelFollow", labelFollow); 
+				 uiData.put("imageUnFollow", false); 
+				 uiData.put("imageFollow", true);
 				 Controller.getDynamicUserWindow().setLabelFollow(labelFollow); 
 				 Controller.getProfilePanel().getComposite_dinamic().redraw(dimensionLabel.x, dimensionLabel.y, dimensionLabel.width, dimensionLabel.height, true);
 				 Controller.getProfilePanel().getComposite_dinamic().layout(); 
+			}
+			else
+			{
+				uiData.put("error", true);
+				MessageBox messageBox = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_WARNING  | SWT.YES);
+		        messageBox.setMessage("Something was wrong, please try again!");
+		        messageBox.setText("SocialCDEforEclipse Message");
+		        messageBox.open();
+		         
 			}
 			
 			break;
 			
 		case "labelSkills":
+			
 			final SkillsPanel skillPanel = new SkillsPanel(); 
 			skillPanel.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 			skillPanel.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
@@ -189,24 +217,25 @@ public class ActionDynamicUserTimeline {
 			 
 			break;
 		case "otherPostAvailable":
-			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  widget.getData("userPostMaster")).getChildren().length); 
+			
+			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  uiData.get("userPostMaster")).getChildren().length); 
 			 
 			
 			 
-			 WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ((WUser) widget.getData("user")).Username,((long)  widget.getData("lastPostId")),0);
+			 WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ( (WUser) uiData.get("userSelected") ).Username,((long)  uiData.get("lastPostId")),0);
 			 
 			 
 			 System.out.println("number post " +  posts.length); 
 			 
 			 
-			 widget.setData("firstPostId", widget.getData("lastPostId")); 
+			 uiData.put("firstPostId", uiData.get("lastPostId")); 
 				
 				
 				for(int i=0;i< posts.length; i++)
 				{
 
 					
-					Composite userPostComposite = new Composite(((Composite)  widget.getData("userPostMaster")), SWT.BORDER);
+					Composite userPostComposite = new Composite(((Composite)  uiData.get("userPostMaster")), SWT.BORDER);
 					userPostComposite.setLayout(new GridLayout(2, false)); 
 					GridData gridData = new GridData(); 
 					gridData.grabExcessHorizontalSpace = true; 
@@ -325,19 +354,19 @@ public class ActionDynamicUserTimeline {
 					messageDate.setLayoutData(gridData); 
 					
 					
-				 widget.setData("lastPostId",posts[i].Id);
+				 uiData.put("lastPostId",posts[i].Id);
 				}
-				System.out.println("Altezza impostata " + Controller.getWindowHeight() + (150 * ((Composite)  widget.getData("userPostMaster")).getChildren().length) ); 
-				Controller.setScrollHeight(Controller.getWindowHeight() + (250 * ((Composite)  widget.getData("userPostMaster")).getChildren().length)  );
+				System.out.println("Altezza impostata " + Controller.getWindowHeight() + (150 * ((Composite)  uiData.get("userPostMaster")).getChildren().length) ); 
+				Controller.setScrollHeight(Controller.getWindowHeight() + (250 * ((Composite)  uiData.get("userPostMaster")).getChildren().length)  );
 				((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
 
-				 WPost[] newPosts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ((WUser) widget.getData("user")).Username,((long)  widget.getData("lastPostId")),0);
+				 WPost[] newPosts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ( (WUser) uiData.get("userSelected") ).Username,((long)  uiData.get("lastPostId")),0);
 				 System.out.println("Nuovi post disponibili " + newPosts.length);
 			if( newPosts.length == 0)
 			{
 				System.out.println("Other post 0 rilevato"); 
-				((Link)  widget).setVisible(false);
-				Label noPostAvailable = new Label(((Composite)  widget.getData("otherPostWarning")),SWT.NONE); 
+				((Link)  uiData.get("otherPostAvailable")).setVisible(false);
+				Label noPostAvailable = new Label(((Composite)  uiData.get("otherPostWarning")),SWT.NONE); 
 				noPostAvailable.setText("There are no older post available.");
 				noPostAvailable.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.None));
 				GridData  gridData = new GridData();
@@ -346,17 +375,17 @@ public class ActionDynamicUserTimeline {
 				noPostAvailable.setLayoutData(gridData); 
 			}
 			
-			((Composite)  widget.getData("userPostMaster")).layout();
-			((Composite)  widget.getData("userPostMaster")).redraw();
-			((Composite)  widget.getData("otherPostWarning")).layout();
-			((Composite)  widget.getData("otherPostWarning")).redraw();
+			((Composite)  uiData.get("userPostMaster")).layout();
+			((Composite)  uiData.get("userPostMaster")).redraw();
+			((Composite)  uiData.get("otherPostWarning")).layout();
+			((Composite)  uiData.get("otherPostWarning")).redraw();
 			Controller.getProfilePanel().getComposite_dinamic().layout(); 
 			Controller.getProfilePanel().getComposite_dinamic().redraw();
 			((ScrolledComposite)	Controller.getWindow().getParent()).layout(); 
 			((ScrolledComposite)	Controller.getWindow().getParent()).redraw(); 
 			
 			
-			System.out.println("N. figli " + ((Composite)  widget.getData("userPostMaster")).getChildren().length ); 
+			System.out.println("N. figli " + ((Composite)  uiData.get("userPostMaster")).getChildren().length ); 
 			 
 			break;
 

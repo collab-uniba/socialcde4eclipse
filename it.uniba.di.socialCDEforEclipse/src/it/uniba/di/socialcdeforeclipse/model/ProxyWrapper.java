@@ -826,6 +826,10 @@ public class ProxyWrapper implements ISocialTFSProxy{
 					Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, new JsonDateDeserializer()).create();
 					wpost =  gson.fromJson(result,WPost[].class);
 				}
+				else
+				{
+					wpost = null;
+				}
 
 				conn.disconnect();
 			} catch (Exception e) {
@@ -1010,44 +1014,53 @@ public class ProxyWrapper implements ISocialTFSProxy{
 	{
 		String result = "";
 		try {
-			URL url = new URL(host +"/Follow");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			conn.setDoInput(true);
-			conn.setUseCaches(false);
-			conn.setAllowUserInteraction(false);
-			conn.setRequestProperty("Content-Type", "application/json");
-
-			// Create the form content
-			OutputStream out = conn.getOutputStream();
-			Writer writer = new OutputStreamWriter(out, "UTF-8");
-			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"followId\":\"" + followId  + "\"}");
 			
-			writer.close();
-			out.close();
-			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
-			if (status >= 200 && status <= 299) {
-				InputStreamReader in = new InputStreamReader(
-						conn.getInputStream());
-				BufferedReader br = new BufferedReader(in);
-				String output;
+			if(followId != -1)
+			{
+				URL url = new URL(host +"/Follow");
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("POST");
+				conn.setDoOutput(true);
+				conn.setDoInput(true);
+				conn.setUseCaches(false);
+				conn.setAllowUserInteraction(false);
+				conn.setRequestProperty("Content-Type", "application/json");
+	
+				// Create the form content
+				OutputStream out = conn.getOutputStream();
+				Writer writer = new OutputStreamWriter(out, "UTF-8");
+				writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"followId\":\"" + followId  + "\"}");
 				
-				while ((output = br.readLine()) != null) {
-					result += output;
-
+				writer.close();
+				out.close();
+				int status = conn.getResponseCode();
+				System.out.println("RESPONSE CODE " + status);
+				System.out.println("Content type " + conn.getContentType());
+				if (status >= 200 && status <= 299) {
+					InputStreamReader in = new InputStreamReader(
+							conn.getInputStream());
+					BufferedReader br = new BufferedReader(in);
+					String output;
+					
+					while ((output = br.readLine()) != null) {
+						result += output;
+	
+					}
+					br.close();
+					
+					
 				}
-				br.close();
-				
-				
+	
+				conn.disconnect();
 			}
-
-			conn.disconnect();
 		} catch (Exception e) {
 			return  false;
 
+		}
+		
+		if( followId == -1)
+		{
+			return false; 
 		}
 		
 		if(result.equals("true"))

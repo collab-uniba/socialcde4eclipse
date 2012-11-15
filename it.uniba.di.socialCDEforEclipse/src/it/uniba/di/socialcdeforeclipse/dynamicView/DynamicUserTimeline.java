@@ -42,6 +42,8 @@ public class DynamicUserTimeline implements Panel {
 	private Label labelAvatar; 
 	private Label labelHidden; 
 	private Label labelFollow; 
+	private Label labelSkills; 
+	private Label labelHide; 
 	private Label username;
 	private Composite postComposite; 
 	private Label labelPost; 
@@ -49,9 +51,12 @@ public class DynamicUserTimeline implements Panel {
 	private Label labelFollowing; 
 	private Label labelFollowers; 
 	private Composite buttonComposite; 
+	private Composite userPostMaster; 
+	private Composite otherPostWarning; 
 	private Listener azioni;
 	private WUser user; 
 	private String userType; 
+	private Link otherPostAvailable; 
 	 
 	private static long firstPostId = 0; 
 	private static long lastPostId = 0; 
@@ -130,7 +135,7 @@ public class DynamicUserTimeline implements Panel {
 	public void inizialize(final Composite panel) {
 		// TODO Auto-generated method stub
 		GridData gridData; 
-		WUser userSelected = Controller.getProxy().GetColleagueProfile(Controller.getCurrentUser().Username , Controller.getCurrentUserPassword(), user.Id); 
+		WUser userSelected = (WUser) Controller.temporaryInformation.get("User_selected"); 
 		 azioni = new ActionGeneral();
 		controlli = new ArrayList<Control>();
 		
@@ -199,8 +204,7 @@ public class DynamicUserTimeline implements Panel {
 		
 		
 		
-		Label labelSkills; 
-		Label labelHide; 
+	
 		if(userType == "Suggested" )
 		{
 			labelFollow = new Label(buttonComposite,SWT.RIGHT); 
@@ -314,9 +318,14 @@ public class DynamicUserTimeline implements Panel {
 		
 		WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user.Username); 
 		
+		if(posts == null)
+		{
+			posts = new WPost[0]; 
+		}
+		
 		System.out.println("Post ottenuti " + posts.length); 
 
-		Composite userPostMaster = new Composite(panel, SWT.BORDER); 
+		userPostMaster = new Composite(panel, SWT.BORDER); 
 		userPostMaster.setLayout(new GridLayout(1,false)); 
 		gridData = new GridData(); 
 		gridData.horizontalSpan = 4;
@@ -465,7 +474,7 @@ public class DynamicUserTimeline implements Panel {
 			lastPostId = posts[i].Id;
 		}
 		
-		Composite otherPostWarning = new Composite(panel, SWT.None); 
+		otherPostWarning = new Composite(panel, SWT.None); 
 		otherPostWarning.setLayout(new GridLayout(1,false)); 
 		gridData = new GridData(); 
 		gridData.horizontalSpan = 4;
@@ -475,11 +484,16 @@ public class DynamicUserTimeline implements Panel {
 		
 		WPost[] newPost = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), userSelected.Username,lastPostId,0);
 		
+		if(newPost == null)
+		{
+			newPost = new WPost[0]; 
+		}
+	
 		System.out.println("Nuovi post disponibili " + newPost.length);
 		
 		if(newPost.length > 0)
 		{
-			Link otherPostAvailable = new Link(otherPostWarning, SWT.NONE); 
+			otherPostAvailable = new Link(otherPostWarning, SWT.NONE); 
 			otherPostAvailable.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
 			otherPostAvailable.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.UNDERLINE_LINK));
 			otherPostAvailable.setText("<a>Click to view older posts</a>"); 
@@ -490,11 +504,7 @@ public class DynamicUserTimeline implements Panel {
 			
 			otherPostAvailable.addListener(SWT.Selection, azioni); 
 			otherPostAvailable.setData("ID_action", "otherPostAvailable");
-			otherPostAvailable.setData("firstPostId", firstPostId);
-			otherPostAvailable.setData("lastPostId", lastPostId);
-			otherPostAvailable.setData("userPostMaster", userPostMaster);
-			otherPostAvailable.setData("otherPostWarning", otherPostWarning); 
-			otherPostAvailable.setData("user", user); 
+			
 			
 			
 		}
@@ -527,13 +537,38 @@ public class DynamicUserTimeline implements Panel {
 		 controlli.get(i).dispose(); 
 			
 		}
-		panel.setLayout(null); 
+		 
 	}
 
 	@Override
 	public HashMap<String, Object> getData() {
 		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, Object> uiData = new HashMap<String, Object>();
+		uiData.put("userType", userType); 
+		uiData.put("labelFollow",labelFollow); 
+		uiData.put("labelSkills", labelSkills); 
+		uiData.put("labelHide", labelHide); 
+		uiData.put("userPostMaster", userPostMaster); 
+		uiData.put("otherPostWarning", otherPostWarning); 
+		uiData.put("userSelected", user);
+		uiData.put("action",azioni); 
+		uiData.put("otherPostAvailable", otherPostAvailable);
+		uiData.put("firstPostId", firstPostId);
+		uiData.put("lastPostId", lastPostId);
+		
+		if(userType == "Suggested" || userType == "Followers" || userType == "Hidden")
+		{
+			uiData.put("imageUnFollow", false); 
+			 uiData.put("imageFollow", true);
+		}
+		else if(userType == "Following")
+		{
+			uiData.put("imageUnFollow", false); 
+			 uiData.put("imageFollow", true);
+		}
+			
+		
+		return uiData;
 	}
 
 	
