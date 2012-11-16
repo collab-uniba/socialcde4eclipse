@@ -5,7 +5,7 @@ import java.net.URI;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
+import it.uniba.di.socialcdeforeclipse.shared.library.*;
 
 import org.junit.Before;
 import org.junit.Test;

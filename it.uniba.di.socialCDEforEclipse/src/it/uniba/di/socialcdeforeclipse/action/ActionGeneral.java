@@ -59,7 +59,11 @@ public class ActionGeneral implements Listener  {
 				}
 				else
 				{
-					new ActionHomePanel(widget, event); 
+					uiData = Controller.getHomeWindow().getData(); 
+					uiData.put("Event", event); 
+					uiData.put("Event_type", event.type); 
+					uiData.put("ID_action", widget.getData("ID_action").toString());
+					new ActionHomePanel(uiData); 
 				}
 				break;
 			case "Settings":

@@ -15,8 +15,8 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.popup.HideUserPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WPost;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
+import it.uniba.di.socialcdeforeclipse.shared.library.WPost;
+import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;

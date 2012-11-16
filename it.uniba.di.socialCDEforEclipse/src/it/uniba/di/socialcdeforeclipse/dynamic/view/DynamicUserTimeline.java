@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.dynamicView;
+package it.uniba.di.socialcdeforeclipse.dynamic.view;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,8 +31,8 @@ import org.junit.Test.None;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WPost;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
+import it.uniba.di.socialcdeforeclipse.shared.library.WPost;
+import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 public class DynamicUserTimeline implements Panel {

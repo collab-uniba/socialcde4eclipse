@@ -9,12 +9,12 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.dynamicView.InterceptingFilter;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.InterceptingFilter;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 import it.uniba.di.socialcdeforeclipse.object.ProgressBarThread;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
-import it.uniba.di.socialcdeforeclipse.staticView.ProfilePanel;
-import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
+import it.uniba.di.socialcdeforeclipse.shared.library.*;
+import it.uniba.di.socialcdeforeclipse.staticview.ProfilePanel;
+import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 

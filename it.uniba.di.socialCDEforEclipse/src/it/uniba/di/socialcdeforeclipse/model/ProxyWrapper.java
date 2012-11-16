@@ -2,7 +2,7 @@ package it.uniba.di.socialcdeforeclipse.model;
 
 
 
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
+import it.uniba.di.socialcdeforeclipse.shared.library.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

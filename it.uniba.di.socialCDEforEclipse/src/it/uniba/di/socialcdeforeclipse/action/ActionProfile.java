@@ -3,8 +3,8 @@ package it.uniba.di.socialcdeforeclipse.action;
 import java.io.InputStream;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicPeople;
-import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicPeople;
+import it.uniba.di.socialcdeforeclipse.staticview.LoginPanel;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;

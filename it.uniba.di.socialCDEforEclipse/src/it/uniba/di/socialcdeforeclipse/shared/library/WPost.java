@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.sharedLibrary;
+package it.uniba.di.socialcdeforeclipse.shared.library;
 
 import java.util.Calendar;
 import java.util.Date;

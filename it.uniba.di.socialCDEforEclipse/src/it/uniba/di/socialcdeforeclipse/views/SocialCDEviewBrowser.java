@@ -6,7 +6,7 @@ package it.uniba.di.socialcdeforeclipse.views;
 import java.io.InputStream;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;

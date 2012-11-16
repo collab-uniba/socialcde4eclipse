@@ -5,11 +5,11 @@ import java.util.HashMap;
 
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.dynamicView.InterceptingFilter;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.InterceptingFilter;
 
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 import it.uniba.di.socialcdeforeclipse.object.ProgressBarThread;
-import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
+import it.uniba.di.socialcdeforeclipse.staticview.LoginPanel;
 
 
 import org.eclipse.swt.SWT;

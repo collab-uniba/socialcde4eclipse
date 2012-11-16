@@ -1,8 +1,8 @@
-package it.uniba.di.socialcdeforeclipse.dynamicView;
+package it.uniba.di.socialcdeforeclipse.dynamic.view;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
+import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 import it.uniba.di.socialcdeforeclipse.views.ButtonAvatar;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 

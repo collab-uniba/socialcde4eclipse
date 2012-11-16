@@ -3,7 +3,7 @@ package registration;
 import java.io.File;
 import java.io.IOException;
 
-import it.uniba.di.socialcdeforeclipse.dynamicView.InterceptingFilter;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.InterceptingFilter;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;

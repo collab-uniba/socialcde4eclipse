@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.sharedLibrary;
+package it.uniba.di.socialcdeforeclipse.shared.library;
 
 public class WService
 {

@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.staticView;
+package it.uniba.di.socialcdeforeclipse.staticview;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;

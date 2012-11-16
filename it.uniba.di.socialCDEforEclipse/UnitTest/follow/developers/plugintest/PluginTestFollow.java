@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 import it.uniba.di.socialcdeforeclipse.action.ActionDynamicUserTimeline;
 import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WUser;
+import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 
 import org.eclipse.ui.PlatformUI;
 import org.jdom2.Document;

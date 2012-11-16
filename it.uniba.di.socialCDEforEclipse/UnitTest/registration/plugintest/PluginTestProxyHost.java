@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
 import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
+import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
 
 import org.eclipse.ui.PlatformUI;
 import org.jdom2.Document;

@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
+import it.uniba.di.socialcdeforeclipse.shared.library.*;
 import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;

@@ -22,18 +22,18 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 
-import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicHome;
-import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicInteractionTimeline;
-import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicInteractiveTimeline;
-import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicPeople;
-import it.uniba.di.socialcdeforeclipse.dynamicView.DynamicUserTimeline;
-import it.uniba.di.socialcdeforeclipse.dynamicView.SettingPanel;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicHome;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicInteractionTimeline;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicInteractiveTimeline;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicPeople;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicUserTimeline;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.SettingPanel;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
 import it.uniba.di.socialcdeforeclipse.object.ProgressBarThread;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.*;
-import it.uniba.di.socialcdeforeclipse.staticView.LoginPanel;
-import it.uniba.di.socialcdeforeclipse.staticView.ProfilePanel;
-import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
+import it.uniba.di.socialcdeforeclipse.shared.library.*;
+import it.uniba.di.socialcdeforeclipse.staticview.LoginPanel;
+import it.uniba.di.socialcdeforeclipse.staticview.ProfilePanel;
+import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 public class Controller {

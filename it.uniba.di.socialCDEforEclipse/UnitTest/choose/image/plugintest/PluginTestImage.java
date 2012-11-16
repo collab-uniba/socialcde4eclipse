@@ -1,4 +1,4 @@
-package user.profile.plugintest;
+package choose.image.plugintest;
 
 import static org.junit.Assert.*;
 
@@ -9,17 +9,16 @@ import java.util.HashMap;
 
 import junit.framework.TestCase;
 
+import it.uniba.di.socialcdeforeclipse.action.ActionDynamicUserTimeline;
 import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
-import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.shared.library.WService;
-import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
+import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,24 +27,27 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class PluginTestProfile extends TestCase {
+public class PluginTestImage extends TestCase {
 
 	/**
-	 * Unit test for User story number 18.
+	 * Unit test for User story number 11.
 	 * 
-	 * Action considered: View profile of current user
+	 * Action considered: Follow a developer
+	 * 
+	  * Unit test for User story number 29.
+	 * 
+	 * Action considered: Choose an image
 	 * 
 	 * Equivalence classes considered: 
-	 * 1.Profile of user that can active one or more services
-	 * 2.Profile of user that can't active services.  
+	 * 1. Choose an image between the available
+	 * 2. No images are available  
 	 * */
 	
-	HashMap<String, Object> dati; 
+	static HashMap<String, Object> dati; 
 	Document document; 
-
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		
 		SAXBuilder builder = new SAXBuilder();
 		try {
@@ -59,15 +61,9 @@ public class PluginTestProfile extends TestCase {
 			e.printStackTrace();
 		}
 		
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
 		
-		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
-		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		  assertNotNull(Controller.getLoginPanel());
+		 assertNotNull(Controller.getLoginPanel());
 		  dati = Controller.getLoginPanel().getData(); 
 		  dati.put("ID_action", "btnLogin"); 
 		  dati.put("Event_type", SWT.Selection); 
@@ -75,34 +71,28 @@ public class PluginTestProfile extends TestCase {
 		  ( (Text)  dati.get("txtUsername")).setText(document.getRootElement().getChild("CorrectData").getChild("Username").getText());
 		  ( (Text)  dati.get("txtPassword")).setText(document.getRootElement().getChild("CorrectData").getChild("Password").getText());
 		  new ActionLoginPanel(dati);
-		  assertTrue(Controller.getProxy().IsWebServiceRunning());
-		  assertNotNull(Controller.getCurrentUser()); 
-		  assertNotNull(Controller.getHomeWindow()); 
-		  assertNull(Controller.getLoginPanel()); 
-		  assertEquals("Home",Controller.getWindowName()); 
-		  dati = Controller.getHomeWindow().getData(); 
-		  
-	
+		assertNotNull(Controller.getHomeWindow()); 
 		
 	}
 	
-	@Test
-	public void testCase1() { 
-		WService[] services = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
-		assertTrue(services.length > 0);
+	@Test public void testCase1()
+	{
+		
+		  
+		  
 	}
 	
-	@Test
-	public void testCase2() { 
-		WService[] services = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
-		assertTrue(services.length == 0);
-		assertEquals("There are no services available yet.\t\nPlease try again soon or contact your admin.",((Label) dati.get("service")).getText()); 
-	
-	}
 	
 	@After
 	public void tearDown() throws Exception {
+		
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
 	}
+	
+	
+	
+
+	
+	
 
 }

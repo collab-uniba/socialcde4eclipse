@@ -1,4 +1,4 @@
-package it.uniba.di.socialcdeforeclipse.dynamicView;
+package it.uniba.di.socialcdeforeclipse.dynamic.view;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;

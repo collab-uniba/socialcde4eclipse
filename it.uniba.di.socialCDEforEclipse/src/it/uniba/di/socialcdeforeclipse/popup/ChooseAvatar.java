@@ -241,6 +241,12 @@ public class ChooseAvatar implements Panel {
 						@Override
 						public void handleEvent(Event event) {
 							// TODO Auto-generated method stub
+							
+							MessageBox messageBox = new MessageBox(firstComposite.getShell(), SWT.ICON_ERROR  | SWT.OK);
+					        messageBox.setMessage("Something was wrong, please try again.");
+					        messageBox.setText("SocialCDEforEclipse Message");
+					        messageBox.open();
+							/*
 							ButtonAvatar btnSelected = (ButtonAvatar) event.widget; 
 							if(Controller.getProxy().SaveAvatar(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),(URI) btnSelected.getData("URI")))
 							{
@@ -255,6 +261,7 @@ public class ChooseAvatar implements Panel {
 						        messageBox.setText("SocialCDEforEclipse Message");
 						        messageBox.open();
 							}
+							*/
 						}
 					});
 					/*
@@ -373,6 +380,7 @@ public class ChooseAvatar implements Panel {
 		
 		shell.layout();
 		shell.open();
+		
 	}
 
 	@Override

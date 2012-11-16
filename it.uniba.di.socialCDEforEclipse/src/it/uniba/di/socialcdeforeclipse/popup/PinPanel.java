@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.shared.library.WOAuthData;
+import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 

@@ -1,13 +1,16 @@
-package follow.developers;
+package choose.image;
 
 import static org.junit.Assert.*;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
@@ -16,22 +19,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UnitTestFollow {
+public class UnitTestImage {
 	/**
-	 * Unit test for User story number 11.
+	 * Unit test for User story number 29.
 	 * 
-	 * Action considered: Follow a developer
+	 * Action considered: Choose an image
 	 * 
 	 * Equivalence classes considered: 
-	 * 1.Follow a developer identified by correct id
-	 * 2.Follow a developer identified by wrong id (-1) 
-	 * 
-	 * Note: For test the equivalence class number 1, the sistem select a random developer 
-	 * between suggested developers. At the end of test the user selected will be unfollow. 
+	 * 1. Choose an image between the available
+	 * 2. No images are available  
 	 * */
 	Document document; 
-	 int positionUser; 
-	 WUser[] users; 
+	HashMap<String, Object> data; 
 	 
 	@Before
 	public void setUp() throws Exception {
@@ -52,35 +51,34 @@ public class UnitTestFollow {
 		Controller.getProxy().setHost(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
 		Controller.setCurrentUser(Controller.getProxy().GetUser(document.getRootElement().getChild("CorrectData").getChild("Username").getText(), document.getRootElement().getChild("CorrectData").getChild("Password").getText()));
 		Controller.setCurrentUserPassword(document.getRootElement().getChild("CorrectData").getChild("Password").getText()); 
-		users = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
-		assertTrue(users.length > 0); 
+
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		
-		if(positionUser != -1)
-		{
-			assertTrue(Controller.getProxy().UnFollow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), users[positionUser].Id));
-		}
+		
 	}
 
 	@Test
 	public void testCase1() {
 	 
-	 positionUser = (int) (Math.random() * (users.length -1)); 
-	 
-	 assertTrue(Controller.getProxy().Follow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), users[positionUser].Id)); 
-	 
+		URI[] images = Controller.getProxy().GetAvailableAvatars(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+		int imageChoose = (int) (Math.random() * images.length );
+		
+		assertTrue(Controller.getProxy().SaveAvatar(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), images[imageChoose]));
+
 	}
 	
 	@Test
 	public void testCase2() {
 	 
-	 positionUser = -1; 
-	 
-	 assertFalse(Controller.getProxy().Follow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),-1)); 
-	 
+		URI[] images = Controller.getProxy().GetAvailableAvatars(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+		assertTrue(images.length == 0); 
+		
 	}
+	
+	
 
 }

@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.staticView.RegistrationPanel;
+import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
 
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;

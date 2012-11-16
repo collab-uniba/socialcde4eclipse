@@ -15,8 +15,8 @@ import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
 import it.uniba.di.socialcdeforeclipse.popup.TFSLogin;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WOAuthData;
-import it.uniba.di.socialcdeforeclipse.sharedLibrary.WService;
+import it.uniba.di.socialcdeforeclipse.shared.library.WOAuthData;
+import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
 
 import org.eclipse.swt.SWT;
@@ -55,9 +55,11 @@ public class ActionHomePanel {
 	
 
 
-	public ActionHomePanel(Widget widget, Event event)	{
+	public ActionHomePanel(HashMap<String, Object> uiData)	{
 	
-		String widgetName = widget.getData("ID_action").toString(); 
+		String widgetName = uiData.get("ID_action").toString(); 
+		int type = (int) uiData.get("Event_type"); 
+		Event event = (Event)  uiData.get("Event");
 	    IViewPart browser = null; 
 		System.out.println("Azione invocata " + widgetName); 
 		switch (widgetName) {
@@ -121,16 +123,16 @@ public class ActionHomePanel {
 			 available_avatar.inizialize(Controller.getWindow());
 			break;
 		case "labelSettings":
-			if(event.type == SWT.MouseDown){
+			if(type == SWT.MouseDown){
 				System.out.println("Labelsettings azione"); 
 				Controller.selectDynamicWindow(1);
 			}
 			break;
 		case "btnServices":
-			if(event.type == SWT.Selection)
+			if(type == SWT.Selection)
 			{
 		
-		 WService service = (WService) widget.getData("service"); 
+				WService service = (WService) uiData.get("service"); 
 				if(service.Registered){
 					System.out.println("Servizio registrato");
 					final SettingServicePanel serviceSetting = new SettingServicePanel(); 

@@ -1,6 +1,7 @@
 package it.uniba.di.socialcdeforeclipse.action;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
@@ -14,8 +15,9 @@ public class ActionDynamicPeople {
 		switch (widgetName) {
 		case "User_selected":
 			Controller.temporaryInformation.put("User_selected", widget.getData("User_data")); 
-			Controller.temporaryInformation.put("User_type", widget.getData("User_type")); 
-			
+			Controller.temporaryInformation.put("User_type", widget.getData("User_type"));
+			WUser utente = (WUser)  widget.getData("User_data"); 
+			System.out.println("Info utente" + utente.getStatuses() + " following " + utente.getFollowings() + "followers" + utente.getFollowers()); 
 			Controller.selectDynamicWindow(3); 
 			break;
 		
