@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
@@ -48,7 +49,10 @@ public class ChooseAvatar implements Panel {
 	private Composite firstComposite;
 	private Button btnAvatarBack;
 	private Listener backListener;
-
+	private ArrayList<ButtonAvatar> allAvatar; 
+    private Label noAvatarMessage = null;
+    private URI[] uriAvatar; 
+	
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
 			.getResourceAsStream("images/Wallpaper.png");
 	private final InputStream PATH_ECLIPSE_ICON = this.getClass()
@@ -154,7 +158,7 @@ public class ChooseAvatar implements Panel {
 
 		shell.setLayout(new GridLayout(1, false));
 		
-		URI[] uriAvatar = Controller.getProxy().GetAvailableAvatars(
+		uriAvatar = Controller.getProxy().GetAvailableAvatars(
 				Controller.getCurrentUser().Username,
 				Controller.getCurrentUserPassword());
 			System.out.println("Avatar disponibili " + uriAvatar.length); 
@@ -191,10 +195,11 @@ public class ChooseAvatar implements Panel {
 					}
 				});
 			}
-
+			allAvatar = new ArrayList<ButtonAvatar>();
+			
 			for (int i = 0; i < uriAvatar.length; i++) {
 				System.out.println("Analizzo Avatar " + i); 
-			//	System.out.println(uriAvatar[i].toString()); 
+			 
 				Boolean flag = true; 
 				try {
 					getImageStream(uriAvatar[i].toURL().openStream()); 
@@ -210,7 +215,7 @@ public class ChooseAvatar implements Panel {
 					Composite service1 = new Composite(firstComposite, SWT.None); 
 					service1.setLayout(new GridLayout(1,false));
 					service1.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
-					//service1.setSize(30,30);
+					
 					
 					ButtonAvatar	avatarImage = new ButtonAvatar(service1, SWT.NONE);
 					avatarImage.setRoundedCorners(false);
@@ -246,49 +251,10 @@ public class ChooseAvatar implements Panel {
 					        messageBox.setMessage("Something was wrong, please try again.");
 					        messageBox.setText("SocialCDEforEclipse Message");
 					        messageBox.open();
-							/*
-							ButtonAvatar btnSelected = (ButtonAvatar) event.widget; 
-							if(Controller.getProxy().SaveAvatar(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),(URI) btnSelected.getData("URI")))
-							{
-								//btnSelected.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_CYAN)); 
-								
-								
-							}
-							else
-							{
-								MessageBox messageBox = new MessageBox(firstComposite.getShell(), SWT.ICON_ERROR  | SWT.OK);
-						        messageBox.setMessage("Something was wrong, please try again.");
-						        messageBox.setText("SocialCDEforEclipse Message");
-						        messageBox.open();
-							}
-							*/
+							
 						}
 					});
-					/*
 					
-					avatarImage.addListener(SWT.Selection, new Listener() {
-						
-						@Override
-						public void handleEvent(Event event) {
-							// TODO Auto-generated method stub
-							Button btnSelected = (Button) event.widget; 
-							if(Controller.getProxy().SaveAvatar(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),(URI) btnSelected.getData("URI")))
-							{
-								btnSelected.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_CYAN)); 
-								
-								
-							}
-							else
-							{
-								MessageBox messageBox = new MessageBox(firstComposite.getShell(), SWT.ICON_ERROR  | SWT.OK);
-						        messageBox.setMessage("Something was wrong, please try again.");
-						        messageBox.setText("SocialCDEforEclipse Message");
-						        messageBox.open();
-							}
-							
-						
-					}); 
-					 */
 					try {
 						 System.out.println("avatar link  " + uriAvatar[i].toURL()); 
 						avatarImage.setImage(resize(getImageStream(uriAvatar[i].toURL().openStream()), 70, 70));
@@ -301,33 +267,9 @@ public class ChooseAvatar implements Panel {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					/*
-					Button btn_avatar = new Button(firstComposite,
-							SWT.BORDER);
-	
-					try {
-						
-						if(Controller.getCurrentUser().getAvatar().equals(uriAvatar[i].toString()) )
-						{
-							System.out.println("Controllo positivo"); 
-							btn_avatar.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN)); 
-							
-						}
-						
-						btn_avatar.setImage(resize(getImageStream(uriAvatar[i].toURL().openStream()), 75, 75));
-						btn_avatar.setData("URI", uriAvatar[i]); 
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					// btn_avatar.setSize(140, 140);
-					System.out.println("URI n. " + i + " " + uriAvatar[i]);
-					btn_avatar.addListener(SWT.Selection, 
-				*/
+					allAvatar.add(avatarImage); 
 				}
+				
 			}
 			
 			sc.setContent(firstComposite);
@@ -357,7 +299,7 @@ public class ChooseAvatar implements Panel {
 			gridData.verticalAlignment = gridData.CENTER; 
 			firstComposite.setLayoutData(gridData);
 			
-			Label noAvatarMessage = new Label(firstComposite, SWT.None);
+		    noAvatarMessage = new Label(firstComposite, SWT.None);
 			noAvatarMessage.setText("There are no avatars available.");
 			noAvatarMessage.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 			noAvatarMessage.setFont(new Font(shell.getDisplay(), "Calibri", 12,	SWT.BOLD));
@@ -395,7 +337,19 @@ public class ChooseAvatar implements Panel {
 	@Override
 	public HashMap<String, Object> getData() {
 		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, Object> uiData = new HashMap<String, Object>();
+		
+		if(uriAvatar.length > 0)
+		{
+		for(int i=0;i< allAvatar.size();i++)
+		{
+			uiData.put("Avatar"+ i, allAvatar.get(i)); 
+		}
+		}
+		uiData.put("btnAvatarBack", btnAvatarBack); 
+		uiData.put("noAvatarMessage",noAvatarMessage);
+		
+		return uiData;
 	}
 
 }

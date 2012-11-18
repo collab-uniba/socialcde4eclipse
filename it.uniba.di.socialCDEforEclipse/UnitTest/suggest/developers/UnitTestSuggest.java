@@ -1,4 +1,4 @@
-package follow.developers;
+package suggest.developers;
 
 import static org.junit.Assert.*;
 
@@ -16,18 +16,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UnitTestFollow {
+public class UnitTestSuggest {
 	/**
-	 * Unit test for User story number 11.
+	 * Unit test for User story number 35.
 	 * 
-	 * Action considered: Follow a developer
+	 * Action considered: Suggests a developer
 	 * 
 	 * Equivalence classes considered: 
-	 * 1.Follow a developer identified by correct id
-	 * 2.Follow a developer identified by wrong id (-1) 
+	 * 1.There are developers that the system can suggests.
+	 * 2.There aren't developers to suggests. 
 	 * 
-	 * Note: For test the equivalence class number 1, the system select a random developer 
-	 * between suggested developers. At the end of test the user selected will be unfollow. 
 	 * */
 	Document document; 
 	 int positionUser; 
@@ -52,35 +50,26 @@ public class UnitTestFollow {
 		Controller.getProxy().setHost(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
 		Controller.setCurrentUser(Controller.getProxy().GetUser(document.getRootElement().getChild("CorrectData").getChild("Username").getText(), document.getRootElement().getChild("CorrectData").getChild("Password").getText()));
 		Controller.setCurrentUserPassword(document.getRootElement().getChild("CorrectData").getChild("Password").getText()); 
-		users = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
-		assertTrue(users.length > 0); 
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		
-		if(positionUser != -1)
-		{
-			assertTrue(Controller.getProxy().UnFollow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), users[positionUser].Id));
-		}
 	}
 
 	@Test
 	public void testCase1() {
 	 
-	 positionUser = (int) (Math.random() * (users.length -1)); 
-	 
-	 assertTrue(Controller.getProxy().Follow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), users[positionUser].Id)); 
-	 
+		users = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
+		assertTrue(users.length > 0); 
 	}
 	
 	@Test
 	public void testCase2() {
 	 
-	 positionUser = -1; 
-	 
-	 assertFalse(Controller.getProxy().Follow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),-1)); 
-	 
+		users = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, "try");
+		assertTrue(users.length == 0); 
 	}
 
 }

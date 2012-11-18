@@ -121,6 +121,7 @@ public class ActionHomePanel {
 				}
 			});
 			 available_avatar.inizialize(Controller.getWindow());
+			 uiData.put("Avatar_Window", available_avatar); 
 			break;
 		case "labelSettings":
 			if(type == SWT.MouseDown){

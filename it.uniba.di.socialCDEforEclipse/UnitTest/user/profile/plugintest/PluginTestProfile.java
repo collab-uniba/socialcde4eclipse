@@ -88,6 +88,7 @@ public class PluginTestProfile extends TestCase {
 	
 	@Test
 	public void testCase1() { 
+		
 		WService[] services = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		assertTrue(services.length > 0);
 	}

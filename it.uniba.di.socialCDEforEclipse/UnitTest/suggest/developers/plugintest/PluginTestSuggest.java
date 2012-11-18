@@ -1,4 +1,4 @@
-package choose.image.plugintest;
+package suggest.developers.plugintest;
 
 import static org.junit.Assert.*;
 
@@ -29,24 +29,22 @@ import org.junit.Test;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class PluginTestImage extends TestCase {
+public class PluginTestSuggest extends TestCase {
 
 	/**
-	 * Unit test for User story number 11.
+	 * Unit test for User story number 35.
 	 * 
-	 * Action considered: Follow a developer
-	 * 
-	  * Unit test for User story number 29.
-	 * 
-	 * Action considered: Choose an image
+	 * Action considered: Suggests a developer
 	 * 
 	 * Equivalence classes considered: 
-	 * 1. Choose an image between the available
-	 * 2. No images are available  
+	 * 1.There are developers that the system can suggests.
+	 * 2.There aren't developers to suggests. 
+	 * 
 	 * */
 	
 	static HashMap<String, Object> dati; 
@@ -84,43 +82,39 @@ public class PluginTestImage extends TestCase {
 	@Test public void testCase1()
 	{
 		
-		  dati = Controller.getHomeWindow().getData(); 
-		  dati.put("ID_action", "labelAvatar"); 
-		  dati.put("Event_type",SWT.MouseDown);
-		  new ActionHomePanel(dati); 
-		  ChooseAvatar avatarWindow = (ChooseAvatar) dati.get("Avatar_Window"); 
-		  dati = avatarWindow.getData(); 
-		  ArrayList<ButtonAvatar> btnAvatar = new ArrayList<ButtonAvatar>();
-		  for(int i=0;i< dati.size();i++)
-		  {
-			  if(dati.containsKey("Avatar" + i))
-			  {
-				  btnAvatar.add( (ButtonAvatar) dati.get("Avatar" + i)); 
-			  }
-		  }
-		  
-		 int avatar_selected = (int) (Math.random() * (btnAvatar.size() -1));
-		 
-		 ButtonAvatar btnAvatarSelected = btnAvatar.get(avatar_selected);
-		 
-		 btnAvatarSelected.notifyListeners(SWT.MouseDown,new Event() ); 
+		Controller.selectDynamicWindow(2); 
+		assertNotNull(Controller.getPeopleWindow()); 
+		dati = Controller.getPeopleWindow().getData();
+		
+		if(dati.containsKey("userSuggested"))
+		{
+			assertTrue( ((ArrayList<Composite>)  dati.get("userSuggested")).size() > 0); 
+		}
+		else
+		{
+			fail("no developers founded"); 
+		}
 		  
 	}
+	
 	@Test public void testCase2()
 	{
 		String psw = Controller.getCurrentUserPassword();
-		  dati = Controller.getHomeWindow().getData(); 
-		  Controller.setCurrentUserPassword("prova"); 
-		  dati.put("ID_action", "labelAvatar"); 
-		  dati.put("Event_type",SWT.MouseDown);
-		  new ActionHomePanel(dati);
-		  ChooseAvatar avatarWindow = (ChooseAvatar) dati.get("Avatar_Window"); 
-		  dati = avatarWindow.getData(); 
-		  Controller.setCurrentUserPassword(psw); 
-		  Button btnBack = (Button) dati.get("btnAvatarBack");
-		  assertNotNull( (Label) dati.get("noAvatarMessage"));
-		  assertEquals("There are no avatars available.", ( (Label) dati.get("noAvatarMessage")).getText());
-		  btnBack.notifyListeners(SWT.Selection,new Event() ); 
+		 Controller.setCurrentUserPassword("prova");
+		Controller.selectDynamicWindow(2); 
+		assertNotNull(Controller.getPeopleWindow()); 
+		dati = Controller.getPeopleWindow().getData();
+		
+		if(dati.containsKey("labelsuggestion"))
+		{
+			assertEquals("We have no suggestion for you.\n Please try again soon.", ((Label) dati.get("labelsuggestion")).getText()); 
+		}
+		else
+		{
+			fail("Test not passed"); 
+		}
+		
+		 
 	}
 	
 	@After

@@ -26,7 +26,7 @@ public class UnitTestUnFollow {
 	 * 1.Unfollow a developer identified by correct id
 	 * 2.Unfollow a developer identified by wrong id (-1) 
 	 * 
-	 * Note: For test the equivalence class number 1, the sistem select a random developer 
+	 * Note: For test the equivalence class number 1, the system select a random developer 
 	 * between followings developers. At the end of test the user selected will be follow. 
 	 * */
 	

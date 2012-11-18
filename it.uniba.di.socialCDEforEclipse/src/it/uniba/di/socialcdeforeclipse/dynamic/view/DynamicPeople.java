@@ -35,7 +35,10 @@ public class DynamicPeople implements Panel{
 	
 	
 	private ArrayList<Control> controlli;
-	  
+	private Label labelsuggestion = null;
+	private ArrayList<Composite> userSuggested = null;
+	private Label labelFollowings = null;
+	private ArrayList<Composite> userFollowings = null;
 	
 	 
 	
@@ -80,37 +83,37 @@ public class DynamicPeople implements Panel{
 		
 		
 		 
-		Label labelSuggestion = new Label(panel2, SWT.NONE); 
-		labelSuggestion.setText("Suggestions:"); 
-		labelSuggestion.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
+		Label labelSuggestionTitle = new Label(panel2, SWT.NONE); 
+		labelSuggestionTitle.setText("Suggestions:"); 
+		labelSuggestionTitle.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
 		grid = new GridData(); 
 		grid.horizontalSpan = 3; 
 		grid.grabExcessHorizontalSpace = true;
 		grid.horizontalAlignment = GridData.FILL; 
-		labelSuggestion.setLayoutData(grid); 
-		controlli.add(labelSuggestion);
+		labelSuggestionTitle.setLayoutData(grid); 
+		controlli.add(labelSuggestionTitle);
 		
 		WUser[] suggestion = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		//WUser[] suggestion = Controller.getProxy().GetFollowings(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 		if(suggestion.length == 0)
 		{
-			Label labelsuggestionText = new Label(panel2, SWT.WRAP); 
-			labelsuggestionText.setText("We have no suggestion for you.\n Please try again soon."); 
+			labelsuggestion = new Label(panel2, SWT.WRAP); 
+			labelsuggestion.setText("We have no suggestion for you.\n Please try again soon."); 
 			grid = new GridData(); 
 			grid.horizontalSpan = 3; 
 			grid.grabExcessHorizontalSpace = true;
 			grid.horizontalAlignment = GridData.FILL; 
 			 
 			
-			labelsuggestionText.setLayoutData(grid);
-			controlli.add(labelsuggestionText);
+			labelsuggestion.setLayoutData(grid);
+			controlli.add(labelsuggestion);
 			
 		}
 		else
 		{
 			System.out.println("Persone suggerite " + suggestion.length);
 			 
-			
+			userSuggested = new ArrayList<Composite>();
 			
 			for(int i=0;i< suggestion.length;i++)
 			{
@@ -154,6 +157,7 @@ public class DynamicPeople implements Panel{
 					}
 				});
 				controlli.add(compositeSuggestionUser); 
+				userSuggested.add(compositeSuggestionUser); 
 				
 				Label labelUserImage = new Label(compositeSuggestionUser, SWT.None); 
 				try {
@@ -200,31 +204,31 @@ public class DynamicPeople implements Panel{
 			
 		}
 		
-		Label labelFollowings = new Label(panel2, SWT.NONE); 
-		labelFollowings.setText("Followings:"); 
-		labelFollowings.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
+		Label labelFollowingsTitle = new Label(panel2, SWT.NONE); 
+		labelFollowingsTitle.setText("Followings:"); 
+		labelFollowingsTitle.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
 		grid = new GridData(); 
 		grid.horizontalSpan = 3; 
 		grid.grabExcessHorizontalSpace = true; 
 		grid.horizontalAlignment = GridData.FILL; 
-		labelFollowings.setLayoutData(grid); 
-		controlli.add(labelFollowings);
+		labelFollowingsTitle.setLayoutData(grid); 
+		controlli.add(labelFollowingsTitle);
 		
 		WUser[] following = Controller.getProxy().GetFollowings(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		
 		if(following.length == 0)
 		{
-			Label labelFollowingText = new Label(panel2, SWT.WRAP); 
-			labelFollowingText.setText("You are following no one."); 
+			labelFollowings = new Label(panel2, SWT.WRAP); 
+			labelFollowings.setText("You are following no one."); 
 			grid = new GridData(); 
 			grid.horizontalSpan = 3; 
-			labelFollowingText.setLayoutData(grid);
-			controlli.add(labelFollowingText);
+			labelFollowings.setLayoutData(grid);
+			controlli.add(labelFollowings);
 			
 		}
 		else
 		{
-			
+			userFollowings = new ArrayList<Composite>();
 			GridData grid2; 
 			
 			for(int i=0;i< following.length;i++)
@@ -271,6 +275,7 @@ public class DynamicPeople implements Panel{
 					}
 				});
 				controlli.add(compositeFollowingUser); 
+				userFollowings.add(compositeFollowingUser); 
 				
 				Label labelUserImage = new Label(compositeFollowingUser, SWT.None); 
 				try {
@@ -574,14 +579,35 @@ public class DynamicPeople implements Panel{
 		 controlli.get(i).dispose(); 
 			
 		}
-		panel.setLayout(null); 
+		//panel.setLayout(null); 
 		
 	}
 
 	@Override
 	public HashMap<String, Object> getData() {
 		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, Object> uiData = new HashMap<String, Object>();
+		
+		if(labelsuggestion != null)
+		{
+			uiData.put("labelsuggestionText", labelsuggestion); 
+		}
+		else
+		{
+			uiData.put("userSuggested", userSuggested); 
+		}
+		
+		if(labelFollowings != null)
+		{
+			uiData.put("labelFollowings", labelFollowings); 
+		}
+		else
+		{
+			uiData.put("userFollowings", userFollowings); 
+		}
+		
+		
+		return uiData;
 	}
 
 
