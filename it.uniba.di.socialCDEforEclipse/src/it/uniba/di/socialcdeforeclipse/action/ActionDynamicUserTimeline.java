@@ -17,7 +17,7 @@ import it.uniba.di.socialcdeforeclipse.popup.SettingServicePanel;
 import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
 import it.uniba.di.socialcdeforeclipse.shared.library.WPost;
 import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
-import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -212,7 +212,7 @@ public class ActionDynamicUserTimeline {
 					
 				}
 			});
-			
+			uiData.put("HideUserPanel", hideUserSetting); 
 			hideUserSetting.inizialize(Controller.getWindow()); 
 			 
 			break;

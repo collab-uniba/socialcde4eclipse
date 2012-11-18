@@ -34,7 +34,7 @@ import it.uniba.di.socialcdeforeclipse.shared.library.*;
 import it.uniba.di.socialcdeforeclipse.staticview.LoginPanel;
 import it.uniba.di.socialcdeforeclipse.staticview.ProfilePanel;
 import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
-import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 public class Controller {
 

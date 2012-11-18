@@ -17,7 +17,7 @@ import it.uniba.di.socialcdeforeclipse.popup.SkillsPanel;
 import it.uniba.di.socialcdeforeclipse.popup.TFSLogin;
 import it.uniba.di.socialcdeforeclipse.shared.library.WOAuthData;
 import it.uniba.di.socialcdeforeclipse.shared.library.WService;
-import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

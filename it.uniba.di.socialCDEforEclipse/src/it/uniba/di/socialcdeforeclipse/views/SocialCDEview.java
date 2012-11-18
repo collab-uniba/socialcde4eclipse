@@ -11,6 +11,7 @@ import java.util.Date;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.model.*;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 import it.uniba.di.socialcdeforeclipse.popup.PinPanel;
 
 import org.eclipse.jface.action.Action;

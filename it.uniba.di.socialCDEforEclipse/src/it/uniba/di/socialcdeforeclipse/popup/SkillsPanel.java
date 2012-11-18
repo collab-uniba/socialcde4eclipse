@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Text;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
-import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
+import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 public class SkillsPanel implements Panel {

@@ -35,9 +35,9 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.views.ButtonAvatar;
+import it.uniba.di.socialcdeforeclipse.object.ButtonAvatar;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
-import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 public class ChooseAvatar implements Panel {
 	private Shell shell;

@@ -2,7 +2,7 @@ package it.uniba.di.socialcdeforeclipse.action;
 
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;

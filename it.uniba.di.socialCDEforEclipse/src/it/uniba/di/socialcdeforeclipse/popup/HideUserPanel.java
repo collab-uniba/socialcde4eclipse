@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WHidden;
 import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
-import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
+import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 public class HideUserPanel implements Panel {
@@ -40,7 +40,11 @@ public class HideUserPanel implements Panel {
 	private Listener btnCancelListener; 
 	private Listener btnSaveListener; 
 	private HashMap<String, Button>	checkboxCreated; 
-	
+	private Button suggestionPermission; 
+	private Button iterationTimelinePermission; 
+	private Button interactiveTimelinePermission; 
+	private GeneralButton btnCancel; 
+	private GeneralButton btnSave; 
 	
 	private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
 
@@ -196,7 +200,7 @@ public class HideUserPanel implements Panel {
 			
 			
 				 
-				Button suggestionPermission = new Button(shell, SWT.CHECK);
+				suggestionPermission = new Button(shell, SWT.CHECK);
 				suggestionPermission.setText("Suggestions");
 				if (hiddenSetting.isSuggestions()) {
 					suggestionPermission.setSelection(true);
@@ -204,7 +208,7 @@ public class HideUserPanel implements Panel {
 				}
 				checkboxCreated.put("suggestion", suggestionPermission);
 				
-				Button iterationTimelinePermission = new Button(shell, SWT.CHECK); 
+				iterationTimelinePermission = new Button(shell, SWT.CHECK); 
 				iterationTimelinePermission.setText("Iteration Timeline"); 
 				if(hiddenSetting.isInteractive())
 				{
@@ -212,7 +216,7 @@ public class HideUserPanel implements Panel {
 				}
 				checkboxCreated.put("iteration", iterationTimelinePermission); 
 				
-				Button interactiveTimelinePermission = new Button(shell, SWT.CHECK); 
+				interactiveTimelinePermission = new Button(shell, SWT.CHECK); 
 				interactiveTimelinePermission.setText("Interactive Timeline"); 
 				if(hiddenSetting.isInteractive())
 				{
@@ -226,7 +230,7 @@ public class HideUserPanel implements Panel {
 				gridData.verticalSpan = 2; 
 				labelhidden.setLayoutData(gridData); 
 				
-				GeneralButton btnCancel = new GeneralButton(shell, SWT.None); 
+				btnCancel = new GeneralButton(shell, SWT.None); 
 				btnCancel.setText("Cancel"); 
 				btnCancel.setWidth(90);
 				btnCancel.setHeight(30); 
@@ -239,7 +243,7 @@ public class HideUserPanel implements Panel {
 				btnCancel.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
 				btnCancel.addListener(SWT.Selection, btnCancelListener);
 				
-				GeneralButton btnSave = new GeneralButton(shell, SWT.None); 
+				btnSave = new GeneralButton(shell, SWT.None); 
 				btnSave.setText("Save"); 
 				btnSave.setWidth(90);
 				btnSave.setHeight(30); 
@@ -293,7 +297,14 @@ public class HideUserPanel implements Panel {
 	@Override
 	public HashMap<String, Object> getData() {
 		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, Object> uidata = new HashMap<String, Object>();
+		uidata.put("suggestionPermission", suggestionPermission); 
+		uidata.put("iterationTimelinePermission", iterationTimelinePermission); 
+		uidata.put("interactiveTimelinePermission", interactiveTimelinePermission); 
+		uidata.put("btnCancel", btnCancel); 
+		uidata.put("btnSave", btnSave); 
+		
+		return uidata;
 	}
 
 }

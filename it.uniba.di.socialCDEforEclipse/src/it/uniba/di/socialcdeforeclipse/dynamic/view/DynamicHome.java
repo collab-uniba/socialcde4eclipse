@@ -6,7 +6,7 @@ import it.uniba.di.socialcdeforeclipse.action.ActionProfile;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
-import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 import java.io.IOException;
 import java.io.InputStream;

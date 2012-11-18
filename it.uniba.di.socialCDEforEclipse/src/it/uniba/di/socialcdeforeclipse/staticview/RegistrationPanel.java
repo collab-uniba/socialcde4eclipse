@@ -2,7 +2,7 @@ package it.uniba.di.socialcdeforeclipse.staticview;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
+import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.io.InputStream;

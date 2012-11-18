@@ -14,9 +14,9 @@ import java.util.HashMap;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.*;
-import it.uniba.di.socialcdeforeclipse.views.GeneralButton;
+import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
-import it.uniba.di.socialcdeforeclipse.views.SquareButtonService;
+import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;

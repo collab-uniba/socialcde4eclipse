@@ -16,7 +16,7 @@ import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.popup.ChooseAvatar;
 import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
-import it.uniba.di.socialcdeforeclipse.views.ButtonAvatar;
+import it.uniba.di.socialcdeforeclipse.object.ButtonAvatar;
 
 import org.eclipse.ui.PlatformUI;
 import org.jdom2.Document;
