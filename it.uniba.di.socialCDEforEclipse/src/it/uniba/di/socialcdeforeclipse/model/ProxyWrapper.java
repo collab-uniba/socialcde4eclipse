@@ -798,7 +798,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				conn.setUseCaches(false);
 				conn.setAllowUserInteraction(false);
 				conn.setRequestProperty("Content-Type", "application/json");
-
+			
 				// Create the form content
 				OutputStream out = conn.getOutputStream();
 				Writer writer = new OutputStreamWriter(out, "UTF-8");
@@ -811,7 +811,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				System.out.println("Content type " + conn.getContentType());
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
-							conn.getInputStream());
+							conn.getInputStream(),"UTF-8");
 					BufferedReader br = new BufferedReader(in);
 					String output;
 					String result = "";

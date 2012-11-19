@@ -135,7 +135,7 @@ public class DynamicUserTimeline implements Panel {
 	public void inizialize(final Composite panel) {
 		// TODO Auto-generated method stub
 		GridData gridData; 
-		WUser userSelected = (WUser) Controller.temporaryInformation.get("User_selected"); 
+		WUser userSelected =  Controller.getProxy().GetColleagueProfile(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ((WUser) Controller.temporaryInformation.get("User_selected")).Id) ; 
 		 azioni = new ActionGeneral();
 		controlli = new ArrayList<Control>();
 		
@@ -325,7 +325,7 @@ public class DynamicUserTimeline implements Panel {
 		
 		System.out.println("Post ottenuti " + posts.length); 
 
-		userPostMaster = new Composite(panel, SWT.BORDER); 
+		userPostMaster = new Composite(panel, SWT.None); 
 		userPostMaster.setLayout(new GridLayout(1,false)); 
 		gridData = new GridData(); 
 		gridData.horizontalSpan = 4;

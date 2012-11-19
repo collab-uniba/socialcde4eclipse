@@ -14,10 +14,10 @@ public class ActionDynamicPeople {
 		
 		switch (widgetName) {
 		case "User_selected":
-			Controller.temporaryInformation.put("User_selected", widget.getData("User_data")); 
+			Controller.temporaryInformation.put("User_selected",(WUser) widget.getData("User_data")); 
 			Controller.temporaryInformation.put("User_type", widget.getData("User_type"));
 			WUser utente = (WUser)  widget.getData("User_data"); 
-			System.out.println("Info utente" + utente.getStatuses() + " following " + utente.getFollowings() + "followers" + utente.getFollowers()); 
+			System.out.println("Info utente" + utente.getStatuses() + " following " + utente.getFollowings() + "followers" + utente.getFollowers() + " id " + utente.Id); 
 			Controller.selectDynamicWindow(3); 
 			break;
 		
