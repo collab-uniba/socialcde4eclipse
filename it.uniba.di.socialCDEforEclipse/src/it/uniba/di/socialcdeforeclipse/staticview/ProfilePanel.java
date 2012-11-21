@@ -149,6 +149,7 @@ public class ProfilePanel implements Panel{
 		labelHomeTimeline.setImage(get_ImageStream(PATH_HOME)); 
 		labelHomeTimeline.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
 		labelHomeTimeline.setToolTipText("Home Timeline"); 
+		labelHomeTimeline.setData("ID_action", "labelHomeTimeline");
 		
 		controlli.add(labelHomeTimeline); 
 		
@@ -191,6 +192,7 @@ public class ProfilePanel implements Panel{
 		
 		//panel.addListener(SWT.Resize, azioni); 
 		labelAvatarProfile.addListener(SWT.MouseDown, azioni); 
+		labelHomeTimeline.addListener(SWT.MouseDown, azioni); 
 		labelLogout.addListener(SWT.MouseDown, azioni); 
 		labelPeople.addListener(SWT.MouseDown, azioni); 
 		

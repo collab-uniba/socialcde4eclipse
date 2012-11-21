@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 
 
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicHome;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicHomeTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicInteractionTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicInteractiveTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicPeople;
@@ -68,6 +69,8 @@ public class Controller {
 	
 	private static DynamicInteractiveTimeline interactiveTimelineWindow = null;
 	
+	private static DynamicHomeTimeline homeTimelineWindow = null;
+	
 	private static DynamicPeople peopleWindow = null;
 	
 	private static SettingPanel settingWindow = null;
@@ -91,6 +94,18 @@ public class Controller {
 	}
 	
 	
+
+	public static DynamicHomeTimeline getHomeTimelineWindow() {
+		return homeTimelineWindow;
+	}
+
+
+
+	public static void setHomeTimelineWindow(DynamicHomeTimeline homeTimelineWindow) {
+		Controller.homeTimelineWindow = homeTimelineWindow;
+	}
+
+
 
 	public static int getProgressBarPositionX() {
 		return progressBarPositionX;
@@ -268,6 +283,12 @@ public class Controller {
 		{
 			dynamicUserWindow.dispose(Controller.getProfilePanel().getComposite_dinamic());
 			dynamicUserWindow = null;
+		}
+		
+		if(homeTimelineWindow != null)
+		{
+			homeTimelineWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
+			homeTimelineWindow = null; 
 		}
 		
 		
@@ -484,6 +505,46 @@ public class Controller {
 			Controller.getWindow().layout(); 
 			
 			break;
+			
+		case 4:
+			
+			homeTimelineWindow = new DynamicHomeTimeline(); 
+			
+			if(Controller.getProfilePanel().getComposite_dinamic() == null)
+			{
+			 dynamicComposite = new Composite(getWindow(),SWT.None); 
+			
+			gridData = new GridData(); 
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.horizontalAlignment = GridData.FILL; 
+			gridData.grabExcessVerticalSpace = true; 
+			gridData.verticalAlignment = GridData.FILL;
+			dynamicComposite.setLayoutData(gridData);
+			
+			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
+			}
+			else
+			{
+				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
+				dynamicComposite = new Composite(getWindow(),SWT.None); 
+				 
+				
+				gridData = new GridData(); 
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = GridData.FILL;
+				gridData.grabExcessVerticalSpace = true; 
+				gridData.verticalAlignment = GridData.FILL; 
+				dynamicComposite.setLayoutData(gridData); 
+				
+				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+			}
+			
+			homeTimelineWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic()); 
+			pbWindow.setStop(1); 
+			//Controller.getWindow().getLayout(); 
+			break;
+			
 			default:
 				break;
 		}

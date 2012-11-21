@@ -29,6 +29,7 @@ public class ActionGeneral implements Listener  {
 		widgetProfile.add("labelAvatarProfile"); 
 		widgetProfile.add("labelLogout");
 		widgetProfile.add("labelPeople"); 
+		widgetProfile.add("labelHomeTimeline");
 		Widget widget =  event.widget;
 		System.out.println("Window name " + Controller.getWindowName()); 
 		switch (Controller.getWindowName()) {
@@ -98,6 +99,20 @@ public class ActionGeneral implements Listener  {
 					uiData.put("Event_type", event.type); 
 					uiData.put("ID_action", widget.getData("ID_action").toString()); 
 					new ActionDynamicUserTimeline(uiData); 
+				}
+				break;
+			case "homeTimeline":
+				if(widgetProfile.contains(widget.getData("ID_action").toString()))
+				{
+					new ActionProfile(widget, event); 
+				}
+				else
+				{
+					uiData = Controller.getHomeTimelineWindow().getData(); 
+					uiData.put("Event", event); 
+					uiData.put("Event_type", event.type); 
+					uiData.put("ID_action", widget.getData("ID_action").toString()); 
+					new ActionHomeTimeline(uiData); 
 				}
 				break;
 		}

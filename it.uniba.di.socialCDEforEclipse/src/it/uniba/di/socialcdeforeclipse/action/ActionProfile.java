@@ -81,7 +81,12 @@ public class ActionProfile {
 			}
 			
 			break;
-		
+		case "labelHomeTimeline":
+			if(event.type == SWT.MouseDown){
+				Controller.selectDynamicWindow(4); 
+				Controller.getWindow().layout(); 
+			}
+			break;
 		default:
 			break;
 			

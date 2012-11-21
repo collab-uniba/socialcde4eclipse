@@ -733,7 +733,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		 wpost = new WPost[2];
 		
 		 try {
-				URL url = new URL(host +"/GetStaticTimeline");
+				URL url = new URL(host +"/GetHomeTimeline");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("POST");
 				conn.setDoOutput(true);
@@ -764,9 +764,23 @@ public class ProxyWrapper implements ISocialTFSProxy{
 					}
 					br.close();
 					
-					wpost = new WPost[countOccurrences(result,'{')];
-					Gson gson = new Gson();
+					if(result.equals("[]"))
+					{
+						wpost = null;
+					}
+					else
+					{
+						int num = countOccurrences(result,'{'); 
+						wpost = new WPost[countOccurrences(result,'{')];
+						Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, new JsonDateDeserializer()).create();
 					wpost =  gson.fromJson(result,WPost[].class);
+					}
+					
+					
+				}
+				else
+				{
+					wpost = null;
 				}
 
 				conn.disconnect();
@@ -998,7 +1012,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 		}
 		
-		if(result == "true")
+		if(result.equals("true"))
 		{
 			
 			return true;

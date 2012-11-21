@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.junit.Test.None;
 
+import it.uniba.di.socialcdeforeclipse.action.ActionDynamicUserTimeline;
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WPost;
@@ -59,7 +60,7 @@ public class DynamicUserTimeline implements Panel {
 	private Link otherPostAvailable; 
 	 
 	private static long firstPostId = 0; 
-	private static long lastPostId = 0; 
+	
 	
 	
 	private final InputStream PATH_SKILLS = this.getClass().getClassLoader().getResourceAsStream("images/skills.png");
@@ -347,7 +348,7 @@ public class DynamicUserTimeline implements Panel {
 		
 		
 		firstPostId = 0; 
-		
+		ActionDynamicUserTimeline.setLastId(0); 
 		
 		for(int i=0;i< posts.length; i++)
 		{
@@ -471,7 +472,7 @@ public class DynamicUserTimeline implements Panel {
 			messageDate.setLayoutData(gridData); 
 			
 			
-			lastPostId = posts[i].Id;
+			ActionDynamicUserTimeline.setLastId(posts[i].Id);
 		}
 		
 		otherPostWarning = new Composite(panel, SWT.None); 
@@ -482,7 +483,7 @@ public class DynamicUserTimeline implements Panel {
 		gridData.horizontalAlignment = GridData.FILL; 
 		otherPostWarning.setLayoutData(gridData);
 		
-		WPost[] newPost = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), userSelected.Username,lastPostId,0);
+		WPost[] newPost = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), userSelected.Username,ActionDynamicUserTimeline.getLastId(),0);
 		
 		if(newPost == null)
 		{
@@ -554,7 +555,7 @@ public class DynamicUserTimeline implements Panel {
 		uiData.put("action",azioni); 
 		uiData.put("otherPostAvailable", otherPostAvailable);
 		uiData.put("firstPostId", firstPostId);
-		uiData.put("lastPostId", lastPostId);
+		
 		
 		if(userType == "Suggested" || userType == "Followers" || userType == "Hidden")
 		{

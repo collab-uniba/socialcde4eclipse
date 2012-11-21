@@ -40,8 +40,18 @@ import org.eclipse.swt.widgets.Widget;
 
 public class ActionDynamicUserTimeline {
 
+	
+	private static long lastId; 
 	private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
 	
+	public static long getLastId() {
+		return lastId;
+	}
+
+	public static void setLastId(long lastId) {
+		ActionDynamicUserTimeline.lastId = lastId;
+	}
+
 	public Image get_ImageStream(InputStream stream)
 	{
 		return  new Image(Controller.getWindow().getDisplay(),stream); 
@@ -218,17 +228,17 @@ public class ActionDynamicUserTimeline {
 			break;
 		case "otherPostAvailable":
 			
-			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  uiData.get("userPostMaster")).getChildren().length); 
+			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  uiData.get("userPostMaster")).getChildren().length + " lastid  " + getLastId()); 
 			 
 			
 			 
-			 WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ( (WUser) uiData.get("userSelected") ).Username,((long)  uiData.get("lastPostId")),0);
+			 WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ( (WUser) uiData.get("userSelected") ).Username,0,getLastId());
 			 
-			 
+			 System.out.println("getLastId inizio " + getLastId());
 			 System.out.println("number post " +  posts.length); 
 			 
 			 
-			 uiData.put("firstPostId", uiData.get("lastPostId")); 
+			 
 				
 				
 				for(int i=0;i< posts.length; i++)
@@ -354,15 +364,16 @@ public class ActionDynamicUserTimeline {
 					messageDate.setLayoutData(gridData); 
 					
 					
-				 uiData.put("lastPostId",posts[i].Id);
+				  setLastId(posts[i].Id);
+				  System.out.println("getLastId aggiornamento " + getLastId());
 				}
 				System.out.println("Altezza impostata " + Controller.getWindowHeight() + (150 * ((Composite)  uiData.get("userPostMaster")).getChildren().length) ); 
 				Controller.setScrollHeight(Controller.getWindowHeight() + (250 * ((Composite)  uiData.get("userPostMaster")).getChildren().length)  );
 				((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
 
-				 WPost[] newPosts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ( (WUser) uiData.get("userSelected") ).Username,((long)  uiData.get("lastPostId")),0);
-				 System.out.println("Nuovi post disponibili " + newPosts.length);
-			if( newPosts.length == 0)
+				 WPost[] newPosts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ( (WUser) uiData.get("userSelected") ).Username,0,getLastId());
+				 
+			if( newPosts == null || newPosts.length == 0)
 			{
 				System.out.println("Other post 0 rilevato"); 
 				((Link)  uiData.get("otherPostAvailable")).setVisible(false);
