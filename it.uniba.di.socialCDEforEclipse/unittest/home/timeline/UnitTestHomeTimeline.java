@@ -23,8 +23,9 @@ public class UnitTestHomeTimeline extends TestCase {
 	 * 
 	 * Equivalence classes considered: 
 	 * 1.Current user have static friend.
-	 * 2. Current user have not static friend.
-	 * 
+	 * 2.Current user have not static friend.
+	 * 3.Current user can send a post.
+	 * 4.Current user can't send a post. 
 	 * Note: By default, current user have static friend.  
 	 * 
 	 * */
@@ -72,8 +73,18 @@ public class UnitTestHomeTimeline extends TestCase {
 		assertNull(posts); 
 	}
 	
+	@Test
+	public void testCase3()
+	{
+		assertTrue(Controller.getProxy().Post(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), "unit test message")); 
+	}
 	
-	
+	@Test
+	public void testCase4()
+	{
+		Controller.setCurrentUserPassword("try1"); 
+		assertFalse(Controller.getProxy().Post(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), "unit test message")); 
+	}
 	
 	@After
 	public void tearDown() {

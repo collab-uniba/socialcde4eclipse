@@ -294,8 +294,9 @@ public class ActionHomeTimeline {
 			
 			if(!InterceptingFilter.verifyText( ((Text) uiData.get("textMessage") ).getText()))
 			{
+				uiData.put("alert", "message empty");
 				MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
-		        messageBox2.setMessage("Something was wrong, please try again.");
+		        messageBox2.setMessage("The message is empty, please try again.");
 		        messageBox2.setText("SocialCDEforEclipse Message");
 		        messageBox2.open();
 			}
@@ -305,6 +306,7 @@ public class ActionHomeTimeline {
 			
 			if(!Controller.getProxy().Post(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), userMessage))
 			{
+				uiData.put("alert", "connection problem");
 				MessageBox messageBox2 = new MessageBox(Controller.getWindow().getShell(), SWT.ICON_ERROR  | SWT.OK);
 		        messageBox2.setMessage("Something was wrong, please try again.");
 		        messageBox2.setText("SocialCDEforEclipse Message");
@@ -312,6 +314,7 @@ public class ActionHomeTimeline {
 			}
 			else
 			{
+				uiData.put("alert","");
 			Composite userPostComposite = new Composite(((Composite)  uiData.get("userPostMaster")), SWT.BORDER);
 			userPostComposite.setLayout(new GridLayout(2, false)); 
 			userPostComposite.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
