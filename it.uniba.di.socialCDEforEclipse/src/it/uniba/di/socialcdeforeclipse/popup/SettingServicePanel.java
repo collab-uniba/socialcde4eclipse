@@ -221,7 +221,7 @@ public class SettingServicePanel implements Panel {
 		    });
 
 	
-		System.out.println("Dimensioni btnImgService " + imgService.getBounds()); 
+		 
 		
 		gridData = new GridData();
 		gridData.verticalSpan = 4;

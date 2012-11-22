@@ -77,13 +77,7 @@ public class ActionLoginPanel {
 			break;
 		case "btnLogin":
 			if(type == SWT.Selection)	{
-				System.out.println("------------------------------");
-			    System.out.println("getBounds: " + Controller.getWindow().getBounds());
-			    System.out.println("getLocation: " + Controller.getWindow().getLocation());
-			    System.out.println("getSize: " + Controller.getWindow().getSize());
-			    System.out.println("to display " + Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y));
-			    System.out.println("label: " + ((Label) uiData.get("labelAlert")).getLocation());
-			    pbWindow = new ProgressBarThread(); 
+				pbWindow = new ProgressBarThread(); 
 				pbWindow.setLabelTxt("Login in progress..");
 				Controller.setProgressBarPositionX(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 				Controller.setProgressBarPositionY(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
@@ -92,7 +86,7 @@ public class ActionLoginPanel {
 				 pbWindow.setxCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x + (Controller.getWindow().getBounds().width - 300) / 2); 
 				 pbWindow.setyCoordinateWithOffset(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y + (Controller.getWindow().getBounds().height - 200) / 2);
 				 pbWindow.start();  
-				System.out.println("step 1");
+				
 			    
 			    
 			        	if(Controller.getProxy() == null)	{
@@ -102,7 +96,7 @@ public class ActionLoginPanel {
 							Controller.getProxy().setHost(((Text) uiData.get("txtProxyHost")).getText());
 						}
 							if(Controller.getProxy().IsWebServiceRunning())  {
-								System.out.println("step 2");
+								
 								user = Controller.getProxy().GetUser(((Text) uiData.get("txtUsername")).getText(), ((Text) uiData.get("txtPassword")).getText()); 
 								
 								if(user == null)  {
@@ -147,7 +141,7 @@ public class ActionLoginPanel {
 										Controller.setPreferences("Autologin", "False"); 
 										Controller.setPreferences("FlagAutologin", "False");
 									}
-									System.out.println("Utente corretto!"); 
+									
 									Controller.setCurrentUser(user); 
 									Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
 									Controller.setPreferences("ProxyRoot", ((Text) uiData.get("txtProxyHost")).getText());
@@ -200,7 +194,7 @@ public class ActionLoginPanel {
 			try {
 			if(type == SWT.Paint)
 			{
-				System.out.println("Evento paint label attivato");
+				
 				
 					
 				
@@ -216,7 +210,7 @@ public class ActionLoginPanel {
 							Controller.setProgressBarPositionX(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 							Controller.setProgressBarPositionY(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
 						 pbWindow.start();  
-						System.out.println("step 1");
+						
 					    
 					    
 					        	if(Controller.getProxy() == null)	{
@@ -261,7 +255,7 @@ public class ActionLoginPanel {
 											if(((Button) uiData.get("chkAutologin")).getSelection())	{
 												Controller.setPreferences("Autologin", "True"); 
 											}
-											System.out.println("Utente corretto!"); 
+											
 											Controller.setCurrentUser(user); 
 											Controller.setPreferences("ProxyHost", Controller.getProxy().getHost());
 											Controller.setPreferences("ProxyRoot", ((Text) uiData.get("txtProxyHost")).getText());

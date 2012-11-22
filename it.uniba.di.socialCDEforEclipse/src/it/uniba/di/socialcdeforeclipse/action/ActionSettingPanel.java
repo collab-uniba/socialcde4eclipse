@@ -18,7 +18,7 @@ public class ActionSettingPanel {
 			
 		case "SettingBtnOk":
 			if(event.type == SWT.Selection){
-				System.out.println("Azione setting avviata"); 
+				 
 				if(!Controller.getCurrentUserPassword().equals(Controller.getSettingWindow().getTxtOldPassword().getText()))
 				{
 					

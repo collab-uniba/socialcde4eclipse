@@ -94,7 +94,7 @@ public class LoginPanel implements Panel{
 		panel.setLayout(layout);
 		//panel.setData("ID_action","loginPanel"); 
 		//panel.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),100,100)); 
-		System.out.println("larghezza " + Controller.getWindowWidth() + " altezza " + Controller.getWindowHeight() );  
+		  
 		
 		labelLogin = new Label(panel, SWT.FILL);
 		labelLogin.setText("Login" );
@@ -268,7 +268,7 @@ public class LoginPanel implements Panel{
 		
 		 panel.setTabList(new Control[] { txtProxyHost, txtUsername, txtPassword, btnLogin , chkAutologin , chkSavePassword });	
 		 
-		 System.out.println("Controlli " + panel.getChildren().length); 
+		 
 		
 		txtProxyHost.addTraverseListener(new TraverseListener() {
 			
@@ -321,7 +321,7 @@ public class LoginPanel implements Panel{
 	
 		for(int i=0; i < controlli.size();i++)
 		{
-		System.out.println("Pos "+ i + " controllo " + controlli.get(i));
+		
 		 controlli.get(i).dispose(); 
 			
 		}

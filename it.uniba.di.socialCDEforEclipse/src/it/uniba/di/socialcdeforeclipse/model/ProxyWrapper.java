@@ -36,7 +36,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 	public void setHost(String host) {
 		ProxyWrapper.host = host + "/SocialTFSProxy.svc";
-		System.out.println("Host impostato " + ProxyWrapper.host); 
+	 
 	}
 
 	
@@ -66,26 +66,24 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		
 		String output = "";
 		try {
-	       	System.out.println("Username di controllo " + username);  
+	         
      		URL url = new URL( host + "/IsAvailable?username="+ username);
      		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
      		conn.setRequestMethod("GET");
      		conn.setRequestProperty("Accept", "application/json");
      		int status = conn.getResponseCode(); 
-     		System.out.println("RESPONSE CODE " + status ); 
-     		System.out.println("Content type " + conn.getContentType()); 
+     		
      		
      		if(status >= 200 && status <=299 )
      		{
      			InputStreamReader in = new InputStreamReader(conn.getInputStream());
      			BufferedReader br = new BufferedReader(in);
      			output = br.readLine();
-     			System.out.println("Risultato available " + output); 
+     			
      		}
  		} catch(Exception e)
  		{
- 			System.out.println("Eccezione lanciata!");
- 			System.out.println(e.toString()); 
+ 			
  			return false;
  		}
 		
@@ -97,13 +95,13 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		if(output.equals("true"))
 		{
 			
-			System.out.println("Risultato positivo"); 
+			
 				return true;
 				
 		}
 		else
 		{
-			System.out.println("Risultato negativo"); 
+			 
 				return false; 
 		}
 		
@@ -120,37 +118,35 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		try {
 	       	 
      		URL url = new URL( host + "/IsWebServiceRunning");
-     		System.out.println(host + "/IsWebServiceRunning"); 
+     		 
      		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
      		conn.setRequestMethod("GET");
      		conn.setRequestProperty("Accept", "application/json");
      		int status = conn.getResponseCode(); 
-     		System.out.println("RESPONSE CODE " + status ); 
-     		System.out.println("Content type " + conn.getContentType()); 
+     	
      		
      		if(status >= 200 && status <=299 )
      		{
      			InputStreamReader in = new InputStreamReader(conn.getInputStream());
      			BufferedReader br = new BufferedReader(in);
      			output = br.readLine();
-     			System.out.println("output " + output); 
+     		
      		}
  		} catch(Exception e)
  		{
- 			System.out.println("Eccezione lanciata!");
- 			System.out.println(e.toString()); 
+ 			
  			return false;
  		}
 		
 				
 		if(output.equals("true"))
 		{
-			System.out.println("Servizi online!");
+			
 				return true;
 		}
 		else
 		{
-			System.out.println("Servizi offline!"); 
+			
 				return false; 
 		}
 		
@@ -177,8 +173,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -239,12 +234,11 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			OutputStream out = conn.getOutputStream();
 			Writer writer = new OutputStreamWriter(out, "UTF-8");
 			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"serviceInstanceId\":\"" + serviceInstanceId + "\" , \"chosenFeatures\" : " + features +  "}");
-			System.out.println("Feature selezionate { \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"serviceInstanceId\":\"" + serviceInstanceId + "\" , \"chosenFeatures\" : " + features +  "}" ); 
+			//System.out.println("Feature selezionate { \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"serviceInstanceId\":\"" + serviceInstanceId + "\" , \"chosenFeatures\" : " + features +  "}" ); 
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -300,8 +294,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -359,8 +352,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
-				System.out.println("RESPONSE CODE " + status);
-				System.out.println("Content type " + conn.getContentType());
+				
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
 							conn.getInputStream());
@@ -409,8 +401,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -459,8 +450,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -509,8 +499,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -554,7 +543,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		String result = "";
 		try {
 			URL url = new URL(host +"/Authorize");
-			System.out.println("URL autorizzazione " + host +"/Authorize"); 
+			 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
@@ -567,12 +556,11 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			OutputStream out = conn.getOutputStream();
 			Writer writer = new OutputStreamWriter(out, "UTF-8");
 			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"service\":\"" + service + "\", \"verifier\":\"" + verifier + "\", \"accessToken\": \"" + accessToken + "\", \"accessSecret\":\""+accessSecret + "\"}");
-			System.out.println("Verifica " + "{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"service\":\"" + service + "\", \"verifier\":\"" + verifier + "\", \"accessToken\": \"" + accessToken + "\", \"accessSecret\":\""+accessSecret + "\"}" ); 
+			 
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -581,7 +569,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				
 				while ((output = br.readLine()) != null) {
 					result += output;
-					System.out.println(" Result interno " + result);
+				
 				}
 				br.close();
 				
@@ -593,7 +581,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			return  false;
 
 		}
-		System.out.println(" Result esterno " + result);
+		
 		if(result.equals("true"))
 		{
 			
@@ -613,7 +601,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		try {
 			URL url = new URL(host +"/RecordService");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			System.out.println("Record service path "  + url.toString()); 
+			 
 			
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
@@ -626,12 +614,11 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			OutputStream out = conn.getOutputStream();
 			Writer writer = new OutputStreamWriter(out, "UTF-8");
 			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"service\":\"" + service + "\", \"usernameOnService\":\"" + usernameOnService + "\", \"passwordOnService\": \"" + passwordOnService + "\", \"domain\":\""+ domain + "\"}");
-			System.out.println("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"service\":\"" + service + "\", \"usernameOnService\":\"" + usernameOnService + "\", \"passwordOnService\": \"" + passwordOnService + "\", \"domain\":\""+ domain + "\"}");
+			
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -686,8 +673,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -750,8 +736,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
-				System.out.println("RESPONSE CODE " + status);
-				System.out.println("Content type " + conn.getContentType());
+				
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
 							conn.getInputStream());
@@ -804,7 +789,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		
 		 try {
 				URL url = new URL(host +"/GetUserTimeline");
-				System.out.println("Stringa conn " + host +"/GetUserTimeline"); 
+				 
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("POST");
 				conn.setDoOutput(true);
@@ -817,12 +802,11 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				OutputStream out = conn.getOutputStream();
 				Writer writer = new OutputStreamWriter(out, "UTF-8");
 				writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"ownerName\":\""+ ownerName + "\" , \"since\":\"" + since + "\" , \"to\":\"" + to  + "\"}");
-				System.out.println(" parametri " + "{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"ownerName\":\""+ ownerName + "\" , \"since\":\"" + since + "\" , \"to\":\"" + to  + "\"}"); 
+				 
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
-				System.out.println("RESPONSE CODE " + status);
-				System.out.println("Content type " + conn.getContentType());
+				
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
 							conn.getInputStream(),"UTF-8");
@@ -834,8 +818,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 					}
 					br.close();
-					System.out.println("risultato " + result);
-					System.out.println("occorrences " + countOccurrences(result, '{')); 
+				
 					wpost = new WPost[countOccurrences(result,'{')];
 					Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, new JsonDateDeserializer()).create();
 					wpost =  gson.fromJson(result,WPost[].class);
@@ -884,8 +867,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
-				System.out.println("RESPONSE CODE " + status);
-				System.out.println("Content type " + conn.getContentType());
+				
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
 							conn.getInputStream());
@@ -940,8 +922,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
-				System.out.println("RESPONSE CODE " + status);
-				System.out.println("Content type " + conn.getContentType());
+				
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
 							conn.getInputStream());
@@ -989,8 +970,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1048,8 +1028,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
-				System.out.println("RESPONSE CODE " + status);
-				System.out.println("Content type " + conn.getContentType());
+			
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
 							conn.getInputStream());
@@ -1094,7 +1073,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		String result = "";
 		try {
 			URL url = new URL(host +"/UnFollow");
-			System.out.println("Request " + host +"/UnFollow");
+			
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
@@ -1107,12 +1086,11 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			OutputStream out = conn.getOutputStream();
 			Writer writer = new OutputStreamWriter(out, "UTF-8");
 			writer.write("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"followId\":\"" + followId  + "\"}");
-			System.out.println("{ \"username\":\""+ username +"\", \"password\":\""+ password +"\" , \"followId\":\"" + followId  + "\"}"); 
+		 
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1133,7 +1111,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			return  false;
 
 		}
-		System.out.println("Risultato " + result); 
+		 
 		if(result.equals("true"))
 		{
 			
@@ -1151,7 +1129,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		
 		try {
 			URL url = new URL(host +"/GetFollowings");
-			System.out.println("Request " + host +"/GetFollowings"); 
+			 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
@@ -1168,8 +1146,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1181,7 +1158,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 
 				}
 				br.close();
-				System.out.println("Following result " + result); 
+				 
 				Gson gson = new Gson();
 				wuser = new WUser[countOccurrences(result, '{')];
 				wuser = gson.fromJson(result, WUser[].class);
@@ -1222,8 +1199,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1273,8 +1249,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1323,8 +1298,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1373,8 +1347,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1423,8 +1396,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+		
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1470,8 +1442,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1527,8 +1498,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 				writer.close();
 				out.close();
 				int status = conn.getResponseCode();
-				System.out.println("RESPONSE CODE " + status);
-				System.out.println("Content type " + conn.getContentType());
+			
 				if (status >= 200 && status <= 299) {
 					InputStreamReader in = new InputStreamReader(
 							conn.getInputStream());
@@ -1562,7 +1532,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 		
 		try {
 			URL url = new URL(host +"/GetAvailableAvatars");
-			System.out.println("Reguest avatar " + host +"/GetAvailableAvatars");
+			
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
@@ -1579,8 +1549,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1628,8 +1597,7 @@ public class ProxyWrapper implements ISocialTFSProxy{
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-			System.out.println("RESPONSE CODE " + status);
-			System.out.println("Content type " + conn.getContentType());
+			
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());

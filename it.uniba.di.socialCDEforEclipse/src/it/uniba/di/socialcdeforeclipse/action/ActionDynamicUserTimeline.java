@@ -86,11 +86,11 @@ public class ActionDynamicUserTimeline {
 			
 		case "labelFollow":
 			 
-			System.out.println(" Follow chiamato");
+			
 			if(Controller.getProxy().Follow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user_selected.Id))
 			{
 				uiData.put("error", false);
-				System.out.println("Follow riuscito"); 
+				 
 			  Label	labelUnfollow = new Label(((Label) uiData.get("labelFollow")).getParent()  ,SWT.RIGHT); 
 				labelUnfollow.setImage(Controller.getDynamicUserWindow().get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/UnFollow.png")));
 				labelUnfollow.setCursor( new Cursor(Display.getCurrent(), SWT.CURSOR_HAND)); 
@@ -121,11 +121,11 @@ public class ActionDynamicUserTimeline {
 			
 		case "labelUnfollow":
 		
-			System.out.println(" Unfollow chiamato");
+			
 			if(Controller.getProxy().UnFollow(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user_selected.Id))
 			{
 				uiData.put("error", false);
-				System.out.println("unFollow riuscito"); 
+				 
 				Label labelFollow = new Label(((Label) uiData.get("labelFollow")).getParent(),SWT.RIGHT); 
 				labelFollow.setImage(Controller.getDynamicUserWindow().get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Follow.png")));
 				labelFollow.setCursor( new Cursor(Display.getCurrent(), SWT.CURSOR_HAND)); 
@@ -228,14 +228,14 @@ public class ActionDynamicUserTimeline {
 			break;
 		case "otherPostAvailable":
 			
-			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  uiData.get("userPostMaster")).getChildren().length + " lastid  " + getLastId()); 
+			 
 			 
 			
 			 
 			 WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ( (WUser) uiData.get("userSelected") ).Username,0,getLastId());
 			 
-			 System.out.println("getLastId inizio " + getLastId());
-			 System.out.println("number post " +  posts.length); 
+			
+			 
 			 
 			 
 			 
@@ -365,9 +365,9 @@ public class ActionDynamicUserTimeline {
 					
 					
 				  setLastId(posts[i].Id);
-				  System.out.println("getLastId aggiornamento " + getLastId());
+				 
 				}
-				System.out.println("Altezza impostata " + Controller.getWindowHeight() + (150 * ((Composite)  uiData.get("userPostMaster")).getChildren().length) ); 
+				 
 				Controller.setScrollHeight(Controller.getWindowHeight() + (250 * ((Composite)  uiData.get("userPostMaster")).getChildren().length)  );
 				((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
 
@@ -375,7 +375,7 @@ public class ActionDynamicUserTimeline {
 				 
 			if( newPosts == null || newPosts.length == 0)
 			{
-				System.out.println("Other post 0 rilevato"); 
+				 
 				((Link)  uiData.get("otherPostAvailable")).setVisible(false);
 				Label noPostAvailable = new Label(((Composite)  uiData.get("otherPostWarning")),SWT.NONE); 
 				noPostAvailable.setText("There are no older post available.");
@@ -396,7 +396,7 @@ public class ActionDynamicUserTimeline {
 			((ScrolledComposite)	Controller.getWindow().getParent()).redraw(); 
 			
 			
-			System.out.println("N. figli " + ((Composite)  uiData.get("userPostMaster")).getChildren().length ); 
+			 
 			 
 			break;
 

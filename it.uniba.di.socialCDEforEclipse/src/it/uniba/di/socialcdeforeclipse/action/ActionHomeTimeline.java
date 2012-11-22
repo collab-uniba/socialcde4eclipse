@@ -66,15 +66,13 @@ public class ActionHomeTimeline {
 		switch (widgetName) {
 		case "otherPostAvailable":
 			
-			 System.out.println("Evento otherPostAvailable lanciato " + ((Composite)  uiData.get("userPostMaster")).getChildren().length + " lastid  " + getLastId()); 
+			 
 			 
 			
 			 
 			 WPost[] posts = Controller.getProxy().GetHomeTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),0,getLastId());
 			 
-			 System.out.println("getLastId inizio " + getLastId());
-			 System.out.println("number post " +  posts.length); 
-			 
+			
 			 
 			 
 			   
@@ -236,7 +234,7 @@ public class ActionHomeTimeline {
 						newPosts = new WPost[0]; 
 					}
 				
-					System.out.println("Nuovi post disponibili " + newPosts.length);
+					
 					
 					if(newPosts.length > 0)
 					{
@@ -268,7 +266,7 @@ public class ActionHomeTimeline {
 						noPostAvailable.setLayoutData(gridData); 
 					}
 			
-					System.out.println("precedente" + ((ScrolledComposite)	 uiData.get("superUserPostMaster")).getMinHeight());
+					
 			((ScrolledComposite)	 uiData.get("superUserPostMaster")).setMinSize(Controller.getWindowWidth()-50, (80 * ((Composite)	 uiData.get("userPostMaster")).getChildren().length));		
 			((ScrolledComposite)  uiData.get("superUserPostMaster")).layout();
 			((ScrolledComposite)  uiData.get("superUserPostMaster")).redraw();
@@ -276,7 +274,7 @@ public class ActionHomeTimeline {
 			((Composite)  uiData.get("userPostMaster")).layout();
 			((Composite)  uiData.get("userPostMaster")).redraw();
 			((ScrolledComposite)	 uiData.get("superUserPostMaster")).setMinSize(Controller.getWindowWidth()-50, (80 * ((Composite)	 uiData.get("userPostMaster")).getChildren().length));
-			System.out.println("successivo " + ((ScrolledComposite)	 uiData.get("superUserPostMaster")).getMinHeight());
+			
 			//((Composite)  uiData.get("otherPostWarning")).layout();
 			//((Composite)  uiData.get("otherPostWarning")).redraw();
 			//Controller.getProfilePanel().getComposite_dinamic().layout(); 
@@ -285,7 +283,7 @@ public class ActionHomeTimeline {
 			//((ScrolledComposite)	Controller.getWindow().getParent()).redraw(); 
 			
 			
-			System.out.println("N. figli " + ((Composite)  uiData.get("userPostMaster")).getChildren().length ); 
+			 
 			 
 			break;
 			

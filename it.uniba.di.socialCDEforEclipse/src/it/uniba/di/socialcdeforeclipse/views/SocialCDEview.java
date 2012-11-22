@@ -107,12 +107,7 @@ public class SocialCDEview extends ViewPart {
 	 * it.
 	 */
 	public void createPartControl(final Composite parent2) {
-		String myUrl = "http:\\/\\/www.example.com\\/example";
-		String  tmpString =  myUrl.replace("/","");
-		 
-
-		System.out.println( "Original = " + myUrl );
-		System.out.println( "Result   = " + tmpString );
+		
 		
 		final ScrolledComposite scrollComposite = new ScrolledComposite(parent2, SWT.V_SCROLL | SWT.H_SCROLL);
 		Composite parent = new Composite(scrollComposite, SWT.NONE);
@@ -126,7 +121,7 @@ public class SocialCDEview extends ViewPart {
 		scrollComposite.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				Rectangle r = scrollComposite.getClientArea();
-				System.out.println("Dimensioni scrollheight "); 
+				 
 				
 				if(Controller.getWindowName().equals("Login") || Controller.getWindowName().equals("Registration"))
 				{
@@ -134,7 +129,7 @@ public class SocialCDEview extends ViewPart {
 				}
 				else
 				{
-					System.out.println("Pannello dinamico, dimensioni larghezza " + Controller.getWindowWidth() + " altezza " + ( Controller.getProfilePanel().getComposite_static().getSize().y + Controller.getProfilePanel().getComposite_dinamic().getSize().y)); 
+					 
 					scrollComposite.setMinSize(Controller.getWindowWidth(),Controller.getScrollHeight()  );
 				}
 				
@@ -156,19 +151,13 @@ public class SocialCDEview extends ViewPart {
 		
 		 
 		
-		System.out.println(Controller.getWindow().getSize());
-		System.out.println(Controller.getWindow().getShell().getSize());
-		System.out.println(Controller.getWindow().toDisplay(Controller.getWindow().getShell().getSize()));
-
+		
 		final PaintListener paintEvent = new PaintListener() {
 
 		
 			
 			
 			public void paintControl(PaintEvent e) {
-				
-				System.out.println("Evento paint attivato");
-				System.out.println("Dimensioni window " +  Controller.getWindow().getSize());
 				/*
 				System.out.println("Dimensioni shell " + Controller.getWindow().getShell().getSize());
 				System.out.println("Dimensioni window parent " +  Controller.getWindow().getParent().getSize());
@@ -180,14 +169,14 @@ public class SocialCDEview extends ViewPart {
 				
 				if (Controller.getWindowHeight() != Controller.getWindow().getParent().getSize().y || Controller.getWindowWidth() != Controller.getWindow().getParent().getSize().x ) {
 					
-				System.out.println("Confronto altezza (" + Controller.getWindowHeight() + " con " + Controller.getWindow().getParent().getSize().y + ") e larghezza (" + Controller.getWindowWidth() + " con " + Controller.getWindow().getParent().getSize().x + ")" );	
+					
 					
 					if (Controller.getWindow().getParent().getSize().x == 0	&& Controller.getWindow().getParent().getSize().y == 0) {
 						
 						Controller.getWindow().setBackground(new Color(Display.getCurrent(),255,255,255));
 						//Controller.getWindow().setBackgroundImage(	 getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png")));
 					} else {
-						System.out.println("Inizio "	+ Controller.getWindow().getParent().getSize());
+						
 						Controller.setWindowHeight(Controller.getWindow().getParent().getSize().y);
 						Controller.setWindowWidth(Controller.getWindow().getParent().getSize().x);
 						Controller.getWindow().setBackground(new Color(Display.getCurrent(),255,255,255));
@@ -217,7 +206,7 @@ public class SocialCDEview extends ViewPart {
 				{
 					Controller.setPreferences("FlagAutologin", "False");
 				}
-				System.out.println("Finestra chiusa"); 
+				
 			}
 		});
 		

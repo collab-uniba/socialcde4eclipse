@@ -326,13 +326,6 @@ public class Controller {
 		Composite dynamicComposite;
 		GridData gridData; 
 		ProgressBarThread pbWindow; 
-		System.out.println("Inizio ricaricamento della pagina..");
-		System.out.println("Classico  " + Controller.getWindow().toDisplay(Controller.getWindow().getLocation())); 
-		System.out.println("Classico parent " + Controller.getWindow().toDisplay(Controller.getWindow().getParent().getLocation()));
-		System.out.println("Classico parent2 " + Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getLocation()));
-		System.out.println("Classico parent3 " + Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getParent().getLocation()));
-		System.out.println("Classico parent4 " + Controller.getWindow().getLocation());
-		System.out.println("Classico parent5 " + Controller.getWindow().toControl(Controller.getWindow().getParent().getParent().getParent().getLocation()));
 		
 		 	pbWindow = new ProgressBarThread(); 
 			pbWindow.setLabelTxt("Operation in progress..");
@@ -465,7 +458,7 @@ public class Controller {
 			Controller.getWindow().layout(); 
 			break;
 		case 3:
-			System.out.println("Selezionato caso n.3"); 
+			
 			dynamicUserWindow = new DynamicUserTimeline(); 
 			if(Controller.getProfilePanel().getComposite_dinamic() == null)
 			{

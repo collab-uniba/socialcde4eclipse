@@ -241,7 +241,7 @@ public class PinPanel implements Panel{
 			gridData.widthHint = 300; 
 			labelInformation.setLayoutData(gridData); 
 			
-			System.out.println("Dimensioni label " + labelInformation.getBounds()); 
+			 
 		}
 	
 		

@@ -360,7 +360,7 @@ public class GeneralButton extends Canvas {
 			
 			
 			
-			System.out.println("Dimensioni fissate " + this.getBounds() ); 
+			 
 			
 		}
 

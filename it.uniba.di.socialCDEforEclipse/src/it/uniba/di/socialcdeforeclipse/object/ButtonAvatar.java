@@ -105,7 +105,7 @@ public class ButtonAvatar extends Canvas {
 	public ButtonAvatar(Composite parent, int style) {
 		super(parent, style | SWT.NO_BACKGROUND);
 		this.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		System.out.println("Costruttore btn person evocato"); 
+		 
 		setDefaultColors();
 		addListeners();
 	}
@@ -350,7 +350,7 @@ public class ButtonAvatar extends Canvas {
 		
 		
 		
-		System.out.println("Button avatar paint event call " + this.getClientArea() ); 
+		 
 		
 		 
 		
@@ -358,7 +358,7 @@ public class ButtonAvatar extends Canvas {
 		{
 			
 			this.setBounds(0,0,85,80);
-			System.out.println("Dimensione impostata " + this.getClientArea());
+			
 			/*
 			switch (counterPosition) {
 			case 0:

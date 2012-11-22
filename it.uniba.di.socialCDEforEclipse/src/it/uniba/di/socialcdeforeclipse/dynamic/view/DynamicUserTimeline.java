@@ -324,7 +324,7 @@ public class DynamicUserTimeline implements Panel {
 			posts = new WPost[0]; 
 		}
 		
-		System.out.println("Post ottenuti " + posts.length); 
+		 
 
 		userPostMaster = new Composite(panel, SWT.None); 
 		userPostMaster.setLayout(new GridLayout(1,false)); 
@@ -490,7 +490,7 @@ public class DynamicUserTimeline implements Panel {
 			newPost = new WPost[0]; 
 		}
 	
-		System.out.println("Nuovi post disponibili " + newPost.length);
+		
 		
 		if(newPost.length > 0)
 		{
@@ -526,7 +526,7 @@ public class DynamicUserTimeline implements Panel {
 		
 		panel.layout(); 
 		
-		System.out.println("Lettura caso 3 terminata"); 
+		 
 
 	}
 

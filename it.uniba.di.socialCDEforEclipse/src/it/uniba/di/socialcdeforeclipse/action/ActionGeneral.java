@@ -31,7 +31,7 @@ public class ActionGeneral implements Listener  {
 		widgetProfile.add("labelPeople"); 
 		widgetProfile.add("labelHomeTimeline");
 		Widget widget =  event.widget;
-		System.out.println("Window name " + Controller.getWindowName()); 
+		 
 		switch (Controller.getWindowName()) {
 			case "Registration":
 				uiData = Controller.getRegistrationPanel().getData(); 

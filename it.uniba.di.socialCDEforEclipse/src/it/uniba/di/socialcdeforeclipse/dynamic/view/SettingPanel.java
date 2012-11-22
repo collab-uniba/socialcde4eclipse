@@ -120,7 +120,7 @@ public class SettingPanel implements Panel {
 				 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				System.out.println("Eccezione lanciata"); 
+			 
 				labelAvatar.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
 				labelAvatar.setImage(resize(labelAvatar.getImage(), 48, 48));
 				//e.printStackTrace();

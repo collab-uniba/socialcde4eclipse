@@ -111,7 +111,7 @@ public class DynamicPeople implements Panel{
 		}
 		else
 		{
-			System.out.println("Persone suggerite " + suggestion.length);
+			
 			 
 			userSuggested = new ArrayList<Composite>();
 			
@@ -129,7 +129,7 @@ public class DynamicPeople implements Panel{
 					@Override
 					public void handleEvent(Event event) {
 						// TODO Auto-generated method stub
-						System.out.println("Mouse move attivato"); 
+						 
 						Composite cmp = (Composite)  event.widget; 
 						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
 						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
@@ -146,7 +146,7 @@ public class DynamicPeople implements Panel{
 					@Override
 					public void handleEvent(Event event) {
 						// TODO Auto-generated method stub
-						System.out.println("Mouse exit attivato");
+						
 						Composite cmp = (Composite)  event.widget; 
 						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
 						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
@@ -247,7 +247,7 @@ public class DynamicPeople implements Panel{
 					@Override
 					public void handleEvent(Event event) {
 						// TODO Auto-generated method stub
-						System.out.println("Mouse move attivato"); 
+					 
 						Composite cmp = (Composite)  event.widget; 
 						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
 						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
@@ -264,7 +264,7 @@ public class DynamicPeople implements Panel{
 					@Override
 					public void handleEvent(Event event) {
 						// TODO Auto-generated method stub
-						System.out.println("Mouse exit attivato");
+						
 						Composite cmp = (Composite)  event.widget; 
 						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
 						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
@@ -362,7 +362,7 @@ public class DynamicPeople implements Panel{
 					@Override
 					public void handleEvent(Event event) {
 						// TODO Auto-generated method stub
-						System.out.println("Mouse move attivato"); 
+						 
 						Composite cmp = (Composite)  event.widget; 
 						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
 						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
@@ -379,7 +379,7 @@ public class DynamicPeople implements Panel{
 					@Override
 					public void handleEvent(Event event) {
 						// TODO Auto-generated method stub
-						System.out.println("Mouse exit attivato");
+						
 						Composite cmp = (Composite)  event.widget; 
 						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
 						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
@@ -475,7 +475,7 @@ public class DynamicPeople implements Panel{
 				@Override
 				public void handleEvent(Event event) {
 					// TODO Auto-generated method stub
-					System.out.println("Mouse move attivato"); 
+					 
 					Composite cmp = (Composite)  event.widget; 
 					cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
 					cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
@@ -492,7 +492,7 @@ public class DynamicPeople implements Panel{
 				@Override
 				public void handleEvent(Event event) {
 					// TODO Auto-generated method stub
-					System.out.println("Mouse exit attivato");
+				
 					Composite cmp = (Composite)  event.widget; 
 					cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
 					cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 

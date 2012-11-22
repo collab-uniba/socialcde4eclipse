@@ -353,7 +353,7 @@ public class RegistrationPanel implements Panel {
 		
 		 panel.setTabList(new Control[] { txtProxyHost, txtMail , txtInvitationCode , txtUsername ,  txtPassword , txtPassword2 , btnRegister });
 		
-		System.out.println("Controlli " + panel.getChildren().length); 
+		 
 		
 		
 		panel.addListener(SWT.Resize, azioni); 

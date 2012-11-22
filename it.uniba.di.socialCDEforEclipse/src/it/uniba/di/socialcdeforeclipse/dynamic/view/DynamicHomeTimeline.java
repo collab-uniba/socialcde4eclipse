@@ -265,7 +265,7 @@ public class DynamicHomeTimeline implements Panel{
 			newPost = new WPost[0]; 
 		}
 	
-		System.out.println("Nuovi post disponibili " + newPost.length);
+		
 		
 		if(newPost.length > 0)
 		{
@@ -355,11 +355,11 @@ public class DynamicHomeTimeline implements Panel{
 				 
 				//textMessage.setBackgroundMode(SWT.INHERIT_DEFAULT); 
 				//try1.setBounds(Controller.getWindow().computeTrim(5, superUserPostMaster.getClientArea().height + 150, 542, 20)); 
-			System.out.println("Dimensioni super master " + superUserPostMaster.getBounds()); 
-			System.out.println("dimensioni normal master " + userPostMaster.getBounds() );
+			 
+			
 			//System.out.println("Dimen post " + controlToPost.getBounds()); 
 			//System.out.println("Dimensioni scritta " + try1.getBounds()); 
-			System.out.println("post molt " + posts.length * 200); 
+			
 			 
 			}
 		}); 

@@ -61,7 +61,7 @@ public class ActionHomePanel {
 		int type = (int) uiData.get("Event_type"); 
 		Event event = (Event)  uiData.get("Event");
 	    IViewPart browser = null; 
-		System.out.println("Azione invocata " + widgetName); 
+		 
 		switch (widgetName) {
 		
 		case "labelSkills":
@@ -83,7 +83,7 @@ public class ActionHomePanel {
 			break;
 		
 		case "labelAvatar":
-			System.out.println("Evento labelAvatar attivato"); 
+			 
 			final ChooseAvatar available_avatar = new ChooseAvatar(); 
 			 available_avatar.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
 			 available_avatar.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
@@ -111,7 +111,7 @@ public class ActionHomePanel {
 							
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							System.out.println("Eccezione lanciata"); 
+							 
 							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().get_ImageStream(PATH_DEFAULT_AVATAR));
 							 Controller.getProfilePanel().getLabelAvatarProfile().setImage( Controller.getProfilePanel().resize( Controller.getProfilePanel().getLabelAvatarProfile().getImage(), 32,32));
 							//e.printStackTrace();
@@ -125,7 +125,7 @@ public class ActionHomePanel {
 			break;
 		case "labelSettings":
 			if(type == SWT.MouseDown){
-				System.out.println("Labelsettings azione"); 
+				 
 				Controller.selectDynamicWindow(1);
 			}
 			break;
@@ -135,7 +135,7 @@ public class ActionHomePanel {
 		
 				WService service = (WService) uiData.get("service"); 
 				if(service.Registered){
-					System.out.println("Servizio registrato");
+					
 					final SettingServicePanel serviceSetting = new SettingServicePanel(); 
 					serviceSetting.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x ); 
 					serviceSetting.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y ); 
@@ -227,7 +227,7 @@ public class ActionHomePanel {
 				}
 				else
 				{
-					System.out.println("Servizio non registrato");
+					
 					if(service.RequireOAuth)
 					{
 						 //int x = bounds.x + (Controller.getWindow().getShell().getBounds().width - 300) / 2;
@@ -243,7 +243,7 @@ public class ActionHomePanel {
 						 pinWindow.setOauthData(oauthData); 
 						
 						
-						System.out.println(oauthData.AuthorizationLink); 
+						 
 						Controller.temporaryInformation.put("CurrentURL", oauthData.AuthorizationLink); 
 						
 						//Controller.temporaryInformation.put("CurrentURL","http://www.google.it");
@@ -276,7 +276,7 @@ public class ActionHomePanel {
 						 	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"); 
 						
 						} catch (PartInitException e1) {
-							System.out.println("Eccezione browser lanciata"); 
+							 
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -333,7 +333,7 @@ public class ActionHomePanel {
 					}
 				}
 			
-				System.out.println("Servizio richiesto"); 
+				 
 			}
 			break;
 
@@ -384,24 +384,19 @@ public class ActionHomePanel {
 		switch (pinWindow.getService().OAuthVersion)
         {
             case 1:
-            	//System.out.println("dati autorizzazione username " + Controller.getCurrentUser().Username+ " passwrd " +Controller.getCurrentUserPassword()+" id servizio "+ pinWindow.getService().Id + " codice "  + pinWindow.getTxtPin().getText()+" token "+ Controller.temporaryInformation.get("AccessToken").toString() + " acc secret"+ pinWindow.getOauthData().AccessSecret);
+            	
             	if(Controller.getProxy().Authorize(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(), pinWindow.getService().Id , pinWindow.getTxtPin().getText(),pinWindow.getOauthData().AccessToken, pinWindow.getOauthData().AccessSecret))
             	{
             		pinWindow.dispose(Controller.getWindow()); 
             		pinWindow.getService().Registered = true; 
             		pinWindow.setOauthData(null); 
             		
-            		for(int i=0;i< ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences().length;i++)
-            		{
-            			System.out.println("View n. " + i + " partname " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getPartName());
-            			System.out.println("View n. " + i + " id " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getId());
-            			System.out.println("View n. " + i + " title " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getTitle());
-            		}
+            		
             		
             		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview").setFocus(); 
             		Controller.selectDynamicWindow(0); 
             		//oauthData = null;
-            		System.out.println("Ok pinwindow premuto");
+            		
             		//Controller.selectDynamicWindow(0);
             		
             		final SettingServicePanel serviceSetting = new SettingServicePanel(); 
@@ -500,7 +495,7 @@ public class ActionHomePanel {
     		        messageBox2.setText("SocialCDEforEclipse Message");
     		        messageBox2.open();
     		        pinWindow.dispose(null); 
-            		System.out.println("Autorizzazione non confermata"); 
+            		 
             	}
             	
             	try {
@@ -537,12 +532,7 @@ public class ActionHomePanel {
                 		pinWindow.getService().Registered = true; 
                 		pinWindow.setOauthData(null); 
                 		
-                		for(int i=0;i< ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences().length;i++)
-                		{
-                			System.out.println("View n. " + i + " partname " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getPartName());
-                			System.out.println("View n. " + i + " id " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getId());
-                			System.out.println("View n. " + i + " title " + ((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().getViewReferences()[i].getTitle());
-                		}
+                	
                 		
                 		((IWorkbenchWindow) Controller.temporaryInformation.get("Workbench")).getActivePage().findView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview").setFocus(); 
                 		Controller.selectDynamicWindow(0); 

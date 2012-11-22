@@ -308,7 +308,7 @@ public class DynamicHome implements Panel {
 		 controlli.add(labelAvatar); 
 		Controller.setWindowName("Home"); 
 		Controller.temporaryInformation.put("Workbench", PlatformUI.getWorkbench().getActiveWorkbenchWindow()); 
-		System.out.println("Dimensione composite " + serviceComposite.getBounds());
+		
 		serviceComposite.layout(); 
 		serviceComposite.pack(); 
 		
@@ -319,7 +319,7 @@ public class DynamicHome implements Panel {
 		Controller.getWindow().pack(); 
 		Controller.getWindow().layout(); 
 		
-		System.out.println("Id utente corrente " + Controller.getCurrentUser().Id); 
+		 
 		
 	}
 	

@@ -161,14 +161,14 @@ public class ChooseAvatar implements Panel {
 		uriAvatar = Controller.getProxy().GetAvailableAvatars(
 				Controller.getCurrentUser().Username,
 				Controller.getCurrentUserPassword());
-			System.out.println("Avatar disponibili " + uriAvatar.length); 
+		 
 		if (uriAvatar.length > 0) {
 
 			final ScrolledComposite sc = new ScrolledComposite(shell, SWT.None
 					| SWT.H_SCROLL | SWT.V_SCROLL);
 			sc.setLayout(new GridLayout(1, false));
 			sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-			System.out.println("CL " + sc.getSize());
+			
 
 			firstComposite = new Composite(sc, SWT.None);
 			firstComposite.setLayout(new GridLayout(3, false));
@@ -180,9 +180,7 @@ public class ChooseAvatar implements Panel {
 					@Override
 					public void controlResized(ControlEvent e) {
 						// TODO Auto-generated method stub
-						System.out.println("CL " + sc.getClientArea().width
-								+ " " + sc.getClientArea().height);
-
+						
 						Rectangle r = sc.getClientArea();
 						sc.setMinSize(shell.computeSize(r.width, SWT.DEFAULT));
 
@@ -198,7 +196,7 @@ public class ChooseAvatar implements Panel {
 			allAvatar = new ArrayList<ButtonAvatar>();
 			
 			for (int i = 0; i < uriAvatar.length; i++) {
-				System.out.println("Analizzo Avatar " + i); 
+			 
 			 
 				Boolean flag = true; 
 				try {
@@ -222,7 +220,7 @@ public class ChooseAvatar implements Panel {
 					
 					if(Controller.getCurrentUser().getAvatar().equals(uriAvatar[i].toString()) )
 					{
-						System.out.println("Controllo positivo"); 
+						 
 						avatarImage.setDefaultColors(new Color(Display.getCurrent(), 230, 230, 223),null,Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null); 
 						avatarImage.setSelectedColors(new Color(Display.getCurrent(), 230, 230, 223), null, Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN),null);
 					}
@@ -256,7 +254,7 @@ public class ChooseAvatar implements Panel {
 					});
 					
 					try {
-						 System.out.println("avatar link  " + uriAvatar[i].toURL()); 
+						 
 						avatarImage.setImage(resize(getImageStream(uriAvatar[i].toURL().openStream()), 70, 70));
 						
 						 

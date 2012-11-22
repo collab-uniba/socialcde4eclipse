@@ -97,7 +97,7 @@ public class SocialCDEviewBrowser extends ViewPart {
 				//sc.setMinSize(parent.getSize().x-100 , parent.getSize().y-100);
 				getBrowser().setSize(parent.computeSize(parent.getSize().x, parent.getSize().y));
 					
-				System.out.println("Client area browser " + getBrowser().getClientArea() + " parent cl " + parent.getClientArea() + " shell cl " + parent.getShell().getClientArea()); 
+				 
 			
 				parent.layout(); 
 				getBrowser().layout(); 
@@ -112,14 +112,14 @@ public class SocialCDEviewBrowser extends ViewPart {
 		browser = new Browser(parent, SWT.None); 
 		service = (WService) Controller.temporaryInformation.get("Service");
 	
-		System.out.println("Scrollbar mode  " + browser.getScrollbarsMode());
-		System.out.println("Creazione indirizzo nel browser " + Controller.temporaryInformation.get("CurrentURL").toString());
+		
+		
 		try {
 		//	browser.setUrl("www.google.it");
 			browser.setUrl(Controller.temporaryInformation.get("CurrentURL").toString()); 
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("exception on browser");
+			
 			
 		}
 		
@@ -134,7 +134,7 @@ public class SocialCDEviewBrowser extends ViewPart {
 			@Override
 			public void changed(LocationEvent event) {
 				// TODO Auto-generated method stub
-				 System.out.println("Indirizzo trovato " + event.location.toString()); 
+				 
 				if(event.location.contains("#") && service.Name.equals("Facebook"))
 				{
 					
@@ -143,7 +143,7 @@ public class SocialCDEviewBrowser extends ViewPart {
 				}
 				else if(event.location.contains("?") && service.Name.equals("LinkedIn"))
 				{
-					System.out.println("Parte trovata " + event.location.split("=")[1].toString()); 
+					 
 					Controller.temporaryInformation.put("AccessToken", event.location.split("=")[1].toString());
 				}
 				

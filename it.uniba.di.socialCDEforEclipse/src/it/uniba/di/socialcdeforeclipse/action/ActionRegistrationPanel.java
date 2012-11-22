@@ -216,7 +216,7 @@ public class ActionRegistrationPanel {
 			
 			if(type == SWT.Selection)
 			{
-				System.out.println("Scatta evento registrazione"); 
+				 
 				pbWindow = new ProgressBarThread(); 
 				pbWindow.setLabelTxt("Login in progress..");
 				pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
@@ -260,7 +260,7 @@ public class ActionRegistrationPanel {
 				case 0:
 					
 					boolean password = Controller.getProxy().ChangePassword(((Text) uiData.get("Username")).getText(), ((Text) uiData.get("InvitationCode")).getText(),((Text) uiData.get("Password1")).getText()); 
-					System.out.println("Valore di password "+ password); 
+					 
 					if(password)
 					{
 						Controller.setPreferences("ProxyHost", Controller.getProxy().getHost()); 
@@ -363,10 +363,10 @@ public class ActionRegistrationPanel {
 				{
 					if(Controller.getProxy() != null)
 					{
-						System.out.println("Proxy corretto"); 
+						 
 						//registra
 					 res = Controller.getProxy().SubscribeUser( dataExtracted.get("Email"),  dataExtracted.get("InvitationCode"), dataExtracted.get("Username"));
-					 System.out.println("Valore di res "+ res);
+					
 					 
 					 
 					
@@ -380,7 +380,7 @@ public class ActionRegistrationPanel {
 						if(Controller.getProxy().IsWebServiceRunning())
 						{
 							 res = Controller.getProxy().SubscribeUser( dataExtracted.get("Email"),  dataExtracted.get("InvitationCode"), dataExtracted.get("Username"));
-							 System.out.println("Valore di res "+ res);
+							
 						}
 						else
 						{
