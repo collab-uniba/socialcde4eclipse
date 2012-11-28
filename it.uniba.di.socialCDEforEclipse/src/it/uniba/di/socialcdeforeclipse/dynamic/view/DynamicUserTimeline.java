@@ -11,6 +11,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
@@ -27,10 +29,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.junit.Test.None;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionDynamicUserTimeline;
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
+import it.uniba.di.socialcdeforeclipse.action.ActionHomeTimeline;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WPost;
 import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
@@ -58,8 +62,11 @@ public class DynamicUserTimeline implements Panel {
 	private WUser user; 
 	private String userType; 
 	private Link otherPostAvailable; 
-	 
-	private static long firstPostId = 0; 
+	private Label labelDownloadPost; 
+	private ProgressBar pbar; 
+	private WPost[] posts; 
+	private ScrolledComposite superUserPostMaster; 
+	
 	
 	
 	
@@ -136,22 +143,23 @@ public class DynamicUserTimeline implements Panel {
 	public void inizialize(final Composite panel) {
 		// TODO Auto-generated method stub
 		GridData gridData; 
+		
+		//((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getWindowHeight());
+		
 		WUser userSelected =  Controller.getProxy().GetColleagueProfile(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ((WUser) Controller.temporaryInformation.get("User_selected")).Id) ; 
 		 azioni = new ActionGeneral();
 		controlli = new ArrayList<Control>();
 		
-		GridLayout layout = new GridLayout(4, false);
+		GridLayout layout = new GridLayout(5, false);
 		panel.setLayout(layout);
 		 
 		Composite compositeBack = new Composite(panel, SWT.None);
 		compositeBack.setLayout(new GridLayout(1, false)); 
 		compositeBack.setBackground(new Color(Display.getCurrent(), 192,192,186));
-		gridData = new GridData(); 
-		gridData.horizontalSpan = 4; 
+		gridData = new GridData();
+		gridData.verticalSpan = 2; 
 		compositeBack.setLayoutData(gridData); 
 
-		
-		
 		Label labelBack = new Label(compositeBack, SWT.None); 
 		labelBack.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
 		labelBack.setImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Back.png"))); 
@@ -185,7 +193,7 @@ public class DynamicUserTimeline implements Panel {
 		
 		username = new Label(panel, SWT.NONE); 
 		username.setText(userSelected.Username); 
-		username.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 15, SWT.NONE)); 
+		username.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 15, SWT.BOLD)); 
 		gridData = new GridData(); 
 		gridData.horizontalIndent = 10; 
 		username.setLayoutData(gridData); 
@@ -200,7 +208,7 @@ public class DynamicUserTimeline implements Panel {
 		buttonComposite = new Composite(panel, SWT.None); 
 		buttonComposite.setLayout(new GridLayout(3, false)); 
 		gridData = new GridData(); 
-		gridData.horizontalIndent = 50; 
+		gridData.horizontalIndent = 45; 
 		buttonComposite.setLayoutData(gridData); 
 		
 		
@@ -317,168 +325,221 @@ public class DynamicUserTimeline implements Panel {
 		labelFollowers.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.BOLD ));
 		labelFollowers.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		
-		WPost[] posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user.Username); 
-		
-		if(posts == null)
-		{
-			posts = new WPost[0]; 
-		}
-		
-		 
-
-		userPostMaster = new Composite(panel, SWT.None); 
-		userPostMaster.setLayout(new GridLayout(1,false)); 
+		labelHidden = new Label(panel, SWT.None); 
+		labelHidden.setVisible(false); 
 		gridData = new GridData(); 
-		gridData.horizontalSpan = 4;
-		gridData.grabExcessHorizontalSpace = true; 
-		gridData.horizontalAlignment = GridData.FILL; 
+		gridData.horizontalSpan = 5; 
+		labelHidden.setLayoutData(gridData); 
+		
+		superUserPostMaster = new ScrolledComposite(panel, SWT.V_SCROLL); 
+		superUserPostMaster.setLayout(new GridLayout(1, false)); 
+		gridData = new GridData(); 
+		gridData.widthHint = Controller.getWindowWidth()-50; 
+		gridData.heightHint = 280;
+		gridData.horizontalSpan = 5; 
+		superUserPostMaster.setLayoutData(gridData); 
+		controlli.add(superUserPostMaster); 
+		
+		
+		userPostMaster = new Composite(superUserPostMaster, SWT.None);
+		
+		superUserPostMaster.setContent(userPostMaster);
+		superUserPostMaster.setExpandVertical(true);
+		superUserPostMaster.setExpandHorizontal(true);
+		superUserPostMaster.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
+		
+		controlli.add(userPostMaster); 
+		
+		superUserPostMaster.addControlListener(new ControlAdapter() {
+			public void controlResized(ControlEvent e) {
+				
+				superUserPostMaster.setMinSize(Controller.getWindowWidth()-10, (120 * posts.length)); 
+				
+			}} ); 
+	    
+		
+		
+		userPostMaster.setLayout(new GridLayout(2,false)); 
+		gridData = new GridData(); 
+		gridData.widthHint = Controller.getWindowWidth()-50; 
+		gridData.heightHint = 350;
 		userPostMaster.setLayoutData(gridData); 
-		
-		if(posts.length > 5)
-		{
-			Controller.setScrollHeight(Controller.getWindowHeight() + (200 * posts.length)  );
-			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
-		}
-		else
-		{
-			Controller.setScrollHeight(Controller.getWindowHeight()); 
-			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth()-50, Controller.getScrollHeight());
-		}
+	
+		userPostMaster.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
 		
 		
 		
-		firstPostId = 0; 
+	   	posts = Controller.getProxy().GetUserTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(),userSelected.Username); 
+		
+		System.out.println("numero di post " + posts.length); 
+
 		ActionDynamicUserTimeline.setLastId(0); 
 		
 		for(int i=0;i< posts.length; i++)
 		{
 			
-			Composite userPostComposite = new Composite(userPostMaster, SWT.BORDER);
-			userPostComposite.setLayout(new GridLayout(2, false)); 
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true; 
-			gridData.horizontalAlignment = GridData.FILL; 
-			userPostComposite.setLayoutData(gridData); 
+			final Composite userPostComposite = new Composite(userPostMaster, SWT.None);
+			final int j = i; 
 			
-			Label labelUserAvatar = new Label(userPostComposite,SWT.NONE); 
-			gridData = new GridData();
-			gridData.verticalSpan = 2; 
-			labelUserAvatar.setLayoutData(gridData); 
-			labelUserAvatar.setData("ID_action", "labelAvatar");
-			 
-			
-				try {
-					labelUserAvatar.setImage(get_ImageStream(new URL(posts[i].getUser().Avatar).openStream()));
-					labelUserAvatar.setImage(resize(labelUserAvatar.getImage(), 75, 75)); 
-					 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					//System.out.println("Eccezione lanciata"); 
-					labelUserAvatar.setImage(resize(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png")),75,75));
-					
-					//e.printStackTrace();
-				} 
-				catch (NullPointerException e) {
-					// TODO: handle exception
-					labelUserAvatar.setImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"))); 
-					labelUserAvatar.setImage(resize(labelUserAvatar.getImage(), 75, 75));
-				}
+			Display.getCurrent().syncExec(new Runnable() {
 				
-			Label username = new Label(userPostComposite, SWT.None); 
-			username.setText(posts[i].getUser().Username); 
-			username.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 15, SWT.BOLD ));  
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = false; 
-			gridData.horizontalAlignment = GridData.FILL;
-			username.setLayoutData(gridData); 
-			
-			Label message = new Label(userPostComposite, SWT.None | SWT.WRAP); 
-			message.setText(posts[i].getMessage()); 
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true; 
-			gridData.horizontalAlignment = GridData.FILL; 
-			gridData.horizontalSpan = 2; 
-			gridData.widthHint = 100; 
-			message.setLayoutData(gridData); 
-			
-			Calendar nowDate = Calendar.getInstance(); 
-			Calendar dateSelected = posts[i].getCreateAt(); 
-			long millisDiff = nowDate.getTime().getTime() - dateSelected.getTime().getTime();
-			
-			int seconds = (int) (millisDiff / 1000 % 60);
-			int minutes = (int) (millisDiff / 60000 % 60);
-			int hours = (int) (millisDiff / 3600000 % 24);
-			int days = (int) (millisDiff / 86400000);
-			
-			Label messageDate = new Label(userPostComposite, SWT.None); 
-			
-			if(days > 1 && days < 30)
-			{
-				messageDate.setText("About " + days + " days ago from " + posts[i].getService().getName());
-			}
-			else if(days > 30)
-			{
-				messageDate.setText("More than one month ago from " + posts[i].getService().getName());
-			}
-			else if(days == 1)
-			{
-				messageDate.setText("About " + days + " day ago from " + posts[i].getService().getName());
-			}
-			else
-			{
-				if( hours > 1)
-				{
-					messageDate.setText("About " + hours + " hours ago from " + posts[i].getService().getName());
-				}
-				else if(hours == 1)
-				{
-					messageDate.setText("About " + hours + " hour ago from " + posts[i].getService().getName());
-				}
-				else
-				{
-
-					if( minutes > 1)
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					userPostComposite.setLayout(new GridLayout(2, false)); 
+					userPostComposite.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+					userPostComposite.setBackgroundMode(SWT.INHERIT_DEFAULT); 
+					GridData  gridData = new GridData(); 
+					gridData.grabExcessHorizontalSpace = true; 
+					gridData.horizontalAlignment = GridData.FILL; 
+					userPostComposite.setLayoutData(gridData); 
+					
+					controlli.add(userPostComposite);
+					
+					Label labelUserAvatar = new Label(userPostComposite,SWT.NONE); 
+					gridData = new GridData();
+					gridData.verticalSpan = 3; 
+					labelUserAvatar.setLayoutData(gridData); 
+					labelUserAvatar.setData("ID_action", "labelAvatar");
+					 
+					
+						try {
+							labelUserAvatar.setImage(get_ImageStream(new URL(posts[j].getUser().Avatar).openStream()));
+							labelUserAvatar.setImage(resize(labelUserAvatar.getImage(), 75, 75)); 
+							 
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							System.out.println("Eccezione lanciata"); 
+							labelUserAvatar.setImage(resize(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png")),75,75));
+							
+							//e.printStackTrace();
+						} 
+						catch (NullPointerException e) {
+							// TODO: handle exception
+							System.out.println("Eccezione lanciata 2");
+							labelUserAvatar.setImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"))); 
+							labelUserAvatar.setImage(resize(labelUserAvatar.getImage(), 75, 75));
+						}
+						System.out.println("Fuori");
+						
+					Label username = new Label(userPostComposite, SWT.None); 
+					username.setText(posts[j].getUser().Username); 
+					username.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 15, SWT.BOLD ));  
+					username.setForeground(new Color(Display.getCurrent(), 97,91,91));
+					gridData = new GridData(); 
+					gridData.grabExcessHorizontalSpace = false; 
+					gridData.horizontalAlignment = GridData.BEGINNING;
+					username.setLayoutData(gridData); 
+					
+					Label message = new Label(userPostComposite, SWT.None | SWT.WRAP); 
+					message.setText(posts[j].getMessage()); 
+					gridData = new GridData(); 
+					gridData.grabExcessHorizontalSpace = true; 
+					gridData.horizontalAlignment = GridData.FILL; 
+					gridData.widthHint = 350; 
+					message.setLayoutData(gridData); 
+					
+					Calendar nowDate = Calendar.getInstance(); 
+					Calendar dateSelected = posts[j].getCreateAt(); 
+					long millisDiff = nowDate.getTime().getTime() - dateSelected.getTime().getTime();
+					
+					int seconds = (int) (millisDiff / 1000 % 60);
+					int minutes = (int) (millisDiff / 60000 % 60);
+					int hours = (int) (millisDiff / 3600000 % 24);
+					int days = (int) (millisDiff / 86400000);
+					
+					Label messageDate = new Label(userPostComposite, SWT.None); 
+					messageDate.setForeground(new Color(Display.getCurrent(), 140,140,140));
+					
+					if(days > 1 && days < 30)
 					{
-						messageDate.setText("About " + minutes + " minutes ago from " + posts[i].getService().getName());
+						messageDate.setText("About " + days + " days ago from " + posts[j].getService().getName());
 					}
-					else if(minutes == 1)
+					else if(days > 30)
 					{
-						messageDate.setText("About " + minutes + " minute ago from " + posts[i].getService().getName());
+						messageDate.setText("More than one month ago from " + posts[j].getService().getName());
+					}
+					else if(days == 1)
+					{
+						messageDate.setText("About " + days + " day ago from " + posts[j].getService().getName());
 					}
 					else
 					{
-
-						if( seconds > 1)
+						if( hours > 1)
 						{
-							messageDate.setText("About " + seconds + " seconds ago from " + posts[i].getService().getName());
+							messageDate.setText("About " + hours + " hours ago from " + posts[j].getService().getName());
 						}
-						else if(seconds == 1)
+						else if(hours == 1)
 						{
-							messageDate.setText("About " + seconds + " second ago from " + posts[i].getService().getName());
+							messageDate.setText("About " + hours + " hour ago from " + posts[j].getService().getName());
 						}
 						else
 						{
-							messageDate.setText("Few seconds ago from " + posts[i].getService().getName());
+
+							if( minutes > 1)
+							{
+								messageDate.setText("About " + minutes + " minutes ago from " + posts[j].getService().getName());
+							}
+							else if(minutes == 1)
+							{
+								messageDate.setText("About " + minutes + " minute ago from " + posts[j].getService().getName());
+							}
+							else
+							{
+
+								if( seconds > 1)
+								{
+									messageDate.setText("About " + seconds + " seconds ago from " + posts[j].getService().getName());
+								}
+								else if(seconds == 1)
+								{
+									messageDate.setText("About " + seconds + " second ago from " + posts[j].getService().getName());
+								}
+								else
+								{
+									messageDate.setText("Few seconds ago from " + posts[j].getService().getName());
+								}
+							}
 						}
 					}
+					 
+					messageDate.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 8, SWT.ITALIC ));
+					gridData = new GridData(); 
+					gridData.horizontalAlignment = GridData.BEGINNING; 
+					messageDate.setLayoutData(gridData); 
+					
+					Label labelhidden = new Label(userPostMaster, SWT.None); 
+					labelhidden.setText(""); 
+					labelhidden.setVisible(false); 
+					
+					Label barSeparator = new Label(userPostComposite, SWT.BORDER);
+					gridData = new GridData();
+					gridData.widthHint = 100;
+					gridData.heightHint = 1;
+					gridData.horizontalSpan = 2; 
+					gridData.horizontalAlignment = GridData.CENTER;
+					barSeparator.setLayoutData(gridData);
 				}
-			}
-			 
-			messageDate.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 8, SWT.ITALIC ));
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true; 
-			gridData.horizontalAlignment = GridData.END; 
-			gridData.horizontalSpan = 2; 
-			messageDate.setLayoutData(gridData); 
+			});
+			
+			
+			
+			
+			
 			
 			
 			ActionDynamicUserTimeline.setLastId(posts[i].Id);
+			
+			
+			
 		}
 		
-		otherPostWarning = new Composite(panel, SWT.None); 
+		System.out.println("step1"); 
+		otherPostWarning = new Composite(userPostMaster, SWT.None); 
 		otherPostWarning.setLayout(new GridLayout(1,false)); 
+		otherPostWarning.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 		gridData = new GridData(); 
-		gridData.horizontalSpan = 4;
+		gridData.horizontalSpan = 2;
 		gridData.grabExcessHorizontalSpace = true; 
 		gridData.horizontalAlignment = GridData.FILL; 
 		otherPostWarning.setLayoutData(gridData);
@@ -498,6 +559,7 @@ public class DynamicUserTimeline implements Panel {
 			otherPostAvailable.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
 			otherPostAvailable.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.UNDERLINE_LINK));
 			otherPostAvailable.setText("<a>Click to view older posts</a>"); 
+			otherPostAvailable.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
 			gridData = new GridData();
 			gridData.grabExcessHorizontalSpace = true; 
 			gridData.horizontalAlignment = GridData.CENTER;
@@ -513,12 +575,36 @@ public class DynamicUserTimeline implements Panel {
 		{
 			Label noPostAvailable = new Label(otherPostWarning,SWT.NONE); 
 			noPostAvailable.setText("There are no older post available.");
+			noPostAvailable.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
 			noPostAvailable.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 10, SWT.None));
 			gridData = new GridData();
 			gridData.grabExcessHorizontalSpace = true; 
 			gridData.horizontalAlignment = GridData.CENTER;
 			noPostAvailable.setLayoutData(gridData); 
 		}
+		
+
+		System.out.println("Step2"); 
+
+		
+	
+		
+		superUserPostMaster.setMinSize(Controller.getWindowWidth()-10, (120 * posts.length));
+		  
+		
+		controlli.add(userPostMaster);
+		
+		 labelDownloadPost = new Label(panel, SWT.None); 
+		    labelDownloadPost.setText("Download older posts.."); 
+		    gridData = new GridData(); 
+		    gridData.horizontalAlignment = GridData.CENTER; 
+		    gridData.horizontalSpan = 5; 
+		    gridData.widthHint = 130; 
+		    labelDownloadPost.setLayoutData(gridData); 
+		    labelDownloadPost.setVisible(false);
+		    pbar = new ProgressBar(panel, SWT.None); 
+		    pbar.setVisible(false); 
+		    pbar.setLayoutData(gridData); 
 		
 		labelBack.addListener(SWT.MouseDown,azioni); 
 		
@@ -535,7 +621,17 @@ public class DynamicUserTimeline implements Panel {
 		// TODO Auto-generated method stub
 		for(int i=0; i < controlli.size();i++)
 		{
-		 controlli.get(i).dispose(); 
+			final int j=i; 
+			Display.getCurrent().syncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					 controlli.get(j).dispose(); 
+				}
+			}); 
+			
+		
 			
 		}
 		 
@@ -554,7 +650,12 @@ public class DynamicUserTimeline implements Panel {
 		uiData.put("userSelected", user);
 		uiData.put("action",azioni); 
 		uiData.put("otherPostAvailable", otherPostAvailable);
-		uiData.put("firstPostId", firstPostId);
+		uiData.put("labelDownloadPost", labelDownloadPost); 
+		uiData.put("pbar", pbar); 
+		
+		uiData.put("superUserPostMaster", superUserPostMaster); 
+		uiData.put("userPostMaster", userPostMaster); 
+		
 		
 		
 		if(userType == "Suggested" || userType == "Followers" || userType == "Hidden")

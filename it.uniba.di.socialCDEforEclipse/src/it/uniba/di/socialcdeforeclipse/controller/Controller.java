@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicHome;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicHomeTimeline;
-import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicInteractionTimeline;
+import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicIterationTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicInteractiveTimeline;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicPeople;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicUserTimeline;
@@ -65,7 +65,7 @@ public class Controller {
 
 	private static DynamicHome homeWindow = null;
 	
-	private static DynamicInteractionTimeline interactionTimelineWindow = null;
+	private static DynamicIterationTimeline interationTimelineWindow = null;
 	
 	private static DynamicInteractiveTimeline interactiveTimelineWindow = null;
 	
@@ -199,13 +199,13 @@ public class Controller {
 		homeWindow = newhomeWindow;
 	}
 
-	public static DynamicInteractionTimeline getInteractionTimelineWindow() {
-		return interactionTimelineWindow;
+	public static DynamicIterationTimeline getInteractionTimelineWindow() {
+		return interationTimelineWindow;
 	}
 
 	public static void setInteractionTimelineWindow(
-			DynamicInteractionTimeline newinteractionTimelineWindow) {
-		interactionTimelineWindow = newinteractionTimelineWindow;
+			DynamicIterationTimeline newinteractionTimelineWindow) {
+		interationTimelineWindow = newinteractionTimelineWindow;
 	}
 
 	public static DynamicInteractiveTimeline getInteractiveTimelineWindow() {
@@ -297,9 +297,9 @@ public class Controller {
 		   homeWindow = null;
 	   }
 	   
-	   if(interactionTimelineWindow != null){
-		   interactionTimelineWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
-		   interactionTimelineWindow = null;
+	   if(interationTimelineWindow != null){
+		   interationTimelineWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
+		   interationTimelineWindow = null;
 	   }
 	   
 	   if(interactiveTimelineWindow != null){
@@ -537,7 +537,47 @@ public class Controller {
 			pbWindow.setStop(1); 
 			//Controller.getWindow().getLayout(); 
 			break;
+		
+		case 5:
 			
+			interationTimelineWindow = new DynamicIterationTimeline(); 
+			
+			if(Controller.getProfilePanel().getComposite_dinamic() == null)
+			{
+			 dynamicComposite = new Composite(getWindow(),SWT.None); 
+			
+			gridData = new GridData(); 
+			gridData.grabExcessHorizontalSpace = true;
+			gridData.horizontalAlignment = GridData.FILL; 
+			gridData.grabExcessVerticalSpace = true; 
+			gridData.verticalAlignment = GridData.FILL;
+			dynamicComposite.setLayoutData(gridData);
+			
+			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
+			}
+			else
+			{
+				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
+				dynamicComposite = new Composite(getWindow(),SWT.None); 
+				 
+				
+				gridData = new GridData(); 
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = GridData.FILL;
+				gridData.grabExcessVerticalSpace = true; 
+				gridData.verticalAlignment = GridData.FILL; 
+				dynamicComposite.setLayoutData(gridData); 
+				
+				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+			}
+			
+			interationTimelineWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic()); 
+			pbWindow.setStop(1); 
+			
+			
+			break;
+		
 			default:
 				break;
 		}

@@ -15,6 +15,8 @@ import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
@@ -65,9 +67,31 @@ public class DynamicPeople implements Panel{
 	public void inizialize(Composite panel2) {
 		// TODO Auto-generated method stub
 		
-	 
+	 /*
+		final WUser[]	hiddenUsers1 = Controller.getProxy().GetHiddenUsers(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
+		final WUser[] followers1 = Controller.getProxy().GetFollowers(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
+		final WUser[] following1 = Controller.getProxy().GetFollowings(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
+		final WUser[] suggestion1 = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 		
-		 Image imageAvatar;
+		System.out.println("Total link 1 " + (hiddenUsers1.length + followers1.length + following1.length + suggestion1.length));
+		
+		if( (hiddenUsers1.length + followers1.length + following1.length + suggestion1.length) > 5 )
+		{
+			System.out.println(" altezza pre " + Controller.getWindowHeight());
+			Controller.setScrollHeight(Controller.getWindowHeight() + ((hiddenUsers1.length + followers1.length + following1.length + suggestion1.length) * 70)); 
+		    Controller.setWindowHeight(Controller.getWindowHeight() + ((hiddenUsers1.length + followers1.length + following1.length + suggestion1.length) * 70)); 
+			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
+		   Controller.getWindow().getParent().getParent().redraw(); 
+		   System.out.println(" altezza post " + Controller.getScrollHeight());
+		}
+		else
+		{
+			Controller.setScrollHeight(Controller.getWindowHeight());
+			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
+		}
+		
+		*/
+		Image imageAvatar;
 		  
 	
 	
@@ -75,15 +99,43 @@ public class DynamicPeople implements Panel{
 		
 		
 		GridData grid = new GridData(); 
-		
+		GridData gridData; 
 		
 		controlli = new ArrayList<Control>();
-		Listener azioni = new ActionGeneral();
+		final Listener azioni = new ActionGeneral();
 		panel2.setLayout(new GridLayout(1, true));
+		
+	  final ScrolledComposite	superUserPostMaster = new ScrolledComposite(panel2, SWT.V_SCROLL); 
+		gridData = new GridData(); 
+		gridData.grabExcessHorizontalSpace = true; 
+		gridData.horizontalAlignment = GridData.FILL; 
+		gridData.heightHint = 450;
+		superUserPostMaster.setLayoutData(gridData); 
+		controlli.add(superUserPostMaster); 
+		
+		
+		Composite userPostMaster = new Composite(superUserPostMaster, SWT.None);
+		userPostMaster.setBackgroundMode(SWT.INHERIT_DEFAULT); 
+		superUserPostMaster.setContent(userPostMaster);
+		superUserPostMaster.setExpandVertical(true);
+		superUserPostMaster.setExpandHorizontal(true);
+		superUserPostMaster.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
+		
+		controlli.add(userPostMaster); 
+		
+	
+	    
+		
+		
+		userPostMaster.setLayout(new GridLayout(1,false)); 
+		gridData = new GridData(); 
+		gridData.widthHint = Controller.getWindowWidth() -50; 
+		userPostMaster.setLayoutData(gridData);
+		userPostMaster.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
 		
 		
 		 
-		Label labelSuggestionTitle = new Label(panel2, SWT.NONE); 
+		Label labelSuggestionTitle = new Label(userPostMaster, SWT.NONE); 
 		labelSuggestionTitle.setText("Suggestions:"); 
 		labelSuggestionTitle.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
 		grid = new GridData(); 
@@ -93,11 +145,11 @@ public class DynamicPeople implements Panel{
 		labelSuggestionTitle.setLayoutData(grid); 
 		controlli.add(labelSuggestionTitle);
 		
-		WUser[] suggestion = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+		final WUser[] suggestion = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		//WUser[] suggestion = Controller.getProxy().GetFollowings(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 		if(suggestion.length == 0)
 		{
-			labelsuggestion = new Label(panel2, SWT.WRAP); 
+			labelsuggestion = new Label(userPostMaster, SWT.WRAP); 
 			labelsuggestion.setText("We have no suggestion for you.\n Please try again soon."); 
 			grid = new GridData(); 
 			grid.horizontalSpan = 3; 
@@ -117,94 +169,113 @@ public class DynamicPeople implements Panel{
 			
 			for(int i=0;i< suggestion.length;i++)
 			{
-				Composite compositeSuggestionUser = new Composite(panel2, SWT.BORDER); 
-				compositeSuggestionUser.setLayout(new GridLayout(4, false));
-				grid = new GridData(); 
-				grid.grabExcessHorizontalSpace = true; 
-				grid.horizontalAlignment = GridData.FILL; 
-				compositeSuggestionUser.setLayoutData(grid); 
-				
-				compositeSuggestionUser.addListener(SWT.MouseMove, new Listener() {
+				final Composite compositeSuggestionUser = new Composite(userPostMaster, SWT.None); 
+				final int j=i; 
+				Display.getCurrent().syncExec(new Runnable() {
 					
 					@Override
-					public void handleEvent(Event event) {
+					public void run() {
 						// TODO Auto-generated method stub
+						compositeSuggestionUser.setLayout(new GridLayout(5, false));
+						GridData grid = new GridData(); 
+						grid.grabExcessHorizontalSpace = true; 
+						grid.horizontalAlignment = GridData.FILL; 
+						compositeSuggestionUser.setLayoutData(grid); 
+						
+						compositeSuggestionUser.addListener(SWT.MouseMove, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								 
+								Composite cmp = (Composite)  event.widget; 
+								cmp.setBackground(new Color(Display.getCurrent(), 153,204,0)); 
+								cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+								cmp.redraw(); 
+								cmp.layout(); 
+								Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+								Controller.getWindow().layout(); 
+								
+							}
+						});
+						
+						compositeSuggestionUser.addListener(SWT.MouseExit, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								
+								Composite cmp = (Composite)  event.widget; 
+								cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
+								cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+								cmp.redraw(); 
+								cmp.layout(); 
+								Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+								Controller.getWindow().layout(); 
+							}
+						});
+						controlli.add(compositeSuggestionUser); 
+						userSuggested.add(compositeSuggestionUser); 
+						
 						 
-						Composite cmp = (Composite)  event.widget; 
-						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
-						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-						cmp.redraw(); 
-						cmp.layout(); 
-						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-						Controller.getWindow().layout(); 
 						
-					}
-				});
-				
-				compositeSuggestionUser.addListener(SWT.MouseExit, new Listener() {
-					
-					@Override
-					public void handleEvent(Event event) {
-						// TODO Auto-generated method stub
 						
-						Composite cmp = (Composite)  event.widget; 
-						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
-						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-						cmp.redraw(); 
-						cmp.layout(); 
-						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-						Controller.getWindow().layout(); 
-					}
-				});
-				controlli.add(compositeSuggestionUser); 
-				userSuggested.add(compositeSuggestionUser); 
-				
-				Label labelUserImage = new Label(compositeSuggestionUser, SWT.None); 
-				try {
-					labelUserImage.setImage(resize(getImageStream(new URL(suggestion[i].Avatar).openStream()),80,80));
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-					labelUserImage.setImage(resize(imageAvatar,80,80)); 
-					imageAvatar.dispose(); 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-					labelUserImage.setImage(resize(imageAvatar,80,80)); 
-					imageAvatar.dispose();  
-				} 
-				controlli.add(labelUserImage); 
-				
-				Label labelUserText = new Label(compositeSuggestionUser, SWT.None); 
-				labelUserText.setText(suggestion[i].Username); 
-				controlli.add(labelUserText); 
+						
+						Label labelUserImage = new Label(compositeSuggestionUser, SWT.None); 
+						try {
+							labelUserImage.setImage(resize(getImageStream(new URL(suggestion[j].Avatar).openStream()),48,48));
+						} catch (MalformedURLException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+							 Image  imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+							labelUserImage.setImage(resize(imageAvatar,48,48)); 
+							imageAvatar.dispose(); 
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+							 Image	imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+							labelUserImage.setImage(resize(imageAvatar,48,48)); 
+							imageAvatar.dispose();  
+						} 
+						controlli.add(labelUserImage); 
+						
+						Label labelUserText = new Label(compositeSuggestionUser, SWT.None); 
+						labelUserText.setText(suggestion[j].Username); 
+						controlli.add(labelUserText); 
 
-			    Label labelHidden = new Label(compositeSuggestionUser, SWT.NONE);
-				labelHidden.setText("");
-				labelHidden.setVisible(false);
-				controlli.add(labelHidden);
+					    Label labelHidden = new Label(compositeSuggestionUser, SWT.NONE);
+						labelHidden.setText("");
+						labelHidden.setVisible(false);
+						controlli.add(labelHidden);
+						
+						Label labelNext = new Label(compositeSuggestionUser, SWT.None); 
+						labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+						grid = new GridData(); 
+						grid.grabExcessHorizontalSpace = true; 
+						grid.horizontalAlignment = GridData.END; 
+						labelNext.setLayoutData(grid); 
+						controlli.add(labelNext); 
+						
+					    labelHidden = new Label(compositeSuggestionUser, SWT.NONE);
+						labelHidden.setText("");
+						labelHidden.setVisible(false);
+						controlli.add(labelHidden);
+						
+						compositeSuggestionUser.addListener(SWT.MouseDown, azioni); 
+						compositeSuggestionUser.setData("ID_action", "User_selected"); 
+						compositeSuggestionUser.setData("User_type", "Suggested"); 
+						compositeSuggestionUser.setData("User_data",suggestion[j]); 
+					}
+				}); 
 				
-				Label labelNext = new Label(compositeSuggestionUser, SWT.None); 
-				labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
-				grid = new GridData(); 
-				grid.grabExcessHorizontalSpace = true; 
-				grid.horizontalAlignment = GridData.END; 
-				labelNext.setLayoutData(grid); 
-				controlli.add(labelNext); 
 				
-				compositeSuggestionUser.addListener(SWT.MouseDown, azioni); 
-				compositeSuggestionUser.setData("ID_action", "User_selected"); 
-				compositeSuggestionUser.setData("User_type", "Suggested"); 
-				compositeSuggestionUser.setData("User_data",suggestion[i]); 
 				
 			}
 			
 			
 		}
 		
-		Label labelFollowingsTitle = new Label(panel2, SWT.NONE); 
+		Label labelFollowingsTitle = new Label(userPostMaster, SWT.NONE); 
 		labelFollowingsTitle.setText("Followings:"); 
 		labelFollowingsTitle.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
 		grid = new GridData(); 
@@ -214,11 +285,11 @@ public class DynamicPeople implements Panel{
 		labelFollowingsTitle.setLayoutData(grid); 
 		controlli.add(labelFollowingsTitle);
 		
-		WUser[] following = Controller.getProxy().GetFollowings(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+		final WUser[] following = Controller.getProxy().GetFollowings(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		
 		if(following.length == 0)
 		{
-			labelFollowings = new Label(panel2, SWT.WRAP); 
+			labelFollowings = new Label(userPostMaster, SWT.WRAP); 
 			labelFollowings.setText("You are following no one."); 
 			grid = new GridData(); 
 			grid.horizontalSpan = 3; 
@@ -229,99 +300,109 @@ public class DynamicPeople implements Panel{
 		else
 		{
 			userFollowings = new ArrayList<Composite>();
-			GridData grid2; 
+			 
 			
 			for(int i=0;i< following.length;i++)
 			{
-				
-				Composite compositeFollowingUser = new Composite(panel2, SWT.BORDER); 
-				compositeFollowingUser.setLayout(new GridLayout(4, false));
-				grid2 = new GridData(); 
-				grid2.grabExcessHorizontalSpace = true; 
-				grid2.horizontalAlignment = GridData.FILL; 
-				compositeFollowingUser.setLayoutData(grid2); 
-				
-				
-				compositeFollowingUser.addListener(SWT.MouseMove, new Listener() {
+				final 	Composite compositeFollowingUser = new Composite(userPostMaster, SWT.None); 
+				final int j=i; 
+				Display.getCurrent().syncExec(new Runnable() {
 					
 					@Override
-					public void handleEvent(Event event) {
+					public void run() {
 						// TODO Auto-generated method stub
-					 
-						Composite cmp = (Composite)  event.widget; 
-						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
-						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-						cmp.redraw(); 
-						cmp.layout(); 
-						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-						Controller.getWindow().layout(); 
+						compositeFollowingUser.setLayout(new GridLayout(4, false));
+					    GridData	grid2 = new GridData(); 
+						grid2.grabExcessHorizontalSpace = true; 
+						grid2.horizontalAlignment = GridData.FILL; 
+						compositeFollowingUser.setLayoutData(grid2); 
 						
-					}
-				});
-				
-				compositeFollowingUser.addListener(SWT.MouseExit, new Listener() {
-					
-					@Override
-					public void handleEvent(Event event) {
-						// TODO Auto-generated method stub
 						
-						Composite cmp = (Composite)  event.widget; 
-						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
-						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-						cmp.redraw(); 
-						cmp.layout(); 
-						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-						Controller.getWindow().layout(); 
+						compositeFollowingUser.addListener(SWT.MouseMove, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+							 
+								Composite cmp = (Composite)  event.widget; 
+								cmp.setBackground(new Color(Display.getCurrent(), 153,204,0)); 
+								cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+								cmp.redraw(); 
+								cmp.layout(); 
+								Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+								Controller.getWindow().layout(); 
+								
+							}
+						});
+						
+						compositeFollowingUser.addListener(SWT.MouseExit, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								
+								Composite cmp = (Composite)  event.widget; 
+								cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
+								cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+								cmp.redraw(); 
+								cmp.layout(); 
+								Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+								Controller.getWindow().layout(); 
+							}
+						});
+						controlli.add(compositeFollowingUser); 
+						userFollowings.add(compositeFollowingUser); 
+						
+						Label labelUserImage = new Label(compositeFollowingUser, SWT.None); 
+						try {
+							labelUserImage.setImage(resize(getImageStream(new URL(following[j].Avatar).openStream()),48,48));
+						} catch (MalformedURLException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+						  Image	imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+							labelUserImage.setImage(resize(imageAvatar,48,48)); 
+							imageAvatar.dispose(); 
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+							Image imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+							labelUserImage.setImage(resize(imageAvatar,48,48)); 
+							imageAvatar.dispose();  
+						} 
+						
+						controlli.add(labelUserImage); 
+						
+						Label labelUserText = new Label(compositeFollowingUser, SWT.None); 
+						labelUserText.setText(following[j].Username); 
+						controlli.add(labelUserText);
+		/*
+					    Label labelHidden = new Label(compositeFollowingUser, SWT.NONE);
+						labelHidden.setText("");
+						labelHidden.setVisible(false);
+						controlli.add(labelHidden);
+		*/				
+						Label labelNext = new Label(compositeFollowingUser, SWT.None); 
+						labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+						grid2 = new GridData(); 
+						grid2.grabExcessHorizontalSpace = true; 
+						grid2.horizontalAlignment = GridData.END; 
+						labelNext.setLayoutData(grid2); 
+						controlli.add(labelNext);
+						
+						compositeFollowingUser.addListener(SWT.MouseDown, azioni); 
+						compositeFollowingUser.setData("ID_action", "User_selected"); 
+						compositeFollowingUser.setData("User_type", "Following"); 
+						compositeFollowingUser.setData("User_data",following[j]); 
 					}
-				});
-				controlli.add(compositeFollowingUser); 
-				userFollowings.add(compositeFollowingUser); 
+				}); 
 				
-				Label labelUserImage = new Label(compositeFollowingUser, SWT.None); 
-				try {
-					labelUserImage.setImage(resize(getImageStream(new URL(following[i].Avatar).openStream()),80,80));
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-					labelUserImage.setImage(resize(imageAvatar,80,80)); 
-					imageAvatar.dispose(); 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-					labelUserImage.setImage(resize(imageAvatar,80,80)); 
-					imageAvatar.dispose();  
-				} 
+			
 				
-				controlli.add(labelUserImage); 
-				
-				Label labelUserText = new Label(compositeFollowingUser, SWT.None); 
-				labelUserText.setText(following[i].Username); 
-				controlli.add(labelUserText);
-/*
-			    Label labelHidden = new Label(compositeFollowingUser, SWT.NONE);
-				labelHidden.setText("");
-				labelHidden.setVisible(false);
-				controlli.add(labelHidden);
-*/				
-				Label labelNext = new Label(compositeFollowingUser, SWT.None); 
-				labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
-				grid2 = new GridData(); 
-				grid2.grabExcessHorizontalSpace = true; 
-				grid2.horizontalAlignment = GridData.END; 
-				labelNext.setLayoutData(grid2); 
-				controlli.add(labelNext);
-				
-				compositeFollowingUser.addListener(SWT.MouseDown, azioni); 
-				compositeFollowingUser.setData("ID_action", "User_selected"); 
-				compositeFollowingUser.setData("User_type", "Following"); 
-				compositeFollowingUser.setData("User_data",following[i]); 
 				
 			}
 		}
 		
-		Label labelFollowers = new Label(panel2, SWT.NONE); 
+		Label labelFollowers = new Label(userPostMaster, SWT.NONE); 
 		labelFollowers.setText("Followers: "); 
 		labelFollowers.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
 		grid = new GridData(); 
@@ -331,11 +412,11 @@ public class DynamicPeople implements Panel{
 		labelFollowers.setLayoutData(grid); 
 		controlli.add(labelFollowers);
 		
-		WUser[] followers = Controller.getProxy().GetFollowers(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+		final WUser[] followers = Controller.getProxy().GetFollowers(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		
 		if(followers.length == 0)
 		{
-			Label labelFollowersText = new Label(panel2, SWT.WRAP); 
+			Label labelFollowersText = new Label(userPostMaster, SWT.WRAP); 
 			labelFollowersText.setText("No one is following you."); 
 			grid = new GridData(); 
 			grid.horizontalSpan = 3; 
@@ -345,109 +426,120 @@ public class DynamicPeople implements Panel{
 		}
 		else
 		{
-			GridData grid2; 
+			
 			for(int i=0;i< followers.length;i++)
 			{
 				
-				Composite compositeFollowersUser = new Composite(panel2, SWT.BORDER); 
-				compositeFollowersUser.setLayout(new GridLayout(4, false));
-				grid2 = new GridData(); 
-				grid2.grabExcessHorizontalSpace = true; 
-				grid2.horizontalAlignment = GridData.FILL; 
-				compositeFollowersUser.setLayoutData(grid2); 
+				final Composite compositeFollowersUser = new Composite(userPostMaster, SWT.None); 
+				final int j=i; 
 				
-				
-				compositeFollowersUser.addListener(SWT.MouseMove, new Listener() {
+				Display.getCurrent().syncExec(new Runnable() {
 					
 					@Override
-					public void handleEvent(Event event) {
+					public void run() {
 						// TODO Auto-generated method stub
-						 
-						Composite cmp = (Composite)  event.widget; 
-						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
-						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-						cmp.redraw(); 
-						cmp.layout(); 
-						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-						Controller.getWindow().layout(); 
+						compositeFollowersUser.setLayout(new GridLayout(4, false));
+					  GridData	grid2 = new GridData(); 
+						grid2.grabExcessHorizontalSpace = true; 
+						grid2.horizontalAlignment = GridData.FILL; 
+						compositeFollowersUser.setLayoutData(grid2); 
 						
-					}
-				});
-				
-				compositeFollowersUser.addListener(SWT.MouseExit, new Listener() {
-					
-					@Override
-					public void handleEvent(Event event) {
-						// TODO Auto-generated method stub
 						
-						Composite cmp = (Composite)  event.widget; 
-						cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
-						cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-						cmp.redraw(); 
-						cmp.layout(); 
-						Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-						Controller.getWindow().layout(); 
+						compositeFollowersUser.addListener(SWT.MouseMove, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								 
+								Composite cmp = (Composite)  event.widget; 
+								cmp.setBackground(new Color(Display.getCurrent(), 153,204,0)); 
+								cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+								cmp.redraw(); 
+								cmp.layout(); 
+								Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+								Controller.getWindow().layout(); 
+								
+							}
+						});
+						
+						compositeFollowersUser.addListener(SWT.MouseExit, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								
+								Composite cmp = (Composite)  event.widget; 
+								cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
+								cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+								cmp.redraw(); 
+								cmp.layout(); 
+								Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+								Controller.getWindow().layout(); 
+							}
+						});
+						controlli.add(compositeFollowersUser); 
+						
+						Label labelUserImage = new Label(compositeFollowersUser, SWT.None); 
+						try {
+							labelUserImage.setImage(resize(getImageStream(new URL(followers[j].Avatar).openStream()),48,48));
+						} catch (MalformedURLException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+							Image imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+							labelUserImage.setImage(resize(imageAvatar,48,48)); 
+							imageAvatar.dispose(); 
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+							Image imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+							labelUserImage.setImage(resize(imageAvatar,48,48)); 
+							imageAvatar.dispose();  
+						} 
+						controlli.add(labelUserImage); 
+						
+						Label labelUserText = new Label(compositeFollowersUser, SWT.None); 
+						labelUserText.setText(followers[j].Username); 
+						grid2 = new GridData(); 
+						grid2.horizontalAlignment = GridData.FILL; 
+						labelUserText.setLayoutData(grid2); 
+						controlli.add(labelUserText); 
+		/*
+					    Label labelHidden = new Label(compositeFollowersUser, SWT.NONE);
+						labelHidden.setText("");
+						labelHidden.setVisible(false);
+						controlli.add(labelHidden);
+						*/
+						Label labelNext = new Label(compositeFollowersUser, SWT.None); 
+						labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+						grid2 = new GridData(); 
+						grid2.grabExcessHorizontalSpace = true; 
+						grid2.horizontalAlignment = GridData.END; 
+						labelNext.setLayoutData(grid2); 
+						controlli.add(labelNext); 
+						
+						compositeFollowersUser.addListener(SWT.MouseDown, azioni); 
+						
+						compositeFollowersUser.setData("ID_action", "User_selected"); 
+						compositeFollowersUser.setData("User_type", "Followers"); 
+						compositeFollowersUser.setData("User_data",followers[j]); 
 					}
-				});
-				controlli.add(compositeFollowersUser); 
+				}); 
 				
-				Label labelUserImage = new Label(compositeFollowersUser, SWT.None); 
-				try {
-					labelUserImage.setImage(resize(getImageStream(new URL(followers[i].Avatar).openStream()),80,80));
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-					labelUserImage.setImage(resize(imageAvatar,80,80)); 
-					imageAvatar.dispose(); 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-					labelUserImage.setImage(resize(imageAvatar,80,80)); 
-					imageAvatar.dispose();  
-				} 
-				controlli.add(labelUserImage); 
 				
-				Label labelUserText = new Label(compositeFollowersUser, SWT.None); 
-				labelUserText.setText(followers[i].Username); 
-				grid2 = new GridData(); 
-				grid2.horizontalAlignment = GridData.FILL; 
-				labelUserText.setLayoutData(grid2); 
-				controlli.add(labelUserText); 
-/*
-			    Label labelHidden = new Label(compositeFollowersUser, SWT.NONE);
-				labelHidden.setText("");
-				labelHidden.setVisible(false);
-				controlli.add(labelHidden);
-				*/
-				Label labelNext = new Label(compositeFollowersUser, SWT.None); 
-				labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
-				grid2 = new GridData(); 
-				grid2.grabExcessHorizontalSpace = true; 
-				grid2.horizontalAlignment = GridData.END; 
-				labelNext.setLayoutData(grid2); 
-				controlli.add(labelNext); 
-				
-				compositeFollowersUser.addListener(SWT.MouseDown, azioni); 
-				
-				compositeFollowersUser.setData("ID_action", "User_selected"); 
-				compositeFollowersUser.setData("User_type", "Followers"); 
-				compositeFollowersUser.setData("User_data",followers[i]); 
 			}
 		}
 	
-		Label labelHidden = new Label(panel2, SWT.NONE); 
+		Label labelHidden = new Label(userPostMaster, SWT.NONE); 
 		labelHidden.setText("Hidden:"); 
 		labelHidden.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 14, SWT.BOLD )); 
 		grid.horizontalSpan = 3;  
 		controlli.add(labelHidden);	
 		
-	WUser[]	hiddenUsers = Controller.getProxy().GetHiddenUsers(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
+	final WUser[]	hiddenUsers = Controller.getProxy().GetHiddenUsers(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 	
 	if(hiddenUsers.length == 0)
 	{
-		Label labelHiddenUsersText = new Label(panel2, SWT.WRAP); 
+		Label labelHiddenUsersText = new Label(userPostMaster, SWT.WRAP); 
 		labelHiddenUsersText.setText("You have hidden no one."); 
 		grid = new GridData(); 
 		grid.horizontalSpan = 3; 
@@ -458,114 +550,120 @@ public class DynamicPeople implements Panel{
 	else
 	{
 		
-		GridData grid2; 
+		
 		for(int i=0;i< hiddenUsers.length;i++)
 		{
 			
-			Composite compositeHiddenUser = new Composite(panel2, SWT.BORDER); 
-			compositeHiddenUser.setLayout(new GridLayout(4, false));
-			grid2 = new GridData(); 
-			grid2.grabExcessHorizontalSpace = true; 
-			grid2.horizontalAlignment = GridData.FILL; 
-			compositeHiddenUser.setLayoutData(grid2); 
-			
-			
-			compositeHiddenUser.addListener(SWT.MouseMove, new Listener() {
+			final Composite compositeHiddenUser = new Composite(userPostMaster, SWT.None); 
+			final int j = i; 
+			Display.getCurrent().syncExec(new Runnable() {
 				
 				@Override
-				public void handleEvent(Event event) {
+				public void run() {
 					// TODO Auto-generated method stub
-					 
-					Composite cmp = (Composite)  event.widget; 
-					cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_GREEN)); 
-					cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-					cmp.redraw(); 
-					cmp.layout(); 
-					Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-					Controller.getWindow().layout(); 
+					compositeHiddenUser.setLayout(new GridLayout(4, false));
+					GridData  grid2 = new GridData(); 
+					grid2.grabExcessHorizontalSpace = true; 
+					grid2.horizontalAlignment = GridData.FILL; 
+					compositeHiddenUser.setLayoutData(grid2); 
 					
+					
+					compositeHiddenUser.addListener(SWT.MouseMove, new Listener() {
+						
+						@Override
+						public void handleEvent(Event event) {
+							// TODO Auto-generated method stub
+							 
+							Composite cmp = (Composite)  event.widget; 
+							cmp.setBackground(new Color(Display.getCurrent(), 153,204,0)); 
+							cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+							cmp.redraw(); 
+							cmp.layout(); 
+							Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+							Controller.getWindow().layout(); 
+							
+						}
+					});
+					
+					compositeHiddenUser.addListener(SWT.MouseExit, new Listener() {
+						
+						@Override
+						public void handleEvent(Event event) {
+							// TODO Auto-generated method stub
+						
+							Composite cmp = (Composite)  event.widget; 
+							cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
+							cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
+							cmp.redraw(); 
+							cmp.layout(); 
+							Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
+							Controller.getWindow().layout(); 
+						}
+					});
+					controlli.add(compositeHiddenUser); 
+					
+					Label labelUserImage = new Label(compositeHiddenUser, SWT.None); 
+					try {
+						labelUserImage.setImage(resize(getImageStream(new URL(hiddenUsers[j].Avatar).openStream()),48,48));
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						Image  imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+						labelUserImage.setImage(resize(imageAvatar,48,48)); 
+						imageAvatar.dispose(); 
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						Image imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
+						labelUserImage.setImage(resize(imageAvatar,48,48)); 
+						imageAvatar.dispose();  
+					} 
+					controlli.add(labelUserImage); 
+					
+					Label labelUserText = new Label(compositeHiddenUser, SWT.None); 
+					labelUserText.setText(hiddenUsers[j].Username); 
+					grid2 = new GridData(); 
+					grid2.horizontalAlignment = GridData.FILL; 
+					labelUserText.setLayoutData(grid2); 
+					controlli.add(labelUserText); 
+		/*
+				    Label labelHidden = new Label(compositeFollowersUser, SWT.NONE);
+					labelHidden.setText("");
+					labelHidden.setVisible(false);
+					controlli.add(labelHidden);
+					*/
+					Label labelNext = new Label(compositeHiddenUser, SWT.None); 
+					labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
+					grid2 = new GridData(); 
+					grid2.grabExcessHorizontalSpace = true; 
+					grid2.horizontalAlignment = GridData.END; 
+					labelNext.setLayoutData(grid2); 
+					controlli.add(labelNext); 
+					
+					compositeHiddenUser.addListener(SWT.MouseDown, azioni); 
+					
+					compositeHiddenUser.setData("ID_action", "User_selected"); 
+					compositeHiddenUser.setData("User_type", "Hidden"); 
+					compositeHiddenUser.setData("User_data",hiddenUsers[j]); 
 				}
-			});
+			}); 
 			
-			compositeHiddenUser.addListener(SWT.MouseExit, new Listener() {
-				
-				@Override
-				public void handleEvent(Event event) {
-					// TODO Auto-generated method stub
-				
-					Composite cmp = (Composite)  event.widget; 
-					cmp.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND)); 
-					cmp.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE)); 
-					cmp.redraw(); 
-					cmp.layout(); 
-					Controller.getWindow().redraw(cmp.getLocation().x, cmp.getLocation().y, cmp.getSize().x, cmp.getSize().y, true); 
-					Controller.getWindow().layout(); 
-				}
-			});
-			controlli.add(compositeHiddenUser); 
 			
-			Label labelUserImage = new Label(compositeHiddenUser, SWT.None); 
-			try {
-				labelUserImage.setImage(resize(getImageStream(new URL(hiddenUsers[i].Avatar).openStream()),80,80));
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-				labelUserImage.setImage(resize(imageAvatar,80,80)); 
-				imageAvatar.dispose(); 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				imageAvatar = getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"));
-				labelUserImage.setImage(resize(imageAvatar,80,80)); 
-				imageAvatar.dispose();  
-			} 
-			controlli.add(labelUserImage); 
-			
-			Label labelUserText = new Label(compositeHiddenUser, SWT.None); 
-			labelUserText.setText(hiddenUsers[i].Username); 
-			grid2 = new GridData(); 
-			grid2.horizontalAlignment = GridData.FILL; 
-			labelUserText.setLayoutData(grid2); 
-			controlli.add(labelUserText); 
-/*
-		    Label labelHidden = new Label(compositeFollowersUser, SWT.NONE);
-			labelHidden.setText("");
-			labelHidden.setVisible(false);
-			controlli.add(labelHidden);
-			*/
-			Label labelNext = new Label(compositeHiddenUser, SWT.None); 
-			labelNext.setImage(getImageStream(this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Next.png")));
-			grid2 = new GridData(); 
-			grid2.grabExcessHorizontalSpace = true; 
-			grid2.horizontalAlignment = GridData.END; 
-			labelNext.setLayoutData(grid2); 
-			controlli.add(labelNext); 
-			
-			compositeHiddenUser.addListener(SWT.MouseDown, azioni); 
-			
-			compositeHiddenUser.setData("ID_action", "User_selected"); 
-			compositeHiddenUser.setData("User_type", "Hidden"); 
-			compositeHiddenUser.setData("User_data",hiddenUsers[i]); 
 			
 		}
 	}
 	
+	superUserPostMaster.addControlListener(new ControlAdapter() {
+		public void controlResized(ControlEvent e) {
+			
+			superUserPostMaster.setMinSize(Controller.getWindowWidth()-10, 100 * (suggestion.length + following.length + followers.length + hiddenUsers.length)); 
+			
+		}} ); 
+	superUserPostMaster.setMinSize(Controller.getWindowWidth()-10, 100 * (suggestion.length + following.length + followers.length + hiddenUsers.length));
 	Controller.setWindowName("People"); 
-	int totalLink = (suggestion.length + following.length + followers.length + hiddenUsers.length);  
-	if( totalLink > 5 )
-	{
-		Controller.setScrollHeight(Controller.getWindowHeight() + (totalLink * 70)); 
-	    ((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
-	}
-	else
-	{
-		Controller.setScrollHeight(Controller.getWindowHeight());
-		((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
-	}
 	
 	panel2.redraw(); 
-	
+	panel2.layout(); 
 	
 	
 	}
@@ -576,7 +674,17 @@ public class DynamicPeople implements Panel{
 		
 		for(int i=0; i < controlli.size();i++)
 		{
-		 controlli.get(i).dispose(); 
+			final int j=i;
+			Display.getCurrent().syncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					controlli.get(j).dispose(); 
+				}
+			});
+			
+		 
 			
 		}
 		//panel.setLayout(null); 

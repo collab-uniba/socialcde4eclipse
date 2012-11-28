@@ -2,208 +2,218 @@ package it.uniba.di.socialcdeforeclipse.staticview;
 
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
-public class ProfilePanel implements Panel{
+public class ProfilePanel implements Panel {
 
-	private Listener azioni; 
-	private Label labelAvatarProfile; 
-	private Composite composite_static; 
-	private Label labelPeople; 
+	private Listener azioni;
+	private Label labelAvatarProfile;
+	private Composite composite_static;
+	private Label labelPeople;
 	private Label labelHomeTimeline;
-	private Label labelInteractionTimeline; 
-	private Label labelInteractiveTimeline; 
-	private Composite composite_dinamic; 
-	private Label labelHidden;  
-	private Label labelLogout; 
-	private ArrayList<Control> controlli; 
-	
-	private final InputStream PATH_DEFAULT_AVATAR = this.getClass().getClassLoader().getResourceAsStream("images/DefaultAvatar.png"); 
-	private final InputStream PATH_BALOON = this.getClass().getClassLoader().getResourceAsStream("images/Baloon.png"); 
-	private final InputStream PATH_BACK = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Back.png"); 
-	private final InputStream PATH_FOLLOW = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Follow.png");
-	private final InputStream PATH_HIDE = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Hide.png");
-	private final InputStream PATH_HOME = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Home.png");
-	private final InputStream PATH_INTERACTIVE_TIMELINE = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/InteractiveTimeline.png");
-	private final InputStream PATH_INTERACTION_TIMELINE = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/IterationTimeline.png");
-	private final InputStream PATH_LOGOUT = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/Logout.png");
-	private final InputStream PATH_PEOPLE = this.getClass().getClassLoader().getResourceAsStream("images/Toolbar/People.png");
-	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader().getResourceAsStream("images/Wallpaper.png");
+	private Label labelInterationTimeline;
+	private Label labelInteractiveTimeline;
+	private Composite composite_dinamic;
+	private Label labelHidden;
+	private Label labelLogout;
+	private ArrayList<Control> controlli;
 
+	private final InputStream PATH_DEFAULT_AVATAR = this.getClass()
+			.getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
+	private final InputStream PATH_BALOON = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Baloon.png");
+	private final InputStream PATH_BACK = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Toolbar/Back.png");
+	private final InputStream PATH_FOLLOW = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Toolbar/Follow.png");
+	private final InputStream PATH_HIDE = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Toolbar/Hide.png");
+	private final InputStream PATH_HOME = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Toolbar/Home.png");
+	private final InputStream PATH_INTERACTIVE_TIMELINE = this.getClass()
+			.getClassLoader()
+			.getResourceAsStream("images/Toolbar/InteractiveTimeline.png");
+	private final InputStream PATH_INTERACTION_TIMELINE = this.getClass()
+			.getClassLoader()
+			.getResourceAsStream("images/Toolbar/IterationTimeline.png");
+	private final InputStream PATH_LOGOUT = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Toolbar/Logout.png");
+	private final InputStream PATH_PEOPLE = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Toolbar/People.png");
+	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
+			.getResourceAsStream("images/Wallpaper.png");
 
 	public Image resize(Image image, int width, int height) {
 		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0,
-		image.getBounds().width, image.getBounds().height,
-		0, 0, width, height);
+		gc.drawImage(image, 0, 0, image.getBounds().width,
+				image.getBounds().height, 0, 0, width, height);
 		gc.dispose();
 		image.dispose(); // don't forget about me!
 		return scaled;
-		}
-	
-	public Image get_ImageStream(InputStream stream)
-	{
-		return  new Image(Controller.getWindow().getDisplay(),stream); 
 	}
-	
+
+	public Image get_ImageStream(InputStream stream) {
+		return new Image(Controller.getWindow().getDisplay(), stream);
+	}
+
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
-		
-		 azioni = new ActionGeneral();
-		 controlli = new ArrayList<Control>();
+
+		azioni = new ActionGeneral();
+		controlli = new ArrayList<Control>();
 		GridLayout layout = new GridLayout(1, false);
-		
+
 		panel.setLayout(layout);
-		panel.setBackground(new Color(Display.getCurrent(),255,255,255)); 
-		//panel.setBackgroundImage(resize(get_ImageStream(PATH_WALLPAPER), Controller.getWindowWidth(), Controller.getWindowHeight())); 
-		//panel.setData("ID_action","profilePanel");
-		
-		GridLayout grid_static = new GridLayout(15,false);
-		grid_static.makeColumnsEqualWidth = true; 
-		
-		composite_static = new Composite( panel, SWT.NONE );
-		composite_static.setLayout( grid_static );
-		composite_static.setBackground(new Color(Display.getCurrent(), 192,192,186)); 
-		GridData gridData = new GridData(); 
+		panel.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+		// panel.setBackgroundImage(resize(get_ImageStream(PATH_WALLPAPER),
+		// Controller.getWindowWidth(), Controller.getWindowHeight()));
+		// panel.setData("ID_action","profilePanel");
+
+		GridLayout grid_static = new GridLayout(15, false);
+		grid_static.makeColumnsEqualWidth = true;
+
+		composite_static = new Composite(panel, SWT.NONE);
+		composite_static.setLayout(grid_static);
+		composite_static.setBackground(new Color(Display.getCurrent(), 192,
+				192, 186));
+		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = gridData.FILL; 
-		composite_static.setLayoutData(gridData); 
-		
+		gridData.horizontalAlignment = gridData.FILL;
+		composite_static.setLayoutData(gridData);
+
 		labelAvatarProfile = new Label(composite_static, SWT.NONE);
-	
-		 
-		
-		if(Controller.getCurrentUser().Avatar == null || Controller.getCurrentUser().Avatar.equals(""))
-		{
-			labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR)); 
-			labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 32, 32));
-		}
-		else
-		{
+
+		if (Controller.getCurrentUser().Avatar == null
+				|| Controller.getCurrentUser().Avatar.equals("")) {
+			labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
+			labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(),
+					32, 32));
+		} else {
 			try {
-				labelAvatarProfile.setImage(get_ImageStream(new URL(Controller.getCurrentUser().Avatar).openStream()));
-				labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(), 32, 32)); 
-				 
-				
-				
+				labelAvatarProfile.setImage(get_ImageStream(new URL(Controller
+						.getCurrentUser().Avatar).openStream()));
+				labelAvatarProfile.setImage(resize(
+						labelAvatarProfile.getImage(), 32, 32));
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				 
-				labelAvatarProfile.setImage(resize(get_ImageStream(PATH_DEFAULT_AVATAR), 32, 32));
-				//e.printStackTrace();
-			} 
-		}
-		labelAvatarProfile.setToolTipText("Profile"); 
-		labelAvatarProfile.setData("ID_action", "labelAvatarProfile");
-		labelAvatarProfile.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
-		controlli.add(labelAvatarProfile); 
-		
-		
-		
-		labelPeople = new Label(composite_static, SWT.PUSH);
-		labelPeople.setImage(get_ImageStream(PATH_PEOPLE)); 
-		labelPeople.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND)); 
-		labelPeople.setToolTipText("People"); 
-		labelPeople.setData("ID_action", "labelPeople");
-		
-		
-		controlli.add(labelPeople); 
-		
-		labelHomeTimeline = new Label(composite_static, SWT.PUSH);
-		labelHomeTimeline.setImage(get_ImageStream(PATH_HOME)); 
-		labelHomeTimeline.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
-		labelHomeTimeline.setToolTipText("Home Timeline"); 
-		labelHomeTimeline.setData("ID_action", "labelHomeTimeline");
-		
-		controlli.add(labelHomeTimeline); 
-		
-		labelInteractionTimeline = new Label(composite_static,SWT.PUSH);
-		labelInteractionTimeline.setImage(get_ImageStream(PATH_INTERACTION_TIMELINE)); 
-		labelInteractionTimeline.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
-		labelInteractionTimeline.setToolTipText("Interation Timeline"); 
-		
-		controlli.add(labelInteractionTimeline); 
-		
-		labelInteractiveTimeline = new Label(composite_static,SWT.PUSH); 
-		labelInteractiveTimeline.setImage(get_ImageStream(PATH_INTERACTIVE_TIMELINE)); 
-		labelInteractiveTimeline.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
-		labelInteractiveTimeline.setToolTipText("Interactive Timeline"); 
-		
-		controlli.add(labelInteractiveTimeline); 
-		
-		labelLogout = new Label(composite_static, SWT.BUTTON_MASK); 
-		labelLogout.setImage(get_ImageStream(PATH_LOGOUT));
-		labelLogout.setCursor( new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
-		labelLogout.setData("ID_action", "labelLogout");
-		labelLogout.setToolTipText("Logout"); 
-		 gridData = new GridData(); 
-		gridData.grabExcessHorizontalSpace = true;	
-		
-		labelLogout.setLayoutData(gridData); 
-		
-		controlli.add(labelLogout);
-		
-		
-		
-		composite_static.layout(); 
-		
-		Controller.selectDynamicWindow(0); 
-		
-		controlli.add(composite_static);
-		controlli.add(composite_dinamic); 
 
-		panel.layout(); 
-		
-		//panel.addListener(SWT.Resize, azioni); 
-		labelAvatarProfile.addListener(SWT.MouseDown, azioni); 
-		labelHomeTimeline.addListener(SWT.MouseDown, azioni); 
-		labelLogout.addListener(SWT.MouseDown, azioni); 
-		labelPeople.addListener(SWT.MouseDown, azioni); 
-		
+				labelAvatarProfile.setImage(resize(
+						get_ImageStream(PATH_DEFAULT_AVATAR), 32, 32));
+				// e.printStackTrace();
+			}
+		}
+		labelAvatarProfile.setToolTipText("Profile");
+		labelAvatarProfile.setData("ID_action", "labelAvatarProfile");
+		labelAvatarProfile.setCursor(new Cursor(panel.getDisplay(),
+				SWT.CURSOR_HAND));
+		controlli.add(labelAvatarProfile);
+
+		labelPeople = new Label(composite_static, SWT.PUSH);
+		labelPeople.setImage(get_ImageStream(PATH_PEOPLE));
+		labelPeople.setCursor(new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
+		labelPeople.setToolTipText("People");
+		labelPeople.setData("ID_action", "labelPeople");
+
+		controlli.add(labelPeople);
+
+		labelHomeTimeline = new Label(composite_static, SWT.PUSH);
+		labelHomeTimeline.setImage(get_ImageStream(PATH_HOME));
+		labelHomeTimeline.setCursor(new Cursor(panel.getDisplay(),
+				SWT.CURSOR_HAND));
+		labelHomeTimeline.setToolTipText("Home Timeline");
+		labelHomeTimeline.setData("ID_action", "labelHomeTimeline");
+
+		controlli.add(labelHomeTimeline);
+
+		labelInterationTimeline = new Label(composite_static, SWT.PUSH);
+		labelInterationTimeline
+				.setImage(get_ImageStream(PATH_INTERACTION_TIMELINE));
+		labelInterationTimeline.setCursor(new Cursor(panel.getDisplay(),
+				SWT.CURSOR_HAND));
+		labelInterationTimeline.setToolTipText("Interation Timeline");
+		labelInterationTimeline.setData("ID_action", "labelIterationTimeline");
+		controlli.add(labelInterationTimeline);
+
+		labelInteractiveTimeline = new Label(composite_static, SWT.PUSH);
+		labelInteractiveTimeline
+				.setImage(get_ImageStream(PATH_INTERACTIVE_TIMELINE));
+		labelInteractiveTimeline.setCursor(new Cursor(panel.getDisplay(),
+				SWT.CURSOR_HAND));
+		labelInteractiveTimeline.setToolTipText("Interactive Timeline");
+
+		controlli.add(labelInteractiveTimeline);
+
+		labelLogout = new Label(composite_static, SWT.BUTTON_MASK);
+		labelLogout.setImage(get_ImageStream(PATH_LOGOUT));
+		labelLogout.setCursor(new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
+		labelLogout.setData("ID_action", "labelLogout");
+		labelLogout.setToolTipText("Logout");
+		gridData = new GridData();
+		gridData.grabExcessHorizontalSpace = true;
+
+		labelLogout.setLayoutData(gridData);
+
+		controlli.add(labelLogout);
+
+		composite_static.layout();
+
+		Controller.selectDynamicWindow(0);
+
+		controlli.add(composite_static);
+		controlli.add(composite_dinamic);
+
+		panel.layout();
+
+		// panel.addListener(SWT.Resize, azioni);
+		labelAvatarProfile.addListener(SWT.MouseDown, azioni);
+		labelHomeTimeline.addListener(SWT.MouseDown, azioni);
+		labelInterationTimeline.addListener(SWT.MouseDown, azioni);
+		labelLogout.addListener(SWT.MouseDown, azioni);
+		labelPeople.addListener(SWT.MouseDown, azioni);
+
 	}
 
 	@Override
 	public void dispose(Composite panel) {
 		// TODO Auto-generated method stub
-		for(int i=0; i < controlli.size();i++)
-		{
-			controlli.get(i).dispose(); 
-			
-		}
-		panel.setLayout(null); 
-	}
+		for (int i = 0; i < controlli.size(); i++) {
+			final int j = i;
+			Display.getCurrent().syncExec(new Runnable() {
 
-	
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					controlli.get(j).dispose();
+				}
+			});
+
+		}
+		panel.setLayout(null);
+	}
 
 	public Composite getComposite_static() {
 		return composite_static;
@@ -258,7 +268,5 @@ public class ProfilePanel implements Panel{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }

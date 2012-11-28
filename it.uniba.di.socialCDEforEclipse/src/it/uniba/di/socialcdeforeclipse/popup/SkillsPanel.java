@@ -1,33 +1,22 @@
 package it.uniba.di.socialcdeforeclipse.popup;
 
-import java.io.InputStream;
+
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
@@ -40,16 +29,12 @@ public class SkillsPanel implements Panel {
 	private int yCoordinate;
 	private int xCoordinateWithOffset;
 	private int yCoordinateWithOffset;
-	private WUser user_selected; 
-	private Listener backListener; 
-	
-	
-	
-	
+	private WUser user_selected;
+	private Listener backListener;
+
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
-	
 
 		shadow = new Shell(panel.getShell(), SWT.NO_TRIM);
 		shadow.setSize(Controller.getWindowWidth(),
@@ -69,7 +54,7 @@ public class SkillsPanel implements Panel {
 		GridLayout layout = new GridLayout(1, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(),255,255,255)); 
+		shell.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = GridData.FILL;
@@ -83,54 +68,52 @@ public class SkillsPanel implements Panel {
 		gridData.horizontalSpan = 2;
 		gridData.widthHint = 300;
 		labelSkills.setLayoutData(gridData);
-		
-		String[] skills = Controller.getProxy().GetSkills(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), user_selected.Username);
-		
-		if(skills.length > 0)
-		{
-			String stringSkills = ""; 
-			
-			for(int i=0;i<skills.length;i++)
-			{
-				if(i== skills.length -1)
-				{
-					stringSkills += skills[i]; 
-				}
-				else
-				{
-					stringSkills += skills[i] + ", "; 
+
+		String[] skills = Controller.getProxy().GetSkills(
+				Controller.getCurrentUser().Username,
+				Controller.getCurrentUserPassword(), user_selected.Username);
+
+		if (skills.length > 0) {
+			String stringSkills = "";
+
+			for (int i = 0; i < skills.length; i++) {
+				if (i == skills.length - 1) {
+					stringSkills += skills[i];
+				} else {
+					stringSkills += skills[i] + ", ";
 				}
 			}
-			
-			Label skillsFounded = new Label(shell, SWT.WRAP); 
-			gridData = new GridData(); 
+
+			Label skillsFounded = new Label(shell, SWT.WRAP);
+			gridData = new GridData();
 			gridData.widthHint = 200;
 			gridData.heightHint = 120;
-			skillsFounded.setLayoutData(gridData); 
-			skillsFounded.setText(stringSkills); 
-			
-			
+			skillsFounded.setLayoutData(gridData);
+			skillsFounded.setText(stringSkills);
+
+		} else {
+			Label noSkills = new Label(shell, SWT.None);
+			noSkills.setText("There are no skills or there are no \"Get your skills\" \n feature selected.\n Try again later.");
 		}
-		else
-		{
-			Label noSkills = new Label(shell, SWT.None); 
-			noSkills.setText("There are no skills or there are no \"Get your skills\" \n feature selected.\n Try again later."); 
-		}
-		
-	GeneralButton	btnBack = new GeneralButton(shell, SWT.None); 
-		btnBack.setText("Back"); 
+
+		GeneralButton btnBack = new GeneralButton(shell, SWT.None);
+		btnBack.setText("Back");
 		btnBack.setWidth(80);
-		btnBack.setHeight(30); 
+		btnBack.setHeight(30);
 		btnBack.setxCoordinate(116);
-		btnBack.setyCoordinate(161); 
-		btnBack.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnBack.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnBack.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnBack.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnBack.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		btnBack.setyCoordinate(161);
+		btnBack.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnBack.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnBack.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnBack.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnBack.setFont(new Font(Controller.getWindow().getDisplay(),
+				"Calibri", 12, SWT.BOLD));
 		btnBack.addListener(SWT.Selection, backListener);
-		
-	
+
 		shadow.addMouseListener(new MouseListener() {
 
 			@Override
@@ -152,15 +135,11 @@ public class SkillsPanel implements Panel {
 			}
 		});
 
-	
-		
 		shell.layout();
 		shell.open();
-		
+
 	}
 
-	
-	
 	public WUser getUser_selected() {
 		return user_selected;
 	}
@@ -212,13 +191,9 @@ public class SkillsPanel implements Panel {
 	@Override
 	public void dispose(Composite panel) {
 		// TODO Auto-generated method stub
-		shell.dispose(); 
-		shadow.dispose(); 
+		shell.dispose();
+		shadow.dispose();
 	}
-
-	
-
-
 
 	@Override
 	public HashMap<String, Object> getData() {

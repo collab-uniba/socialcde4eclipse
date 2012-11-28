@@ -1,7 +1,5 @@
 package it.uniba.di.socialcdeforeclipse.object;
 
-
-
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.JFaceResources;
@@ -60,52 +58,49 @@ public class ButtonAvatar extends Canvas {
 	public static int IMAGE_LEFT = 0;
 	public static int IMAGE_RIGHT = 1;
 	protected int imageStyle = 0;
-	
-	private  int xCoordinate; 
-	private  int yCoordinate; 
-	private  int width; 
-	private  int height;
-	private Boolean flagDimension = false; 
-	
-	
-	
-	
-	public  int getxCoordinate() {
+
+	private int xCoordinate;
+	private int yCoordinate;
+	private int width;
+	private int height;
+	private Boolean flagDimension = false;
+
+	public int getxCoordinate() {
 		return xCoordinate;
 	}
 
-	public  void setxCoordinate(int xCoordinate) {
+	public void setxCoordinate(int xCoordinate) {
 		this.xCoordinate = xCoordinate;
 	}
 
-	public  int getyCoordinate() {
+	public int getyCoordinate() {
 		return yCoordinate;
 	}
 
-	public  void setyCoordinate(int yCoordinate) {
+	public void setyCoordinate(int yCoordinate) {
 		this.yCoordinate = yCoordinate;
 	}
 
-	public  int getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
-	public  void setWidth(int width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
-	public  int getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public  void setHeight(int height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
 	public ButtonAvatar(Composite parent, int style) {
 		super(parent, style | SWT.NO_BACKGROUND);
 		this.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		 
+
 		setDefaultColors();
 		addListeners();
 	}
@@ -121,8 +116,6 @@ public class ButtonAvatar extends Canvas {
 			}
 		});
 
-		
-		
 		addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 
@@ -264,7 +257,7 @@ public class ButtonAvatar extends Canvas {
 		hoverBorderColor = getSavedColor(147, 147, 147);
 		clickedBorderColor = getSavedColor(147, 147, 147);
 		inactiveBorderColor = getSavedColor(200, 200, 200);
-		selectedBorderColor = getSavedColor(187,187,187);
+		selectedBorderColor = getSavedColor(187, 187, 187);
 		backgroundColor = getSavedColor(248, 248, 248);
 		backgroundColor2 = getSavedColor(228, 228, 228);
 		clickedColor = getSavedColor(120, 120, 120);
@@ -345,45 +338,30 @@ public class ButtonAvatar extends Canvas {
 	}
 
 	private void paintControl(PaintEvent e) {
-		
-		 
-		
-		
-		
-		 
-		
-		 
-		
-		if( this.getClientArea().height != 80 || this.getClientArea().width != 85)
-		{
-			
-			this.setBounds(0,0,85,80);
-			
+
+		if (this.getClientArea().height != 80
+				|| this.getClientArea().width != 85) {
+
+			this.setBounds(0, 0, 85, 80);
+
 			/*
-			switch (counterPosition) {
-			case 0:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
-				counterPosition +=1;
-				break;
-			case 1:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
-				counterPosition +=1; 
-				break;
-			case 2:
-				this.setBounds(this.computeTrim(xValue[counterPosition], yCoordinateValue, 70, 60));
-				counterPosition = 0;
-				yCoordinateValue += 120;
-			default:
-				break;
-			}
-			
-			
-			
-			
-			//System.out.println("Dimensioni fissate " + this.getBounds() ); 
-			flagDimension = true;*/ 
+			 * switch (counterPosition) { case 0:
+			 * this.setBounds(this.computeTrim(xValue[counterPosition],
+			 * yCoordinateValue, 70, 60)); counterPosition +=1; break; case 1:
+			 * this.setBounds(this.computeTrim(xValue[counterPosition],
+			 * yCoordinateValue, 70, 60)); counterPosition +=1; break; case 2:
+			 * this.setBounds(this.computeTrim(xValue[counterPosition],
+			 * yCoordinateValue, 70, 60)); counterPosition = 0; yCoordinateValue
+			 * += 120; default: break; }
+			 * 
+			 * 
+			 * 
+			 * 
+			 * //System.out.println("Dimensioni fissate " + this.getBounds() );
+			 * flagDimension = true;
+			 */
 		}
-		
+
 		if (currentColor == null) {
 			currentColor = backgroundColor;
 			currentColor2 = backgroundColor2;
@@ -398,9 +376,9 @@ public class ButtonAvatar extends Canvas {
 		if (p.x > getClientArea().width) {
 			p.x = getClientArea().width;
 		}
-		//Rectangle rect = new Rectangle(0, 0, p.x, p.y);
-		Rectangle rect = new Rectangle(0, 0, 85,80);
-		
+		// Rectangle rect = new Rectangle(0, 0, p.x, p.y);
+		Rectangle rect = new Rectangle(0, 0, 85, 80);
+
 		GC gc = e.gc;
 		gc.setAntialias(SWT.ON);
 		gc.setAdvanced(true);
@@ -470,27 +448,25 @@ public class ButtonAvatar extends Canvas {
 			drawText(gc, x, y);
 			if (image != null) {
 				x = rect.width - x - image.getBounds().width + imagePadding;
-				drawImage(gc, x+2, y);
+				drawImage(gc, x + 2, y);
 			}
 		} else {
-			x = drawImage(gc, x+2, y);
+			x = drawImage(gc, x + 2, y);
 			drawText(gc, x, y);
 		}
-		
-		
-		
+
 	}
 
 	private void drawText(GC gc, int x, int y) {
 		gc.setFont(font);
 		gc.setForeground(currentFontColor);
-		gc.drawText(text, 5, y+90, SWT.DRAW_TRANSPARENT);
+		gc.drawText(text, 5, y + 90, SWT.DRAW_TRANSPARENT);
 	}
 
 	private int drawImage(GC gc, int x, int y) {
 		if (image == null)
 			return x;
-		gc.drawImage(image, x-5, y);
+		gc.drawImage(image, x - 5, y);
 		return x + image.getBounds().width + imagePadding;
 	}
 

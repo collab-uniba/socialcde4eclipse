@@ -1,7 +1,5 @@
 package it.uniba.di.socialcdeforeclipse.object;
 
-
-
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.JFaceResources;
@@ -60,44 +58,41 @@ public class GeneralButton extends Canvas {
 	public static int IMAGE_LEFT = 0;
 	public static int IMAGE_RIGHT = 1;
 	protected int imageStyle = 0;
-	
-	private  int xCoordinate; 
-	private  int yCoordinate; 
-	private  int width; 
-	private  int height;
-	
-	
-	
-	
-	public  int getxCoordinate() {
+
+	private int xCoordinate;
+	private int yCoordinate;
+	private int width;
+	private int height;
+
+	public int getxCoordinate() {
 		return xCoordinate;
 	}
 
-	public  void setxCoordinate(int xCoordinate) {
+	public void setxCoordinate(int xCoordinate) {
 		this.xCoordinate = xCoordinate;
 	}
 
-	public  int getyCoordinate() {
+	public int getyCoordinate() {
 		return yCoordinate;
 	}
 
-	public  void setyCoordinate(int yCoordinate) {
+	public void setyCoordinate(int yCoordinate) {
 		this.yCoordinate = yCoordinate;
 	}
 
-	public  int getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
-	public  void setWidth(int width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
-	public  int getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public  void setHeight(int height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
@@ -120,8 +115,6 @@ public class GeneralButton extends Canvas {
 			}
 		});
 
-		
-		
 		addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 
@@ -344,27 +337,17 @@ public class GeneralButton extends Canvas {
 	}
 
 	private void paintControl(PaintEvent e) {
-		
-		 
-		
-		
-		
-		//System.out.println("Square botton paint event call " + this.getClientArea() ); 
-		
-		 
-		
-		if( getClientArea().height != this.height && getClientArea().width != this.width)
-		{
-			this.setBounds(this.xCoordinate, this.yCoordinate, this.width, this.height);
-			
-			
-			
-			
-			 
-			
+
+		// System.out.println("Square botton paint event call " +
+		// this.getClientArea() );
+
+		if (getClientArea().height != this.height
+				&& getClientArea().width != this.width) {
+			this.setBounds(this.xCoordinate, this.yCoordinate, this.width,
+					this.height);
+
 		}
 
-		
 		if (currentColor == null) {
 			currentColor = backgroundColor;
 			currentColor2 = backgroundColor2;
@@ -379,9 +362,9 @@ public class GeneralButton extends Canvas {
 		if (p.x > getClientArea().width) {
 			p.x = getClientArea().width;
 		}
-		//Rectangle rect = new Rectangle(0, 0, p.x, p.y);
-		Rectangle rect = new Rectangle(0, 0, this.width,this.height);
-		
+		// Rectangle rect = new Rectangle(0, 0, p.x, p.y);
+		Rectangle rect = new Rectangle(0, 0, this.width, this.height);
+
 		GC gc = e.gc;
 		gc.setAntialias(SWT.ON);
 		gc.setAdvanced(true);
@@ -457,9 +440,7 @@ public class GeneralButton extends Canvas {
 			x = drawImage(gc, x, y);
 			drawText(gc, x, y);
 		}
-		
-		
-		
+
 	}
 
 	private void drawText(GC gc, int x, int y) {
@@ -471,7 +452,7 @@ public class GeneralButton extends Canvas {
 	private int drawImage(GC gc, int x, int y) {
 		if (image == null)
 			return x;
-		gc.drawImage(image, x-5, y);
+		gc.drawImage(image, x - 5, y);
 		return x + image.getBounds().width + imagePadding;
 	}
 

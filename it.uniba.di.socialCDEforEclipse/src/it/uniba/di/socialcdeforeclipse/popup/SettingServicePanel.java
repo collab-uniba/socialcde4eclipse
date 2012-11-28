@@ -11,12 +11,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.*;
 import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
-import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -27,7 +25,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,7 +34,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.internal.util.ImageSupport;
 
 /**
  * @author Flo
@@ -54,16 +50,14 @@ public class SettingServicePanel implements Panel {
 	private int yCoordinateWithOffset;
 	private Listener btnSaveListener;
 	private Listener btnUnsubscriveListener;
-	private ArrayList<Button> checkboxCreated; 
-	private Boolean selectAllItems = false; 
-	
-	
+	private ArrayList<Button> checkboxCreated;
+	private Boolean selectAllItems = false;
+
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
 			.getResourceAsStream("images/Wallpaper.png");
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay()
-				.getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -85,8 +79,6 @@ public class SettingServicePanel implements Panel {
 	private Image getImageStream(InputStream stream) {
 		return new Image(Controller.getWindow().getDisplay(), stream);
 	}
-	
-	
 
 	public ArrayList<Button> getCheckboxCreated() {
 		return checkboxCreated;
@@ -155,8 +147,6 @@ public class SettingServicePanel implements Panel {
 	@Override
 	public void inizialize(Composite panel) {
 
-		
-
 		shadow = new Shell(panel.getShell(), SWT.NO_TRIM);
 		shadow.setSize(Controller.getWindowWidth(),
 				Controller.getWindowHeight());
@@ -175,7 +165,7 @@ public class SettingServicePanel implements Panel {
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(),255,255,255));
+		shell.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL;
@@ -189,7 +179,7 @@ public class SettingServicePanel implements Panel {
 		gridData.horizontalSpan = 2;
 		gridData.widthHint = 300;
 		labelRegistration.setLayoutData(gridData);
-		
+
 		InputStream urlImageService = null;
 		try {
 			urlImageService = new URL(Controller.getPreferences("ProxyRoot")
@@ -203,47 +193,40 @@ public class SettingServicePanel implements Panel {
 		}
 
 		final Image imgService = getImageStream(urlImageService);
-		
-		
-		
-		 Canvas btnImgServce = new Canvas(shell, SWT.None);
-		 btnImgServce.setBackground(new Color(Display.getCurrent(), 230, 230, 223)); 
-		 
-		 
-		 btnImgServce.addPaintListener(new PaintListener() {
-		      public void paintControl(PaintEvent e) {
-		      
-		        e.gc.drawImage(imgService, 5, 5);
-		        
-		       
-		      
-		      }
-		    });
 
-	
-		 
-		
+		Canvas btnImgServce = new Canvas(shell, SWT.None);
+		btnImgServce.setBackground(new Color(Display.getCurrent(), 230, 230,
+				223));
+
+		btnImgServce.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+
+				e.gc.drawImage(imgService, 5, 5);
+
+			}
+		});
+
 		gridData = new GridData();
 		gridData.verticalSpan = 4;
 		btnImgServce.setLayoutData(gridData);
-		
+
 		WFeature[] featuresService = Controller.getProxy().GetChosenFeatures(
 				Controller.getCurrentUser().Username,
 				Controller.getCurrentUserPassword(), service.Id);
 
 		checkboxCreated = new ArrayList<Button>();
-		
+
 		for (int i = 0; i < featuresService.length; i++) {
-			 
+
 			Button featureService = new Button(shell, SWT.CHECK);
 			featureService.setText(featuresService[i].Description);
-			featureService.setData("FeatureName", featuresService[i].Name ); 
+			featureService.setData("FeatureName", featuresService[i].Name);
 			if (featuresService[i].IsChosen || selectAllItems) {
 				featureService.setSelection(true);
-				 
+
 			}
 			checkboxCreated.add(featureService);
-			
+
 		}
 
 		shadow.addMouseListener(new MouseListener() {
@@ -274,33 +257,43 @@ public class SettingServicePanel implements Panel {
 		gridData.horizontalSpan = 2;
 		labelHidden.setLayoutData(gridData);
 
-		GeneralButton btnUnsubscribe = new GeneralButton(shell, SWT.None); 
-		btnUnsubscribe.setText("Unsubcribe"); 
+		GeneralButton btnUnsubscribe = new GeneralButton(shell, SWT.None);
+		btnUnsubscribe.setText("Unsubcribe");
 		btnUnsubscribe.setWidth(90);
-		btnUnsubscribe.setHeight(30); 
+		btnUnsubscribe.setHeight(30);
 		btnUnsubscribe.setxCoordinate(5);
-		btnUnsubscribe.setyCoordinate(133); 
-		btnUnsubscribe.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnUnsubscribe.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnUnsubscribe.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnUnsubscribe.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnUnsubscribe.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		btnUnsubscribe.setyCoordinate(133);
+		btnUnsubscribe.setDefaultColors(new Color(panel.getDisplay(), 179, 180,
+				168), new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnUnsubscribe.setClickedColors(new Color(panel.getDisplay(), 179, 180,
+				168), new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnUnsubscribe.setHoverColors(new Color(panel.getDisplay(), 179, 180,
+				168), new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnUnsubscribe.setSelectedColors(new Color(panel.getDisplay(), 179,
+				180, 168), new Color(panel.getDisplay(), 179, 180, 168), null,
+				null);
+		btnUnsubscribe.setFont(new Font(Controller.getWindow().getDisplay(),
+				"Calibri", 12, SWT.BOLD));
 		btnUnsubscribe.addListener(SWT.Selection, btnUnsubscriveListener);
-		
-		GeneralButton btnSave = new GeneralButton(shell, SWT.None); 
-		btnSave.setText("Save"); 
+
+		GeneralButton btnSave = new GeneralButton(shell, SWT.None);
+		btnSave.setText("Save");
 		btnSave.setWidth(90);
-		btnSave.setHeight(30); 
+		btnSave.setHeight(30);
 		btnSave.setxCoordinate(105);
-		btnSave.setyCoordinate(133); 
-		btnSave.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnSave.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnSave.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnSave.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168), new Color(panel.getDisplay(), 179, 180, 168) , null, null);
-		btnSave.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
+		btnSave.setyCoordinate(133);
+		btnSave.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnSave.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnSave.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnSave.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnSave.setFont(new Font(Controller.getWindow().getDisplay(),
+				"Calibri", 12, SWT.BOLD));
 		btnSave.addListener(SWT.Selection, btnSaveListener);
-		
-		
+
 		shell.layout();
 		shell.open();
 	}
@@ -311,8 +304,6 @@ public class SettingServicePanel implements Panel {
 		shadow.dispose();
 		shell.dispose();
 	}
-
-	
 
 	@Override
 	public HashMap<String, Object> getData() {

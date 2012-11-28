@@ -27,15 +27,13 @@ public class ProgressBarThread extends Thread {
 	private int stop = 0;
 	private String labelTxt;
 	private int xCoordinate;
-	private int xCoordinateWithOffset; 
+	private int xCoordinateWithOffset;
 	private int yCoordinate;
-	private int yCoordinateWithOffset; 
+	private int yCoordinateWithOffset;
 
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
 			.getResourceAsStream("images/Wallpaper.png");
 
-	
-	
 	public int getxCoordinateWithOffset() {
 		return xCoordinateWithOffset;
 	}
@@ -100,25 +98,26 @@ public class ProgressBarThread extends Thread {
 		display = new Display();
 
 		shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-		 
+
 		shell.setSize(Controller.getWindowWidth(), Controller.getWindowHeight());
 
-		shell.setBounds(Controller.getProgressBarPositionX(), Controller.getProgressBarPositionY(), Controller.getWindowWidth(),
-				Controller.getWindowHeight());
+		shell.setBounds(Controller.getProgressBarPositionX(),
+				Controller.getProgressBarPositionY(),
+				Controller.getWindowWidth(), Controller.getWindowHeight());
 		GridLayout layout = new GridLayout(1, false);
 		shell.setLayout(layout);
-		//shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),Controller.getWindowWidth(), Controller.getWindowHeight()));
+		// shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),Controller.getWindowWidth(),
+		// Controller.getWindowHeight()));
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(),255,255,255)); 
-		
-		
-		Composite first_composite = new Composite(shell,   SWT.NO_BACKGROUND);
-		first_composite.setLayout(layout); 
+		shell.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+
+		Composite first_composite = new Composite(shell, SWT.NO_BACKGROUND);
+		first_composite.setLayout(layout);
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
-		gridData.grabExcessVerticalSpace = true; 
+		gridData.grabExcessVerticalSpace = true;
 		gridData.horizontalAlignment = gridData.CENTER;
-		gridData.verticalAlignment = gridData.CENTER; 
+		gridData.verticalAlignment = gridData.CENTER;
 		first_composite.setLayoutData(gridData);
 
 		Label labelPogress = new Label(first_composite, SWT.CENTER);
@@ -129,7 +128,7 @@ public class ProgressBarThread extends Thread {
 		grid.horizontalAlignment = grid.CENTER;
 		labelPogress.setLayoutData(grid);
 		bar = new ProgressBar(first_composite, SWT.CENTER);
-		max = 100; 
+		max = 100;
 		shell.open();
 		while (stop != 1) {
 			try {

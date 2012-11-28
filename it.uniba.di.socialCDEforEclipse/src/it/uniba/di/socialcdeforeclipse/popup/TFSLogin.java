@@ -2,8 +2,6 @@ package it.uniba.di.socialcdeforeclipse.popup;
 
 import java.io.InputStream;
 import java.util.HashMap;
-
-import org.eclipse.jface.viewers.LabelDecorator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -13,7 +11,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -22,7 +19,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.dynamic.view.InterceptingFilter;
 import it.uniba.di.socialcdeforeclipse.shared.library.WService;
 import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
@@ -34,19 +30,18 @@ public class TFSLogin implements Panel {
 	private int yCoordinate;
 	private int xCoordinateWithOffset;
 	private int yCoordinateWithOffset;
-	private WService service;  
-	private Text textDomain; 
-	private Text textUsername; 
-	private Text textPassword; 
+	private WService service;
+	private Text textDomain;
+	private Text textUsername;
+	private Text textPassword;
 	private Listener okListener;
-	private Listener cancelListener; 
-	
+	private Listener cancelListener;
+
 	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
 			.getResourceAsStream("images/Wallpaper.png");
 
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Controller.getWindow().getDisplay()
-				.getDefault(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -60,7 +55,7 @@ public class TFSLogin implements Panel {
 	private Image getImageStream(InputStream stream) {
 		return new Image(Controller.getWindow().getDisplay(), stream);
 	}
-	
+
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
@@ -84,149 +79,153 @@ public class TFSLogin implements Panel {
 		GridLayout layout = new GridLayout(2, false);
 		shell.setLayout(layout);
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(), 255,255,255)); 
+		shell.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.horizontalAlignment = gridData.FILL;
 		shell.setLayoutData(gridData);
-		
+
 		Label labelRegistration = new Label(shell, SWT.WRAP);
 		labelRegistration.setText("Registration ");
-		labelRegistration.setFont(new Font(shell.getDisplay(), "Calibri", 15, SWT.BOLD));
-		gridData = new GridData(); 
-		gridData.horizontalSpan = 2; 
-		gridData.widthHint = 300; 
-		labelRegistration.setLayoutData(gridData); 
-		
+		labelRegistration.setFont(new Font(shell.getDisplay(), "Calibri", 15,
+				SWT.BOLD));
+		gridData = new GridData();
+		gridData.horizontalSpan = 2;
+		gridData.widthHint = 300;
+		labelRegistration.setLayoutData(gridData);
+
 		Label labelHidden = new Label(shell, SWT.NONE);
 		labelHidden.setText("");
 		labelHidden.setVisible(false);
 		gridData = new GridData();
-		gridData.horizontalSpan = 2; 
+		gridData.horizontalSpan = 2;
 		labelHidden.setLayoutData(gridData);
-		
-		if(service.RequireTFSDomain)
-		{
-			Label labelDomain = new Label(shell, SWT.None); 
-			labelDomain.setText("Domain:"); 
-			labelDomain.setFont(new Font(shell.getDisplay(), "Calibri", 12, SWT.BOLD));
-			
-			textDomain = new Text(shell, SWT.BORDER); 
+
+		if (service.RequireTFSDomain) {
+			Label labelDomain = new Label(shell, SWT.None);
+			labelDomain.setText("Domain:");
+			labelDomain.setFont(new Font(shell.getDisplay(), "Calibri", 12,
+					SWT.BOLD));
+
+			textDomain = new Text(shell, SWT.BORDER);
 			gridData = new GridData();
-			gridData.horizontalAlignment = SWT.FILL;
-			gridData.grabExcessHorizontalSpace = true;
+			gridData.minimumWidth = 350;
 			textDomain.setLayoutData(gridData);
 		}
-			Label labelUsername = new Label(shell, SWT.None); 
-			labelUsername.setText("Username"); 
-			labelUsername.setFont(new Font(shell.getDisplay(), "Calibri", 12, SWT.BOLD));
-			
-			textUsername = new Text(shell, SWT.BORDER); 
-			gridData = new GridData();
-			gridData.horizontalAlignment = SWT.FILL;
-			gridData.grabExcessHorizontalSpace = true;
-			textUsername.setLayoutData(gridData);
-			
-			
-			Label labelPassword = new Label(shell, SWT.None); 
-			labelPassword.setText("Password"); 
-			labelPassword.setFont(new Font(shell.getDisplay(), "Calibri", 12, SWT.BOLD));
-			
-			textPassword = new Text(shell, SWT.PASSWORD | SWT.BORDER); 
-			gridData = new GridData();
-			gridData.horizontalAlignment = SWT.FILL;
-			gridData.grabExcessHorizontalSpace = true;
-			textPassword.setLayoutData(gridData); 
-		
-			labelHidden = new Label(shell, SWT.NONE);
-			labelHidden.setText("");
-			labelHidden.setVisible(false);
-			gridData = new GridData();
-			gridData.horizontalSpan = 2; 
-			labelHidden.setLayoutData(gridData);
-			
-			Composite compositeBtnOk = new Composite(shell, SWT.None); 
-			compositeBtnOk.setLayout(new GridLayout(1,false)); 
-			GridData	grid = new GridData(); 
-			grid.widthHint = 90;
-			grid.heightHint = 40;  
-			compositeBtnOk.setLayoutData(grid);
-			
-			
-			
-		  GeneralButton	btnOk = new GeneralButton(compositeBtnOk, SWT.None); 
-		  btnOk.setText("Ok"); 
-		  btnOk.setWidth(80);
-		  btnOk.setHeight(30); 
-		  btnOk.setxCoordinate(0);
-		  btnOk.setyCoordinate(0); 
-		  btnOk.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnOk.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnOk.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnOk.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnOk.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
-		  btnOk.addListener(SWT.Selection, okListener);
-		  
-		  	Composite compositeBtnCancel = new Composite(shell, SWT.None); 
-		  	compositeBtnCancel.setLayout(new GridLayout(1,false)); 
-			grid = new GridData(); 
-			grid.widthHint = 90;
-			grid.heightHint = 40;  
-			compositeBtnCancel.setLayoutData(grid);
-		  
-		  GeneralButton	btnCancel = new GeneralButton(compositeBtnCancel, SWT.None); 
-		  btnCancel.setText("Cancel"); 
-		  btnCancel.setWidth(80);
-		  btnCancel.setHeight(30); 
-		  btnCancel.setxCoordinate(0);
-		  btnCancel.setyCoordinate(0); 
-		  btnCancel.setDefaultColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnCancel.setClickedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnCancel.setHoverColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnCancel.setSelectedColors(new Color(panel.getDisplay(), 152, 210, 227), new Color(panel.getDisplay(), 211, 217, 223) , null, null);
-		  btnCancel.setFont(new Font(Controller.getWindow().getDisplay(),"Calibri", 12, SWT.BOLD )); 
-		  btnCancel.addListener(SWT.Selection, cancelListener); 
+		Label labelUsername = new Label(shell, SWT.None);
+		labelUsername.setText("Username");
+		labelUsername.setFont(new Font(shell.getDisplay(), "Calibri", 12,
+				SWT.BOLD));
 
-			shadow.addMouseListener(new MouseListener() {
+		textUsername = new Text(shell, SWT.BORDER);
+		gridData = new GridData();
+		gridData.minimumWidth = 350;
+		textUsername.setLayoutData(gridData);
 
-				@Override
-				public void mouseUp(MouseEvent e) {
-					// TODO Auto-generated method stub
-					shell.forceFocus();
-				}
+		Label labelPassword = new Label(shell, SWT.None);
+		labelPassword.setText("Password");
+		labelPassword.setFont(new Font(shell.getDisplay(), "Calibri", 12,
+				SWT.BOLD));
 
-				@Override
-				public void mouseDown(MouseEvent e) {
-					// TODO Auto-generated method stub
-					shell.forceFocus();
-				}
+		textPassword = new Text(shell, SWT.PASSWORD | SWT.BORDER);
+		gridData = new GridData();
+		gridData.minimumWidth = 350;
+		textPassword.setLayoutData(gridData);
 
-				@Override
-				public void mouseDoubleClick(MouseEvent e) {
-					// TODO Auto-generated method stub
-					shell.forceFocus();
-				}
-			});
-		  
-		  	
-		  
+		labelHidden = new Label(shell, SWT.NONE);
+		labelHidden.setText("");
+		labelHidden.setVisible(false);
+		gridData = new GridData();
+		gridData.horizontalSpan = 2;
+		labelHidden.setLayoutData(gridData);
+
+		Composite compositeBtnOk = new Composite(shell, SWT.None);
+		compositeBtnOk.setLayout(new GridLayout(1, false));
+		GridData grid = new GridData();
+		grid.widthHint = 90;
+		grid.heightHint = 40;
+		compositeBtnOk.setLayoutData(grid);
+
+		GeneralButton btnOk = new GeneralButton(compositeBtnOk, SWT.None);
+		btnOk.setText("Ok");
+		btnOk.setWidth(80);
+		btnOk.setHeight(30);
+		btnOk.setxCoordinate(0);
+		btnOk.setyCoordinate(0);
+		btnOk.setDefaultColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnOk.setClickedColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnOk.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnOk.setSelectedColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnOk.setFont(new Font(Controller.getWindow().getDisplay(), "Calibri",
+				12, SWT.BOLD));
+		btnOk.addListener(SWT.Selection, okListener);
+
+		Composite compositeBtnCancel = new Composite(shell, SWT.None);
+		compositeBtnCancel.setLayout(new GridLayout(1, false));
+		grid = new GridData();
+		grid.widthHint = 90;
+		grid.heightHint = 40;
+		compositeBtnCancel.setLayoutData(grid);
+
+		GeneralButton btnCancel = new GeneralButton(compositeBtnCancel,
+				SWT.None);
+		btnCancel.setText("Cancel");
+		btnCancel.setWidth(80);
+		btnCancel.setHeight(30);
+		btnCancel.setxCoordinate(0);
+		btnCancel.setyCoordinate(0);
+		btnCancel.setDefaultColors(
+				new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnCancel.setClickedColors(
+				new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnCancel.setHoverColors(new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnCancel.setSelectedColors(
+				new Color(panel.getDisplay(), 179, 180, 168),
+				new Color(panel.getDisplay(), 179, 180, 168), null, null);
+		btnCancel.setFont(new Font(Controller.getWindow().getDisplay(),
+				"Calibri", 12, SWT.BOLD));
+		btnCancel.addListener(SWT.Selection, cancelListener);
+
+		shadow.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+				shell.forceFocus();
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				shell.forceFocus();
+			}
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				shell.forceFocus();
+			}
+		});
+
 		shell.layout();
 		shell.open();
-		
-		
+
 	}
 
 	@Override
 	public void dispose(Composite panel) {
 		// TODO Auto-generated method stub
-		shell.dispose(); 
-		shadow.dispose(); 
+		shell.dispose();
+		shadow.dispose();
 	}
 
-	
-
-	
-	
 	public Listener getOkListener() {
 		return okListener;
 	}
@@ -286,9 +285,18 @@ public class TFSLogin implements Panel {
 	@Override
 	public HashMap<String, Object> getData() {
 		// TODO Auto-generated method stub
-		return null;
+
+		HashMap<String, Object> uiData = new HashMap<String, Object>();
+		uiData.put("textUsername", textUsername);
+		uiData.put("textPassword", textPassword);
+
+		if (service.RequireTFSDomain) {
+			uiData.put("textDomain", textDomain.getText());
+		} else {
+			uiData.put("textDomain", "");
+		}
+
+		return uiData;
 	}
-	
-	
 
 }

@@ -93,12 +93,12 @@ public class DynamicHome implements Panel {
 		
 		
 		controlli = new ArrayList<Control>();
-		Listener azioni = new ActionGeneral();
+		final Listener azioni = new ActionGeneral();
 		GridLayout layout = new GridLayout(4, true);
 		panel.setLayout(layout);
 		 
 		labelAvatar = new Label(panel,SWT.NONE); 
-		GridData gridData = new GridData();
+	    GridData gridData = new GridData();
 		gridData.verticalSpan = 2; 
 		labelAvatar.setLayoutData(gridData); 
 		labelAvatar.setData("ID_action", "labelAvatar");
@@ -184,16 +184,7 @@ public class DynamicHome implements Panel {
 		
 		final  WService[] wService = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 		
-		if(wService.length > 10)
-		{
-			Controller.setScrollHeight(Controller.getWindowHeight() + (10* wService.length)  );
-			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
-		}
-		else
-		{
-			Controller.setScrollHeight(Controller.getWindowHeight()); 
-			((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), Controller.getScrollHeight());
-		}
+		
 		
 		serviceComposite = new Composite(panel,SWT.None);
 		//System.out.println("servicecomposite size " + serviceComposite.getBounds()); 
@@ -215,7 +206,7 @@ public class DynamicHome implements Panel {
 		
 		 
 		
-		SquareButtonService services; 
+	  // SquareButtonService services; 
 		//Button services; 
 		
 		if(wService.length > 0)
@@ -223,29 +214,39 @@ public class DynamicHome implements Panel {
 		
 			for( int i=0;i<wService.length;i++)
 			{ 
-				Composite bottleComposite = new Composite(serviceComposite, SWT.None); 
-				bottleComposite.setLayout(new GridLayout(2,false)); 
-				bottleComposite.setSize(bottleComposite.computeSize(100, 100)); 
+				final Composite bottleComposite = new Composite(serviceComposite, SWT.None); 
+				final int j = i; 
+				Display.getCurrent().syncExec(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						// TODO Auto-generated method stub
+						bottleComposite.setLayout(new GridLayout(2,false)); 
+						bottleComposite.setSize(bottleComposite.computeSize(100, 100)); 
+						
+						Composite service1 = new Composite(bottleComposite, SWT.None); 
+						service1.setLayout(new GridLayout(1,false));
+						service1.setSize(service1.computeSize(40, 70));
+						
+						SquareButtonService services = new SquareButtonService(service1, SWT.NONE);
+						services.setRoundedCorners(false);
+						services.setDefaultColors(new Color(Display.getCurrent(), 230, 230, 223),null,null,null);
+						services.setClickedColors(new Color(Display.getCurrent(), 230, 230, 223), null, null,null);
+						services.setHoverColors(new Color(Display.getCurrent(), 230, 230, 223), null, Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null);
+						services.setSelectedColors(new Color(Display.getCurrent(), 230, 230, 223), null, null,null);
+						services.borderWidth = 3;
+						services.setText(""); 
+						services.setData("ID_action","btnServices");
+						services.setData("service" , wService[j]); 
+						services.addListener(SWT.Selection, azioni); 
+					
+			
 				
-				Composite service1 = new Composite(bottleComposite, SWT.None); 
-				service1.setLayout(new GridLayout(1,false));
-				service1.setSize(service1.computeSize(40, 70));
-				
-				services = new SquareButtonService(service1, SWT.NONE);
-				services.setRoundedCorners(false);
-				services.setDefaultColors(new Color(Display.getCurrent(), 230, 230, 223),null,null,null);
-				services.setClickedColors(new Color(Display.getCurrent(), 230, 230, 223), null, null,null);
-				services.setHoverColors(new Color(Display.getCurrent(), 230, 230, 223), null, Display.getCurrent().getSystemColor(SWT.COLOR_CYAN),null);
-				services.setSelectedColors(new Color(Display.getCurrent(), 230, 230, 223), null, null,null);
-				services.borderWidth = 3;
-				services.setText(""); 
-				services.setData("ID_action","btnServices");
-				services.setData("service" , wService[i]); 
-				services.addListener(SWT.Selection, azioni); 
 				 
 				try {
 					 
-					services.setImage(get_ImageStream(new URL(Controller.getPreferences("ProxyRoot") +  wService[i].Image).openStream()));
+					services.setImage(get_ImageStream(new URL(Controller.getPreferences("ProxyRoot") +  wService[j].Image).openStream()));
 					
 					 
 				} catch (MalformedURLException e) {
@@ -256,9 +257,13 @@ public class DynamicHome implements Panel {
 					e.printStackTrace();
 				}
 				
-				gridData = new GridData(); 
+				 GridData gridData = new GridData(); 
 				gridData.verticalSpan = 3; 
 				service1.setLayoutData(gridData); 
+				
+					}
+				}); 
+					
 				
 				labelHidden = new Label(bottleComposite,SWT.None); 
 				labelHidden.setVisible(false); 
@@ -354,7 +359,7 @@ public class DynamicHome implements Panel {
 		uiData.put("labelHidden",labelHidden); 
 		uiData.put("username",username); 
 		uiData.put("labelAvatar",labelAvatar); 
-		uiData.put("service", service); 
+		
 		
 		return uiData;
 	}
