@@ -70,6 +70,7 @@ public class UnitTestProfile {
 	@Test
 	public void testCase2() {
 	 
+		Controller.setCurrentUserPassword("try1");
 		WService[] services = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
 		assertTrue(services.length == 0); 
 		

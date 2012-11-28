@@ -105,9 +105,9 @@ public class PluginTestSuggest extends TestCase {
 		assertNotNull(Controller.getPeopleWindow()); 
 		dati = Controller.getPeopleWindow().getData();
 		
-		if(dati.containsKey("labelsuggestion"))
+		if(dati.containsKey("labelsuggestionText"))
 		{
-			assertEquals("We have no suggestion for you.\n Please try again soon.", ((Label) dati.get("labelsuggestion")).getText()); 
+			assertEquals("We have no suggestion for you.\n Please try again soon.", ((Label) dati.get("labelsuggestionText")).getText()); 
 		}
 		else
 		{

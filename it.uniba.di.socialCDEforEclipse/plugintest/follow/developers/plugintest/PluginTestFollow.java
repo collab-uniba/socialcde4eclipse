@@ -36,7 +36,6 @@ public class PluginTestFollow extends TestCase {
 	 * 
 	 * Equivalence classes considered: 
 	 * 1.Follow a developer identified by correct id
-	 * 2.Follow a developer identified by wrong id (-1) 
 	 * 
 	 * Note: For test the equivalence class number 1, the sistem select a random developer 
 	 * between suggested developers. At the end of test the user selected will be unfollow. 
@@ -100,32 +99,7 @@ public class PluginTestFollow extends TestCase {
 		  
 	}
 	
-	@Test public void testCase2()
-	{
-		 positionUser = -1; 
-		 WUser phantom = new WUser(); 
-		 phantom.Id = -1; 
-		 phantom.Avatar = null;
-		 phantom.Followers = 0; 
-		 phantom.Followings = 0; 
-		 phantom.Statuses = 0; 
-		 phantom.setUsername("Test"); 
-		 
-		 Controller.temporaryInformation.put("User_selected", phantom); 
-		 Controller.temporaryInformation.put("User_type", "Suggested");
-		 Controller.selectDynamicWindow(3);
-		 assertNotNull(Controller.getDynamicUserWindow()); 
-		 dati = Controller.getDynamicUserWindow().getData(); 
-		 dati.put("ID_action", "labelFollow"); 
-		  dati.put("Event_type", SWT.Selection);
-		 
-		  assertFalse( (Boolean)  dati.get("imageUnFollow")); 
-		  assertTrue( (Boolean) dati.get("imageFollow")); 
-		  
-		  new ActionDynamicUserTimeline(dati); 
-		  
-		  assertTrue( (Boolean)  dati.get("error")); 
-	}
+	
 	
 	@After
 	public void tearDown() throws Exception {

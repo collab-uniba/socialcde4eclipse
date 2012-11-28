@@ -73,7 +73,7 @@ public class UnitTestImage {
 	
 	@Test
 	public void testCase2() {
-	 
+		Controller.setCurrentUserPassword("try1");
 		URI[] images = Controller.getProxy().GetAvailableAvatars(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		assertTrue(images.length == 0); 
 		

@@ -1,10 +1,9 @@
 package it.uniba.di.socialcdeforeclipse.dynamic.view;
 
-import java.awt.font.TextMeasurer;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -35,11 +33,12 @@ import org.eclipse.swt.widgets.Text;
 import it.uniba.di.socialcdeforeclipse.action.ActionDynamicUserTimeline;
 import it.uniba.di.socialcdeforeclipse.action.ActionGeneral;
 import it.uniba.di.socialcdeforeclipse.action.ActionHomeTimeline;
+import it.uniba.di.socialcdeforeclipse.action.ActionIterationTimeline;
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WPost;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
-public class DynamicHomeTimeline implements Panel{
+public class DynamicIterationTimeline implements Panel{
 
 	private WPost[] posts; 
 	private ArrayList<Control> controlli;
@@ -54,7 +53,7 @@ public class DynamicHomeTimeline implements Panel{
 
 	
 	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Display.getCurrent(), width, height);
+		Image scaled = new Image(Display.getDefault(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -74,7 +73,7 @@ public class DynamicHomeTimeline implements Panel{
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
-		System.out.println("Home timeline lanciato");
+		System.out.println("Interaction timeline lanciato");
 		
 		
 		GridData gridData; 
@@ -85,12 +84,13 @@ public class DynamicHomeTimeline implements Panel{
 		
 		//Controller.setScrollHeight(Controller.getWindowHeight() + 100); 
 	    //((ScrolledComposite)	Controller.getWindow().getParent()).setMinSize(Controller.getWindowWidth(), SWT.DEFAULT);
-
-	   
+		 
+		
 	    
-	   
+	    
 		
 		superUserPostMaster = new ScrolledComposite(panel, SWT.V_SCROLL); 
+		superUserPostMaster.setLayout(new GridLayout(1, false)); 
 		gridData = new GridData(); 
 		gridData.grabExcessHorizontalSpace = true; 
 		gridData.horizontalAlignment = GridData.FILL; 
@@ -99,35 +99,45 @@ public class DynamicHomeTimeline implements Panel{
 		controlli.add(superUserPostMaster); 
 		
 		
+		
 		userPostMaster = new Composite(superUserPostMaster, SWT.None);
+		
+		
+		
+		
 		
 		superUserPostMaster.setContent(userPostMaster);
 		superUserPostMaster.setExpandVertical(true);
 		superUserPostMaster.setExpandHorizontal(true);
 		superUserPostMaster.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
-		
+	
 		controlli.add(userPostMaster); 
 		
 		superUserPostMaster.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				
 				superUserPostMaster.setMinSize(Controller.getWindowWidth()-10, (120 * posts.length)); 
-				
+				//superUserPostMaster.setMinHeight((150 * posts.length)); 
 			}} ); 
 	    
 		
 		
 		userPostMaster.setLayout(new GridLayout(2,false)); 
+		gridData = new GridData(); 
+		gridData.grabExcessHorizontalSpace = true; 
+		gridData.horizontalAlignment = GridData.FILL; 
+		gridData.heightHint = 350;
+		userPostMaster.setLayoutData(gridData); 
 	
 		userPostMaster.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)); 
 		
 		
 		
-		posts = Controller.getProxy().GetHomeTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+		posts = Controller.getProxy().GetIterationTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		
 		System.out.println("numero di post " + posts.length); 
 
-		ActionHomeTimeline.setLastId(0); 
+		ActionIterationTimeline.setLastId(0); 
 		
 		for(int i=0;i< posts.length; i++)
 		{
@@ -282,7 +292,7 @@ public class DynamicHomeTimeline implements Panel{
 			
 			
 			
-			ActionHomeTimeline.setLastId(posts[i].Id);
+			ActionIterationTimeline.setLastId(posts[i].Id);
 			
 			
 			
@@ -298,7 +308,7 @@ public class DynamicHomeTimeline implements Panel{
 		gridData.horizontalAlignment = GridData.FILL; 
 		otherPostWarning.setLayoutData(gridData);
 		
-		WPost[] newPost = Controller.getProxy().GetHomeTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ActionDynamicUserTimeline.getLastId(),0);
+		WPost[] newPost = Controller.getProxy().GetIterationTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), ActionDynamicUserTimeline.getLastId(),0);
 		
 		if(newPost == null)
 		{
@@ -342,27 +352,32 @@ public class DynamicHomeTimeline implements Panel{
 
 		
 	
-		
+		//superUserPostMaster.setMinHeight((150 * posts.length)); 
 		superUserPostMaster.setMinSize(Controller.getWindowWidth()-10, (120 * posts.length));
 		  
 		
 		controlli.add(userPostMaster);
 		
-		 labelDownloadPost = new Label(panel, SWT.None); 
-		    labelDownloadPost.setText("Download older posts.."); 
-		    gridData = new GridData(); 
-		    gridData.horizontalAlignment = GridData.CENTER; 
-		    gridData.widthHint = 130; 
-		    labelDownloadPost.setLayoutData(gridData); 
-		    labelDownloadPost.setVisible(false);
-		    pbar = new ProgressBar(panel, SWT.None); 
-		    pbar.setVisible(false); 
-		    pbar.setLayoutData(gridData); 
+		
 		
 		Label labelHidden = new Label(panel, SWT.None);
 		labelHidden.setText(""); 
 		labelHidden.setVisible(false); 
+		controlli.add(labelHidden); 
 		
+		
+		labelDownloadPost = new Label(panel, SWT.None); 
+	    labelDownloadPost.setText("Download older posts.."); 
+	    gridData = new GridData(); 
+	    gridData.horizontalAlignment = GridData.CENTER; 
+	    gridData.widthHint = 130; 
+	    labelDownloadPost.setLayoutData(gridData); 
+	    labelDownloadPost.setVisible(false);
+	    pbar = new ProgressBar(panel, SWT.None); 
+	    pbar.setVisible(false); 
+	    pbar.setLayoutData(gridData); 
+	    controlli.add(labelDownloadPost); 
+	    controlli.add(pbar); 
 		
 	    Composite controlToPost = new Composite(panel, SWT.None);
 	    controlToPost.setLayout(new GridLayout(2,false)); 
@@ -379,7 +394,7 @@ public class DynamicHomeTimeline implements Panel{
 		gridData = new GridData(); 
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100; 
-		textMessage.setBackgroundImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/baloon.png")));
+		//textMessage.setBackgroundImage( resize(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/baloon.png")), Controller.getWindowWidth() - 95, 75));
 		textMessage.setLayoutData(gridData); 
 		
 		
@@ -398,23 +413,13 @@ public class DynamicHomeTimeline implements Panel{
 			@Override
 			public void paintControl(PaintEvent e) {
 				// TODO Auto-generated method stub
-				//superUserPostMaster.setBounds(Controller.getWindow().computeTrim(0, 0, Controller.getWindowWidth()-10, 400));
-				
-				superUserPostMaster.setSize(Controller.getWindow().computeSize(Controller.getWindowWidth()-20, 350));
-				userPostMaster.setSize(Controller.getWindow().computeSize(Controller.getWindowWidth()-70, 350));
-				textMessage.setBackgroundImage( resize(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/baloon.png")), Controller.getWindowWidth() - 95, 75)); 
-				//textMessage.setBackgroundMode(SWT.INHERIT_DEFAULT); 
-				//try1.setBounds(Controller.getWindow().computeTrim(5, superUserPostMaster.getClientArea().height + 150, 542, 20)); 
-			 
-			
-			//System.out.println("Dimen post " + controlToPost.getBounds()); 
-			//System.out.println("Dimensioni scritta " + try1.getBounds()); 
+				textMessage.setBackgroundImage( resize(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/baloon.png")), Controller.getWindowWidth() - 95, 75));
 			
 			 
 			}
 		}); 
 	
-	Controller.setWindowName("homeTimeline"); 
+	Controller.setWindowName("iterationTimeline"); 
 	}
 
 	@Override
@@ -445,14 +450,13 @@ public class DynamicHomeTimeline implements Panel{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> uiData = new HashMap<String, Object>();
 		
-		uiData.put("superUserPostMaster", superUserPostMaster);
-		uiData.put("userPostMaster", userPostMaster); 
-		uiData.put("otherPostWarning", otherPostWarning); 
+		uiData.put("superUserPostMaster", superUserPostMaster); 
 		uiData.put("userPostMaster", userPostMaster); 
 		uiData.put("textMessage", textMessage);
 		uiData.put("labelDownloadPost", labelDownloadPost); 
 		uiData.put("pbar", pbar);   
-		uiData.put("action",azioni); 
+		uiData.put("action",azioni);
+		uiData.put("otherPostWarning", otherPostWarning); 
 		
 		
 		

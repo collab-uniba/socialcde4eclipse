@@ -1,4 +1,4 @@
-package home.timeline;
+package iteration.timeline;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +16,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UnitTestHomeTimeline extends TestCase {
+public class UnitTestIterationTimeline extends TestCase {
 	/**
-	 * Unit test for User story number 38.
+	 * Unit test for User story number 39.
 	 * 
 	 * 
 	 * Equivalence classes considered: 
@@ -61,7 +61,7 @@ public class UnitTestHomeTimeline extends TestCase {
 	@Test
 	public void testCase1()
 	{
-		WPost[] posts =  Controller.getProxy().GetHomeTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
+		WPost[] posts =  Controller.getProxy().GetIterationTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		assertTrue(posts.length > 0); 
 	}
 	
@@ -69,7 +69,7 @@ public class UnitTestHomeTimeline extends TestCase {
 	public void testCase2()
 	{
 		Controller.setCurrentUserPassword("try1"); 
-		WPost[] posts =  Controller.getProxy().GetHomeTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());  
+		WPost[] posts =  Controller.getProxy().GetIterationTimeline(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());  
 		assertTrue(posts.length == 0);  
 	}
 	

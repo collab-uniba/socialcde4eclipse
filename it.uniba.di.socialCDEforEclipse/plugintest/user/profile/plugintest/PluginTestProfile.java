@@ -95,6 +95,7 @@ public class PluginTestProfile extends TestCase {
 	
 	@Test
 	public void testCase2() { 
+		Controller.setCurrentUserPassword("try1"); 
 		WService[] services = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
 		assertTrue(services.length == 0);
 		assertEquals("There are no services available yet.\t\nPlease try again soon or contact your admin.",((Label) dati.get("service")).getText()); 

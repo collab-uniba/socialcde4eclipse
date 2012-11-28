@@ -109,8 +109,8 @@ public class PluginTestLogin extends TestCase {
 	  new ActionLoginPanel(dati);
 	  assertTrue(Controller.getProxy().IsWebServiceRunning());
 	  assertNotNull(Controller.getCurrentUser()); 
-	  assertEquals("Floriano", Controller.getCurrentUser().Username); 
-	  assertEquals("gualtiero", Controller.getCurrentUserPassword()); 
+	  assertEquals(document.getRootElement().getChild("CorrectData").getChild("Username").getText(), Controller.getCurrentUser().Username); 
+	  assertEquals(document.getRootElement().getChild("CorrectData").getChild("Password").getText(), Controller.getCurrentUserPassword()); 
 	  assertNotNull(Controller.getHomeWindow()); 
 	  assertNull(Controller.getLoginPanel()); 
 	  assertEquals("Home",Controller.getWindowName()); 
