@@ -63,7 +63,7 @@ public class ProfilePanel implements Panel {
 			.getResourceAsStream("images/Wallpaper.png");
 
 	public Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Display.getDefault(), width, height);
+		Image scaled = new Image(Display.getCurrent(), width, height);
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
@@ -75,13 +75,13 @@ public class ProfilePanel implements Panel {
 	}
 
 	public Image get_ImageStream(InputStream stream) {
-		return new Image(Controller.getWindow().getDisplay(), stream);
+		return new Image(Display.getCurrent(), stream);
 	}
 
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
-
+		Controller.writeOnText("inizio profile"); 
 		azioni = new ActionGeneral();
 		controlli = new ArrayList<Control>();
 		GridLayout layout = new GridLayout(1, false);
@@ -108,36 +108,44 @@ public class ProfilePanel implements Panel {
 
 		if (Controller.getCurrentUser().Avatar == null
 				|| Controller.getCurrentUser().Avatar.equals("")) {
+			Controller.writeOnText("Avatar nullo");
 			labelAvatarProfile.setImage(get_ImageStream(PATH_DEFAULT_AVATAR));
 			labelAvatarProfile.setImage(resize(labelAvatarProfile.getImage(),
 					32, 32));
 		} else {
 			try {
+				Controller.writeOnText("Inizio try");
 				labelAvatarProfile.setImage(get_ImageStream(new URL(Controller
 						.getCurrentUser().Avatar).openStream()));
 				labelAvatarProfile.setImage(resize(
 						labelAvatarProfile.getImage(), 32, 32));
-
+				Controller.writeOnText("Fine try");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-
+				 Controller.writeOnText(" message " + e.getMessage());
 				labelAvatarProfile.setImage(resize(
 						get_ImageStream(PATH_DEFAULT_AVATAR), 32, 32));
-				// e.printStackTrace();
+				 //e.printStackTrace();
+				
 			}
 		}
+		Controller.writeOnText("Avatar settato");
 		labelAvatarProfile.setToolTipText("Profile");
 		labelAvatarProfile.setData("ID_action", "labelAvatarProfile");
 		labelAvatarProfile.setCursor(new Cursor(panel.getDisplay(),
 				SWT.CURSOR_HAND));
 		controlli.add(labelAvatarProfile);
-
+		Controller.writeOnText("Fine label avatar");
 		labelPeople = new Label(composite_static, SWT.PUSH);
+		Controller.writeOnText("one station");
 		labelPeople.setImage(get_ImageStream(PATH_PEOPLE));
+		Controller.writeOnText("two station");
 		labelPeople.setCursor(new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
+		Controller.writeOnText("three station");
 		labelPeople.setToolTipText("People");
+		Controller.writeOnText("four station");
 		labelPeople.setData("ID_action", "labelPeople");
-
+		Controller.writeOnText(" step people");
 		controlli.add(labelPeople);
 
 		labelHomeTimeline = new Label(composite_static, SWT.PUSH);
@@ -148,7 +156,7 @@ public class ProfilePanel implements Panel {
 		labelHomeTimeline.setData("ID_action", "labelHomeTimeline");
 
 		controlli.add(labelHomeTimeline);
-
+		Controller.writeOnText(" step home timeline");
 		labelInterationTimeline = new Label(composite_static, SWT.PUSH);
 		labelInterationTimeline
 				.setImage(get_ImageStream(PATH_INTERACTION_TIMELINE));
@@ -157,7 +165,7 @@ public class ProfilePanel implements Panel {
 		labelInterationTimeline.setToolTipText("Interation Timeline");
 		labelInterationTimeline.setData("ID_action", "labelIterationTimeline");
 		controlli.add(labelInterationTimeline);
-
+		Controller.writeOnText("step interaction");
 		labelInteractiveTimeline = new Label(composite_static, SWT.PUSH);
 		labelInteractiveTimeline
 				.setImage(get_ImageStream(PATH_INTERACTIVE_TIMELINE));
@@ -166,7 +174,7 @@ public class ProfilePanel implements Panel {
 		labelInteractiveTimeline.setToolTipText("Interactive Timeline");
 
 		controlli.add(labelInteractiveTimeline);
-
+		Controller.writeOnText(" step interactive");
 		labelLogout = new Label(composite_static, SWT.BUTTON_MASK);
 		labelLogout.setImage(get_ImageStream(PATH_LOGOUT));
 		labelLogout.setCursor(new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
@@ -176,11 +184,11 @@ public class ProfilePanel implements Panel {
 		gridData.grabExcessHorizontalSpace = true;
 
 		labelLogout.setLayoutData(gridData);
-
+		Controller.writeOnText(" step logout");
 		controlli.add(labelLogout);
 
 		composite_static.layout();
-
+		Controller.writeOnText("Inizio set dynamic");
 		Controller.selectDynamicWindow(0);
 
 		controlli.add(composite_static);
@@ -194,6 +202,8 @@ public class ProfilePanel implements Panel {
 		labelInterationTimeline.addListener(SWT.MouseDown, azioni);
 		labelLogout.addListener(SWT.MouseDown, azioni);
 		labelPeople.addListener(SWT.MouseDown, azioni);
+		
+		Controller.writeOnText("fine profile"); 
 
 	}
 

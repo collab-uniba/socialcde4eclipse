@@ -3,13 +3,13 @@ package it.uniba.di.socialcdeforeclipse.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Widget;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WService;
+import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
 
 public class ActionGeneral implements Listener {
 
@@ -84,6 +84,7 @@ public class ActionGeneral implements Listener {
 				uiData.put("Event", event);
 				uiData.put("Event_type", event.type);
 				uiData.put("ID_action", widget.getData("ID_action").toString());
+
 				new ActionDynamicUserTimeline(uiData);
 			}
 			break;
@@ -95,6 +96,18 @@ public class ActionGeneral implements Listener {
 				uiData.put("Event", event);
 				uiData.put("Event_type", event.type);
 				uiData.put("ID_action", widget.getData("ID_action").toString());
+
+				if (widget.getData("ID_action").equals("labelAvatarLink")) {
+					uiData.put("User_data",
+							(WUser) event.widget.getData("User_data"));
+				}
+
+				if (widget.getData("ID_action").equals("usernameLink")) {
+					System.out
+							.println("ottengo " + widget.getData("User_data"));
+					uiData.put("User_data", (WUser) widget.getData("User_data"));
+				}
+
 				new ActionHomeTimeline(uiData);
 			}
 			break;
@@ -106,6 +119,15 @@ public class ActionGeneral implements Listener {
 				uiData.put("Event", event);
 				uiData.put("Event_type", event.type);
 				uiData.put("ID_action", widget.getData("ID_action").toString());
+
+				if (widget.getData("ID_action").equals("labelAvatarLink")) {
+					uiData.put("User_data", (WUser) widget.getData("User_data"));
+				}
+
+				if (widget.getData("ID_action").equals("usernameLink")) {
+					uiData.put("User_data", (WUser) widget.getData("User_data"));
+				}
+
 				new ActionIterationTimeline(uiData);
 			}
 			break;

@@ -1,6 +1,5 @@
 package it.uniba.di.socialcdeforeclipse.popup;
 
-
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;

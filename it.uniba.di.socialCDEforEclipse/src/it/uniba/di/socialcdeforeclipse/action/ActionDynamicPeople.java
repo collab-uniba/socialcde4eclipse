@@ -17,7 +17,7 @@ public class ActionDynamicPeople {
 					(WUser) widget.getData("User_data"));
 			Controller.temporaryInformation.put("User_type",
 					widget.getData("User_type"));
-			WUser utente = (WUser) widget.getData("User_data");
+
 			Controller.selectDynamicWindow(3);
 			break;
 

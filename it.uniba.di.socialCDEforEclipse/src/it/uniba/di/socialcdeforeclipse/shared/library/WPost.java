@@ -3,34 +3,31 @@ package it.uniba.di.socialcdeforeclipse.shared.library;
 import java.util.Calendar;
 import java.util.Date;
 
-
-
-
 public class WPost {
-	/// <summary>
-    /// Identifier of the post.
-    /// </summary>
-    public long Id;  
+	// / <summary>
+	// / Identifier of the post.
+	// / </summary>
+	public long Id;
 
-    /// <summary>
-    /// Name of the author of the post.
-    /// </summary>
-    public WUser User;  
+	// / <summary>
+	// / Name of the author of the post.
+	// / </summary>
+	public WUser User;
 
-    /// <summary>
-    /// Name of the service.
-    /// </summary>
-    public WService Service;  
+	// / <summary>
+	// / Name of the service.
+	// / </summary>
+	public WService Service;
 
-    /// <summary>
-    /// Message of the post.
-    /// </summary>
-    public String Message;  
+	// / <summary>
+	// / Message of the post.
+	// / </summary>
+	public String Message;
 
-    /// <summary>
-    /// Creation date of the post.
-    /// </summary>
-    public Calendar CreateAt;
+	// / <summary>
+	// / Creation date of the post.
+	// / </summary>
+	public Calendar CreateAt;
 
 	public long getId() {
 		return Id;
@@ -72,5 +69,3 @@ public class WPost {
 		CreateAt = createAt;
 	}
 }
-
-

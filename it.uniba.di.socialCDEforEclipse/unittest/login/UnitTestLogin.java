@@ -21,19 +21,20 @@ public class UnitTestLogin extends TestCase {
 	 * 
 	 * Equivalence classes considered: 1.Correct Login 2.Fail login
 	 * */
-	
-	ProxyWrapper pw; 
-	Document document; 
+
+	ProxyWrapper pw;
+	Document document;
+
 	@Before
-	public void setUp()
-	{
-		pw = new ProxyWrapper(); 
-		
+	public void setUp() {
+		pw = new ProxyWrapper();
+
 		SAXBuilder builder = new SAXBuilder();
 		try {
-			document = builder.build(new File("./testData.xml").getCanonicalPath());
+			document = builder.build(new File("./testData.xml")
+					.getCanonicalPath());
 		} catch (JDOMException e) {
-		 
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -41,36 +42,38 @@ public class UnitTestLogin extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
-	public void testCase1()
-	{
-		
-		
-		String proxyServer = document.getRootElement().getChild("CorrectData").getChild("Proxy").getText(); 
-		String username = document.getRootElement().getChild("CorrectData").getChild("Username").getText(); 
-		String password = document.getRootElement().getChild("CorrectData").getChild("Password").getText(); 
-		
-		pw.setHost(proxyServer); 
-		assertTrue(pw.IsWebServiceRunning()); 
-		
-		assertNotNull(pw.GetUser(username, password)); 
-		
+	public void testCase1() {
+
+		String proxyServer = document.getRootElement().getChild("CorrectData")
+				.getChild("Proxy").getText();
+		String username = document.getRootElement().getChild("CorrectData")
+				.getChild("Username").getText();
+		String password = document.getRootElement().getChild("CorrectData")
+				.getChild("Password").getText();
+
+		pw.setHost(proxyServer);
+		assertTrue(pw.IsWebServiceRunning());
+
+		assertNotNull(pw.GetUser(username, password));
+
 	}
-	
+
 	@Test
-	public void testCase2()
-	{
-		String proxyServer = document.getRootElement().getChild("CorrectData").getChild("Proxy").getText(); 
-		String username = document.getRootElement().getChild("CorrectData").getChild("Username").getText(); 
-		String password = document.getRootElement().getChild("WrongData").getChild("Password").getText(); 
-		
-		pw.setHost(proxyServer); 
-		assertTrue(pw.IsWebServiceRunning()); 
-		
-		assertNull(pw.GetUser(username, password)); 
-		
+	public void testCase2() {
+		String proxyServer = document.getRootElement().getChild("CorrectData")
+				.getChild("Proxy").getText();
+		String username = document.getRootElement().getChild("CorrectData")
+				.getChild("Username").getText();
+		String password = document.getRootElement().getChild("WrongData")
+				.getChild("Password").getText();
+
+		pw.setHost(proxyServer);
+		assertTrue(pw.IsWebServiceRunning());
+
+		assertNull(pw.GetUser(username, password));
+
 	}
-	
 
 }

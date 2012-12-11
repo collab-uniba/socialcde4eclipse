@@ -155,7 +155,7 @@ public class ChooseAvatar implements Panel {
 		uriAvatar = Controller.getProxy().GetAvailableAvatars(
 				Controller.getCurrentUser().Username,
 				Controller.getCurrentUserPassword());
-
+		System.out.println(" avatar " + uriAvatar.length);
 		if (uriAvatar.length > 0) {
 
 			final ScrolledComposite sc = new ScrolledComposite(shell, SWT.None
@@ -192,14 +192,17 @@ public class ChooseAvatar implements Panel {
 			for (int i = 0; i < uriAvatar.length; i++) {
 
 				Boolean flag = true;
+				System.out.println("uri  " + i + " n. "
+						+ uriAvatar[i].toString());
 				try {
+
 					getImageStream(uriAvatar[i].toURL().openStream());
 
 				} catch (Exception e) {
 					// TODO: handle exception
 					flag = false;
 				}
-
+				System.out.println("Avatars flag " + flag);
 				if (flag) {
 
 					Composite service1 = new Composite(firstComposite, SWT.None);
@@ -244,23 +247,26 @@ public class ChooseAvatar implements Panel {
 					avatarImage.setText("");
 					avatarImage.setData("ID_action", "btnAvatar");
 					avatarImage.setData("URI", uriAvatar[i]);
-					final int j=i;
+					final int j = i;
 					avatarImage.addListener(SWT.Selection, new Listener() {
-						
+
 						@Override
 						public void handleEvent(Event event) {
 							// TODO Auto-generated method stub
-							
-							if(!Controller.getProxy().SaveAvatar(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword(), uriAvatar[j]))
-							{
-							
-							MessageBox messageBox = new MessageBox(
-									firstComposite.getShell(), SWT.ICON_ERROR
-											| SWT.OK);
-							messageBox
-									.setMessage("Something was wrong, please try again.");
-							messageBox.setText("SocialCDEforEclipse Message");
-							messageBox.open();
+
+							if (!Controller.getProxy().SaveAvatar(
+									Controller.getCurrentUser().Username,
+									Controller.getCurrentUserPassword(),
+									uriAvatar[j])) {
+
+								MessageBox messageBox = new MessageBox(
+										firstComposite.getShell(),
+										SWT.ICON_ERROR | SWT.OK);
+								messageBox
+										.setMessage("Something was wrong, please try again.");
+								messageBox
+										.setText("SocialCDEforEclipse Message");
+								messageBox.open();
 							}
 
 						}

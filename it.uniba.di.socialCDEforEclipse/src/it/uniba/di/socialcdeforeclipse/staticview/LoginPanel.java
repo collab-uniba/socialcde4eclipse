@@ -12,7 +12,6 @@ import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.object.GeneralButton;
 import it.uniba.di.socialcdeforeclipse.views.Panel;
 
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,8 +83,6 @@ public class LoginPanel implements Panel {
 		}
 
 		panel.setBackgroundMode(SWT.INHERIT_DEFAULT);
-
-	
 
 		azioni = new ActionGeneral();
 		controlli = new ArrayList<Control>();
@@ -333,7 +330,6 @@ public class LoginPanel implements Panel {
 				}
 			});
 
-			
 		}
 
 		// panel.setLayout(null);

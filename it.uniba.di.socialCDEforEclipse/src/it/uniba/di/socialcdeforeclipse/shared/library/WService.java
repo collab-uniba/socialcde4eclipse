@@ -1,57 +1,59 @@
 package it.uniba.di.socialcdeforeclipse.shared.library;
 
-public class WService
-{
-	/// <summary>
-    /// Identifier of the service.
-    /// </summary>
-    public int Id;
+public class WService {
+	// / <summary>
+	// / Identifier of the service.
+	// / </summary>
+	public int Id;
 
-    /// <summary>
-    /// Name of the service.
-    /// </summary>
-    public String Name;
+	// / <summary>
+	// / Name of the service.
+	// / </summary>
+	public String Name;
 
-    /// <summary>
-    /// Host of the service.
-    /// </summary>
-    public String Host;
+	// / <summary>
+	// / Host of the service.
+	// / </summary>
+	public String Host;
 
-    /// <summary>
-    /// Service to the base of the service.
-    /// </summary>
-    public String BaseService;
+	// / <summary>
+	// / Service to the base of the service.
+	// / </summary>
+	public String BaseService;
 
-    /// <summary>
-    /// Image logo of the service.
-    /// </summary>
-    public String Image;
+	// / <summary>
+	// / Image logo of the service.
+	// / </summary>
+	public String Image;
 
-    /// <summary>
-    /// True if the current user is registered to the service. False otherwise.
-    /// </summary>
-    public boolean Registered;
+	// / <summary>
+	// / True if the current user is registered to the service. False otherwise.
+	// / </summary>
+	public boolean Registered;
 
-    /// <summary>
-    /// True if the service require OAuth procedure, false otherwise.
-    /// </summary>
-    public boolean RequireOAuth;
+	// / <summary>
+	// / True if the service require OAuth procedure, false otherwise.
+	// / </summary>
+	public boolean RequireOAuth;
 
-    /// <summary>
-    /// Version of OAuth procedure required.
-    /// </summary>
-    public int OAuthVersion;
+	// / <summary>
+	// / Version of OAuth procedure required.
+	// / </summary>
+	public int OAuthVersion;
 
-    /// <summary>
-    /// True if the service require TFS authetication procedure, false otherwise.
-    /// </summary>
-    public boolean RequireTFSAuthentication;
+	// / <summary>
+	// / True if the service require TFS authetication procedure, false
+	// otherwise.
+	// / </summary>
+	public boolean RequireTFSAuthentication;
 
-    /// <summary>
-    /// True if the TFS authetication procedure require domain, false otherwise.
-    /// </summary>
-    public boolean RequireTFSDomain;
-    public int getId() {
+	// / <summary>
+	// / True if the TFS authetication procedure require domain, false
+	// otherwise.
+	// / </summary>
+	public boolean RequireTFSDomain;
+
+	public int getId() {
 		return Id;
 	}
 
@@ -130,6 +132,5 @@ public class WService
 	public void setRequireTFSDomain(boolean requireTFSDomain) {
 		RequireTFSDomain = requireTFSDomain;
 	}
-
 
 }

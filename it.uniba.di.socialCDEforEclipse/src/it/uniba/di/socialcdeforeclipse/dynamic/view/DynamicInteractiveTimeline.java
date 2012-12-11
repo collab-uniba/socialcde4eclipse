@@ -6,21 +6,19 @@ import java.util.HashMap;
 
 import org.eclipse.swt.widgets.Composite;
 
-public class DynamicInteractiveTimeline implements Panel{
+public class DynamicInteractiveTimeline implements Panel {
 
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose(Composite panel) {
 		// TODO Auto-generated method stub
-		
-	}
 
-	
+	}
 
 	@Override
 	public HashMap<String, Object> getData() {

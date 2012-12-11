@@ -22,54 +22,64 @@ public class UnitTestSuggest {
 	 * 
 	 * Action considered: Suggests a developer
 	 * 
-	 * Equivalence classes considered: 
-	 * 1.There are developers that the system can suggests.
-	 * 2.There aren't developers to suggests. 
+	 * Equivalence classes considered: 1.There are developers that the system
+	 * can suggests. 2.There aren't developers to suggests.
 	 * 
 	 * */
-	Document document; 
-	 int positionUser; 
-	 WUser[] users; 
-	 
+	Document document;
+	int positionUser;
+	WUser[] users;
+
 	@Before
 	public void setUp() throws Exception {
-		
+
 		SAXBuilder builder = new SAXBuilder();
 		try {
-			document = builder.build(new File("./testData.xml").getCanonicalPath());
+			document = builder.build(new File("./testData.xml")
+					.getCanonicalPath());
 		} catch (JDOMException e) {
-			 
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Controller.setProxy(new ProxyWrapper()); 
-		Controller.getProxy().setHost(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
-		Controller.setCurrentUser(Controller.getProxy().GetUser(document.getRootElement().getChild("CorrectData").getChild("Username").getText(), document.getRootElement().getChild("CorrectData").getChild("Password").getText()));
-		Controller.setCurrentUserPassword(document.getRootElement().getChild("CorrectData").getChild("Password").getText()); 
-		
+
+		Controller.setProxy(new ProxyWrapper());
+		Controller.getProxy().setHost(
+				document.getRootElement().getChild("CorrectData")
+						.getChild("Proxy").getText());
+		Controller.setCurrentUser(Controller.getProxy().GetUser(
+				document.getRootElement().getChild("CorrectData")
+						.getChild("Username").getText(),
+				document.getRootElement().getChild("CorrectData")
+						.getChild("Password").getText()));
+		Controller.setCurrentUserPassword(document.getRootElement()
+				.getChild("CorrectData").getChild("Password").getText());
+
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		
+
 	}
 
 	@Test
 	public void testCase1() {
-	 
-		users = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
-		assertTrue(users.length > 0); 
+
+		users = Controller.getProxy().GetSuggestedFriends(
+				Controller.getCurrentUser().Username,
+				Controller.getCurrentUserPassword());
+		assertTrue(users.length > 0);
 	}
-	
+
 	@Test
 	public void testCase2() {
-	 
-		users = Controller.getProxy().GetSuggestedFriends(Controller.getCurrentUser().Username, "try");
-		assertTrue(users.length == 0); 
+
+		users = Controller.getProxy().GetSuggestedFriends(
+				Controller.getCurrentUser().Username, "try");
+		assertTrue(users.length == 0);
 	}
 
 }

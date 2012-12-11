@@ -4,6 +4,8 @@
 package it.uniba.di.socialcdeforeclipse.views;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.shared.library.WService;
@@ -137,6 +139,18 @@ public class SocialCDEviewBrowser extends ViewPart {
 
 					Controller.temporaryInformation.put("AccessToken",
 							event.location.split("=")[1].toString());
+				} else if (event.location.contains("?")
+						&& service.Name.equals("GitHub")) {
+					URL query = null;
+					try {
+						query = new URL(event.location.toString());
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						// e.printStackTrace();
+					}
+
+					Controller.temporaryInformation.put("AccessToken", query
+							.toString().split("=")[1]);
 				}
 
 			}

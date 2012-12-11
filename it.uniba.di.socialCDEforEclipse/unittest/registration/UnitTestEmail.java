@@ -19,22 +19,20 @@ public class UnitTestEmail extends TestCase {
 	 * 
 	 * Field considered: Email
 	 * 
-	 * Equivalence classes considered: 
-	 * 1.Empty string 
-	 * 2.String that is not an email 
-	 * 3.String that is an email
+	 * Equivalence classes considered: 1.Empty string 2.String that is not an
+	 * email 3.String that is an email
 	 * */
 
 	Document document;
-	
+
 	@Before
-	public void setUp()
-	{ 	
+	public void setUp() {
 		SAXBuilder builder = new SAXBuilder();
 		try {
-			document = builder.build(new File("./testData.xml").getCanonicalPath());
+			document = builder.build(new File("./testData.xml")
+					.getCanonicalPath());
 		} catch (JDOMException e) {
-			 
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -42,7 +40,7 @@ public class UnitTestEmail extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testCase1() {
 		String email = "";
@@ -57,10 +55,11 @@ public class UnitTestEmail extends TestCase {
 
 	@Test
 	public void testCase3() {
-		String email = document.getRootElement().getChild("CorrectData").getChild("Email").getText();
+		String email = document.getRootElement().getChild("CorrectData")
+				.getChild("Email").getText();
 		assertTrue(InterceptingFilter.verifyMail(email));
 	}
-	
+
 	@Test
 	public void testCase4() {
 		String email = ".@.com";

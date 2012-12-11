@@ -14,7 +14,6 @@ import java.util.Calendar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
 /**
  * @author Fauzzi Floriano
  * 
@@ -1493,7 +1492,7 @@ public class ProxyWrapper implements ISocialTFSProxy {
 	}
 
 	public URI[] GetAvailableAvatars(String username, String password) {
-		URI[] uri = new URI[2];
+		URI[] uri = new URI[0];
 
 		try {
 			URL url = new URL(host + "/GetAvailableAvatars");
@@ -1515,7 +1514,7 @@ public class ProxyWrapper implements ISocialTFSProxy {
 			writer.close();
 			out.close();
 			int status = conn.getResponseCode();
-
+			System.out.println("status " + status);
 			if (status >= 200 && status <= 299) {
 				InputStreamReader in = new InputStreamReader(
 						conn.getInputStream());
@@ -1524,10 +1523,11 @@ public class ProxyWrapper implements ISocialTFSProxy {
 				String result = "";
 				while ((output = br.readLine()) != null) {
 					result += output;
+					System.out.println("result1 " + result);
 
 				}
 				br.close();
-
+				System.out.println("result " + result);
 				Gson gson = new Gson();
 				uri = new URI[countOccurrences(result, '{')];
 				uri = gson.fromJson(result, URI[].class);

@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-
 public class ActionRegistrationPanel {
 
 	private ProgressBarThread pbWindow;
@@ -227,6 +226,7 @@ public class ActionRegistrationPanel {
 			if (type == SWT.Selection) {
 
 				pbWindow = new ProgressBarThread();
+				Controller.temporaryInformation.put("ProgressBarThread", pbWindow);
 				pbWindow.setLabelTxt("Login in progress..");
 				pbWindow.setxCoordinate(Controller.getWindow().toDisplay(
 						Controller.getWindow().getLocation().x,

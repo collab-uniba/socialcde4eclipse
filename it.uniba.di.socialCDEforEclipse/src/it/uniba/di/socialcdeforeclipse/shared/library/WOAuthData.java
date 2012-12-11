@@ -1,22 +1,21 @@
 package it.uniba.di.socialcdeforeclipse.shared.library;
 
 public class WOAuthData {
-	/// <summary>
-    /// Link to authorization page of the service instance.
-    /// </summary>
-    public String AuthorizationLink;
-  /// <summary>
-    /// Access Token of the service instance.
-    /// </summary>
-    public String AccessToken;
+	// / <summary>
+	// / Link to authorization page of the service instance.
+	// / </summary>
+	public String AuthorizationLink;
+	// / <summary>
+	// / Access Token of the service instance.
+	// / </summary>
+	public String AccessToken;
 
-    /// <summary>
-    /// AccessSecret of the service instance.
-    /// </summary>
-    public String AccessSecret;
-    
-    
-    public String getAuthorizationLink() {
+	// / <summary>
+	// / AccessSecret of the service instance.
+	// / </summary>
+	public String AccessSecret;
+
+	public String getAuthorizationLink() {
 		return AuthorizationLink;
 	}
 

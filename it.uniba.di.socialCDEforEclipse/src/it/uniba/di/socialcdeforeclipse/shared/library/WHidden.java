@@ -1,20 +1,20 @@
 package it.uniba.di.socialcdeforeclipse.shared.library;
 
 public class WHidden {
-     
-    public boolean Suggestions;
 
-    /// <summary>
-    /// Is hidden in dynamic timeline.
-    /// </summary>
-     
-    public boolean Dynamic;
+	public boolean Suggestions;
 
-    /// <summary>
-    /// Is hidden in interactive timeline.
-    /// </summary>
-     
-    public boolean Interactive;
+	// / <summary>
+	// / Is hidden in dynamic timeline.
+	// / </summary>
+
+	public boolean Dynamic;
+
+	// / <summary>
+	// / Is hidden in interactive timeline.
+	// / </summary>
+
+	public boolean Interactive;
 
 	public boolean isSuggestions() {
 		return Suggestions;
@@ -39,6 +39,5 @@ public class WHidden {
 	public void setInteractive(boolean interactive) {
 		Interactive = interactive;
 	}
-    
 
 }

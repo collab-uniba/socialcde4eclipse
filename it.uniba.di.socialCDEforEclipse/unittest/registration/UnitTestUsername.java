@@ -19,31 +19,32 @@ public class UnitTestUsername extends TestCase {
 	 * 
 	 * Field considered: Username
 	 * 
-	 * Equivalence classes considered: 
-	 * 1.Empty string 
-	 * 2.Valid username 
-	 * 3.Not valid username
+	 * Equivalence classes considered: 1.Empty string 2.Valid username 3.Not
+	 * valid username
 	 * */
 
 	ProxyWrapper pw;
-	Document document; 
+	Document document;
+
 	@Before
 	public void setUp() {
-		
+
 		SAXBuilder builder = new SAXBuilder();
 		try {
-			document = builder.build(new File("./testData.xml").getCanonicalPath());
+			document = builder.build(new File("./testData.xml")
+					.getCanonicalPath());
 		} catch (JDOMException e) {
-			 
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		pw = new ProxyWrapper();
-		pw.setHost(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
+		pw.setHost(document.getRootElement().getChild("CorrectData")
+				.getChild("Proxy").getText());
 		// assertFalse(pw.IsAvailable("Giacomo"));
 	}
 
@@ -55,13 +56,15 @@ public class UnitTestUsername extends TestCase {
 
 	@Test
 	public void testCase2() {
-		String username = document.getRootElement().getChild("WrongData").getChild("Username").getText();
+		String username = document.getRootElement().getChild("WrongData")
+				.getChild("Username").getText();
 		assertTrue(pw.IsAvailable(username));
 	}
 
 	@Test
 	public void testCase3() {
-		String username = document.getRootElement().getChild("CorrectData").getChild("Username").getText();
+		String username = document.getRootElement().getChild("CorrectData")
+				.getChild("Username").getText();
 		assertFalse(pw.IsAvailable(username));
 	}
 }

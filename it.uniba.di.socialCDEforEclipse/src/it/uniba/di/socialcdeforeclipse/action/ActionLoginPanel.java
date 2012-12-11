@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 import it.uniba.di.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.InterceptingFilter;
 import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
@@ -78,6 +77,7 @@ public class ActionLoginPanel {
 		case "btnLogin":
 			if (type == SWT.Selection) {
 				pbWindow = new ProgressBarThread();
+				Controller.temporaryInformation.put("ProgressBarThread", pbWindow); 
 				pbWindow.setLabelTxt("Login in progress..");
 				Controller.setProgressBarPositionX(Controller.getWindow()
 						.toDisplay(Controller.getWindow().getLocation().x,
@@ -100,7 +100,7 @@ public class ActionLoginPanel {
 								Controller.getWindow().getLocation().y).y
 						+ (Controller.getWindow().getBounds().height - 200) / 2);
 				pbWindow.start();
-
+				Controller.writeOnText("Login pb avviata"); 
 				if (Controller.getProxy() == null) {
 					Controller.setProxy(new ProxyWrapper());
 					Controller.getProxy().setHost(
@@ -109,14 +109,19 @@ public class ActionLoginPanel {
 					Controller.getProxy().setHost(
 							((Text) uiData.get("txtProxyHost")).getText());
 				}
+				Controller.writeOnText("Proxy impostato"); 
 				if (Controller.getProxy().IsWebServiceRunning()) {
+					
+					Controller.writeOnText("Servizio avviato"); 
 
 					user = Controller.getProxy().GetUser(
 							((Text) uiData.get("txtUsername")).getText(),
 							((Text) uiData.get("txtPassword")).getText());
-
+					
 					if (user == null) {
-
+						
+					
+						
 						((Label) uiData.get("labelAlert"))
 								.setText("username or password not valid!");
 						((Label) uiData.get("labelImageUsername"))
@@ -143,7 +148,7 @@ public class ActionLoginPanel {
 						System.out.println("Utente non corretto");
 
 					} else {
-
+						Controller.writeOnText("Utente non nullo"); 
 						if (((Button) uiData.get("chkSavePassword"))
 								.getSelection()) {
 							Controller.setPreferences("Password",
@@ -165,24 +170,25 @@ public class ActionLoginPanel {
 						Controller.setCurrentUser(user);
 						Controller.setCurrentUserPassword(((Text) uiData
 								.get("txtPassword")).getText());
-
+						Controller.writeOnText("Utente salvato"); 
 						Controller.setPreferences("ProxyHost", Controller
 								.getProxy().getHost());
 						Controller.setPreferences("ProxyRoot",
 								((Text) uiData.get("txtProxyHost")).getText());
 						Controller.setPreferences("Username", user.Username);
-
+						Controller.writeOnText("Preferenze impostate"); 
 						Controller.setWindowName("Profile");
 
 						Controller.getLoginPanel().dispose(null);
 						Controller.setLoginPanel(null);
-
+						Controller.writeOnText("Login cancellato"); 
 						SquareButtonService.yCoordinateValue = 5;
 						SquareButtonService.counterPosition = 0;
 						Controller.setProfilePanel(new ProfilePanel());
+						Controller.writeOnText("Inizializ chiamata"); 
 						Controller.getProfilePanel().inizialize(
 								Controller.getWindow());
-
+						Controller.writeOnText("fine inizializ");
 						pbWindow.setStop(1);
 						pbWindow = null;
 						// Controller.getWindow().getShell().forceFocus();
@@ -217,6 +223,7 @@ public class ActionLoginPanel {
 									.equals("True")) {
 
 						pbWindow = new ProgressBarThread();
+						Controller.temporaryInformation.put("ProgressBarThread", pbWindow);
 						pbWindow.setLabelTxt("Login in progress..");
 						pbWindow.setxCoordinate(Controller.getWindow()
 								.toDisplay(

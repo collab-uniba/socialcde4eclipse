@@ -24,15 +24,15 @@ public class UnitTestProxyHost extends TestCase {
 	 * */
 
 	Document document;
-	
+
 	@Before
-	public void setUp()
-	{ 	
+	public void setUp() {
 		SAXBuilder builder = new SAXBuilder();
 		try {
-			document = builder.build(new File("./testData.xml").getCanonicalPath());
+			document = builder.build(new File("./testData.xml")
+					.getCanonicalPath());
 		} catch (JDOMException e) {
-			 
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -40,7 +40,7 @@ public class UnitTestProxyHost extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testCase1() {
 		String proxyHost = "";
@@ -51,7 +51,8 @@ public class UnitTestProxyHost extends TestCase {
 
 	@Test
 	public void testCase2() {
-		String proxyHost = document.getRootElement().getChild("WrongData").getChild("Proxy").getText();
+		String proxyHost = document.getRootElement().getChild("WrongData")
+				.getChild("Proxy").getText();
 		ProxyWrapper pw = new ProxyWrapper();
 		pw.setHost(proxyHost);
 		assertFalse(pw.IsWebServiceRunning());
@@ -59,7 +60,8 @@ public class UnitTestProxyHost extends TestCase {
 
 	@Test
 	public void testCase3() {
-		String proxyHost = document.getRootElement().getChild("CorrectData").getChild("Proxy").getText();
+		String proxyHost = document.getRootElement().getChild("CorrectData")
+				.getChild("Proxy").getText();
 		ProxyWrapper pw = new ProxyWrapper();
 		pw.setHost(proxyHost);
 		assertTrue(pw.IsWebServiceRunning());

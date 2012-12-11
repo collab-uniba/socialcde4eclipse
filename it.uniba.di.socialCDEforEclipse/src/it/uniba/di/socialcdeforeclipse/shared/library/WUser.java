@@ -1,4 +1,5 @@
 package it.uniba.di.socialcdeforeclipse.shared.library;
+
 public class WUser {
 
 	// / <summary>
@@ -104,6 +105,5 @@ public class WUser {
 	public void setFollowed(boolean followed) {
 		this.Followed = followed;
 	}
-	
-	
+
 }

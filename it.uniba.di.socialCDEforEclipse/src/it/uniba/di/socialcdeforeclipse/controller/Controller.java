@@ -1,13 +1,16 @@
 /*
-* Classname Controller
-*
-* Version info 1.0.0.0
-*
-* Copyright notice
+ * Classname Controller
+ *
+ * Version info 1.0.0.0
+ *
+ * Copyright notice
  * 
  * */
 package it.uniba.di.socialcdeforeclipse.controller;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.prefs.Preferences;
 
@@ -20,7 +23,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-
+import org.eclipse.swt.widgets.Display;
 
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicHome;
 import it.uniba.di.socialcdeforeclipse.dynamic.view.DynamicHomeTimeline;
@@ -39,109 +42,88 @@ import it.uniba.di.socialcdeforeclipse.object.SquareButtonService;
 
 public class Controller {
 
-	//attributes
-	private static ProxyWrapper proxy = null; 
-	
+	// attributes
+	private static ProxyWrapper proxy = null;
+
 	private static Composite window = null;
-	
+
 	private static int windowWidth = 0;
-	
-	private static int windowHeight = 0; 
-	
-	private static int scrollHeight = 0; 
-	
+
+	private static int windowHeight = 0;
+
+	private static int scrollHeight = 0;
+
 	private static String windowName = null;
-	
+
 	private static RegistrationPanel registrationPanel = null;
-	
-	private static LoginPanel loginPanel = null; 
-	
+
+	private static LoginPanel loginPanel = null;
+
 	private static ProfilePanel profilePanel = null;
 
 	private static WUser currentUser = null;
-	
-	private static String currentUserPassword = null; 
-	
+
+	private static String currentUserPassword = null;
 
 	private static DynamicHome homeWindow = null;
-	
-	private static DynamicIterationTimeline interationTimelineWindow = null;
-	
-	private static DynamicInteractiveTimeline interactiveTimelineWindow = null;
-	
-	private static DynamicHomeTimeline homeTimelineWindow = null;
-	
-	private static DynamicPeople peopleWindow = null;
-	
-	private static SettingPanel settingWindow = null;
-	
-	private static DynamicUserTimeline dynamicUserWindow = null;
-	
-	public static HashMap<String, Object> temporaryInformation =  new HashMap<String,Object>();  
-	
-	public static int progressBarPositionX = 0;
-	
-	public static int progressBarPositionY = 0;
-	
-	//getter and setter for attributes
-	
 
-	
-	
-	
+	private static DynamicIterationTimeline interationTimelineWindow = null;
+
+	private static DynamicInteractiveTimeline interactiveTimelineWindow = null;
+
+	private static DynamicHomeTimeline homeTimelineWindow = null;
+
+	private static DynamicPeople peopleWindow = null;
+
+	private static SettingPanel settingWindow = null;
+
+	private static DynamicUserTimeline dynamicUserWindow = null;
+
+	public static HashMap<String, Object> temporaryInformation = new HashMap<String, Object>();
+
+	public static int progressBarPositionX = 0;
+
+	public static int progressBarPositionY = 0;
+
+	// getter and setter for attributes
+
 	public static LoginPanel getLoginPanel() {
 		return loginPanel;
 	}
-	
-	
 
 	public static DynamicHomeTimeline getHomeTimelineWindow() {
 		return homeTimelineWindow;
 	}
 
-
-
-	public static void setHomeTimelineWindow(DynamicHomeTimeline homeTimelineWindow) {
+	public static void setHomeTimelineWindow(
+			DynamicHomeTimeline homeTimelineWindow) {
 		Controller.homeTimelineWindow = homeTimelineWindow;
 	}
-
-
 
 	public static int getProgressBarPositionX() {
 		return progressBarPositionX;
 	}
 
-
-
 	public static void setProgressBarPositionX(int progressBarPositionX) {
 		Controller.progressBarPositionX = progressBarPositionX;
 	}
-
-
 
 	public static int getProgressBarPositionY() {
 		return progressBarPositionY;
 	}
 
-
-
 	public static void setProgressBarPositionY(int progressBarPositionY) {
 		Controller.progressBarPositionY = progressBarPositionY;
 	}
-
-
 
 	public static DynamicUserTimeline getDynamicUserWindow() {
 		return dynamicUserWindow;
 	}
 
-
-
-	public static void setDynamicUserWindow(DynamicUserTimeline dynamicUserWindow) {
+	public static void setDynamicUserWindow(
+			DynamicUserTimeline dynamicUserWindow) {
 		Controller.dynamicUserWindow = dynamicUserWindow;
 	}
-
-
 
 	public static int getScrollHeight() {
 		return scrollHeight;
@@ -155,41 +137,33 @@ public class Controller {
 		return windowWidth;
 	}
 
-
 	public static void setWindowWidth(int windowWidth) {
 		Controller.windowWidth = windowWidth;
 	}
-
 
 	public static int getWindowHeight() {
 		return windowHeight;
 	}
 
-
 	public static void setWindowHeight(int windowHeight) {
 		Controller.windowHeight = windowHeight;
 	}
-
 
 	public static SettingPanel getSettingWindow() {
 		return settingWindow;
 	}
 
-
 	public static void setSettingWindow(SettingPanel settingWindow) {
 		Controller.settingWindow = settingWindow;
 	}
-
 
 	public static String getCurrentUserPassword() {
 		return currentUserPassword;
 	}
 
-
 	public static void setCurrentUserPassword(String currentUserPassword) {
 		Controller.currentUserPassword = currentUserPassword;
 	}
-
 
 	public static DynamicHome getHomeWindow() {
 		return homeWindow;
@@ -268,420 +242,425 @@ public class Controller {
 	public static void setWindowName(String newWindowName) {
 		windowName = newWindowName;
 	}
-	
+
 	public static RegistrationPanel getRegistrationPanel() {
 		return registrationPanel;
 	}
 
-	public static void setRegistration_panel(RegistrationPanel newRegistrationPanel) {
+	public static void setRegistration_panel(
+			RegistrationPanel newRegistrationPanel) {
 		Controller.registrationPanel = newRegistrationPanel;
 	}
-	
-	//other methods
-	public static void closeAllDynamicPanel(){
-		if(dynamicUserWindow != null)
-		{
-			dynamicUserWindow.dispose(Controller.getProfilePanel().getComposite_dinamic());
+
+	// other methods
+	public static void closeAllDynamicPanel() {
+		if (dynamicUserWindow != null) {
+			dynamicUserWindow.dispose(Controller.getProfilePanel()
+					.getComposite_dinamic());
 			dynamicUserWindow = null;
 		}
-		
-		if(homeTimelineWindow != null)
-		{
-			homeTimelineWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
-			homeTimelineWindow = null; 
+
+		if (homeTimelineWindow != null) {
+			homeTimelineWindow.dispose(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			homeTimelineWindow = null;
 		}
-		
-		
-	   if(homeWindow != null){
-		   homeWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
-		   homeWindow = null;
-	   }
-	   
-	   if(interationTimelineWindow != null){
-		   interationTimelineWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
-		   interationTimelineWindow = null;
-	   }
-	   
-	   if(interactiveTimelineWindow != null){
-		   interactiveTimelineWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
-		   interactiveTimelineWindow = null;
-	   }
-	   
-	   if(peopleWindow != null){
-		   peopleWindow.dispose(Controller.getProfilePanel().getComposite_dinamic()); 
-		   peopleWindow = null;
-	   }
-	   
-	   if(settingWindow != null){
-		   settingWindow.dispose(Controller.getProfilePanel().getComposite_dinamic());
-		   settingWindow = null; 
-	   }
-		
-		 
+
+		if (homeWindow != null) {
+			homeWindow.dispose(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			homeWindow = null;
+		}
+
+		if (interationTimelineWindow != null) {
+			interationTimelineWindow.dispose(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			interationTimelineWindow = null;
+		}
+
+		if (interactiveTimelineWindow != null) {
+			interactiveTimelineWindow.dispose(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			interactiveTimelineWindow = null;
+		}
+
+		if (peopleWindow != null) {
+			peopleWindow.dispose(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			peopleWindow = null;
+		}
+
+		if (settingWindow != null) {
+			settingWindow.dispose(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			settingWindow = null;
+		}
+
+	}
+
+	public static void writeOnText(String text)
+	{
+		BufferedWriter bw = null;
+		try {
+		    bw = new BufferedWriter(new FileWriter("C:/WriteText.txt", true));
+		    bw.write(text);
+		    bw.newLine();
+		    bw.flush();
+		} catch (IOException ioe) {
+		    ioe.printStackTrace();
+		} finally { // always close the file
+		    if (bw != null) {
+		        try {
+		            bw.close();
+		        } catch (IOException ioe2) {
+		            // just ignore it
+		        }
+		    }
+		}
 	}
 	
-	
-	public static void selectDynamicWindow(int choose)
-	{
+	public static void selectDynamicWindow(int choose) {
 		Composite dynamicComposite;
-		GridData gridData; 
-		ProgressBarThread pbWindow; 
-		
-		 	pbWindow = new ProgressBarThread(); 
-			pbWindow.setLabelTxt("Operation in progress..");
-			pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getParent().getLocation()).x); 
-			pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getParent().getParent().getParent().getLocation()).y);
-			//pbWindow.setyCoordinate(Controller.getWindow().toControl(Controller.getWindow().getParent().getParent().getParent().getLocation()).y);
-			//pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).x); 
-			//pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x, Controller.getWindow().getLocation().y).y); 
-			//pbThread.setWidth(Controller.getWindow().getSize().x);
-			//pbThread.setHeight(Controller.getWindow().getSize().y); 
-			pbWindow.start();  
-		
-		closeAllDynamicPanel(); 
-		
+		GridData gridData;
+		ProgressBarThread pbWindow;
+		writeOnText("dynamic view invocata");
+		pbWindow = new ProgressBarThread();
+		Controller.temporaryInformation.put("ProgressBarThread", pbWindow);
+		pbWindow.setLabelTxt("Operation in progress..");
+		pbWindow.setxCoordinate(Controller.getWindow().toDisplay(
+				Controller.getWindow().getParent().getParent().getParent()
+						.getLocation()).x);
+		pbWindow.setyCoordinate(Controller.getWindow().toDisplay(
+				Controller.getWindow().getParent().getParent().getParent()
+						.getLocation()).y);
+		// pbWindow.setyCoordinate(Controller.getWindow().toControl(Controller.getWindow().getParent().getParent().getParent().getLocation()).y);
+		// pbWindow.setxCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x,
+		// Controller.getWindow().getLocation().y).x);
+		// pbWindow.setyCoordinate(Controller.getWindow().toDisplay(Controller.getWindow().getLocation().x,
+		// Controller.getWindow().getLocation().y).y);
+		// pbThread.setWidth(Controller.getWindow().getSize().x);
+		// pbThread.setHeight(Controller.getWindow().getSize().y);
+		pbWindow.start();
+		writeOnText("scroll avviata");
+		closeAllDynamicPanel();
+
 		switch (choose) {
 		case 0:
-			homeWindow = new DynamicHome(); 
-			if(Controller.getProfilePanel().getComposite_dinamic() == null)
-			{
-				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-				 gridData = new GridData(); 
-				gridData.grabExcessHorizontalSpace = true;
-				gridData.horizontalAlignment = gridData.FILL; 
-				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = gridData.FILL; 
-				dynamicComposite.setLayoutData(gridData); 
-				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
+			homeWindow = new DynamicHome();
+			if (Controller.getProfilePanel().getComposite_dinamic() == null) {
+				dynamicComposite = new Composite(getWindow(), SWT.NONE);
+				gridData = new GridData();
+				// gridData.grabExcessHorizontalSpace = true;
+				// gridData.horizontalAlignment = gridData.FILL;
+				gridData.widthHint = Controller.getWindowWidth() - 10;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = gridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
 				Controller.getProfilePanel().getComposite_dinamic().layout();
-			}
-			else
-			{
+			} else {
 				Controller.getProfilePanel().getComposite_dinamic().dispose();
-				
-				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-				 gridData = new GridData(); 
-				gridData.grabExcessHorizontalSpace = true;
-				gridData.horizontalAlignment = gridData.FILL;
-				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = gridData.FILL; 
-				dynamicComposite.setLayoutData(gridData); 
-				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
-				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+
+				dynamicComposite = new Composite(getWindow(), SWT.NONE);
+				gridData = new GridData();
+				// gridData.grabExcessHorizontalSpace = true;
+				// gridData.horizontalAlignment = gridData.FILL;
+				gridData.widthHint = Controller.getWindowWidth() - 10;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = gridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+				Controller.getProfilePanel().getComposite_dinamic().redraw();
 			}
-			//SquareButtonService.flagDimension = false; 
-			
-			SquareButtonService.yCoordinateValue = 5; 
-			SquareButtonService.counterPosition = 0; 
-			
-			homeWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
-			pbWindow.setStop(1); 
-			
-			Controller.getWindow().layout(); 
+			// SquareButtonService.flagDimension = false;
+
+			SquareButtonService.yCoordinateValue = 5;
+			SquareButtonService.counterPosition = 0;
+
+			homeWindow.inizialize(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			pbWindow.setStop(1);
+
+			Controller.getWindow().layout();
 			break;
 		case 1:
-			settingWindow = new SettingPanel(); 
-			if(Controller.getProfilePanel().getComposite_dinamic() == null)
-			{
-			 dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-			 gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.horizontalAlignment = gridData.FILL; 
-			gridData.grabExcessVerticalSpace = true; 
-			gridData.verticalAlignment = gridData.FILL;
-			dynamicComposite.setLayoutData(gridData);
-			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
+			settingWindow = new SettingPanel();
+			if (Controller.getProfilePanel().getComposite_dinamic() == null) {
+				dynamicComposite = new Composite(getWindow(), SWT.NONE);
+				gridData = new GridData();
+				// gridData.grabExcessHorizontalSpace = true;
+				// gridData.horizontalAlignment = gridData.FILL;
+				gridData.widthHint = Controller.getWindowWidth() - 10;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = gridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+			} else {
+				Controller.getProfilePanel().getComposite_dinamic().dispose();
+				dynamicComposite = new Composite(getWindow(), SWT.NONE);
+				gridData = new GridData();
+				// gridData.grabExcessHorizontalSpace = true;
+				// gridData.horizontalAlignment = gridData.FILL;
+				gridData.widthHint = Controller.getWindowWidth() - 10;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = gridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+				Controller.getProfilePanel().getComposite_dinamic().redraw();
 			}
-			else
-			{
-				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
-				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-				 gridData = new GridData(); 
-				gridData.grabExcessHorizontalSpace = true;
-				gridData.horizontalAlignment = gridData.FILL;
-				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = gridData.FILL; 
-				dynamicComposite.setLayoutData(gridData); 
-				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
-				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
-			}
-			settingWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic()); 
-			pbWindow.setStop(1); 
-		
-			Controller.getWindow().layout(); 
-			
-		break;
-		case 2: 
-			
-			
+			settingWindow.inizialize(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			pbWindow.setStop(1);
+
+			Controller.getWindow().layout();
+
+			break;
+		case 2:
+
 			peopleWindow = new DynamicPeople();
-			if(Controller.getProfilePanel().getComposite_dinamic() == null)
-			{
-			 dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-			
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.horizontalAlignment = gridData.FILL; 
-			gridData.grabExcessVerticalSpace = true; 
-			gridData.verticalAlignment = gridData.FILL;
-			dynamicComposite.setLayoutData(gridData);
-			
-			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
+			if (Controller.getProfilePanel().getComposite_dinamic() == null) {
+				dynamicComposite = new Composite(getWindow(), SWT.NONE);
+
+				gridData = new GridData();
+				// gridData.grabExcessHorizontalSpace = true;
+				// gridData.horizontalAlignment = GridData.FILL;
+				gridData.widthHint = Controller.getWindowWidth() - 10;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = GridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+			} else {
+				Controller.getProfilePanel().getComposite_dinamic().dispose();
+				dynamicComposite = new Composite(getWindow(), SWT.None);
+
+				gridData = new GridData();
+				gridData.widthHint = Controller.getWindowWidth() - 10;
+
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = GridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+				Controller.getProfilePanel().getComposite_dinamic().redraw();
 			}
-			else
-			{
-				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
-				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-				 
-				
-				gridData = new GridData(); 
-				gridData.grabExcessHorizontalSpace = true;
-				gridData.horizontalAlignment = GridData.FILL;
-				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = GridData.FILL; 
-				dynamicComposite.setLayoutData(gridData); 
-				
-				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
-				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
-			}
-			 
-			
-			
-			 
-			 
-			peopleWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic());
-			
-			
-			
-			pbWindow.setStop(1); 
-			
-			Controller.getWindow().layout(); 
+
+			peopleWindow.inizialize(Controller.getProfilePanel()
+					.getComposite_dinamic());
+
+			pbWindow.setStop(1);
+
+			Controller.getWindow().layout();
 			break;
 		case 3:
-			
-			dynamicUserWindow = new DynamicUserTimeline(); 
-			if(Controller.getProfilePanel().getComposite_dinamic() == null)
-			{
-			 dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-			
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.horizontalAlignment = gridData.FILL; 
-			gridData.grabExcessVerticalSpace = true; 
-			gridData.verticalAlignment = gridData.FILL;
-			dynamicComposite.setLayoutData(gridData);
-			
-			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
-			}
-			else
-			{
-				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
-				dynamicComposite = new Composite(getWindow(),SWT.NONE); 
-				 
-				
-				gridData = new GridData(); 
+
+			dynamicUserWindow = new DynamicUserTimeline();
+			if (Controller.getProfilePanel().getComposite_dinamic() == null) {
+				dynamicComposite = new Composite(getWindow(), SWT.NONE);
+
+				gridData = new GridData();
 				gridData.grabExcessHorizontalSpace = true;
 				gridData.horizontalAlignment = gridData.FILL;
-				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = gridData.FILL; 
-				dynamicComposite.setLayoutData(gridData); 
-				
-				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
-				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = gridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+			} else {
+				Controller.getProfilePanel().getComposite_dinamic().dispose();
+				dynamicComposite = new Composite(getWindow(), SWT.NONE);
+
+				gridData = new GridData();
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = gridData.FILL;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = gridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+				Controller.getProfilePanel().getComposite_dinamic().redraw();
 			}
-			
-			dynamicUserWindow.setUser( (WUser)  Controller.temporaryInformation.get("User_selected")); 
-			dynamicUserWindow.setUserType((String) Controller.temporaryInformation.get("User_type"));
-			dynamicUserWindow.inizialize( Controller.getProfilePanel().getComposite_dinamic() ); 
-			pbWindow.setStop(1); 
-			
-			Controller.getWindow().layout(); 
-			
+
+			dynamicUserWindow.setUser((WUser) Controller.temporaryInformation
+					.get("User_selected"));
+			dynamicUserWindow
+					.setUserType((String) Controller.temporaryInformation
+							.get("User_type"));
+			dynamicUserWindow.inizialize(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			pbWindow.setStop(1);
+
+			Controller.getWindow().layout();
+
 			break;
-			
+
 		case 4:
-			
-			homeTimelineWindow = new DynamicHomeTimeline(); 
-			
-			if(Controller.getProfilePanel().getComposite_dinamic() == null)
-			{
-			 dynamicComposite = new Composite(getWindow(),SWT.None); 
-			
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.horizontalAlignment = GridData.FILL; 
-			gridData.grabExcessVerticalSpace = true; 
-			gridData.verticalAlignment = GridData.FILL;
-			dynamicComposite.setLayoutData(gridData);
-			
-			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
-			}
-			else
-			{
-				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
-				dynamicComposite = new Composite(getWindow(),SWT.None); 
-				 
-				
-				gridData = new GridData(); 
+
+			homeTimelineWindow = new DynamicHomeTimeline();
+
+			if (Controller.getProfilePanel().getComposite_dinamic() == null) {
+				dynamicComposite = new Composite(getWindow(), SWT.None);
+
+				gridData = new GridData();
 				gridData.grabExcessHorizontalSpace = true;
 				gridData.horizontalAlignment = GridData.FILL;
-				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = GridData.FILL; 
-				dynamicComposite.setLayoutData(gridData); 
-				
-				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
-				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = GridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+			} else {
+				Controller.getProfilePanel().getComposite_dinamic().dispose();
+				dynamicComposite = new Composite(getWindow(), SWT.None);
+
+				gridData = new GridData();
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.horizontalAlignment = GridData.FILL;
+				gridData.verticalAlignment = GridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+				Controller.getProfilePanel().getComposite_dinamic().redraw();
 			}
-			
-			homeTimelineWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic()); 
-			pbWindow.setStop(1); 
-			//Controller.getWindow().getLayout(); 
+
+			homeTimelineWindow.inizialize(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			pbWindow.setStop(1);
+			Controller.getWindow().layout();
+			Controller.getWindow().redraw();
+			Display.getCurrent().update();
+			// Controller.getWindow().getLayout();
 			break;
-		
+
 		case 5:
-			
-			interationTimelineWindow = new DynamicIterationTimeline(); 
-			
-			if(Controller.getProfilePanel().getComposite_dinamic() == null)
-			{
-			 dynamicComposite = new Composite(getWindow(),SWT.None); 
-			
-			gridData = new GridData(); 
-			gridData.grabExcessHorizontalSpace = true;
-			gridData.horizontalAlignment = GridData.FILL; 
-			gridData.grabExcessVerticalSpace = true; 
-			gridData.verticalAlignment = GridData.FILL;
-			dynamicComposite.setLayoutData(gridData);
-			
-			Controller.getProfilePanel().setComposite_dinamic(dynamicComposite);
-			}
-			else
-			{
-				Controller.getProfilePanel().getComposite_dinamic().dispose(); 
-				dynamicComposite = new Composite(getWindow(),SWT.None); 
-				 
-				
-				gridData = new GridData(); 
+
+			interationTimelineWindow = new DynamicIterationTimeline();
+
+			if (Controller.getProfilePanel().getComposite_dinamic() == null) {
+				dynamicComposite = new Composite(getWindow(), SWT.None);
+
+				gridData = new GridData();
 				gridData.grabExcessHorizontalSpace = true;
 				gridData.horizontalAlignment = GridData.FILL;
-				gridData.grabExcessVerticalSpace = true; 
-				gridData.verticalAlignment = GridData.FILL; 
-				dynamicComposite.setLayoutData(gridData); 
-				
-				Controller.getProfilePanel().setComposite_dinamic(dynamicComposite); 
-				Controller.getProfilePanel().getComposite_dinamic().redraw(); 
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = GridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+			} else {
+				Controller.getProfilePanel().getComposite_dinamic().dispose();
+				dynamicComposite = new Composite(getWindow(), SWT.None);
+
+				gridData = new GridData();
+				gridData.grabExcessHorizontalSpace = true;
+				gridData.horizontalAlignment = GridData.FILL;
+				gridData.grabExcessVerticalSpace = true;
+				gridData.verticalAlignment = GridData.FILL;
+				dynamicComposite.setLayoutData(gridData);
+
+				Controller.getProfilePanel().setComposite_dinamic(
+						dynamicComposite);
+				Controller.getProfilePanel().getComposite_dinamic().redraw();
 			}
-			
-			interationTimelineWindow.inizialize(Controller.getProfilePanel().getComposite_dinamic()); 
-			pbWindow.setStop(1); 
-			
-			
+
+			interationTimelineWindow.inizialize(Controller.getProfilePanel()
+					.getComposite_dinamic());
+			pbWindow.setStop(1);
+
 			break;
-		
-			default:
-				break;
+
+		default:
+			break;
 		}
-		
+
 	}
-	
-	public static String getPreferences(String node)
-	{
+
+	public static String getPreferences(String node) {
 		String value;
 		Preferences prefs;
 		prefs = Preferences.userRoot().node(Controller.class.getName());
-		
-		try
-		{
-		  value = prefs.get(node, "");
-		}
-		catch(Exception e)
-		{
+
+		try {
+			value = prefs.get(node, "");
+		} catch (Exception e) {
 			value = null;
 		}
-		
+
 		return value;
 	}
-	
-	public static boolean setPreferences(String node,String value)
-	{
+
+	public static boolean setPreferences(String node, String value) {
 		boolean flag = false;
 		Preferences prefs;
 		prefs = Preferences.userRoot().node(Controller.class.getName());
-		try
-		{
-			prefs.put(node,value);
+		try {
+			prefs.put(node, value);
 			flag = true;
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			flag = false;
 		}
-		
+
 		return flag;
 	}
-	
-	public static boolean isRegistered()
-	{
-		
-		
-		if((!getPreferences("Username").equals("")) && (!getPreferences("ProxyHost").equals("")) )
-		{
+
+	public static boolean isRegistered() {
+
+		if ((!getPreferences("Username").equals(""))
+				&& (!getPreferences("ProxyHost").equals(""))) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
-		
-	 
-		
-	}
-	
-	
-	public static void selectWindow(Composite parent)
-	{
-		if(!isRegistered())
-		{
-			setWindowName("Registration"); 
-			Controller.setRegistration_panel(new RegistrationPanel()); 
-			Controller.getRegistrationPanel().inizialize(parent);
-			//Registration form
-		}
-		else
-		{
-			setWindowName("Login"); 
-			Controller.setLoginPanel(new LoginPanel());
-			Controller.loginPanel.inizialize(parent); 
-			//Login form
-			/*
-			
-			if(!Controller.getPreferences("Autologin").equals(""))
-			{
-				
-				Controller.setProxy(new ProxyWrapper()); 
-				Controller.getProxy().setHost(Controller.getPreferences("ProxyHost"));
-				Controller.setCurrentUser(Controller.getProxy().GetUser(Controller.getPreferences("Username").toString(), Controller.getPreferences("Password").toString()));
-				Controller.setProfilePanel(new ProfilePanel());
-				Controller.getProfilePanel().inizialize(parent);
-				
-				//Main form
-			}
-			else
-			{
-				setWindowName("Login"); 
-				Controller.setLoginPanel(new LoginPanel());
-				Controller.loginPanel.inizialize(parent); 
-				//Login form
-			}
-			*/
-		}
-		
+
 	}
 
-	public static boolean isUsernameAvailable(String username)
-	{
-		return  getProxy().IsAvailable(username);
+	public static void selectWindow(Composite parent) {
+		if (!isRegistered()) {
+			setWindowName("Registration");
+			Controller.setRegistration_panel(new RegistrationPanel());
+			Controller.getRegistrationPanel().inizialize(parent);
+			// Registration form
+		} else {
+			setWindowName("Login");
+			Controller.setLoginPanel(new LoginPanel());
+			Controller.loginPanel.inizialize(parent);
+			// Login form
+			/*
+			 * 
+			 * if(!Controller.getPreferences("Autologin").equals("")) {
+			 * 
+			 * Controller.setProxy(new ProxyWrapper());
+			 * Controller.getProxy().setHost
+			 * (Controller.getPreferences("ProxyHost"));
+			 * Controller.setCurrentUser
+			 * (Controller.getProxy().GetUser(Controller
+			 * .getPreferences("Username").toString(),
+			 * Controller.getPreferences("Password").toString()));
+			 * Controller.setProfilePanel(new ProfilePanel());
+			 * Controller.getProfilePanel().inizialize(parent);
+			 * 
+			 * //Main form } else { setWindowName("Login");
+			 * Controller.setLoginPanel(new LoginPanel());
+			 * Controller.loginPanel.inizialize(parent); //Login form }
+			 */
+		}
+
 	}
-	
-	
+
+	public static boolean isUsernameAvailable(String username) {
+		return getProxy().IsAvailable(username);
+	}
+
 }

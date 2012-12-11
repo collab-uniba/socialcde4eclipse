@@ -1,20 +1,20 @@
 package it.uniba.di.socialcdeforeclipse.shared.library;
 
 public class WFeature {
-        
-    public String Name;
 
-    /// <summary>
-    /// Description of the Feature.
-    /// </summary>
-        
-    public String Description;
+	public String Name;
 
-    /// <summary>
-    /// True if the current user have chosed the feature, false otherwise.
-    /// </summary>
-        
-    public boolean IsChosen;
+	// / <summary>
+	// / Description of the Feature.
+	// / </summary>
+
+	public String Description;
+
+	// / <summary>
+	// / True if the current user have chosed the feature, false otherwise.
+	// / </summary>
+
+	public boolean IsChosen;
 
 	public String getName() {
 		return Name;
@@ -39,8 +39,5 @@ public class WFeature {
 	public void setIsChosen(boolean isChosen) {
 		IsChosen = isChosen;
 	}
-    
-    
-    
 
 }

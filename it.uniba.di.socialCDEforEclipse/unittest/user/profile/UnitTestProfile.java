@@ -24,56 +24,65 @@ public class UnitTestProfile {
 	 * 
 	 * Action considered: View profile of current user
 	 * 
-	 * Equivalence classes considered: 
-	 * 1.Profile of user that can active one or more services
-	 * 2.Profile of user that can't active services.  
+	 * Equivalence classes considered: 1.Profile of user that can active one or
+	 * more services 2.Profile of user that can't active services.
 	 * */
-	Document document; 
-	HashMap<String, Object> data; 
-	 
+	Document document;
+	HashMap<String, Object> data;
+
 	@Before
 	public void setUp() throws Exception {
-		
+
 		SAXBuilder builder = new SAXBuilder();
 		try {
-			document = builder.build(new File("./testData.xml").getCanonicalPath());
+			document = builder.build(new File("./testData.xml")
+					.getCanonicalPath());
 		} catch (JDOMException e) {
-			 
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Controller.setProxy(new ProxyWrapper()); 
-		Controller.getProxy().setHost(document.getRootElement().getChild("CorrectData").getChild("Proxy").getText());
-		Controller.setCurrentUser(Controller.getProxy().GetUser(document.getRootElement().getChild("CorrectData").getChild("Username").getText(), document.getRootElement().getChild("CorrectData").getChild("Password").getText()));
-		Controller.setCurrentUserPassword(document.getRootElement().getChild("CorrectData").getChild("Password").getText()); 
 
-		
+		Controller.setProxy(new ProxyWrapper());
+		Controller.getProxy().setHost(
+				document.getRootElement().getChild("CorrectData")
+						.getChild("Proxy").getText());
+		Controller.setCurrentUser(Controller.getProxy().GetUser(
+				document.getRootElement().getChild("CorrectData")
+						.getChild("Username").getText(),
+				document.getRootElement().getChild("CorrectData")
+						.getChild("Password").getText()));
+		Controller.setCurrentUserPassword(document.getRootElement()
+				.getChild("CorrectData").getChild("Password").getText());
+
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		
-		
+
 	}
 
 	@Test
 	public void testCase1() {
-	 
-		WService[] services = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword()); 
-		assertTrue(services.length > 0); 
+
+		WService[] services = Controller.getProxy().GetServices(
+				Controller.getCurrentUser().Username,
+				Controller.getCurrentUserPassword());
+		assertTrue(services.length > 0);
 	}
-	
+
 	@Test
 	public void testCase2() {
-	 
+
 		Controller.setCurrentUserPassword("try1");
-		WService[] services = Controller.getProxy().GetServices(Controller.getCurrentUser().Username, Controller.getCurrentUserPassword());
-		assertTrue(services.length == 0); 
-		
+		WService[] services = Controller.getProxy().GetServices(
+				Controller.getCurrentUser().Username,
+				Controller.getCurrentUserPassword());
+		assertTrue(services.length == 0);
+
 	}
 
 }
