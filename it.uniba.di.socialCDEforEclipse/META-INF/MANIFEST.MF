@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SocialCDEforEclipse
-Bundle-SymbolicName: it.uniba.di.socialCDEforEclipse; singleton:=true
+Bundle-SymbolicName: it.uniba.di.socialCDEforEclipse2;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: it.uniba.di.socialcdeforeclipse.EclipseCDEactivator
 Require-Bundle: org.eclipse.ui,
