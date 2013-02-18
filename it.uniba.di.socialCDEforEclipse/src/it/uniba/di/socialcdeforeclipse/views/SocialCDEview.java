@@ -78,7 +78,7 @@ public class SocialCDEview extends ViewPart {
 
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
-	 * it.
+	 * it..
 	 */
 	public void createPartControl(final Composite parent) {
 
