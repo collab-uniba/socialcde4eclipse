@@ -7,12 +7,9 @@ SocialCDE for Eclipse is part of a research project in the areas of Social Softw
 
 # Getting started
 (coming soon)
-
 # Documentation
-(Coming soon)
-# Examples
 (Coming soon)
 # Release History
 (Coming soon)
 # License
-Copyright (c) 2012 by the Collaborative Development Group, University of Bari, Italy.
+Microsoft Public License (Ms-PL).
