@@ -6,10 +6,10 @@ This plugin supports GitHub as code repository; Twitter, Yammer and StatusNet (b
 SocialCDE for Eclipse is part of a research project on Social Software Engineering, led by the Collaborative Development Group at the University of Bari, Italy.
 
 # Getting started
-(coming soon)
+ https://github.com/collab-uniba/socialcde4eclipse/wiki/How-to-install-SocialCDE
 # Documentation
-(Coming soon)
+https://github.com/collab-uniba/socialcde4eclipse/wiki
 # Release History
-(Coming soon)
+Varsion 0.1.0 available
 # License
 Microsoft Public License (Ms-PL).
