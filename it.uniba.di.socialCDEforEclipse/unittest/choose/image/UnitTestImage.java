@@ -2,10 +2,10 @@ package choose.image;
 
 import static org.junit.Assert.*;
 
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
-import it.uniba.di.socialcdeforeclipse.shared.library.WService;
-import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.collab.socialcdeforeclipse.shared.library.WService;
+import it.uniba.di.collab.socialcdeforeclipse.shared.library.WUser;
 
 import java.io.File;
 import java.io.IOException;

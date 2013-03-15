@@ -2,19 +2,26 @@ package login.plugintest;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import junit.framework.TestCase;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionLoginPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.LoginPanel;
 
 import org.eclipse.ui.PlatformUI;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -30,20 +37,50 @@ public class PluginTestProxyHost extends TestCase {
 	 * */
 
 	HashMap<String, Object> dati;
-
+	String mainViewId; 
+	Document document; 
 	@Before
 	public void setUp() throws Exception {
+		
+		SAXBuilder builder = new SAXBuilder();
+		try {
+			document = builder.build(new File("./testData.xml")
+					.getCanonicalPath());
+		} catch (JDOMException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText();
+		
 		PlatformUI
 				.getWorkbench()
 				.getActiveWorkbenchWindow()
 				.getActivePage()
-				.showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
+				.showView(mainViewId);
 
 	}
 
 	@Test
 	public void testCase1() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "txtProxyHost");
 		dati.put("Event_type", SWT.FocusOut);
@@ -53,16 +90,31 @@ public class PluginTestProxyHost extends TestCase {
 		assertTrue(((Label) dati.get("labelAlert")).getVisible());
 		assertEquals("Please insert a valid proxy!",
 				((Label) dati.get("labelAlert")).getText());
-		assertTrue((Boolean) ((Label) dati.get("labelImageHost"))
-				.getData("Image_no"));
-		assertFalse((Boolean) ((Label) dati.get("labelImageHost"))
-				.getData("Image_ok"));
+		
+		GridData tempGrid = (GridData)  ((Label) dati.get("labelImageHostNo")).getLayoutData();				 
+		 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData)  ((Label) dati.get("labelImageHostOk")).getLayoutData();
+		assertTrue(tempGrid.exclude);
 
 	}
 
 	@Test
 	public void testCase2() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "txtProxyHost");
 		dati.put("Event_type", SWT.FocusOut);
@@ -72,16 +124,34 @@ public class PluginTestProxyHost extends TestCase {
 		assertTrue(((Label) dati.get("labelAlert")).getVisible());
 		assertEquals("Please insert a valid proxy!",
 				((Label) dati.get("labelAlert")).getText());
-		assertTrue((Boolean) ((Label) dati.get("labelImageHost"))
+		
+		GridData tempGrid = (GridData)  ((Label) dati.get("labelImageHostNo")).getLayoutData();				 
+		assertTrue(!tempGrid.exclude);
+		
+		
+		/*assertTrue((Boolean) ((Label) dati.get("labelImageHost"))
 				.getData("Image_no"));
 		assertFalse((Boolean) ((Label) dati.get("labelImageHost"))
-				.getData("Image_ok"));
+				.getData("Image_ok"));*/
 
 	}
 
 	@Test
 	public void testCase3() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "txtProxyHost");
 		dati.put("Event_type", SWT.FocusOut);
@@ -90,10 +160,16 @@ public class PluginTestProxyHost extends TestCase {
 		new ActionLoginPanel(dati);
 		assertTrue(Controller.getProxy().IsWebServiceRunning());
 		assertFalse(((Label) dati.get("labelAlert")).getVisible());
-		assertTrue((Boolean) ((Label) dati.get("labelImageHost"))
+		
+		GridData tempGrid = (GridData)  ((Label) dati.get("labelImageHostOk")).getLayoutData();				 
+		assertFalse(tempGrid.exclude);
+		
+		
+		
+		/*assertTrue((Boolean) ((Label) dati.get("labelImageHost"))
 				.getData("Image_ok"));
 		assertFalse((Boolean) ((Label) dati.get("labelImageHost"))
-				.getData("Image_no"));
+				.getData("Image_no"));*/
 
 	}
 
@@ -109,7 +185,7 @@ public class PluginTestProxyHost extends TestCase {
 								.getActiveWorkbenchWindow()
 								.getActivePage()
 								.findView(
-										"it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
+										mainViewId));
 	}
 
 }

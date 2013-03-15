@@ -5,29 +5,52 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="Social CDE for Eclipse"
-            id="it.uniba.di.socialCDEforEclipse">
+            name="SocialCDEforEclipse"
+            id="SocialCDEforEclipseField">
       </category>
       <view
-            name="SocialCDE for Eclipse"
+            name="SocialCDEforEclipse View"
             icon="icons/sample.gif"
-            category="it.uniba.di.socialCDEforEclipse"
-            class="it.uniba.di.socialcdeforeclipse.views.SocialCDEview"
-            id="it.uniba.di.socialcdeforeclipse.views.SocialCDEview">
+            category="SocialCDEforEclipseField"
+            class="socialcdeforeclipse.views.SocialCDEforEclipseView"
+            id="SocialCDEforEclipse.SocialCDEforEclipseView">
       </view>
       <view
-            name="SocialCDE for Eclipse Browser"
+            allowMultiple="false"
+            category="SocialCDEforEclipseField"
+            class="socialcdeforeclipse.views.SocialCDE4EclipseBrowser"
             icon="icons/sample.gif"
-            category="it.uniba.di.socialCDEforEclipse"
-            class="it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser"
-            id="it.uniba.di.socialcdeforeclipse.views.SocialCDEviewBrowser">
+            id="SocialCDEforEclipse.SocialCDEforEclipseBrowser"
+            name="SocialCDEforEclipse Browser"
+            restorable="true">
       </view>
    </extension>
    <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="contexts.xml">
-      </contexts>
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="socialcdeforeclipse.views.UserPreferences"
+            id="SocialCDEforEclipse.PreferencesPage"
+            name="SocialCDE Preferences">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <view
+               id="SocialCDEforEclipse.SocialCDEforEclipseView"
+               minimized="false"
+               relationship="right"
+               relative="org.eclipse.ui.editorss">
+         </view>
+         <view
+               id="SocialCDEforEclipse.SocialCDEforEclipseBrowser"
+               minimized="false"
+               relationship="top"
+               relative="org.eclipse.ui.editorss"
+               visible="false">
+         </view>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

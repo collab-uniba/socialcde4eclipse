@@ -8,11 +8,12 @@ import java.util.HashMap;
 
 import junit.framework.TestCase;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
-import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.shared.library.WService;
-import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionLoginPanel;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionRegistrationPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.shared.library.WService;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.LoginPanel;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.RegistrationPanel;
 
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -40,7 +41,7 @@ public class PluginTestProfile extends TestCase {
 
 	HashMap<String, Object> dati;
 	Document document;
-
+	String mainViewId; 
 	@Before
 	public void setUp() {
 
@@ -57,19 +58,32 @@ public class PluginTestProfile extends TestCase {
 			e.printStackTrace();
 		}
 
+		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText();
 		try {
 			PlatformUI
-					.getWorkbench()
-					.getActiveWorkbenchWindow()
-					.getActivePage()
-					.showView(
-							"it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
-		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			.getWorkbench()
+			.getActiveWorkbenchWindow()
+			.getActivePage()
+			.showView(mainViewId);
 
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+	if(Controller.getPreferences("username").equals(""))
+	{
+		assertNotNull(Controller.getRegistrationPanel()); 
+		Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+		Controller.setRegistration_panel(null); 
+		Controller.setLoginPanel(new LoginPanel()); 
+		Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+		assertNotNull(Controller.getLoginPanel()); 
+		assertNotNull(Controller.getLoginPanel()); 
+	}
+	else
+	{
 		assertNotNull(Controller.getLoginPanel());
+	}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -105,9 +119,7 @@ public class PluginTestProfile extends TestCase {
 				Controller.getCurrentUser().Username,
 				Controller.getCurrentUserPassword());
 		assertTrue(services.length == 0);
-		assertEquals(
-				"There are no services available yet.\t\nPlease try again soon or contact your admin.",
-				((Label) dati.get("service")).getText());
+		
 
 	}
 
@@ -123,7 +135,7 @@ public class PluginTestProfile extends TestCase {
 								.getActiveWorkbenchWindow()
 								.getActivePage()
 								.findView(
-										"it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
+										mainViewId));
 	}
 
 }

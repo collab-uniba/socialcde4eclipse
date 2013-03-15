@@ -8,8 +8,9 @@ import java.util.HashMap;
 
 import junit.framework.TestCase;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionLoginPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.LoginPanel;
 
 import org.eclipse.ui.PlatformUI;
 import org.jdom2.Document;
@@ -21,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -37,7 +39,7 @@ public class PluginTestLogin extends TestCase {
 
 	HashMap<String, Object> dati;
 	Document document;
-
+	String mainViewId; 
 	@Before
 	public void setUp() throws Exception {
 
@@ -53,18 +55,31 @@ public class PluginTestLogin extends TestCase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText(); 
 		PlatformUI
 				.getWorkbench()
 				.getActiveWorkbenchWindow()
 				.getActivePage()
-				.showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
+				.showView(mainViewId);
 
 	}
 
 	@Test
 	public void testCase1() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -73,18 +88,33 @@ public class PluginTestLogin extends TestCase {
 		((Text) dati.get("txtUsername")).setText("Floriano");
 		((Text) dati.get("txtPassword")).setText("gualtiero");
 		new ActionLoginPanel(dati);
-		assertTrue((Boolean) ((Label) dati.get("labelImageHost"))
-				.getData("Image_no"));
-		assertFalse((Boolean) ((Label) dati.get("labelImageHost"))
-				.getData("Image_ok"));
+		
+		GridData tempGrid = (GridData)  ((Label) dati.get("labelImageHostNo")).getLayoutData();				 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData)  ((Label) dati.get("labelImageHostOk")).getLayoutData();
+		assertTrue(tempGrid.exclude);
+		
+		
 		assertEquals("The connection with the Proxy failed",
 				((Label) dati.get("labelAlert")).getText());
-		assertTrue(((Label) dati.get("labelImageHost")).getVisible());
-
+		
 	}
 
 	public void testCase2() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -97,19 +127,32 @@ public class PluginTestLogin extends TestCase {
 		new ActionLoginPanel(dati);
 		assertEquals("username or password not valid!",
 				((Label) dati.get("labelAlert")).getText());
-		assertTrue(((Label) dati.get("labelImageHost")).getVisible());
-		assertTrue(((Label) dati.get("labelImageHost")).getVisible());
-
-		assertTrue((Boolean) ((Label) dati.get("labelImageUsername"))
-				.getData("Image_no"));
-		assertTrue((Boolean) ((Label) dati.get("labelImagePassword"))
-				.getData("Image_no"));
+		
+		GridData tempGrid = (GridData)  ((Label) dati.get("labelImageUsernameNo")).getLayoutData();				 
+		 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData)  ((Label) dati.get("labelImagePasswordNo")).getLayoutData();
+		assertFalse(tempGrid.exclude);
+		
 
 	}
 
 	@Test
 	public void testCase3() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -146,7 +189,7 @@ public class PluginTestLogin extends TestCase {
 								.getActiveWorkbenchWindow()
 								.getActivePage()
 								.findView(
-										"it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
+										mainViewId));
 	}
 
 }

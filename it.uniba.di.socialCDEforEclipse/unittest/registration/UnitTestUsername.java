@@ -3,7 +3,7 @@ package registration;
 import java.io.File;
 import java.io.IOException;
 
-import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.collab.socialcdeforeclipse.model.ProxyWrapper;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;

@@ -8,10 +8,10 @@ import java.util.HashMap;
 
 import junit.framework.TestCase;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
-import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionLoginPanel;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionRegistrationPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.RegistrationPanel;
 
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -23,6 +23,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -42,7 +43,7 @@ public class PluginTestUsername extends TestCase {
 
 	HashMap<String, Object> dati;
 	Document document;
-
+	String mainViewId; 
 	@Before
 	public void setUp() throws Exception {
 
@@ -59,18 +60,27 @@ public class PluginTestUsername extends TestCase {
 			e.printStackTrace();
 		}
 
+		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText();
+		
 		PlatformUI
 				.getWorkbench()
 				.getActiveWorkbenchWindow()
 				.getActivePage()
-				.showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
+				.showView(mainViewId);
 
-		Controller.setWindowName("Registration");
-		Controller.getLoginPanel().dispose(Controller.getWindow());
-		Controller.setRegistration_panel(new RegistrationPanel());
-		Controller.getRegistrationPanel().inizialize(Controller.getWindow());
-		Controller.setLoginPanel(null);
-		Controller.getWindow().layout();
+		if(Controller.getRegistrationPanel() == null)
+		{
+			assertNotNull(Controller.getLoginPanel()); 
+			Controller.getLoginPanel().dispose(Controller.getWindow()); 
+			Controller.setLoginPanel(null); 
+			Controller.setRegistration_panel(new RegistrationPanel()); 
+			Controller.getRegistrationPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getRegistrationPanel());
+		}
+		else
+		{
+			assertNotNull(Controller.getRegistrationPanel());
+		}
 	}
 
 	@Test
@@ -87,10 +97,18 @@ public class PluginTestUsername extends TestCase {
 		assertTrue(((Label) dati.get("LabelAlert")).getVisible());
 		assertEquals("Please insert a valid username!",
 				((Label) dati.get("LabelAlert")).getText());
-		assertTrue((Boolean) ((Label) dati.get("LabelImageUsername"))
+		
+		GridData tempGrid = (GridData)((Label) dati.get("LabelImageUsernameNo")).getLayoutData(); 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData)((Label) dati.get("LabelImageUsernameOk")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		tempGrid = (GridData)((Label) dati.get("LabelImageUsernameHidden")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		
+		/*assertTrue((Boolean) ((Label) dati.get("LabelImageUsername"))
 				.getData("Image_no"));
 		assertFalse((Boolean) ((Label) dati.get("LabelImageUsername"))
-				.getData("Image_ok"));
+				.getData("Image_ok"));*/
 
 	}
 
@@ -112,10 +130,18 @@ public class PluginTestUsername extends TestCase {
 		assertTrue(((Label) dati.get("LabelAlert")).getVisible());
 		assertEquals("Please insert a valid username!",
 				((Label) dati.get("LabelAlert")).getText());
-		assertTrue((Boolean) ((Label) dati.get("LabelImageUsername"))
+		
+		GridData tempGrid = (GridData)((Label) dati.get("LabelImageUsernameNo")).getLayoutData(); 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData)((Label) dati.get("LabelImageUsernameOk")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		tempGrid = (GridData)((Label) dati.get("LabelImageUsernameHidden")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		
+		/*assertTrue((Boolean) ((Label) dati.get("LabelImageUsername"))
 				.getData("Image_no"));
 		assertFalse((Boolean) ((Label) dati.get("LabelImageUsername"))
-				.getData("Image_ok"));
+				.getData("Image_ok"));*/
 
 	}
 
@@ -137,10 +163,18 @@ public class PluginTestUsername extends TestCase {
 		((Text) dati.get("Username")).setText(document.getRootElement()
 				.getChild("WrongData").getChild("Username").getText());
 		new ActionRegistrationPanel(dati);
-		assertTrue((Boolean) ((Label) dati.get("LabelImageUsername"))
+		
+		GridData tempGrid = (GridData)((Label) dati.get("LabelImageUsernameNo")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		tempGrid = (GridData)((Label) dati.get("LabelImageUsernameOk")).getLayoutData(); 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData)((Label) dati.get("LabelImageUsernameHidden")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		
+		/*assertTrue((Boolean) ((Label) dati.get("LabelImageUsername"))
 				.getData("Image_ok"));
 		assertFalse((Boolean) ((Label) dati.get("LabelImageUsername"))
-				.getData("Image_no"));
+				.getData("Image_no"));*/
 
 	}
 
@@ -156,7 +190,7 @@ public class PluginTestUsername extends TestCase {
 								.getActiveWorkbenchWindow()
 								.getActivePage()
 								.findView(
-										"it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
+										mainViewId));
 	}
 
 }

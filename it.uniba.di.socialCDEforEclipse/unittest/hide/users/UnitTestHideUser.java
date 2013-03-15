@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import junit.framework.TestCase;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
-import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.collab.socialcdeforeclipse.shared.library.WUser;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;

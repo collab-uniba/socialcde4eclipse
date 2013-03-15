@@ -3,9 +3,9 @@
  */
 package registration;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.model.ProxyWrapper;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionRegistrationPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.model.ProxyWrapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,11 +57,11 @@ public class UnitTestRegistration extends TestCase {
 		// o3401944@rtrtr.com and
 		// an username like 'John' is available
 		ProxyWrapper pw = new ProxyWrapper();
-		pw.setHost(document.getRootElement().getChild("CorrectData")
+		pw.setHost(document.getRootElement().getChild("RegistrationData")
 				.getChild("Proxy").getText());
 		Controller.setProxy(pw);
 		assertTrue(pw.IsAvailable(document.getRootElement()
-				.getChild("CorrectData").getChild("Username").getText()));
+				.getChild("RegistrationData").getChild("Username").getText()));
 
 	}
 
@@ -100,7 +100,7 @@ public class UnitTestRegistration extends TestCase {
 						.getChild("Email").getText());
 		dataExtracted.put(
 				"ProxyHost",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Proxy").getText());
 
 		ActionRegistrationPanel action = new ActionRegistrationPanel();
@@ -136,7 +136,7 @@ public class UnitTestRegistration extends TestCase {
 						.getChild("Email").getText());
 		dataExtracted.put(
 				"ProxyHost",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Proxy").getText());
 		ActionRegistrationPanel action = new ActionRegistrationPanel();
 
@@ -151,27 +151,27 @@ public class UnitTestRegistration extends TestCase {
 		HashMap<String, String> dataExtracted = new HashMap<String, String>();
 		dataExtracted.put(
 				"Username",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Username").getText());
 		dataExtracted.put(
 				"Password1",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Password").getText());
 		dataExtracted.put(
 				"Password2",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Second_Password").getText());
 		dataExtracted.put(
 				"InvitationCode",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Invitation_Code").getText());
 		dataExtracted.put(
 				"Email",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Email").getText());
 		dataExtracted.put(
 				"ProxyHost",
-				document.getRootElement().getChild("CorrectData")
+				document.getRootElement().getChild("RegistrationData")
 						.getChild("Proxy").getText());
 		ActionRegistrationPanel action = new ActionRegistrationPanel();
 

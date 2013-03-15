@@ -8,9 +8,9 @@ import java.util.HashMap;
 
 import junit.framework.TestCase;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionRegistrationPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.staticview.RegistrationPanel;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionRegistrationPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.RegistrationPanel;
 
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -38,7 +39,7 @@ public class PluginTestEmail extends TestCase {
 
 	HashMap<String, Object> dati;
 	Document document;
-
+	String mainViewId; 
 	@Before
 	public void setUp() {
 
@@ -55,24 +56,37 @@ public class PluginTestEmail extends TestCase {
 			e.printStackTrace();
 		}
 
+		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText();
+		
 		try {
 			PlatformUI
 					.getWorkbench()
 					.getActiveWorkbenchWindow()
 					.getActivePage()
 					.showView(
-							"it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
+							mainViewId);
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		Controller.setWindowName("Registration");
-		Controller.getLoginPanel().dispose(Controller.getWindow());
-		Controller.setRegistration_panel(new RegistrationPanel());
-		Controller.getRegistrationPanel().inizialize(Controller.getWindow());
-		Controller.setLoginPanel(null);
-		Controller.getWindow().layout();
+		if(Controller.getRegistrationPanel() == null)
+		{
+			assertNotNull(Controller.getLoginPanel()); 
+			Controller.getLoginPanel().dispose(Controller.getWindow()); 
+			Controller.setLoginPanel(null); 
+			Controller.setRegistration_panel(new RegistrationPanel()); 
+			Controller.getRegistrationPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getRegistrationPanel());
+		}
+		else
+		{
+			assertNotNull(Controller.getRegistrationPanel());
+			Controller.setRegistration_panel(null); 
+			Controller.setRegistration_panel(new RegistrationPanel()); 
+			Controller.getRegistrationPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getRegistrationPanel());
+		}
 
 	}
 
@@ -88,10 +102,15 @@ public class PluginTestEmail extends TestCase {
 		assertTrue(((Label) dati.get("LabelAlert")).getVisible());
 		assertEquals("Please insert a valid mail!",
 				((Label) dati.get("LabelAlert")).getText());
-		assertTrue((Boolean) ((Label) dati.get("LabelImageMail"))
-				.getData("Image_no"));
-		assertFalse((Boolean) ((Label) dati.get("LabelImageMail"))
-				.getData("Image_ok"));
+		GridData tempGrid = (GridData) ((Label) dati.get("LabelImageMailNo")).getLayoutData(); 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData) ((Label) dati.get("LabelImageMailOk")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		tempGrid = (GridData) ((Label) dati.get("LabelImageMailHidden")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		
+		
+	
 
 	}
 
@@ -107,26 +126,36 @@ public class PluginTestEmail extends TestCase {
 		assertTrue(((Label) dati.get("LabelAlert")).getVisible());
 		assertEquals("Please insert a valid mail!",
 				((Label) dati.get("LabelAlert")).getText());
-		assertTrue((Boolean) ((Label) dati.get("LabelImageMail"))
-				.getData("Image_no"));
-		assertFalse((Boolean) ((Label) dati.get("LabelImageMail"))
-				.getData("Image_ok"));
+		
+		GridData tempGrid = (GridData) ((Label) dati.get("LabelImageMailNo")).getLayoutData(); 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData) ((Label) dati.get("LabelImageMailOk")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		tempGrid = (GridData) ((Label) dati.get("LabelImageMailHidden")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		
+		
 
 	}
 
 	@Test
 	public void testCase3() {
 		assertNotNull(Controller.getRegistrationPanel());
+		((Text) Controller.getRegistrationPanel().getData().get("Email")).setText(document.getRootElement()
+				.getChild("WrongData").getChild("Email").getText());
 		dati = Controller.getRegistrationPanel().getData();
 		dati.put("ID_action", "txtMail");
 		dati.put("Event_type", SWT.FocusOut);
-		((Text) dati.get("Email")).setText(document.getRootElement()
-				.getChild("WrongData").getChild("Email").getText());
+		
 		new ActionRegistrationPanel(dati);
-		assertTrue((Boolean) ((Label) dati.get("LabelImageMail"))
-				.getData("Image_ok"));
-		assertFalse((Boolean) ((Label) dati.get("LabelImageMail"))
-				.getData("Image_no"));
+		
+		GridData tempGrid = (GridData) ((Label) dati.get("LabelImageMailNo")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+		tempGrid = (GridData) ((Label) dati.get("LabelImageMailOk")).getLayoutData(); 
+		assertFalse(tempGrid.exclude);
+		tempGrid = (GridData) ((Label) dati.get("LabelImageMailHidden")).getLayoutData(); 
+		assertTrue(tempGrid.exclude);
+	
 
 	}
 
@@ -142,7 +171,7 @@ public class PluginTestEmail extends TestCase {
 								.getActiveWorkbenchWindow()
 								.getActivePage()
 								.findView(
-										"it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
+										mainViewId));
 	}
 
 }

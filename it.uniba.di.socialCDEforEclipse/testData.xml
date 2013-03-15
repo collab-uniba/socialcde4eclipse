@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TestData>
 <CorrectData>
-	<Proxy>http://apat.di.uniba.it:8081</Proxy>
+	<Proxy>http://localhost:8572</Proxy>
 	<Email>floriano87@hotmail.com</Email>
 	<Invitation_Code>abcde</Invitation_Code>
 	<Username>Floriano</Username>
 	<Password>patrizio</Password> 
-	<Second_Password>gualtiero</Second_Password>
+	<Second_Password>patrizio</Second_Password>
 </CorrectData>
 <WrongData>
 	<Proxy>www.google.it</Proxy>
@@ -16,4 +16,20 @@
 	<Password>antonio</Password> 
 	<Second_Password>antonio</Second_Password>
 </WrongData>
+<RegistrationData>
+	<Proxy>http://localhost:8572</Proxy>
+	<Email>c471786@rmqkr.net</Email>
+	<Invitation_Code>z+:Lps#bGY</Invitation_Code>
+	<Username>Anna</Username>
+	<Password>anna</Password> 
+	<Second_Password>anna</Second_Password>
+</RegistrationData>
+<ViewInfo>
+	<MainView>
+		<Id>SocialCDEforEclipse.SocialCDEforEclipseView</Id>
+	</MainView>
+	<BrowserView>
+		<Id>socialcdeforeclipse.views.SocialCDEforEclipseBrowser</Id>
+	</BrowserView>
+</ViewInfo>
 </TestData>

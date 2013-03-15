@@ -9,13 +9,14 @@ import java.util.HashMap;
 
 import junit.framework.TestCase;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionDynamicUserTimeline;
-import it.uniba.di.socialcdeforeclipse.action.ActionHomePanel;
-import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.socialcdeforeclipse.popup.ChooseAvatar;
-import it.uniba.di.socialcdeforeclipse.shared.library.WUser;
-import it.uniba.di.socialcdeforeclipse.object.ButtonAvatar;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionDynamicUserTimeline;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionHomePanel;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionLoginPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.object.ButtonAvatar;
+import it.uniba.di.collab.socialcdeforeclipse.popup.ChooseAvatar;
+import it.uniba.di.collab.socialcdeforeclipse.shared.library.WUser;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.LoginPanel;
 
 import org.eclipse.ui.PlatformUI;
 import org.jdom2.Document;
@@ -47,7 +48,7 @@ public class PluginTestFollowing extends TestCase {
 
 	static HashMap<String, Object> dati;
 	Document document;
-
+	String mainViewId; 
 	@Before
 	public void setUp() throws Exception {
 
@@ -64,24 +65,51 @@ public class PluginTestFollowing extends TestCase {
 			e.printStackTrace();
 		}
 
+		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText();
+		
 		PlatformUI
-				.getWorkbench()
-				.getActiveWorkbenchWindow()
-				.getActivePage()
-				.showView("it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
-
-		assertNotNull(Controller.getLoginPanel());
-		dati = Controller.getLoginPanel().getData();
-		dati.put("ID_action", "btnLogin");
-		dati.put("Event_type", SWT.Selection);
-		((Text) dati.get("txtProxyHost")).setText(document.getRootElement()
-				.getChild("CorrectData").getChild("Proxy").getText());
-		((Text) dati.get("txtUsername")).setText(document.getRootElement()
-				.getChild("CorrectData").getChild("Username").getText());
-		((Text) dati.get("txtPassword")).setText(document.getRootElement()
-				.getChild("CorrectData").getChild("Password").getText());
-		new ActionLoginPanel(dati);
-		assertNotNull(Controller.getHomeWindow());
+		.getWorkbench()
+		.getActiveWorkbenchWindow()
+		.getActivePage()
+		.showView(mainViewId);
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			dati = Controller.getLoginPanel().getData();
+			dati.put("ID_action", "btnLogin");
+			dati.put("Event_type", SWT.Selection);
+			((Text) dati.get("txtProxyHost")).setText(document.getRootElement()
+					.getChild("CorrectData").getChild("Proxy").getText());
+			((Text) dati.get("txtUsername")).setText(document.getRootElement()
+					.getChild("CorrectData").getChild("Username").getText());
+			((Text) dati.get("txtPassword")).setText(document.getRootElement()
+					.getChild("CorrectData").getChild("Password").getText());
+			new ActionLoginPanel(dati);
+			
+			assertNotNull(Controller.getHomeWindow());
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel()); 
+			dati = Controller.getLoginPanel().getData();
+			dati.put("ID_action", "btnLogin");
+			dati.put("Event_type", SWT.Selection);
+			((Text) dati.get("txtProxyHost")).setText(document.getRootElement()
+					.getChild("CorrectData").getChild("Proxy").getText());
+			((Text) dati.get("txtUsername")).setText(document.getRootElement()
+					.getChild("CorrectData").getChild("Username").getText());
+			((Text) dati.get("txtPassword")).setText(document.getRootElement()
+					.getChild("CorrectData").getChild("Password").getText());
+			new ActionLoginPanel(dati);
+			
+			assertNotNull(Controller.getHomeWindow());
+		}
 
 	}
 
@@ -131,7 +159,7 @@ public class PluginTestFollowing extends TestCase {
 								.getActiveWorkbenchWindow()
 								.getActivePage()
 								.findView(
-										"it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
+										"SocialCDEforEclipseIndigoVersion.SocialCDE4Eclipse"));
 	}
 
 }

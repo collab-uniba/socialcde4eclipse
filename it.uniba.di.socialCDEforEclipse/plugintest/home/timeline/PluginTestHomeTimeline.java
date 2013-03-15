@@ -1,7 +1,8 @@
 package home.timeline;
 
-import it.uniba.di.socialcdeforeclipse.action.ActionLoginPanel;
-import it.uniba.di.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionLoginPanel;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.staticview.LoginPanel;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class PluginTestHomeTimeline extends TestCase {
 
 	Document document;
 	HashMap<String, Object> dati;
-
+	String mainViewId;
 	@Before
 	public void setUp() {
 		SAXBuilder builder = new SAXBuilder();
@@ -53,13 +54,15 @@ public class PluginTestHomeTimeline extends TestCase {
 			e.printStackTrace();
 		}
 
+		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText();
+		
 		try {
 			PlatformUI
 					.getWorkbench()
 					.getActiveWorkbenchWindow()
 					.getActivePage()
 					.showView(
-							"it.uniba.di.socialcdeforeclipse.views.SocialCDEview");
+						mainViewId);
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,7 +72,20 @@ public class PluginTestHomeTimeline extends TestCase {
 
 	@Test
 	public void testCase1() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -92,7 +108,20 @@ public class PluginTestHomeTimeline extends TestCase {
 
 	@Test
 	public void testCase2() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -118,7 +147,20 @@ public class PluginTestHomeTimeline extends TestCase {
 
 	@Test
 	public void testCase3() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -145,7 +187,20 @@ public class PluginTestHomeTimeline extends TestCase {
 
 	@Test
 	public void testCase4() {
-		assertNotNull(Controller.getLoginPanel());
+		if(Controller.getPreferences("username").equals(""))
+		{
+			assertNotNull(Controller.getRegistrationPanel()); 
+			Controller.getRegistrationPanel().dispose(Controller.getWindow()); 
+			Controller.setRegistration_panel(null); 
+			Controller.setLoginPanel(new LoginPanel()); 
+			Controller.getLoginPanel().inizialize(Controller.getWindow()); 
+			assertNotNull(Controller.getLoginPanel()); 
+			assertNotNull(Controller.getLoginPanel()); 
+		}
+		else
+		{
+			assertNotNull(Controller.getLoginPanel());
+		}
 		dati = Controller.getLoginPanel().getData();
 		dati.put("ID_action", "btnLogin");
 		dati.put("Event_type", SWT.Selection);
@@ -185,7 +240,7 @@ public class PluginTestHomeTimeline extends TestCase {
 								.getActiveWorkbenchWindow()
 								.getActivePage()
 								.findView(
-										"it.uniba.di.socialcdeforeclipse.views.SocialCDEview"));
+									mainViewId));
 	}
 
 }
