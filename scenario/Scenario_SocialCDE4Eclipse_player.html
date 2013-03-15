@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="google" value="notranslate" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title></title>
+<link href="skins/classic/player-min.css" rel="stylesheet" type="text/css" />
+
+
+
+<style>
+html, body {
+	background-color: #1a1a1a;
+}
+</style>
+</head>
+<body>
+
+<div id="tscVideoContent"></div>
+
+<script src="scripts/jquery-1.7.1.min.js" ></script>
+<script src="scripts/jquery-ui-1.8.15.custom.min.js" ></script>
+<script src="scripts/swfobject.js"></script>
+<script src="scripts/modernizr.js"></script>
+<script src="scripts/handlebars.js"></script>
+
+<script src="scripts/player-min.js"></script>
+<script type="text/javascript">
+    TSC.playerConfiguration.setFlashPlayerSwf("Scenario_SocialCDE4Eclipse_controller.swf");
+    TSC.playerConfiguration.setMediaSrc("Scenario_SocialCDE4Eclipse.mp4");
+    TSC.playerConfiguration.setXMPSrc("Scenario_SocialCDE4Eclipse_config.xml");
+    TSC.playerConfiguration.setConfigurationSrc("skins/configuration_classic.xml");
+    TSC.playerConfiguration.setAutoHideControls(true);
+    TSC.playerConfiguration.setBackgroundColor("#000000");
+    TSC.playerConfiguration.setCaptionsEnabled(false);
+    TSC.playerConfiguration.setSidebarEnabled(false);
+    
+    TSC.playerConfiguration.setAutoPlayMedia(false);
+    TSC.playerConfiguration.setPosterImageSrc("Scenario_SocialCDE4Eclipse_First_Frame.png");
+    TSC.playerConfiguration.setIsSearchable(false);
+    TSC.playerConfiguration.setEndActionType("stop");
+    TSC.playerConfiguration.setEndActionParam("true");
+    TSC.playerConfiguration.setAllowRewind(-1);
+    
+
+    $(document).ready(function (e) {
+        TSC.mediaPlayer.init("#tscVideoContent");
+    });
+</script>
+
+
+
+</body>
+</html>
