@@ -759,11 +759,11 @@ public class DynamicInteractiveTimeline implements Panel {
 
 		if(Controller.OSisWindows())
 		{
-			textMessage = new Text(controlToPost, SWT.WRAP);
+			textMessage = new Text(controlToPost, SWT.SINGLE);
 		}
 		else
 		{
-			textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER);
+			textMessage = new Text(controlToPost, SWT.SINGLE | SWT.BORDER);
 		}
 		gridData = new GridData();
 		gridData.heightHint = 75;

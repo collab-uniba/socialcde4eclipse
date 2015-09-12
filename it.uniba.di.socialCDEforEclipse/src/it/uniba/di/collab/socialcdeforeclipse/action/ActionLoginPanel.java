@@ -461,43 +461,51 @@ public class ActionLoginPanel {
 				if (InterceptingFilter.verifyText(((Text) uiData
 						.get("txtUsername")).getText())) {
 					if (Controller.getProxy() != null) {
-						if (!Controller.getProxy().IsAvailable(
-								((Text) uiData.get("txtUsername")).getText())) {
+						
+						Display.getDefault().asyncExec(new Runnable() {
+			                @Override
+			                public void run() {		     
+			                	if (!Controller.getProxy().IsAvailable(
+										((Text) uiData.get("txtUsername")).getText())) {
 
-							GridData tempGrid = (GridData) ((Label) uiData.get("labelImageUsernameOk")).getLayoutData(); 
-							tempGrid.exclude = false; 
-							((Label) uiData.get("labelImageUsernameOk")).setVisible(true); 
-							
-							tempGrid = (GridData) ((Label) uiData.get("labelImageUsernameNo")).getLayoutData(); 
-							tempGrid.exclude = true; 
-							((Label) uiData.get("labelImageUsernameNo")).setVisible(false); 
-							
-							tempGrid = (GridData)  ((Label) uiData.get("labelHiddenUsername")).getLayoutData(); 
-							tempGrid.exclude = true; 
-							((Label) uiData.get("labelHiddenUsername")).setVisible(false); 
-							
-							((Label) uiData.get("labelAlert"))
-									.setVisible(false);
+									GridData tempGrid = (GridData) ((Label) uiData.get("labelImageUsernameOk")).getLayoutData(); 
+									tempGrid.exclude = false; 
+									((Label) uiData.get("labelImageUsernameOk")).setVisible(true); 
+									
+									tempGrid = (GridData) ((Label) uiData.get("labelImageUsernameNo")).getLayoutData(); 
+									tempGrid.exclude = true; 
+									((Label) uiData.get("labelImageUsernameNo")).setVisible(false); 
+									
+									tempGrid = (GridData)  ((Label) uiData.get("labelHiddenUsername")).getLayoutData(); 
+									tempGrid.exclude = true; 
+									((Label) uiData.get("labelHiddenUsername")).setVisible(false); 
+									
+									((Label) uiData.get("labelAlert"))
+											.setVisible(false);
 
-							Controller.getWindow().layout();
-						} else {
-							((Label) uiData.get("labelAlert"))
-									.setText("Please insert a valid username");
-							((Label) uiData.get("labelAlert")).setVisible(true);
-							GridData tempGrid = (GridData)  ((Label) uiData.get("labelImageUsernameNo")).getLayoutData(); 
-							tempGrid.exclude = false; 
-							((Label) uiData.get("labelImageUsernameNo")).setVisible(true); 
-							
-							tempGrid = (GridData)  ((Label) uiData.get("labelImageUsernameOk")).getLayoutData();
-							tempGrid.exclude = true; 
-							((Label) uiData.get("labelImageUsernameOk")).setVisible(false); 
-							
-							tempGrid = (GridData)  ((Label) uiData.get("labelHiddenUsername")).getLayoutData(); 
-							tempGrid.exclude = true; 
-							((Label) uiData.get("labelHiddenUsername")).setVisible(false); 
+									Controller.getWindow().layout();
+								} else {
+									((Label) uiData.get("labelAlert"))
+											.setText("Please insert a valid username");
+									((Label) uiData.get("labelAlert")).setVisible(true);
+									GridData tempGrid = (GridData)  ((Label) uiData.get("labelImageUsernameNo")).getLayoutData(); 
+									tempGrid.exclude = false; 
+									((Label) uiData.get("labelImageUsernameNo")).setVisible(true); 
+									
+									tempGrid = (GridData)  ((Label) uiData.get("labelImageUsernameOk")).getLayoutData();
+									tempGrid.exclude = true; 
+									((Label) uiData.get("labelImageUsernameOk")).setVisible(false); 
+									
+									tempGrid = (GridData)  ((Label) uiData.get("labelHiddenUsername")).getLayoutData(); 
+									tempGrid.exclude = true; 
+									((Label) uiData.get("labelHiddenUsername")).setVisible(false); 
 
-							Controller.getWindow().layout();
-						}
+									Controller.getWindow().layout();
+								}
+			                		
+			               }
+			            }); 
+						
 					} else {
 						
 						setProxyHost(uiData); 
@@ -569,72 +577,84 @@ public class ActionLoginPanel {
 	
 	private void setProxyHost( final HashMap<String, Object> uiData )
 	{
-		if (InterceptingFilter.verifyText(((Text) uiData
-				.get("txtProxyHost")).getText())) {
-			Controller.setProxy(new ProxyWrapper());
-			Controller.getProxy().setHost(
-					((Text) uiData.get("txtProxyHost")).getText());
-			if (Controller.getProxy().IsWebServiceRunning()) {
+		Display.getDefault().asyncExec(new Runnable() {
 
-				GridData tempGrid = (GridData) ((Label) uiData.get("labelImageHostOk")).getLayoutData(); 
-				tempGrid.exclude = false; 
-				((Label) uiData.get("labelImageHostOk")).setVisible(true); 
-				
-				tempGrid = (GridData) ((Label) uiData.get("labelImageHostNo")).getLayoutData(); 
-				tempGrid.exclude = true; 
-				((Label) uiData.get("labelImageHostNo")).setVisible(false); 
-				
-				tempGrid = (GridData)  ((Label) uiData.get("labelHiddenProxyHost")).getLayoutData(); 
-				tempGrid.exclude = true; 
-				((Label) uiData.get("labelHiddenProxyHost")).setVisible(false); 
-				((Label) uiData.get("labelAlert")).setVisible(false);
-				
-				Controller.getWindow().layout(); 
-				
+            @Override
+            public void run() {
+            	
+				if (InterceptingFilter.verifyText(((Text) uiData
+						.get("txtProxyHost")).getText())) {
+					Controller.setProxy(new ProxyWrapper());
+					Controller.getProxy().setHost(
+							((Text) uiData.get("txtProxyHost")).getText());
+ 	
+                	if (Controller.getProxy().IsWebServiceRunning()) {
 
-			} else {
+        				GridData tempGrid = (GridData) ((Label) uiData.get("labelImageHostOk")).getLayoutData(); 
+        				tempGrid.exclude = false; 
+        				((Label) uiData.get("labelImageHostOk")).setVisible(true); 
+        				
+        				tempGrid = (GridData) ((Label) uiData.get("labelImageHostNo")).getLayoutData(); 
+        				tempGrid.exclude = true; 
+        				((Label) uiData.get("labelImageHostNo")).setVisible(false); 
+        				
+        				tempGrid = (GridData)  ((Label) uiData.get("labelHiddenProxyHost")).getLayoutData(); 
+        				tempGrid.exclude = true; 
+        				((Label) uiData.get("labelHiddenProxyHost")).setVisible(false); 
+        				((Label) uiData.get("labelAlert")).setVisible(false);
+        				
+        				Controller.getWindow().layout(); 
+        				
 
-				Controller.setProxy(null);
-				((Label) uiData.get("labelAlert"))
-						.setText("Please insert a valid proxy!");
-				((Label) uiData.get("labelAlert")).setVisible(true);
-				
-				GridData tempGrid = (GridData) ((Label) uiData.get("labelImageHostNo")).getLayoutData(); 
-				tempGrid.exclude = false; 
-				((Label) uiData.get("labelImageHostNo")).setVisible(true); 
-				
-				tempGrid = (GridData) ((Label) uiData.get("labelImageHostOk")).getLayoutData(); 
-				tempGrid.exclude = true; 
-				 ((Label) uiData.get("labelImageHostOk")).setVisible(false); 
-				 
-				tempGrid = (GridData)  ((Label) uiData.get("labelHiddenProxyHost")).getLayoutData(); 
-				tempGrid.exclude = true; 
-				((Label) uiData.get("labelHiddenProxyHost")).setVisible(false); 
-				
-						
+        			} else {
 
-				Controller.getWindow().layout();
-			}
-		} else {
-			Controller.setProxy(null);
-			((Label) uiData.get("labelAlert"))
-					.setText("Please insert a valid proxy!");
-			((Label) uiData.get("labelAlert")).setVisible(true);
-			GridData tempGrid = (GridData) ((Label) uiData.get("labelImageHostNo")).getLayoutData(); 
-			tempGrid.exclude = false;
-			((Label) uiData.get("labelImageHostNo")).setVisible(true); 
-			
-			tempGrid = (GridData) ((Label) uiData.get("labelImageHostOk")).getLayoutData(); 
-			tempGrid.exclude = true;
-			((Label) uiData.get("labelImageHostOk")).setVisible(false); 
-			
-			tempGrid = (GridData)  ((Label) uiData.get("labelHiddenProxyHost")).getLayoutData(); 
-			tempGrid.exclude = true; 
-			((Label) uiData.get("labelHiddenProxyHost")).setVisible(false); 
-			
-			
-			Controller.getWindow().layout(); 
-		}
+        				Controller.setProxy(null);
+        				((Label) uiData.get("labelAlert"))
+        						.setText("Please insert a valid proxy!");
+        				((Label) uiData.get("labelAlert")).setVisible(true);
+        				
+        				GridData tempGrid = (GridData) ((Label) uiData.get("labelImageHostNo")).getLayoutData(); 
+        				tempGrid.exclude = false; 
+        				((Label) uiData.get("labelImageHostNo")).setVisible(true); 
+        				
+        				tempGrid = (GridData) ((Label) uiData.get("labelImageHostOk")).getLayoutData(); 
+        				tempGrid.exclude = true; 
+        				 ((Label) uiData.get("labelImageHostOk")).setVisible(false); 
+        				 
+        				tempGrid = (GridData)  ((Label) uiData.get("labelHiddenProxyHost")).getLayoutData(); 
+        				tempGrid.exclude = true; 
+        				((Label) uiData.get("labelHiddenProxyHost")).setVisible(false); 
+        				
+        						
+
+        				Controller.getWindow().layout();
+        			}
+                		
+                
+				} else {
+					Controller.setProxy(null);
+					((Label) uiData.get("labelAlert"))
+							.setText("Please insert a valid proxy!");
+					((Label) uiData.get("labelAlert")).setVisible(true);
+					GridData tempGrid = (GridData) ((Label) uiData.get("labelImageHostNo")).getLayoutData(); 
+					tempGrid.exclude = false;
+					((Label) uiData.get("labelImageHostNo")).setVisible(true); 
+					
+					tempGrid = (GridData) ((Label) uiData.get("labelImageHostOk")).getLayoutData(); 
+					tempGrid.exclude = true;
+					((Label) uiData.get("labelImageHostOk")).setVisible(false); 
+					
+					tempGrid = (GridData)  ((Label) uiData.get("labelHiddenProxyHost")).getLayoutData(); 
+					tempGrid.exclude = true; 
+					((Label) uiData.get("labelHiddenProxyHost")).setVisible(false); 
+					
+					
+					Controller.getWindow().layout(); 
+				}
+		
+		
+            }
+	
+		});
 	}
-
 }

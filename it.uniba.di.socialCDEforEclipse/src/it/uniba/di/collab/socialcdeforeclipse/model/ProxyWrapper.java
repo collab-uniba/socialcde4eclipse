@@ -85,9 +85,9 @@ public class ProxyWrapper implements ISocialProxy {
 	}
 
 	public Boolean IsWebServiceRunning() {
-
+		
 		String output = "";
-		Boolean out = false;
+
 		try {
 
 			URL url = new URL(host + "/IsWebServiceRunning");
@@ -95,6 +95,8 @@ public class ProxyWrapper implements ISocialProxy {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
+			conn.setConnectTimeout(5000);
+			
 			int status = conn.getResponseCode();
 
 			if (status >= 200 && status <= 299) {
@@ -102,20 +104,20 @@ public class ProxyWrapper implements ISocialProxy {
 						conn.getInputStream());
 				BufferedReader br = new BufferedReader(in);
 				output = br.readLine();
-
 			}
+			
 		} catch (Exception e) {
 
 			return false;
 		}
-
 		if (output.equals("true")) {
-
+			
 			return true;
 		} else {
-
+			
 			return false;
 		}
+		
 
 	}
 

@@ -659,7 +659,7 @@ public class DynamicHomeTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.WRAP);
+		textMessage = new Text(controlToPost, SWT.SINGLE);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;
@@ -668,6 +668,7 @@ public class DynamicHomeTimeline implements Panel {
 						.getResourceAsStream("images/Baloon.png")),
 				(Controller.getWindowWidth() - 100),
 				75));
+	
 		// textMessage.setBackgroundImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/baloon.png")));
 		textMessage.setLayoutData(gridData);
 

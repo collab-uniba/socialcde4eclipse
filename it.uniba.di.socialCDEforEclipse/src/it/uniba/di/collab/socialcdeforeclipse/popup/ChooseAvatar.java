@@ -53,6 +53,8 @@ public class ChooseAvatar implements Panel {
 			.getResourceAsStream("images/Wallpaper.png");
 	private final InputStream PATH_ECLIPSE_ICON = this.getClass()
 			.getClassLoader().getResourceAsStream("icons/sample.gif");
+	private final InputStream PATH_DEFAULT_AVATAR = this.getClass()
+			.getClassLoader().getResourceAsStream("images/DefaultAvatar.png");
 
 	public Listener getBackListener() {
 		return backListener;
@@ -94,21 +96,6 @@ public class ChooseAvatar implements Panel {
 		this.yCoordinateWithOffset = yCoordinateWithOffset;
 	}
 
-	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Display.getDefault(), width, height);
-		GC gc = new GC(scaled);
-		gc.setAntialias(SWT.ON);
-		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0, image.getBounds().width,
-				image.getBounds().height, 0, 0, width, height);
-		gc.dispose();
-		image.dispose();
-		return scaled;
-	}
-
-	private Image getImageStream(InputStream stream) {
-		return new Image(Controller.getWindow().getDisplay(), stream);
-	}
 
 	@Override
 	public void inizialize(Composite panel) {
@@ -282,27 +269,66 @@ public class ChooseAvatar implements Panel {
 								messageBox
 										.setText("SocialCDEforEclipse Message");
 								messageBox.open();
+							} else {
+								try {					
+									ChooseAvatar.this.dispose(Controller.getWindow());
+									Controller.getUsersAvatar().get(Controller.getCurrentUser().Username).dispose(); 
+									Controller.getUsersAvatar().put(Controller.getCurrentUser().Username, getUserImage());
+									
+									Controller.selectDynamicWindow(0);
+									
+									Image avatarImage = resize(Controller
+											.getProfilePanel()
+											.get_ImageStream(
+													new URL(
+															Controller
+																	.getCurrentUser().Avatar)
+															.openStream()),75,75);
+									Controller.getUsersAvatar().put(Controller.getCurrentUser().Username, getUserImage()); 
+									
+									Controller
+										.getProfilePanel()
+										.getLabelAvatarProfile()
+										.setImage(resize(new Image(Display.getCurrent(), avatarImage, SWT.IMAGE_COPY) ,32,32));
+									
+									((Label) Controller.getHomeWindow().getData().get("labelAvatar")).setImage(	avatarImage);
+									
+								} catch(IOException e) {
+									Controller
+									.getProfilePanel()
+									.getLabelAvatarProfile()
+									.setImage(
+											Controller
+													.getProfilePanel()
+													.get_ImageStream(
+															PATH_DEFAULT_AVATAR));
+									
+									((Label) Controller.getHomeWindow().getData().get("labelAvatar")).setImage(
+											Controller
+											.getProfilePanel()
+											.get_ImageStream(
+													PATH_DEFAULT_AVATAR));
+									
+									Controller
+											.getProfilePanel()
+											.getLabelAvatarProfile()
+											.setImage(
+													Controller
+															.getProfilePanel()
+															.resize(Controller
+																	.getProfilePanel()
+																	.getLabelAvatarProfile()
+																	.getImage(), 32, 32));
+									((Label) Controller.getHomeWindow().getData().get("labelAvatar")).setImage(
+											Controller
+											.getProfilePanel()
+											.resize(Controller
+													.getProfilePanel()
+													.getLabelAvatarProfile()
+													.getImage(), 75, 75));
+								}
+								
 							}
-							/*else
-							{
-								Controller
-								.getProfilePanel()
-								.getLabelAvatarProfile().getImage().dispose(); 
-								
-								Controller
-								.getProfilePanel()
-								.getLabelAvatarProfile().setImage(resize(new Image(Display.getCurrent(),Controller.getUsersAvatar().get(Controller.getCurrentUser().Username),SWT.IMAGE_COPY),32,32));
-								
-								((Label) Controller.getHomeWindow().getData().get("labelAvatar")).getImage().dispose(); 
-								
-								((Label) Controller.getHomeWindow().getData().get("labelAvatar")).setImage(resize(new Image(Display.getCurrent(),Controller.getUsersAvatar().get(Controller.getCurrentUser().Username),SWT.IMAGE_COPY),75,75));
-								
-								Controller.getProfilePanel().getLabelAvatarProfile().redraw(); 
-								((Label) Controller.getHomeWindow().getData().get("labelAvatar")).redraw(); 
-								
-								
-								Controller.getWindow().layout(); 
-							}*/
 
 						}
 					});
@@ -386,6 +412,45 @@ public class ChooseAvatar implements Panel {
 		uiData.put("noAvatarMessage", noAvatarMessage);
 
 		return uiData;
+	}
+	
+	private Image getUserImage()
+	{
+		try {
+			return resize(get_ImageStream(new URL(Controller
+					.getCurrentUser().Avatar).openStream()),48,48);
+			
+
+		} catch (IOException e) {
+			
+			
+			return resize(get_ImageStream(PATH_DEFAULT_AVATAR),48,48);
+			
+			
+		} catch (NullPointerException e) {
+			
+			return resize(get_ImageStream(PATH_DEFAULT_AVATAR),48,48);
+		}
+	}
+	
+	private Image get_ImageStream(InputStream stream) {
+		return new Image(Display.getCurrent(), stream);
+	}
+	
+	private Image resize(Image image, int width, int height) {
+		Image scaled = new Image(Display.getDefault(), width, height);
+		GC gc = new GC(scaled);
+		gc.setAntialias(SWT.ON);
+		gc.setInterpolation(SWT.HIGH);
+		gc.drawImage(image, 0, 0, image.getBounds().width,
+				image.getBounds().height, 0, 0, width, height);
+		gc.dispose();
+		image.dispose();
+		return scaled;
+	}
+
+	private Image getImageStream(InputStream stream) {
+		return new Image(Controller.getWindow().getDisplay(), stream);
 	}
 
 }
