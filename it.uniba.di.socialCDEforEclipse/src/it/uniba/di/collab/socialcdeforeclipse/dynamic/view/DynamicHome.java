@@ -124,6 +124,9 @@ public class DynamicHome implements Panel {
 		}
 	}
 	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	@Override
 	public void inizialize(Composite panel) {
 		
@@ -252,8 +255,8 @@ public class DynamicHome implements Panel {
 		superUserPostMaster.setBackground(Display.getCurrent().getSystemColor(
 				SWT.COLOR_WHITE));
 		
-		GridLayout serviceGrid = new GridLayout(1, true);
-		serviceComposite.setLayout(serviceGrid);
+		//GridLayout serviceGrid = new GridLayout(1, true);
+		serviceComposite.setLayout(new RowLayout());
 		
 
 		if (wService.length > 0) {
@@ -267,7 +270,7 @@ public class DynamicHome implements Panel {
 
 					@Override
 					public void run() {
-						bottleComposite.setLayout(new GridLayout(2, false));
+						bottleComposite.setLayout( new GridLayout(2, false));
 						bottleComposite.setSize(bottleComposite.computeSize(
 								100, 100));
 

@@ -72,6 +72,9 @@ public class LoginPanel implements Panel {
 
 	}
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	@Override
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
@@ -119,7 +122,7 @@ public class LoginPanel implements Panel {
 				"Calibri", 10, SWT.NONE));
 		controlli.add(labelProxyHost);
 
-		txtProxyHost = new Text(panel, SWT.BORDER | SWT.WRAP);
+		txtProxyHost = new Text(panel, SWT.BORDER | SWT.SINGLE);
 		txtProxyHost.setData("ID_action", "txtProxyHost");
 		gridData = new GridData();
 		gridData.widthHint = 180; 
@@ -165,7 +168,7 @@ public class LoginPanel implements Panel {
 				"Calibri", 10, SWT.NONE));
 		controlli.add(labelUsername);
 
-		txtUsername = new Text(panel, SWT.BORDER | SWT.WRAP);
+		txtUsername = new Text(panel, SWT.BORDER | SWT.SINGLE);
 		gridData = new GridData();
 		gridData.widthHint = 180; 
 		//gridData.grabExcessHorizontalSpace = true;

@@ -199,13 +199,14 @@ public class DynamicIterationTimeline implements Panel {
 								SWT.NONE);
 						gridData = new GridData();
 						gridData.verticalSpan = 3;
+						gridData.verticalAlignment = SWT.BEGINNING;
 						labelUserAvatar.setLayoutData(gridData);
 
 						if(Controller.getUsersAvatar().get(posts[j].getUser().Username) == null)
 						{
 							Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 						}
-						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75)); 
+						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48,48)); 
 
 						if (!posts[j].getUser().Username.equals(Controller
 								.getCurrentUser().Username)) {
@@ -468,6 +469,7 @@ public class DynamicIterationTimeline implements Panel {
 							SWT.NONE);
 					gridData = new GridData();
 					gridData.verticalSpan = 3;
+					gridData.verticalAlignment = SWT.BEGINNING;
 					labelUserAvatar.setLayoutData(gridData);
 					labelUserAvatar.setData("ID_action", "labelAvatar");
 					
@@ -475,7 +477,7 @@ public class DynamicIterationTimeline implements Panel {
 					{
 						Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 					}
-					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75)); 
+					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48, 48)); 
 					
 
 					if (!posts[j].getUser().Username.equals(Controller
@@ -731,18 +733,10 @@ public class DynamicIterationTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		if(Controller.OSisWindows())
-		{
-			textMessage = new Text(controlToPost, SWT.SINGLE);
-		}
-		else
-		{
-			textMessage = new Text(controlToPost, SWT.SINGLE | SWT.BORDER);
-		}
+		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER);
 		gridData = new GridData();
 		gridData.heightHint = 75;
-		gridData.widthHint = Controller.getWindowWidth() - 100;
-		
+		gridData.widthHint = Controller.getWindowWidth() - 100;		
 		textMessage.setLayoutData(gridData);
 
 		Label btnSendMessage = new Label(controlToPost, SWT.None);
@@ -803,25 +797,6 @@ public class DynamicIterationTimeline implements Panel {
 				}
 			}
 		}); 
-
-		panel.addPaintListener(new PaintListener() {
-
-			@Override
-			public void paintControl(PaintEvent e) {
-			
-				/*superUserPostMaster.setSize(Controller.getWindow().computeSize(
-						Controller.getWindowWidth() - 20, 350));
-				userPostMaster.setSize(Controller.getWindow().computeSize(
-						Controller.getWindowWidth() - 70, 350));*/
-				textMessage.setBackgroundImage(resize(
-						get_ImageStream(this.getClass().getClassLoader()
-								.getResourceAsStream("images/Baloon.png")),
-						textMessage.getBounds().width,
-						textMessage.getBounds().height));
-				
-
-			}
-		});
 
 		Controller.setWindowName("iterationTimeline");
 
