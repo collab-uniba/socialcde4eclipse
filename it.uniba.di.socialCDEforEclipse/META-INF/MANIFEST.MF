@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SocialCDEforEclipse
 Bundle-SymbolicName: SocialCDEforEclipse; singleton:=true
-Bundle-Version: 0.1.0
+Bundle-Version: 0.1.1
 Bundle-Activator: socialcdeforeclipse.Activator
 Bundle-Vendor: it.uniba.di.collab
 Require-Bundle: org.eclipse.ui,
@@ -11,5 +11,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/gson-2.2.2.jar,
  lib/jdom-2.0.4.jar,
+ lib/commons-lang3-3.4.jar,
  .
 Import-Package: org.eclipse.core.resources
