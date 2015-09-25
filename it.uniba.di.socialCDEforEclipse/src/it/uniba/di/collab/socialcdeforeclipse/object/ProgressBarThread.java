@@ -1,8 +1,8 @@
 package it.uniba.di.collab.socialcdeforeclipse.object;
 
-import java.io.InputStream;
-
 import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+
+import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -11,10 +11,10 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Display;
-
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 
@@ -96,9 +96,8 @@ public class ProgressBarThread extends Thread {
 
 	public void run() {
 		display = new Display();
-
+	
 		shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-
 		shell.setSize(Controller.getWindowWidth(), Controller.getWindowHeight());
 
 		shell.setBounds(Controller.getProgressBarPositionX(),
@@ -111,7 +110,8 @@ public class ProgressBarThread extends Thread {
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		shell.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
-		Composite first_composite = new Composite(shell, SWT.NO_BACKGROUND);
+		Composite first_composite = new Composite(shell, SWT.None);
+		first_composite.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		first_composite.setLayout(layout);
 		GridData gridData = new GridData();
 		gridData.grabExcessHorizontalSpace = true;

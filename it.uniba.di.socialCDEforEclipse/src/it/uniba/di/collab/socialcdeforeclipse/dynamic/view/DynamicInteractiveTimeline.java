@@ -1,10 +1,7 @@
 package it.uniba.di.collab.socialcdeforeclipse.dynamic.view;
 
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionDynamicUserTimeline;
 import it.uniba.di.collab.socialcdeforeclipse.action.ActionGeneral;
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionHomeTimeline;
 import it.uniba.di.collab.socialcdeforeclipse.action.ActionInteractiveTimeline;
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionIterationTimeline;
 import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.collab.socialcdeforeclipse.object.Panel;
 import it.uniba.di.collab.socialcdeforeclipse.object.ProgressBarWindow;
@@ -18,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
@@ -42,10 +38,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -155,7 +148,8 @@ public class DynamicInteractiveTimeline implements Panel {
 			
 		 	 if(editor != null)
 			 {
-		 		 tempFileSelected = editor.getTitleToolTip(); 
+		 		 tempFileSelected = editor.getTitleToolTip();
+		 		 tempFileSelected = tempFileSelected.substring(tempFileSelected.indexOf('/') + 1);
 			 }
 		}
 		catch(Exception e)
@@ -430,6 +424,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		 	 if(editor != null)
 			 {
 		 		 tempFileSelected = editor.getTitleToolTip(); 
+		 		 tempFileSelected = tempFileSelected.substring(tempFileSelected.indexOf('/') + 1);
 			 }
 		}
 		catch(Exception e)

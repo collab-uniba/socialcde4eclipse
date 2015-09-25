@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 public class InterceptingFilter {
 
 	public static boolean verifyText(String txt) {
-		return (txt == "" ? false : true);
+		txt = txt.replace(" ", "");
+		txt = txt.replace("\r\n", "");
+		return (txt.equals("") ? false : true);
 
 	}
 
@@ -51,5 +53,5 @@ public class InterceptingFilter {
 		return flag;
 
 	}
-
+	
 }

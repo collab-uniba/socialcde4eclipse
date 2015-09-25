@@ -95,7 +95,6 @@ public class ProxyWrapper implements ISocialProxy {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
-			conn.setConnectTimeout(5000);
 			
 			int status = conn.getResponseCode();
 
