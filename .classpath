@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="it.uniba.di.socialCDEforEclipse/plugintest"/>
+	<classpathentry kind="src" path="it.uniba.di.socialCDEforEclipse/src"/>
+	<classpathentry kind="src" path="it.uniba.di.socialCDEforEclipse/unittest"/>
+	<classpathentry kind="lib" path="it.uniba.di.socialCDEforEclipse/downloadClient/SocialCDEforEclipse_0.1.1.jar"/>
+	<classpathentry kind="lib" path="it.uniba.di.socialCDEforEclipse/lib/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="it.uniba.di.socialCDEforEclipse/lib/jdom-2.0.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
