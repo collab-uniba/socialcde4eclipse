@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import org.eclipse.mylyn.tasks.ui.editors.TaskEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
@@ -38,7 +39,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -55,17 +55,18 @@ public class DynamicInteractiveTimeline implements Panel {
 	private Label labelDownloadPost;
 	private ProgressBar pbar;
 	private static int totalField; 
-	private static String fileSelected; 
-	private String tempFileSelected; 
+	private static String objectSelected; 
+	private String tempObjectSelected; 
+	private String repositoryURL;
 	private static ProgressBarWindow pbW; 
 	private static long timerUpdate = 0; 
 	
 	public static String getFileSelected() {
-		return fileSelected;
+		return objectSelected;
 	}
 
 	public static void setFileSelected(String fileSelected) {
-		DynamicInteractiveTimeline.fileSelected = fileSelected;
+		DynamicInteractiveTimeline.objectSelected = fileSelected;
 	}
 
 	private Image resize(Image image, int width, int height) {
@@ -140,24 +141,33 @@ public class DynamicInteractiveTimeline implements Panel {
 	public void updateTimeline()
 	{
 		IEditorPart editor = null; 
-		tempFileSelected = ""; 
+		tempObjectSelected = ""; 
 		try{
 		 editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
 				.getActiveEditor();
-			
+		 	 
 		 	 if(editor != null)
 			 {
-		 		 tempFileSelected = editor.getTitleToolTip();
-		 		 tempFileSelected = tempFileSelected.substring(tempFileSelected.indexOf('/') + 1);
+		 		if (editor instanceof TaskEditor) 
+		 		{	 
+					 //obtaining repository url
+					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
+					repositoryURL = repositoryURL.replaceFirst("https", "git").concat(".git");
+		 		} else {
+		 			repositoryURL = "";
+		 		}
+		 		
+		 		 tempObjectSelected = editor.getTitleToolTip();
+		 		 tempObjectSelected = tempObjectSelected.substring(tempObjectSelected.indexOf('/') + 1);
 			 }
 		}
 		catch(Exception e)
 		{
-			fileSelected = ""; 
+			objectSelected = ""; 
 		}
-		System.out.println("temp " + tempFileSelected + " presente " + fileSelected); 
-		if(!tempFileSelected.equals(fileSelected))
+		System.out.println("temp " + tempObjectSelected + " presente " + objectSelected); 
+		if(!tempObjectSelected.equals(objectSelected))
 		{
 			System.out.println(" Aggiornamento concesso");
 			Controller.selectDynamicWindow(6); 
@@ -165,7 +175,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		else
 		{
 			System.out.println(" Aggiornamento non concesso");
-			if(fileSelected.equals("") )
+			if(objectSelected.equals("") )
 			{
 				posts = new WPost[0]; 
 			}
@@ -173,7 +183,7 @@ public class DynamicInteractiveTimeline implements Panel {
 			{
 				posts = Controller.getProxy().GetInteractiveTimeline(
 						Controller.getCurrentUser().Username,
-						Controller.getCurrentUserPassword(),"", fileSelected , "File");
+						Controller.getCurrentUserPassword(), repositoryURL, objectSelected , repositoryURL.equals("")? "File" : "WorkItem");
 				
 				if(posts == null || posts.length == 2)
 				{
@@ -185,7 +195,7 @@ public class DynamicInteractiveTimeline implements Panel {
 			{
 				posts = Controller.getProxy().GetInteractiveTimeline(
 						Controller.getCurrentUser().Username,
-						Controller.getCurrentUserPassword(),"", fileSelected , "File",Integer.parseInt(userPostMaster.getChildren()[0].getData("IdPost").toString()),0);
+						Controller.getCurrentUserPassword(),repositoryURL, objectSelected , repositoryURL.equals("")? "File" : "WorkItem",Integer.parseInt(userPostMaster.getChildren()[0].getData("IdPost").toString()),0);
 			}
 			if(userPostMaster.getChildren().length > 1)
 			{
@@ -415,7 +425,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		}
 		
 		IEditorPart editor = null; 
-		tempFileSelected = ""; 
+		tempObjectSelected = ""; 
 		try{
 		 editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
@@ -423,16 +433,25 @@ public class DynamicInteractiveTimeline implements Panel {
 			
 		 	 if(editor != null)
 			 {
-		 		 tempFileSelected = editor.getTitleToolTip(); 
-		 		 tempFileSelected = tempFileSelected.substring(tempFileSelected.indexOf('/') + 1);
+		 		if (editor instanceof TaskEditor) 
+		 		{	 
+					 //obtaining repository url
+					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
+					repositoryURL = repositoryURL.replaceFirst("https", "git").concat(".git");
+		 		} else {
+		 			repositoryURL = "";
+		 		}
+		 		
+		 		 tempObjectSelected = editor.getTitleToolTip(); 
+		 		 tempObjectSelected = tempObjectSelected.substring(tempObjectSelected.indexOf('/') + 1);
 			 }
 		}
 		catch(Exception e)
 		{
-			fileSelected = ""; 
+			objectSelected = ""; 
 		}
 				
-		fileSelected = tempFileSelected; 
+		objectSelected = tempObjectSelected; 
 		
 		//System.out.println("Interaction timeline lanciato");
 
@@ -467,7 +486,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		userPostMaster.setBackground(Display.getCurrent().getSystemColor(
 				SWT.COLOR_WHITE));
 
-		if(fileSelected == null || fileSelected.equals(""))
+		if(objectSelected == null || objectSelected.equals(""))
 		{
 			System.out.println("File selected nullo o vuoto");
 			posts = new WPost[0]; 
@@ -475,7 +494,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		else
 		{
 			System.out.println("Richiesta post inviata "); 
-			posts = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(),"",fileSelected,"File");
+			posts = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(),repositoryURL,objectSelected,repositoryURL.equals("")? "File" : "WorkItem");
 			System.out.println("Numero post ottenuti " + posts.length); 
 			
 			posts = (posts.length == 2 ? new WPost[0] : posts); 
@@ -688,7 +707,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		gridData.horizontalAlignment = GridData.FILL;
 		otherPostWarning.setLayoutData(gridData);
 
-		 WPost[] newPost = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,	 Controller.getCurrentUserPassword(),"",fileSelected, "File", ActionInteractiveTimeline.getLastId(),0);
+		 WPost[] newPost = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,	 Controller.getCurrentUserPassword(),repositoryURL,objectSelected, repositoryURL.equals("")? "File" : "WorkItem", ActionInteractiveTimeline.getLastId(),0);
 		
 		if (newPost == null || newPost.length == 2) {
 			newPost = new WPost[0];

@@ -8,30 +8,6 @@
  * */
 package it.uniba.di.collab.socialcdeforeclipse.controller;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.prefs.Preferences;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-
-import socialcdeforeclipse.Activator;
-
-
-
 import it.uniba.di.collab.socialcdeforeclipse.dynamic.view.DynamicHome;
 import it.uniba.di.collab.socialcdeforeclipse.dynamic.view.DynamicHomeTimeline;
 import it.uniba.di.collab.socialcdeforeclipse.dynamic.view.DynamicInteractiveTimeline;
@@ -44,10 +20,21 @@ import it.uniba.di.collab.socialcdeforeclipse.object.ProgressBarThread;
 import it.uniba.di.collab.socialcdeforeclipse.object.ProgressBarWindow;
 import it.uniba.di.collab.socialcdeforeclipse.object.SquareButtonService;
 import it.uniba.di.collab.socialcdeforeclipse.popup.ConnLostPanel;
-import it.uniba.di.collab.socialcdeforeclipse.shared.library.*;
+import it.uniba.di.collab.socialcdeforeclipse.shared.library.WUser;
 import it.uniba.di.collab.socialcdeforeclipse.staticview.LoginPanel;
 import it.uniba.di.collab.socialcdeforeclipse.staticview.ProfilePanel;
 import it.uniba.di.collab.socialcdeforeclipse.staticview.RegistrationPanel;
+
+import java.util.HashMap;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+
+import socialcdeforeclipse.Activator;
 
 public class Controller {
 
