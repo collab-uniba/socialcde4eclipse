@@ -447,7 +447,7 @@ public class ActionLoginPanel {
 				
 			break;
 
-		case "txtProxyHost":
+		/*case "txtProxyHost":
 
 			if (type == SWT.FocusOut) {
 				setProxyHost(uiData); 
@@ -569,12 +569,12 @@ public class ActionLoginPanel {
 			}
 
 			break;
-
+*/
 		default:
 			break;
 		}
 	}
-	
+	/*
 	private void setProxyHost( final HashMap<String, Object> uiData )
 	{
 		Display.getDefault().asyncExec(new Runnable() {
@@ -656,5 +656,5 @@ public class ActionLoginPanel {
             }
 	
 		});
-	}
+	}*/
 }
