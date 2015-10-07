@@ -3,7 +3,10 @@ package it.uniba.di.collab.socialcdeforeclipse.object;
 import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -14,11 +17,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 
-public class ProgressBarThread extends Thread {
+public class ProgressBarThread extends Thread{
 
 	private Display display;
 	private ProgressBar bar;
@@ -30,9 +32,6 @@ public class ProgressBarThread extends Thread {
 	private int xCoordinateWithOffset;
 	private int yCoordinate;
 	private int yCoordinateWithOffset;
-
-	private final InputStream PATH_WALLPAPER = this.getClass().getClassLoader()
-			.getResourceAsStream("images/Wallpaper.png");
 
 	public int getxCoordinateWithOffset() {
 		return xCoordinateWithOffset;
@@ -65,22 +64,7 @@ public class ProgressBarThread extends Thread {
 	public void setyCoordinate(int yCoordinate) {
 		this.yCoordinate = yCoordinate;
 	}
-
-	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Display.getDefault(), width, height);
-		GC gc = new GC(scaled);
-		gc.setAntialias(SWT.ON);
-		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0, image.getBounds().width,
-				image.getBounds().height, 0, 0, width, height);
-		gc.dispose();
-		image.dispose(); // don't forget about me!
-		return scaled;
-	}
-
-	private Image getImageStream(InputStream stream) {
-		return new Image(Controller.getWindow().getDisplay(), stream);
-	}
+	
 
 	public String getLabelTxt() {
 		return labelTxt;
@@ -94,48 +78,25 @@ public class ProgressBarThread extends Thread {
 		this.stop = stop;
 	}
 
-	public void run() {
-		display = new Display();
+	public void run() { 
 	
-		shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-		shell.setSize(Controller.getWindowWidth(), Controller.getWindowHeight());
-
-		shell.setBounds(Controller.getProgressBarPositionX(),
-				Controller.getProgressBarPositionY(),
-				Controller.getWindowWidth(), Controller.getWindowHeight());
-		GridLayout layout = new GridLayout(1, false);
-		shell.setLayout(layout);
-		// shell.setBackgroundImage(resize(getImageStream(PATH_WALLPAPER),Controller.getWindowWidth(),
-		// Controller.getWindowHeight()));
-		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-
-		Composite first_composite = new Composite(shell, SWT.None);
-		first_composite.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-		first_composite.setLayout(layout);
-		GridData gridData = new GridData();
-		gridData.grabExcessHorizontalSpace = true;
-		gridData.grabExcessVerticalSpace = true;
-		gridData.horizontalAlignment = gridData.CENTER;
-		gridData.verticalAlignment = gridData.CENTER;
-		first_composite.setLayoutData(gridData);
-
-		Label labelPogress = new Label(first_composite, SWT.CENTER);
-		labelPogress.setText(labelTxt);
-		labelPogress.setFont(new Font(shell.getDisplay(), "Calibri", 15,
-				SWT.BOLD));
-		GridData grid = new GridData();
-		grid.horizontalAlignment = grid.CENTER;
-		labelPogress.setLayoutData(grid);
-		bar = new ProgressBar(first_composite, SWT.CENTER);
+		display =  new Display();
+		
+		shell = new Shell(display);
+		
+		ProgressBarDialog pbd = new ProgressBarDialog(shell);
+		pbd.setBlockOnOpen(false);
+		pbd.setLabelTxt(getLabelTxt());
+		pbd.open();
+	
 		max = 100;
-		shell.open();
+		bar = pbd.getBar();
+
 		while (stop != 1) {
 			try {
 				Thread.sleep(100);
 			} catch (Throwable th) {
 			}
-
 			if (bar.getSelection() == (max - 1)) {
 				bar.setSelection(0);
 			} else {
@@ -144,13 +105,11 @@ public class ProgressBarThread extends Thread {
 			}
 		}
 		if (stop == 1) {
+			pbd.close();
 			shell.dispose();
+			display.dispose();
 		}
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
 	}
+
 
 }
