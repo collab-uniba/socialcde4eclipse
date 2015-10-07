@@ -4,6 +4,7 @@ import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.collab.socialcdeforeclipse.object.*;
 import it.uniba.di.collab.socialcdeforeclipse.shared.library.WPost;
 import it.uniba.di.collab.socialcdeforeclipse.shared.library.WUser;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -11,6 +12,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -322,6 +324,7 @@ public class ActionIterationTimeline {
 								SWT.NONE);
 						gridData = new GridData();
 						gridData.verticalSpan = 3;
+						gridData.verticalAlignment = SWT.BEGINNING;
 						labelUserAvatar.setLayoutData(gridData);
 						labelUserAvatar.setData("ID_action", "labelAvatar");
 
@@ -329,7 +332,7 @@ public class ActionIterationTimeline {
 						{
 							Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 						}
-						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75)); 
+						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48,48)); 
 
 
 						if (!posts[j].getUser().Username.equals(Controller
@@ -576,6 +579,11 @@ public class ActionIterationTimeline {
 			} else {
 				userMessage = ((Text) uiData.get("textMessage")).getText();
 
+				//escaping special characters
+				userMessage = StringEscapeUtils.escapeJava(userMessage);
+				System.out.println("User Message: " + userMessage);
+				
+				
 				if (!Controller.getProxy().Post(
 						Controller.getCurrentUser().Username,
 						Controller.getCurrentUserPassword(), userMessage)) {
@@ -613,6 +621,7 @@ public class ActionIterationTimeline {
 							SWT.NONE);
 					gridData = new GridData();
 					gridData.verticalSpan = 3;
+					gridData.verticalAlignment = SWT.BEGINNING;
 					labelUserAvatar.setLayoutData(gridData);
 					labelUserAvatar.setData("ID_action", "labelAvatar");
 					
@@ -620,7 +629,7 @@ public class ActionIterationTimeline {
 					{
 						Controller.getUsersAvatar().put(Controller.getCurrentUser().Username, getUserImage(Controller.getCurrentUser().Avatar)); 
 					}
-					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(Controller.getCurrentUser().Username),SWT.IMAGE_COPY),75,75)); 
+					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(Controller.getCurrentUser().Username),SWT.IMAGE_COPY),48,48)); 
 
 					Label username = new Label(userPostComposite, SWT.None);
 					username.setForeground(new Color(Display.getCurrent(), 97,
@@ -634,7 +643,10 @@ public class ActionIterationTimeline {
 					username.setLayoutData(gridData);
 
 					Label message = new Label(userPostComposite, SWT.WRAP);
-					message.setText(userMessage);
+					
+					//reading message unescaping the text for correct visualization
+					message.setText(StringEscapeUtils.unescapeJava(userMessage));
+					
 					gridData = new GridData();
 					gridData.widthHint = Controller.getWindowWidth() - 150;
 					message.setLayoutData(gridData);

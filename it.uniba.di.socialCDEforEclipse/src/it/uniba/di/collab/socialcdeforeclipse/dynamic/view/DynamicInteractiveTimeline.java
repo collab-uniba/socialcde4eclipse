@@ -1,10 +1,7 @@
 package it.uniba.di.collab.socialcdeforeclipse.dynamic.view;
 
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionDynamicUserTimeline;
 import it.uniba.di.collab.socialcdeforeclipse.action.ActionGeneral;
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionHomeTimeline;
 import it.uniba.di.collab.socialcdeforeclipse.action.ActionInteractiveTimeline;
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionIterationTimeline;
 import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
 import it.uniba.di.collab.socialcdeforeclipse.object.Panel;
 import it.uniba.di.collab.socialcdeforeclipse.object.ProgressBarWindow;
@@ -18,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
@@ -42,10 +38,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -155,7 +148,8 @@ public class DynamicInteractiveTimeline implements Panel {
 			
 		 	 if(editor != null)
 			 {
-		 		 tempFileSelected = editor.getTitleToolTip(); 
+		 		 tempFileSelected = editor.getTitleToolTip();
+		 		 tempFileSelected = tempFileSelected.substring(tempFileSelected.indexOf('/') + 1);
 			 }
 		}
 		catch(Exception e)
@@ -239,13 +233,14 @@ public class DynamicInteractiveTimeline implements Panel {
 									SWT.NONE);
 							gridData = new GridData();
 							gridData.verticalSpan = 3;
+							gridData.verticalAlignment = SWT.BEGINNING;
 							labelUserAvatar.setLayoutData(gridData);
 							
 							if(Controller.getUsersAvatar().get(posts[j].getUser().Username) == null)
 							{
 								Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 							}
-							labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75)); 
+							labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48,48)); 
 
 							if (!posts[j].getUser().Username.equals(Controller
 									.getCurrentUser().Username)) {
@@ -407,6 +402,9 @@ public class DynamicInteractiveTimeline implements Panel {
 	}
 	
 	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public void inizialize(Composite panel) {
 		// TODO Auto-generated method stub
 		timerUpdate = 0; 
@@ -426,6 +424,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		 	 if(editor != null)
 			 {
 		 		 tempFileSelected = editor.getTitleToolTip(); 
+		 		 tempFileSelected = tempFileSelected.substring(tempFileSelected.indexOf('/') + 1);
 			 }
 		}
 		catch(Exception e)
@@ -522,6 +521,7 @@ public class DynamicInteractiveTimeline implements Panel {
 							SWT.NONE);
 					gridData = new GridData();
 					gridData.verticalSpan = 3;
+					gridData.verticalAlignment = SWT.BEGINNING;
 					labelUserAvatar.setLayoutData(gridData);
 					labelUserAvatar.setData("ID_action", "labelAvatar");
 					
@@ -529,7 +529,7 @@ public class DynamicInteractiveTimeline implements Panel {
 					{
 						Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 					}
-					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75)); 
+					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48,48)); 
 
 					//System.out.println("Fuori");
 
@@ -757,14 +757,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		if(Controller.OSisWindows())
-		{
-			textMessage = new Text(controlToPost, SWT.SINGLE);
-		}
-		else
-		{
-			textMessage = new Text(controlToPost, SWT.SINGLE | SWT.BORDER);
-		}
+		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;
@@ -832,23 +825,6 @@ public class DynamicInteractiveTimeline implements Panel {
 			}
 		}); 
 
-		panel.addPaintListener(new PaintListener() {
-
-			@Override
-			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
-				/*superUserPostMaster.setSize(Controller.getWindow().computeSize(
-						Controller.getWindowWidth() - 20, 350));
-				userPostMaster.setSize(Controller.getWindow().computeSize(
-						Controller.getWindowWidth() - 70, 350));*/
-				textMessage.setBackgroundImage(resize(
-						get_ImageStream(this.getClass().getClassLoader()
-								.getResourceAsStream("images/Baloon.png")),
-						textMessage.getBounds().width,
-						textMessage.getBounds().height));
-
-			}
-		});
 
 		Controller.setWindowName("interactiveTimeline");
 

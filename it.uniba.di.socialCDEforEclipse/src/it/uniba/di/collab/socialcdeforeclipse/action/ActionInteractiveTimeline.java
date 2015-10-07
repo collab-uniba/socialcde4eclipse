@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Color;
@@ -291,13 +292,14 @@ public class ActionInteractiveTimeline {
 								SWT.NONE);
 						gridData = new GridData();
 						gridData.verticalSpan = 3;
+						gridData.verticalAlignment = SWT.BEGINNING;
 						labelUserAvatar.setLayoutData(gridData);
 						
 						if(Controller.getUsersAvatar().get(posts[j].getUser().Username) == null)
 						{
 							Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 						}
-						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75)); 
+						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48, 48)); 
 
 						if (!posts[j].getUser().Username.equals(Controller
 								.getCurrentUser().Username)) {
@@ -534,6 +536,7 @@ public class ActionInteractiveTimeline {
 
 			if (!InterceptingFilter.verifyText(((Text) uiData
 					.get("textMessage")).getText())) {
+				
 				uiData.put("alert", "message empty");
 				MessageBox messageBox2 = new MessageBox(Controller.getWindow()
 						.getShell(), SWT.ICON_ERROR | SWT.OK);
@@ -541,12 +544,21 @@ public class ActionInteractiveTimeline {
 						.setMessage("The message is empty, please try again.");
 				messageBox2.setText("SocialCDEforEclipse Message");
 				messageBox2.open();
+				
 			} else {
+				
 				userMessage = ((Text) uiData.get("textMessage")).getText();
 				((Text) uiData.get("textMessage")).setText(""); 
+				
+				//escaping special characters
+				userMessage = StringEscapeUtils.escapeJava(userMessage);
+				System.out.println("User Message: " + userMessage);
+				
+				
 				if (!Controller.getProxy().Post(
 						Controller.getCurrentUser().Username,
 						Controller.getCurrentUserPassword(), userMessage)) {
+					
 					uiData.put("alert", "connection problem");
 					MessageBox messageBox2 = new MessageBox(Controller
 							.getWindow().getShell(), SWT.ICON_ERROR | SWT.OK);
@@ -555,6 +567,7 @@ public class ActionInteractiveTimeline {
 					messageBox2.setText("SocialCDEforEclipse Message");
 					messageBox2.open();
 				} else {
+					
 					uiData.put("alert", "");
 					
 				    WPost[]	interactiveTimelinePost = Controller.getProxy().GetUserTimeline(
@@ -581,6 +594,7 @@ public class ActionInteractiveTimeline {
 							SWT.NONE);
 					gridData = new GridData();
 					gridData.verticalSpan = 3;
+					gridData.verticalAlignment = SWT.BEGINNING;
 					labelUserAvatar.setLayoutData(gridData);
 					labelUserAvatar.setData("ID_action", "labelAvatar");
 					
@@ -588,7 +602,7 @@ public class ActionInteractiveTimeline {
 					{
 						Controller.getUsersAvatar().put(Controller.getCurrentUser().Username, getUserImage(Controller.getCurrentUser().Avatar)); 
 					}
-					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(Controller.getCurrentUser().Username),SWT.IMAGE_COPY),75,75)); 
+					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(), Controller.getUsersAvatar().get(Controller.getCurrentUser().Username),SWT.IMAGE_COPY),48,48)); 
 
 					Label username = new Label(userPostComposite, SWT.None);
 					username.setForeground(new Color(Display.getCurrent(), 97,
@@ -602,7 +616,10 @@ public class ActionInteractiveTimeline {
 					username.setLayoutData(gridData);
 
 					Label message = new Label(userPostComposite, SWT.WRAP);
-					message.setText(userMessage);
+					
+					//reading message unescaping the text for correct visualization
+					message.setText(StringEscapeUtils.unescapeJava(userMessage));
+					
 					gridData = new GridData();
 					gridData.widthHint = Controller.getWindowWidth() - 150;
 					message.setLayoutData(gridData);

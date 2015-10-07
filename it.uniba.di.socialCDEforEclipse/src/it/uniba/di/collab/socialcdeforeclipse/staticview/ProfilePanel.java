@@ -188,7 +188,7 @@ public class ProfilePanel implements Panel {
 				.setImage(get_ImageStream(PATH_INTERACTION_TIMELINE));
 		labelInterationTimeline.setCursor(new Cursor(panel.getDisplay(),
 				SWT.CURSOR_HAND));
-		labelInterationTimeline.setToolTipText("Interation Timeline");
+		labelInterationTimeline.setToolTipText("Iteration Timeline");
 		labelInterationTimeline.setData("ID_action", "labelIterationTimeline");
 		controlli.add(labelInterationTimeline);
 	

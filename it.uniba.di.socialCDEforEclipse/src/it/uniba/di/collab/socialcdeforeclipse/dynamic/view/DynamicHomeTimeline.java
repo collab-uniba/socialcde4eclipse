@@ -18,6 +18,8 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -168,6 +170,7 @@ public class DynamicHomeTimeline implements Panel {
 								SWT.NONE);
 						gridData = new GridData();
 						gridData.verticalSpan = 3;
+						gridData.verticalAlignment = SWT.BEGINNING;
 						labelUserAvatar.setLayoutData(gridData);
 						
 						if(Controller.getUsersAvatar().get(posts[j].getUser().Username) == null)
@@ -175,7 +178,7 @@ public class DynamicHomeTimeline implements Panel {
 							Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 						}
 
-						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(),Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75));
+						labelUserAvatar.setImage(resize(new Image(Display.getCurrent(),Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48,48));
 	
 						if (!posts[j].getUser().Username.equals(Controller
 								.getCurrentUser().Username)) {
@@ -401,6 +404,7 @@ public class DynamicHomeTimeline implements Panel {
 							SWT.NONE);
 					gridData = new GridData();
 					gridData.verticalSpan = 3;
+					gridData.verticalAlignment = SWT.BEGINNING;
 					labelUserAvatar.setLayoutData(gridData);
 					
 					if(Controller.getUsersAvatar().get(posts[j].getUser().Username) == null)
@@ -408,7 +412,7 @@ public class DynamicHomeTimeline implements Panel {
 						Controller.getUsersAvatar().put(posts[j].getUser().Username, getUserImage(posts[j].getUser().Avatar)); 
 					}
 
-					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(),Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),75,75));
+					labelUserAvatar.setImage(resize(new Image(Display.getCurrent(),Controller.getUsersAvatar().get(posts[j].getUser().Username),SWT.IMAGE_COPY),48,48));
 
 					if (!posts[j].getUser().Username.equals(Controller
 							.getCurrentUser().Username)) {
@@ -659,17 +663,11 @@ public class DynamicHomeTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.SINGLE);
+		textMessage = new Text(controlToPost, SWT.MULTI | SWT.WRAP | SWT.BORDER);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;
-		textMessage.setBackgroundImage(resize(
-				get_ImageStream(this.getClass().getClassLoader()
-						.getResourceAsStream("images/Baloon.png")),
-				(Controller.getWindowWidth() - 100),
-				75));
-	
-		// textMessage.setBackgroundImage(get_ImageStream(this.getClass().getClassLoader().getResourceAsStream("images/baloon.png")));
+
 		textMessage.setLayoutData(gridData);
 
 		Label btnSendMessage = new Label(controlToPost, SWT.None);
@@ -757,11 +755,11 @@ public class DynamicHomeTimeline implements Panel {
 						Controller.getWindowWidth() - 20, (Controller.getWindowHeight() - DownloadOlderPosts.getSize().y - controlToPost.getSize().y)));
 				userPostMaster.setSize(Controller.getWindow().computeSize(
 						Controller.getWindowWidth() - 70, (Controller.getWindowHeight() - DownloadOlderPosts.getSize().y - controlToPost.getSize().y)-100));*/
-				textMessage.setBackgroundImage(resize(
+				/*textMessage.setBackgroundImage(resize(
 						get_ImageStream(this.getClass().getClassLoader()
 								.getResourceAsStream("images/Baloon.png")),
 						textMessage.getBounds().width,
-						textMessage.getBounds().height));
+						textMessage.getBounds().height));*/
 
 			}
 		});
