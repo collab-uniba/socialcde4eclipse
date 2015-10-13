@@ -162,7 +162,7 @@ public class SettingServicePanel implements Panel {
 		if(Controller.OSisWindows())
 		{
 			shell.setSize(300, 100);
-			shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 340, 200);
+			shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 340, 250);
 		}
 		else if(Controller.OSisUnix())
 		{
