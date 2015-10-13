@@ -2,11 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SocialCDEforEclipse
 Bundle-SymbolicName: SocialCDEforEclipse; singleton:=true
-Bundle-Version: 0.1.2
+Bundle-Version: 0.1.3
 Bundle-Activator: socialcdeforeclipse.Activator
 Bundle-Vendor: it.uniba.di.collab
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.ui.forms; bundle-version="3.6.100",
+ org.eclipse.core.runtime,
+ org.eclipse.mylyn.tasks.ui,
+ org.eclipse.mylyn.tasks.core 
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/gson-2.2.2.jar,
