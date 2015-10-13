@@ -153,14 +153,15 @@ public class DynamicInteractiveTimeline implements Panel {
 		 		{	 
 					 //obtaining repository url
 					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
-					repositoryURL = repositoryURL.replaceFirst("https", "git").concat(".git");
+					repositoryURL = repositoryURL.replaceFirst("https", "git");
+					tempObjectSelected = ((TaskEditor) editor).getTaskEditorInput().getTask().getTaskId();
 		 		} else {
 		 			repositoryURL = "";
+			 		
+			 		tempObjectSelected = editor.getTitleToolTip(); 
+			 		tempObjectSelected = tempObjectSelected.substring(tempObjectSelected.indexOf('/') + 1);
 		 		}
-		 		
-		 		 tempObjectSelected = editor.getTitleToolTip();
-		 		 tempObjectSelected = tempObjectSelected.substring(tempObjectSelected.indexOf('/') + 1);
-			 }
+		 	 }
 		}
 		catch(Exception e)
 		{
@@ -437,13 +438,15 @@ public class DynamicInteractiveTimeline implements Panel {
 		 		{	 
 					 //obtaining repository url
 					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
-					repositoryURL = repositoryURL.replaceFirst("https", "git").concat(".git");
+					repositoryURL = repositoryURL.replaceFirst("https", "git");
+					tempObjectSelected = ((TaskEditor) editor).getTaskEditorInput().getTask().getTaskId();
 		 		} else {
 		 			repositoryURL = "";
+			 		
+			 		tempObjectSelected = editor.getTitleToolTip(); 
+			 		tempObjectSelected = tempObjectSelected.substring(tempObjectSelected.indexOf('/') + 1);
 		 		}
-		 		
-		 		 tempObjectSelected = editor.getTitleToolTip(); 
-		 		 tempObjectSelected = tempObjectSelected.substring(tempObjectSelected.indexOf('/') + 1);
+
 			 }
 		}
 		catch(Exception e)
