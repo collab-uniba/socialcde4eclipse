@@ -158,7 +158,7 @@ public class SettingServicePanel implements Panel {
 		shadow.open();
 
 		// TODO Auto-generated method stub
-		shell = new Shell(panel.getShell(), SWT.NO_REDRAW_RESIZE);
+		shell = new Shell(panel.getShell(), SWT.TITLE);
 		if(Controller.OSisWindows())
 		{
 			shell.setSize(300, 100);
