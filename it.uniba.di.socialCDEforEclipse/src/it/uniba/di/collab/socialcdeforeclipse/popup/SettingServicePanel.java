@@ -158,11 +158,11 @@ public class SettingServicePanel implements Panel {
 		shadow.open();
 
 		// TODO Auto-generated method stub
-		shell = new Shell(panel.getShell(), SWT.NO_REDRAW_RESIZE);
+		shell = new Shell(panel.getShell(), SWT.TITLE);
 		if(Controller.OSisWindows())
 		{
 			shell.setSize(300, 100);
-			shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 340, 200);
+			shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 340, 250);
 		}
 		else if(Controller.OSisUnix())
 		{

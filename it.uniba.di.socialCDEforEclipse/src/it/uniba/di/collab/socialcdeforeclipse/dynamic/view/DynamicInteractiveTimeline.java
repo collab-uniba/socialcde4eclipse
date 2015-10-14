@@ -142,6 +142,8 @@ public class DynamicInteractiveTimeline implements Panel {
 	{
 		IEditorPart editor = null; 
 		tempObjectSelected = ""; 
+		repositoryURL = "";
+
 		try{
 		 editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
@@ -427,6 +429,8 @@ public class DynamicInteractiveTimeline implements Panel {
 		
 		IEditorPart editor = null; 
 		tempObjectSelected = ""; 
+		repositoryURL = "";
+		
 		try{
 		 editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
@@ -710,7 +714,12 @@ public class DynamicInteractiveTimeline implements Panel {
 		gridData.horizontalAlignment = GridData.FILL;
 		otherPostWarning.setLayoutData(gridData);
 
-		 WPost[] newPost = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,	 Controller.getCurrentUserPassword(),repositoryURL,objectSelected, repositoryURL.equals("")? "File" : "WorkItem", ActionInteractiveTimeline.getLastId(),0);
+		 WPost[] newPost = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,	 
+				 Controller.getCurrentUserPassword(),
+				 repositoryURL,
+				 objectSelected, 
+				 repositoryURL.equals("")? "File" : "WorkItem", 
+						 ActionInteractiveTimeline.getLastId(),0);
 		
 		if (newPost == null || newPost.length == 2) {
 			newPost = new WPost[0];

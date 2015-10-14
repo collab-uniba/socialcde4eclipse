@@ -122,7 +122,7 @@ public class ConnLostPanel implements Panel {
 		shadow.layout();
 		shadow.open();
 
-		shell = new Shell(panel.getShell(), SWT.ON_TOP | SWT.NO_TRIM);
+		shell = new Shell(panel.getShell(), SWT.TITLE);
 		shell.setSize(300, 200);
 
 		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 300, 100);
