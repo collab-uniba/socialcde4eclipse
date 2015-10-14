@@ -133,7 +133,7 @@ public class ChooseAvatar implements Panel {
 			}
 		});
 
-		shell = new Shell(panel.getShell(), SWT.NO_TRIM);
+		shell = new Shell(panel.getShell(), SWT.TITLE);
 
 		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 300, 200);
 		shell.setImage(getImageStream(PATH_ECLIPSE_ICON));

@@ -51,7 +51,7 @@ public class SkillsPanel implements Panel {
 		shadow.open();
 
 		// TODO Auto-generated method stub
-		shell = new Shell(panel.getShell(), SWT.NO_REDRAW_RESIZE);
+		shell = new Shell(panel.getShell(), SWT.TITLE);
 		shell.setSize(300, 100);
 
 		shell.setBounds(xCoordinateWithOffset, yCoordinateWithOffset, 300, 200);
