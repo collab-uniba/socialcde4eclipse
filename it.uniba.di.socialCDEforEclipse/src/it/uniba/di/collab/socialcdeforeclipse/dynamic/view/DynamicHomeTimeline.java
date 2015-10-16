@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -856,37 +857,38 @@ public class DynamicHomeTimeline implements Panel {
 		return uiData;
 	}
 	
-	private String findLink(String message)
-	{
-		String[] subsequences = message.split(" "); 
-		String result = ""; 
-		for(int i=0;i<subsequences.length; i++)
-		{
-			if(result.equals(""))
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result = "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result = subsequences[i] + " "; 
-				}
-			}
-			else
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result += "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result += subsequences[i] + " "; 
-				}
+	private String findLink(String message) {
+		String[] singleLine = message.split("\n");
+		
+		List<String> singleWords = new ArrayList<String>();
+		for (String s: singleLine) {
+			for (String ss : s.split(" ")) {
+				singleWords.add(ss);
 			}
 		}
 		
-		return result; 
+		String [] subsequences = new String[singleWords.size()];
+		singleWords.toArray(subsequences);
+		String result = "";
+		for (int i = 0; i < subsequences.length; i++) {
+			if (result.equals("")) {
+				if (subsequences[i].contains("http")) {
+					result = "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result = subsequences[i] + " ";
+				}
+			} else {
+				if (subsequences[i].contains("http")) {
+					result += "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result += subsequences[i] + " ";
+				}
+			}
+		}
+
+		return result;
 	}
 
 }
