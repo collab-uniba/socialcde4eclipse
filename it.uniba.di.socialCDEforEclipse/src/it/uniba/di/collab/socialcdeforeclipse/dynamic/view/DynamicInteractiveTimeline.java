@@ -191,7 +191,7 @@ public class DynamicInteractiveTimeline implements Panel {
 						Controller.getCurrentUser().Username,
 						Controller.getCurrentUserPassword(), repositoryURL, objectSelected , repositoryURL.equals("")? "File" : "WorkItem");
 				
-				if(posts == null || posts.length == 2)
+				if(posts == null /*|| posts.length == 2*/)
 				{
 					posts = new WPost[0]; 
 				}
@@ -510,7 +510,7 @@ public class DynamicInteractiveTimeline implements Panel {
 			posts = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(),repositoryURL,objectSelected,repositoryURL.equals("")? "File" : "WorkItem");
 			System.out.println("Numero post ottenuti " + posts.length); 
 			
-			posts = (posts.length == 2 ? new WPost[0] : posts); 
+			//posts = (posts.length == 2 ? new WPost[0] : posts); 
 			
 		}
 		
@@ -794,7 +794,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER);
+		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;

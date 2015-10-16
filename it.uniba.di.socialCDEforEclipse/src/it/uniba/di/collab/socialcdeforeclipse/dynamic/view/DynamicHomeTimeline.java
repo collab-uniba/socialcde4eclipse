@@ -134,7 +134,7 @@ public class DynamicHomeTimeline implements Panel {
 			for (int i = 0; i < posts.length; i++) {
 				System.out.println("Numero posts nuovi  " + posts.length);
 				System.out.println("numero figli master " + userPostMaster.getChildren().length);
-				System.out.println((userPostMaster.getChildren()[0].getData("IdPost") == null?  "id post è nullo " : "id post non è nullo"));
+				System.out.println((userPostMaster.getChildren()[0].getData("IdPost") == null?  "id post ï¿½ nullo " : "id post non ï¿½ nullo"));
 				System.out.println("post n. " + i + " valore " +  posts[i].Message + " id " + posts[i].Id); 
 				System.out.println(" confronto con post n. 0 valore " +  userPostMaster.getChildren()[0].getData("IdPost").toString()); 
 				
@@ -663,7 +663,7 @@ public class DynamicHomeTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.MULTI | SWT.WRAP | SWT.BORDER);
+		textMessage = new Text(controlToPost, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;

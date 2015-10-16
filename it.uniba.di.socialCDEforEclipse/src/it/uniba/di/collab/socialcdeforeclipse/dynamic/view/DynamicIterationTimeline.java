@@ -152,11 +152,11 @@ public class DynamicIterationTimeline implements Panel {
 		}
 		if(userPostMaster.getChildren()[0].getData("IdPost") == null)
 		{
-			System.out.println("id post è nullo "); 
+			System.out.println("id post ï¿½ nullo "); 
 		}
 		else
 		{
-			System.out.println("id post non è nullo ");
+			System.out.println("id post non ï¿½ nullo ");
 		}
 		
 		Controller.temporaryInformation.put("CurrentComposite", userPostMaster.getChildren()[0]); 
@@ -733,7 +733,7 @@ public class DynamicIterationTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER);
+		textMessage = new Text(controlToPost, SWT.MULTI |SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;		
