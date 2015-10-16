@@ -155,7 +155,10 @@ public class DynamicInteractiveTimeline implements Panel {
 		 		{	 
 					 //obtaining repository url
 					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
-					repositoryURL = repositoryURL.replaceFirst("https", "git");
+					repositoryURL = repositoryURL.replaceFirst("https", "git"); 
+					if(!repositoryURL.contains("git://")) {
+						repositoryURL = repositoryURL.replaceFirst("http", "git");	//if the previous one doesn't work
+					}
 					tempObjectSelected = ((TaskEditor) editor).getTaskEditorInput().getTask().getTaskId();
 		 		} else {
 		 			repositoryURL = "";
@@ -208,7 +211,7 @@ public class DynamicInteractiveTimeline implements Panel {
 			
 			 
 			
-			if(posts.length > 0 &&  posts[0].Id != Integer.parseInt(userPostMaster.getChildren()[0].getData("IdPost").toString()))
+			if(posts != null && posts.length > 0 &&  posts[0].Id != Integer.parseInt(userPostMaster.getChildren()[0].getData("IdPost").toString()))
 			{
 				boolean flag = true; 
 				
@@ -443,6 +446,9 @@ public class DynamicInteractiveTimeline implements Panel {
 					 //obtaining repository url
 					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
 					repositoryURL = repositoryURL.replaceFirst("https", "git");
+					if(!repositoryURL.contains("git://")) {
+						repositoryURL = repositoryURL.replaceFirst("http", "git");	//if the previous one doesn't work
+					}
 					tempObjectSelected = ((TaskEditor) editor).getTaskEditorInput().getTask().getTaskId();
 		 		} else {
 		 			repositoryURL = "";
