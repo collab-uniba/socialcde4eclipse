@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -72,6 +74,7 @@ public class ActionHomeTimeline {
 					.getClassLoader().getResourceAsStream("images/DefaultAvatar.png")),48,48);
 		}
 	}
+	
 	
 	public static void setLastId(long lastId) {
 		ActionHomeTimeline.lastId = lastId;
@@ -609,10 +612,10 @@ public class ActionHomeTimeline {
 					gridData.horizontalAlignment = GridData.FILL;
 					username.setLayoutData(gridData);
 
-					Label message = new Label(userPostComposite, SWT.WRAP);
+					Link message = new Link(userPostComposite, SWT.WRAP);
 					
 					//reading message unescaping the text for correct visualization
-					message.setText(StringEscapeUtils.unescapeJava(userMessage));
+					message.setText( findLink(StringEscapeUtils.unescapeJava(userMessage)));
 					
 					gridData = new GridData();
 					gridData.widthHint = Controller.getWindowWidth() - 150;
@@ -661,37 +664,38 @@ public class ActionHomeTimeline {
 		}
 	}
 	
-	private String findLink(String message)
-	{
-		String[] subsequences = message.split(" "); 
-		String result = ""; 
-		for(int i=0;i<subsequences.length; i++)
-		{
-			if(result.equals(""))
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result = "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result = subsequences[i] + " "; 
-				}
-			}
-			else
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result += "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result += subsequences[i] + " "; 
-				}
+	private String findLink(String message) {
+		String[] singleLine = message.split("\n");
+		
+		List<String> singleWords = new ArrayList<String>();
+		for (String s: singleLine) {
+			for (String ss : s.split(" ")) {
+				singleWords.add(ss);
 			}
 		}
 		
-		return result; 
+		String [] subsequences = new String[singleWords.size()];
+		singleWords.toArray(subsequences);
+		String result = "";
+		for (int i = 0; i < subsequences.length; i++) {
+			if (result.equals("")) {
+				if (subsequences[i].contains("http")) {
+					result = "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result = subsequences[i] + " ";
+				}
+			} else {
+				if (subsequences[i].contains("http")) {
+					result += "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result += subsequences[i] + " ";
+				}
+			}
+		}
+
+		return result;
 	}
 
 }

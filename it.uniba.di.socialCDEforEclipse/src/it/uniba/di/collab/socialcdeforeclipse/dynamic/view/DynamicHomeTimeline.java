@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -134,7 +135,7 @@ public class DynamicHomeTimeline implements Panel {
 			for (int i = 0; i < posts.length; i++) {
 				System.out.println("Numero posts nuovi  " + posts.length);
 				System.out.println("numero figli master " + userPostMaster.getChildren().length);
-				System.out.println((userPostMaster.getChildren()[0].getData("IdPost") == null?  "id post è nullo " : "id post non è nullo"));
+				System.out.println((userPostMaster.getChildren()[0].getData("IdPost") == null?  "id post ï¿½ nullo " : "id post non ï¿½ nullo"));
 				System.out.println("post n. " + i + " valore " +  posts[i].Message + " id " + posts[i].Id); 
 				System.out.println(" confronto con post n. 0 valore " +  userPostMaster.getChildren()[0].getData("IdPost").toString()); 
 				
@@ -663,7 +664,7 @@ public class DynamicHomeTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.MULTI | SWT.WRAP | SWT.BORDER);
+		textMessage = new Text(controlToPost, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;
@@ -856,37 +857,38 @@ public class DynamicHomeTimeline implements Panel {
 		return uiData;
 	}
 	
-	private String findLink(String message)
-	{
-		String[] subsequences = message.split(" "); 
-		String result = ""; 
-		for(int i=0;i<subsequences.length; i++)
-		{
-			if(result.equals(""))
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result = "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result = subsequences[i] + " "; 
-				}
-			}
-			else
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result += "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result += subsequences[i] + " "; 
-				}
+	private String findLink(String message) {
+		String[] singleLine = message.split("\n");
+		
+		List<String> singleWords = new ArrayList<String>();
+		for (String s: singleLine) {
+			for (String ss : s.split(" ")) {
+				singleWords.add(ss);
 			}
 		}
 		
-		return result; 
+		String [] subsequences = new String[singleWords.size()];
+		singleWords.toArray(subsequences);
+		String result = "";
+		for (int i = 0; i < subsequences.length; i++) {
+			if (result.equals("")) {
+				if (subsequences[i].contains("http")) {
+					result = "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result = subsequences[i] + " ";
+				}
+			} else {
+				if (subsequences[i].contains("http")) {
+					result += "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result += subsequences[i] + " ";
+				}
+			}
+		}
+
+		return result;
 	}
 
 }

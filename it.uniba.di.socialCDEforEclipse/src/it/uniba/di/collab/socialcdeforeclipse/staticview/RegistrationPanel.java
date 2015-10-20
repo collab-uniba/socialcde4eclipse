@@ -136,7 +136,7 @@ public class RegistrationPanel implements Panel {
 				"Calibri", 10, SWT.NONE));
 		controlli.add(labelProxyHost);
 
-		txtProxyHost = new Text(panel, SWT.BORDER | SWT.WRAP);
+		txtProxyHost = new Text(panel, SWT.BORDER | SWT.SINGLE);
 		txtProxyHost.setData("ID_action", "txtProxyHost");
 		gridData = new GridData();
 		gridData.horizontalAlignment = SWT.FILL;
@@ -180,7 +180,7 @@ public class RegistrationPanel implements Panel {
 				"Calibri", 10, SWT.NONE));
 		controlli.add(labelMail);
 
-		txtMail = new Text(panel, SWT.BORDER | SWT.WRAP);
+		txtMail = new Text(panel, SWT.BORDER | SWT.SINGLE);
 		gridData = new GridData();
 		gridData.horizontalAlignment = SWT.FILL;
 		gridData.grabExcessHorizontalSpace = true;
@@ -222,7 +222,7 @@ public class RegistrationPanel implements Panel {
 				.getDisplay(), "Calibri", 10, SWT.NONE));
 		controlli.add(labelInvitationCode);
 
-		txtInvitationCode = new Text(panel, SWT.BORDER | SWT.WRAP);
+		txtInvitationCode = new Text(panel, SWT.BORDER | SWT.SINGLE);
 		gridData = new GridData();
 		gridData.horizontalAlignment = SWT.FILL;
 		gridData.grabExcessHorizontalSpace = true;
@@ -263,7 +263,7 @@ public class RegistrationPanel implements Panel {
 				"Calibri", 10, SWT.NONE));
 		controlli.add(labelUsername);
 
-		txtUsername = new Text(panel, SWT.BORDER | SWT.WRAP);
+		txtUsername = new Text(panel, SWT.BORDER | SWT.SINGLE);
 		gridData = new GridData();
 		gridData.horizontalAlignment = SWT.FILL;
 		gridData.grabExcessHorizontalSpace = true;
@@ -387,7 +387,7 @@ public class RegistrationPanel implements Panel {
 		btnRegister.setWidth(100);
 		btnRegister.setHeight(40);
 		btnRegister.setxCoordinate(5);
-		btnRegister.setyCoordinate(230);
+		btnRegister.setyCoordinate(280);
 		btnRegister.setDefaultColors(new Color(panel.getDisplay(), 179, 180,
 				168), new Color(panel.getDisplay(), 179, 180, 168), null, null);
 		btnRegister.setClickedColors(new Color(panel.getDisplay(), 179, 180,

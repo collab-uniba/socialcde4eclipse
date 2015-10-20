@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.mylyn.tasks.ui.editors.TaskEditor;
 import org.eclipse.swt.SWT;
@@ -105,37 +106,38 @@ public class DynamicInteractiveTimeline implements Panel {
 		}
 	}
 	
-	private String findLink(String message)
-	{
-		String[] subsequences = message.split(" "); 
-		String result = ""; 
-		for(int i=0;i<subsequences.length; i++)
-		{
-			if(result.equals(""))
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result = "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result = subsequences[i] + " "; 
-				}
-			}
-			else
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result += "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result += subsequences[i] + " "; 
-				}
+	private String findLink(String message) {
+		String[] singleLine = message.split("\n");
+		
+		List<String> singleWords = new ArrayList<String>();
+		for (String s: singleLine) {
+			for (String ss : s.split(" ")) {
+				singleWords.add(ss);
 			}
 		}
 		
-		return result; 
+		String [] subsequences = new String[singleWords.size()];
+		singleWords.toArray(subsequences);
+		String result = "";
+		for (int i = 0; i < subsequences.length; i++) {
+			if (result.equals("")) {
+				if (subsequences[i].contains("http")) {
+					result = "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result = subsequences[i] + " ";
+				}
+			} else {
+				if (subsequences[i].contains("http")) {
+					result += "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result += subsequences[i] + " ";
+				}
+			}
+		}
+
+		return result;
 	}
 	
 	public void updateTimeline()
@@ -155,7 +157,10 @@ public class DynamicInteractiveTimeline implements Panel {
 		 		{	 
 					 //obtaining repository url
 					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
-					repositoryURL = repositoryURL.replaceFirst("https", "git");
+					repositoryURL = repositoryURL.replaceFirst("https", "git"); 
+					if(!repositoryURL.contains("git://")) {
+						repositoryURL = repositoryURL.replaceFirst("http", "git");	//if the previous one doesn't work
+					}
 					tempObjectSelected = ((TaskEditor) editor).getTaskEditorInput().getTask().getTaskId();
 		 		} else {
 		 			repositoryURL = "";
@@ -188,7 +193,7 @@ public class DynamicInteractiveTimeline implements Panel {
 						Controller.getCurrentUser().Username,
 						Controller.getCurrentUserPassword(), repositoryURL, objectSelected , repositoryURL.equals("")? "File" : "WorkItem");
 				
-				if(posts == null || posts.length == 2)
+				if(posts == null /*|| posts.length == 2*/)
 				{
 					posts = new WPost[0]; 
 				}
@@ -208,7 +213,7 @@ public class DynamicInteractiveTimeline implements Panel {
 			
 			 
 			
-			if(posts.length > 0 &&  posts[0].Id != Integer.parseInt(userPostMaster.getChildren()[0].getData("IdPost").toString()))
+			if(posts != null && posts.length > 0 &&  posts[0].Id != Integer.parseInt(userPostMaster.getChildren()[0].getData("IdPost").toString()))
 			{
 				boolean flag = true; 
 				
@@ -443,6 +448,9 @@ public class DynamicInteractiveTimeline implements Panel {
 					 //obtaining repository url
 					repositoryURL = ((TaskEditor) editor).getTaskEditorInput().getTaskRepository().getRepositoryUrl();
 					repositoryURL = repositoryURL.replaceFirst("https", "git");
+					if(!repositoryURL.contains("git://")) {
+						repositoryURL = repositoryURL.replaceFirst("http", "git");	//if the previous one doesn't work
+					}
 					tempObjectSelected = ((TaskEditor) editor).getTaskEditorInput().getTask().getTaskId();
 		 		} else {
 		 			repositoryURL = "";
@@ -504,7 +512,7 @@ public class DynamicInteractiveTimeline implements Panel {
 			posts = Controller.getProxy().GetInteractiveTimeline(Controller.getCurrentUser().Username,Controller.getCurrentUserPassword(),repositoryURL,objectSelected,repositoryURL.equals("")? "File" : "WorkItem");
 			System.out.println("Numero post ottenuti " + posts.length); 
 			
-			posts = (posts.length == 2 ? new WPost[0] : posts); 
+			//posts = (posts.length == 2 ? new WPost[0] : posts); 
 			
 		}
 		
@@ -788,7 +796,7 @@ public class DynamicInteractiveTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER);
+		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;

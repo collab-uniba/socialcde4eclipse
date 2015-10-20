@@ -1,5 +1,12 @@
 package it.uniba.di.collab.socialcdeforeclipse.dynamic.view;
 
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionGeneral;
+import it.uniba.di.collab.socialcdeforeclipse.action.ActionIterationTimeline;
+import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+import it.uniba.di.collab.socialcdeforeclipse.object.Panel;
+import it.uniba.di.collab.socialcdeforeclipse.object.ProgressBarWindow;
+import it.uniba.di.collab.socialcdeforeclipse.shared.library.WPost;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -7,11 +14,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -34,15 +40,7 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionDynamicUserTimeline;
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionGeneral;
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionHomeTimeline;
-import it.uniba.di.collab.socialcdeforeclipse.action.ActionIterationTimeline;
-import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
-import it.uniba.di.collab.socialcdeforeclipse.object.Panel;
-import it.uniba.di.collab.socialcdeforeclipse.object.ProgressBarWindow;
-import it.uniba.di.collab.socialcdeforeclipse.shared.library.WPost;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public class DynamicIterationTimeline implements Panel {
 
@@ -96,37 +94,38 @@ public class DynamicIterationTimeline implements Panel {
 		return new Image(Controller.getWindow().getDisplay(), stream);
 	}
 	
-	private String findLink(String message)
-	{
-		String[] subsequences = message.split(" "); 
-		String result = ""; 
-		for(int i=0;i<subsequences.length; i++)
-		{
-			if(result.equals(""))
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result = "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result = subsequences[i] + " "; 
-				}
-			}
-			else
-			{
-				if(subsequences[i].contains("http"))
-				{
-					result += "<a href=\" " + subsequences[i] + "\" > " + subsequences[i] + "</a> "; 
-				}
-				else
-				{
-					result += subsequences[i] + " "; 
-				}
+	private String findLink(String message) {
+		String[] singleLine = message.split("\n");
+		
+		List<String> singleWords = new ArrayList<String>();
+		for (String s: singleLine) {
+			for (String ss : s.split(" ")) {
+				singleWords.add(ss);
 			}
 		}
 		
-		return result; 
+		String [] subsequences = new String[singleWords.size()];
+		singleWords.toArray(subsequences);
+		String result = "";
+		for (int i = 0; i < subsequences.length; i++) {
+			if (result.equals("")) {
+				if (subsequences[i].contains("http")) {
+					result = "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result = subsequences[i] + " ";
+				}
+			} else {
+				if (subsequences[i].contains("http")) {
+					result += "<a href=\" " + subsequences[i] + "\" > "
+							+ subsequences[i] + "</a> ";
+				} else {
+					result += subsequences[i] + " ";
+				}
+			}
+		}
+
+		return result;
 	}
 
 	public void updateTimeline()
@@ -152,11 +151,11 @@ public class DynamicIterationTimeline implements Panel {
 		}
 		if(userPostMaster.getChildren()[0].getData("IdPost") == null)
 		{
-			System.out.println("id post è nullo "); 
+			System.out.println("id post ï¿½ nullo "); 
 		}
 		else
 		{
-			System.out.println("id post non è nullo ");
+			System.out.println("id post non ï¿½ nullo ");
 		}
 		
 		Controller.temporaryInformation.put("CurrentComposite", userPostMaster.getChildren()[0]); 
@@ -267,6 +266,7 @@ public class DynamicIterationTimeline implements Panel {
 						gridData = new GridData();
 						gridData.widthHint = Controller.getWindowWidth() - 150;
 						message.setLayoutData(gridData);
+						
 
 						Calendar nowDate = Calendar.getInstance();
 						Calendar dateSelected = posts[j].getCreateAt();
@@ -545,7 +545,7 @@ public class DynamicIterationTimeline implements Panel {
 								e.printStackTrace();
 							} 
 						}
-					});  
+					}); 
 					gridData = new GridData();
 					gridData.widthHint = Controller.getWindowWidth() - 150;
 					message.setLayoutData(gridData);
@@ -733,7 +733,7 @@ public class DynamicIterationTimeline implements Panel {
 		controlToPost.setLayoutData(gridData);
 		controlli.add(controlToPost);
 
-		textMessage = new Text(controlToPost, SWT.WRAP | SWT.BORDER);
+		textMessage = new Text(controlToPost, SWT.MULTI |SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 		gridData = new GridData();
 		gridData.heightHint = 75;
 		gridData.widthHint = Controller.getWindowWidth() - 100;		
