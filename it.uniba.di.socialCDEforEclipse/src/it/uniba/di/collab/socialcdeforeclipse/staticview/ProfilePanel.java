@@ -17,6 +17,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -26,15 +27,15 @@ import org.eclipse.swt.widgets.Listener;
 public class ProfilePanel implements Panel {
 
 	private Listener azioni;
-	private Label labelAvatarProfile;
+	private Button labelAvatarProfile;
 	private Composite composite_static;
-	private Label labelPeople;
-	private Label labelHomeTimeline;
-	private Label labelInterationTimeline;
-	private Label labelInteractiveTimeline;
+	private Button labelPeople;
+	private Button labelHomeTimeline;
+	private Button labelInterationTimeline;
+	private Button labelInteractiveTimeline;
 	private Composite composite_dinamic;
 	private Label labelHidden;
-	private Label labelLogout;
+	private Button labelLogout;
 	private ArrayList<Control> controlli;
 
 	private final InputStream PATH_DEFAULT_AVATAR = this.getClass()
@@ -121,7 +122,8 @@ public class ProfilePanel implements Panel {
 		gridData.horizontalAlignment = gridData.FILL;
 		composite_static.setLayoutData(gridData);
 
-		labelAvatarProfile = new Label(composite_static, SWT.NONE);
+		labelAvatarProfile = new Button(composite_static, SWT.TOGGLE);
+		labelAvatarProfile.setSelection(true);
 
 		if(Controller.getUsersAvatar().get(Controller.getCurrentUser().Username) == null)
 		{
@@ -162,7 +164,7 @@ public class ProfilePanel implements Panel {
 		labelAvatarProfile.setLayoutData(new GridData()); 
 		controlli.add(labelAvatarProfile);
 		
-		labelPeople = new Label(composite_static, SWT.PUSH);
+		labelPeople = new Button(composite_static, SWT.TOGGLE);
 		
 		labelPeople.setImage(get_ImageStream(PATH_PEOPLE));
 		
@@ -174,7 +176,7 @@ public class ProfilePanel implements Panel {
 		
 		controlli.add(labelPeople);
 
-		labelHomeTimeline = new Label(composite_static, SWT.PUSH);
+		labelHomeTimeline = new Button(composite_static, SWT.TOGGLE);
 		labelHomeTimeline.setImage(get_ImageStream(PATH_HOME));
 		labelHomeTimeline.setCursor(new Cursor(panel.getDisplay(),
 				SWT.CURSOR_HAND));
@@ -183,7 +185,7 @@ public class ProfilePanel implements Panel {
 
 		controlli.add(labelHomeTimeline);
 	
-		labelInterationTimeline = new Label(composite_static, SWT.PUSH);
+		labelInterationTimeline = new Button(composite_static, SWT.TOGGLE);
 		labelInterationTimeline
 				.setImage(get_ImageStream(PATH_INTERACTION_TIMELINE));
 		labelInterationTimeline.setCursor(new Cursor(panel.getDisplay(),
@@ -192,7 +194,7 @@ public class ProfilePanel implements Panel {
 		labelInterationTimeline.setData("ID_action", "labelIterationTimeline");
 		controlli.add(labelInterationTimeline);
 	
-		labelInteractiveTimeline = new Label(composite_static, SWT.PUSH);
+		labelInteractiveTimeline = new Button(composite_static, SWT.TOGGLE);
 		labelInteractiveTimeline
 				.setImage(get_ImageStream(PATH_INTERACTIVE_TIMELINE));
 		labelInteractiveTimeline.setCursor(new Cursor(panel.getDisplay(),
@@ -202,7 +204,7 @@ public class ProfilePanel implements Panel {
 		
 		controlli.add(labelInteractiveTimeline);
 	
-		labelLogout = new Label(composite_static, SWT.BUTTON_MASK);
+		labelLogout = new Button(composite_static, SWT.BUTTON_MASK);
 		labelLogout.setImage(get_ImageStream(PATH_LOGOUT));
 		labelLogout.setCursor(new Cursor(panel.getDisplay(), SWT.CURSOR_HAND));
 		labelLogout.setData("ID_action", "labelLogout");
@@ -281,27 +283,27 @@ public class ProfilePanel implements Panel {
 		this.composite_static = composite_static;
 	}
 
-	public Label getLabelPeople() {
+	public Button getLabelPeople() {
 		return labelPeople;
 	}
 
-	public void setLabelPeople(Label labelPeople) {
+	public void setLabelPeople(Button labelPeople) {
 		this.labelPeople = labelPeople;
 	}
 
-	public Label getLabelHomeTimeline() {
+	public Button getLabelHomeTimeline() {
 		return labelHomeTimeline;
 	}
 
-	public void setLabelHomeTimeline(Label labelHomeTimeline) {
+	public void setLabelHomeTimeline(Button labelHomeTimeline) {
 		this.labelHomeTimeline = labelHomeTimeline;
 	}
 
-	public Label getLabelInteractiveTimeline() {
+	public Button getLabelInteractiveTimeline() {
 		return labelInteractiveTimeline;
 	}
 
-	public void setLabelInteractiveTimeline(Label labelInteractiveTimeline) {
+	public void setLabelInteractiveTimeline(Button labelInteractiveTimeline) {
 		this.labelInteractiveTimeline = labelInteractiveTimeline;
 	}
 
@@ -309,11 +311,11 @@ public class ProfilePanel implements Panel {
 		return composite_dinamic;
 	}
 
-	public Label getLabelAvatarProfile() {
+	public Button getLabelAvatarProfile() {
 		return labelAvatarProfile;
 	}
 
-	public void setLabelAvatarProfile(Label labelAvatarProfile) {
+	public void setLabelAvatarProfile(Button labelAvatarProfile) {
 		this.labelAvatarProfile = labelAvatarProfile;
 	}
 
