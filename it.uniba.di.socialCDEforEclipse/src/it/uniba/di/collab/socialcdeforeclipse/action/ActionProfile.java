@@ -12,6 +12,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Control;
+
+
 
 public class ActionProfile {
 
@@ -38,7 +42,8 @@ public class ActionProfile {
 	public ActionProfile(Widget widget, Event event) {
 
 		String widgetName = widget.getData("ID_action").toString();
-
+		Control[] toolBarButtons = ((Control) widget).getParent().getChildren();
+		
 		switch (widgetName) {
 
 		case "profilePanel":
@@ -73,12 +78,18 @@ public class ActionProfile {
 			break;
 
 		case "labelPeople":
-
 			if (event.type == SWT.MouseDown && Controller.getProxy().IsWebServiceRunning()) {
 
 				Controller.selectDynamicWindow(2);
 				Controller.getWindow().layout();
 
+				//unselect others buttons in the tool bar
+				for (Control c : toolBarButtons) {
+					if (c instanceof Button)
+						((Button) c).setSelection(false);
+				}
+				
+				((Button) widget).setSelection(true);
 			}
 			else
 			{
@@ -90,6 +101,14 @@ public class ActionProfile {
 			if (event.type == SWT.MouseDown && Controller.getProxy().IsWebServiceRunning()) {
 				Controller.selectDynamicWindow(0);
 				Controller.getWindow().layout();
+				
+				//unselect others buttons in the tool bar
+				for (Control c : toolBarButtons) {
+					if (c instanceof Button)
+						((Button) c).setSelection(false);
+				}
+				
+				((Button) widget).setSelection(true);
 			}
 			else
 			{
@@ -99,7 +118,13 @@ public class ActionProfile {
 		case "labelHomeTimeline":
 			if (event.type == SWT.MouseDown && Controller.getProxy().IsWebServiceRunning()) {
 				Controller.selectDynamicWindow(4);
-				//Controller.getWindow().layout();
+				
+				//unselect others buttons in the tool bar
+				for (Control c : toolBarButtons) {
+					if (c instanceof Button)
+						((Button) c).setSelection(false);
+				}
+				((Button) widget).setSelection(true);
 			}
 			else
 			{
@@ -110,6 +135,14 @@ public class ActionProfile {
 			if (event.type == SWT.MouseDown && Controller.getProxy().IsWebServiceRunning()) {
 				Controller.selectDynamicWindow(5);
 				Controller.getWindow().layout();
+				
+				//unselect others buttons in the tool bar
+				for (Control c : toolBarButtons) {
+					if (c instanceof Button)
+						((Button) c).setSelection(false);
+				}
+				
+				((Button) widget).setSelection(true);
 			}
 			else
 			{
@@ -120,6 +153,14 @@ public class ActionProfile {
 			if (event.type == SWT.MouseDown && Controller.getProxy().IsWebServiceRunning()) {
 				Controller.selectDynamicWindow(6);
 				Controller.getWindow().layout();
+				
+				//unselect others buttons in the tool bar
+				for (Control c : toolBarButtons) {
+					if (c instanceof Button)
+						((Button) c).setSelection(false);
+				}
+				
+				((Button) widget).setSelection(true);
 			}
 			else
 			{
