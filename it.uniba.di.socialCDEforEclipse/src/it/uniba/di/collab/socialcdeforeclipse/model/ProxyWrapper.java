@@ -109,7 +109,7 @@ public class ProxyWrapper implements ISocialProxy {
 
 			return false;
 		}
-		if (output.equals("true")) {
+		if (output != null && output.equals("true")) {
 			
 			return true;
 		} else {
